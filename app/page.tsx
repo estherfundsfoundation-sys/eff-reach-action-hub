@@ -1,0 +1,201 @@
+const urgentHelp = [
+  { title: "Food & essentials", text: "Find local food, SNAP, campus pantry, and basic-needs support.", href: "https://portal.estherfundsfoundation.org/resources#basic-needs", tone: "yellow" },
+  { title: "Housing & utilities", text: "Start with local assistance, campus housing support, and 211.", href: "https://portal.estherfundsfoundation.org/resources", tone: "pink" },
+  { title: "Tuition balance", text: "Build an action plan for a balance, hold, appeal, or emergency grant.", href: "https://portal.estherfundsfoundation.org/resources", tone: "blue" },
+  { title: "Mental health", text: "Call or text 988 in a crisis. Find ongoing support and campus care.", href: "https://988lifeline.org/", tone: "lavender" },
+];
+
+const pathways = [
+  { number: "01", title: "Money for school", text: "Scholarships, FAFSA, aid appeals, tuition gaps, emergency funding, and financial-aid offer help.", href: "#college-money" },
+  { number: "02", title: "Parents & families", text: "Plain-language guidance for FAFSA contributors, college costs, Parent PLUS decisions, and supporting your student.", href: "#families" },
+  { number: "03", title: "Stay enrolled", text: "Food, housing, transportation, childcare, books, technology, and school-balance resources.", href: "#stay-enrolled" },
+  { number: "04", title: "Career & income", text: "Jobs that work around college, internships, apprenticeships, career planning, resumes, and training.", href: "#career" },
+  { number: "05", title: "Wellness & rights", text: "Mental health, accommodations, student-parent support, legal aid, and advocacy resources.", href: "#wellness" },
+  { number: "06", title: "Scholarship portal", text: "Apply to EFF programs, claim an application, manage documents, and view your secure dashboard.", href: "https://portal.estherfundsfoundation.org/" },
+];
+
+const resourceGroups = [
+  {
+    id: "college-money",
+    eyebrow: "FUND YOUR FUTURE",
+    title: "College money, without the confusion",
+    intro: "Make a plan before a financial gap becomes a reason to leave school.",
+    links: [
+      ["EFF Scholarship Portal", "Search scholarships and apply to current EFF programs.", "https://portal.estherfundsfoundation.org/"],
+      ["FAFSA Rescue & Aid Appeals", "Get unstuck, understand your offer, and prepare a strong appeal.", "https://portal.estherfundsfoundation.org/resources"],
+      ["College Cost Decision Lab", "Compare real costs, debt, graduation outcomes, and likely monthly payments.", "https://www.consumerfinance.gov/paying-for-college/your-financial-path-to-graduation/"],
+      ["College Scorecard", "Compare institutions by costs, completion, fields of study, and earnings.", "https://collegescorecard.ed.gov/"],
+    ],
+  },
+  {
+    id: "families",
+    eyebrow: "FOR THE WHOLE FAMILY",
+    title: "A calmer college plan for parents",
+    intro: "Know what to sign, what to ask, what belongs to the student, and what different types of aid really mean.",
+    links: [
+      ["Parent & Family Toolkit", "Download EFF's college funding guide and family conversation worksheets.", "https://portal.estherfundsfoundation.org/resources#toolkits"],
+      ["FAFSA for Parents", "Understand contributor invitations, consent, tax information, and common mistakes.", "https://studentaid.gov/articles/fafsa-for-parents/"],
+      ["Childcare & Family Assistance", "Find state childcare subsidies, campus childcare, WIC, SNAP, and family supports.", "https://www.childcare.gov/consumer-education/get-help-paying-for-child-care/child-care-financial-assistance-options"],
+      ["Questions to Ask the College", "Use EFF's checklist before accepting an aid offer or private loan.", "https://portal.estherfundsfoundation.org/resources"],
+    ],
+  },
+  {
+    id: "career",
+    eyebrow: "EARN + LEARN",
+    title: "Career support that starts before graduation",
+    intro: "Connect education to income with credible training, job, internship, and career-planning tools.",
+    links: [
+      ["CareerOneStop", "Explore careers, assessments, training, scholarships, and local American Job Centers.", "https://www.careeronestop.org/"],
+      ["Internships & Apprenticeships", "Explore paid work-based learning and credentials connected to growing careers.", "https://www.apprenticeship.gov/"],
+      ["College Money Skills", "Handle aid refunds, banking, budgeting, and borrowing more confidently.", "https://www.consumerfinance.gov/consumer-tools/student-loans/manage-your-college-money/"],
+      ["Loan Simulator", "Estimate repayment options and understand how future borrowing changes your payment.", "https://studentaid.gov/loan-simulator/"],
+    ],
+  },
+  {
+    id: "wellness",
+    eyebrow: "YOU DESERVE SUPPORT",
+    title: "Wellness, rights, and someone to call",
+    intro: "School is hard enough. These resources help with safety, mental health, accommodations, and legal barriers.",
+    links: [
+      ["988 Suicide & Crisis Lifeline", "Call, text, or chat 988 for immediate mental-health crisis support.", "https://988lifeline.org/"],
+      ["Local Help Through 211", "Find nearby food, housing, health, transportation, and emergency services.", "https://www.211.org/"],
+      ["Disability & Accommodation Rights", "Learn about Section 504, the ADA, and support in higher education.", "https://www.ed.gov/laws-and-policy/civil-rights-laws/disability-discrimination"],
+      ["Free Civil Legal Aid", "Find local help for housing, family, benefits, employment, and consumer issues.", "https://www.lsc.gov/about-lsc/what-legal-aid/i-need-legal-help"],
+    ],
+  },
+];
+
+export default function Home() {
+  return (
+    <main>
+      <div className="announcement">If you are in immediate danger, call 911. For mental-health crisis support, call or text 988.</div>
+      <header className="site-header">
+        <a className="brand" href="#top" aria-label="EFF Reach Action Hub home">
+          <img src="/eff-logo.png" alt="Esther Funds Foundation" />
+          <span><strong>REACH</strong> Action Hub</span>
+        </a>
+        <nav aria-label="Main navigation">
+          <a href="#find-help">Find help</a>
+          <a href="#reach-path">The REACH path</a>
+          <a href="#families">For families</a>
+          <a href="#take-action">Take action</a>
+        </nav>
+        <a className="header-cta" href="https://portal.estherfundsfoundation.org/">Scholarship Portal ↗</a>
+      </header>
+
+      <section className="hero" id="top">
+        <div className="hero-copy">
+          <p className="kicker">A FREE STUDENT + FAMILY SUPPORT CENTER</p>
+          <h1>College gets hard.<br /><em>Keep reaching.</em></h1>
+          <p className="hero-lead">One welcoming place to find college funding, emergency support, family guidance, career tools, wellness resources, and a clear next step.</p>
+          <div className="hero-actions">
+            <a className="button primary" href="#find-help">Help me find my next step</a>
+            <a className="button secondary" href="https://portal.estherfundsfoundation.org/resources#toolkits">Download free toolkits</a>
+          </div>
+          <p className="microcopy">No account required to explore resources. Never email passwords, Social Security numbers, or verification codes.</p>
+        </div>
+        <div className="hero-art" aria-label="Reach out. Engage. Access resources. Care for your mental health. Hold on.">
+          <div className="sunburst" />
+          <div className="note note-one">YOU ARE NOT<br />BEHIND.</div>
+          <div className="note note-two">YOU ARE<br />BUILDING.</div>
+          <div className="reach-card">
+            <span>R</span><b>Reach out</b>
+            <span>E</span><b>Engage your community</b>
+            <span>A</span><b>Access resources</b>
+            <span>C</span><b>Care for your mental health</b>
+            <span>H</span><b>Hold on</b>
+          </div>
+        </div>
+      </section>
+
+      <section className="quick-help" id="find-help">
+        <div className="section-heading">
+          <p className="kicker">START WHERE YOU ARE</p>
+          <h2>What do you need help with today?</h2>
+          <p>Choose the closest match. You do not need to know the name of a program before asking for help.</p>
+        </div>
+        <div className="help-grid">
+          {urgentHelp.map((item) => (
+            <a key={item.title} className={`help-card ${item.tone}`} href={item.href}>
+              <span className="arrow">↗</span>
+              <h3>{item.title}</h3>
+              <p>{item.text}</p>
+            </a>
+          ))}
+        </div>
+        <div className="not-sure">
+          <div><strong>Not sure where to begin?</strong><span>Use the complete EFF resource center or ask for guidance.</span></div>
+          <div><a href="https://portal.estherfundsfoundation.org/resources">Explore all resources</a><a href="mailto:nationals@estherfundsinc.org?subject=Student%20support%20request">Email EFF support</a></div>
+        </div>
+      </section>
+
+      <section className="pathways" id="reach-path">
+        <div className="pathways-intro">
+          <p className="kicker">YOUR SUPPORT MAP</p>
+          <h2>One hub.<br />Six clear pathways.</h2>
+          <p>Resources are organized around real-life problems—not complicated systems.</p>
+        </div>
+        <div className="pathway-list">
+          {pathways.map((item) => (
+            <a href={item.href} className="pathway" key={item.number}>
+              <span>{item.number}</span><div><h3>{item.title}</h3><p>{item.text}</p></div><b>→</b>
+            </a>
+          ))}
+        </div>
+      </section>
+
+      <section className="reach-manifesto">
+        <p>R.E.A.C.H. IS MORE THAN A PROGRAM</p>
+        <h2><span>R</span>each out. <span>E</span>ngage your community. <span>A</span>ccess resources. <span>C</span>are for your mental health. <span>H</span>old on.</h2>
+        <p className="manifesto-end">Seeking help is not weakness. It is the first courageous step.</p>
+      </section>
+
+      <section className="resource-library" id="stay-enrolled">
+        {resourceGroups.map((group, index) => (
+          <article className={`resource-group ${index % 2 ? "reverse" : ""}`} id={group.id} key={group.id}>
+            <div className="resource-title">
+              <p className="kicker">{group.eyebrow}</p>
+              <h2>{group.title}</h2>
+              <p>{group.intro}</p>
+            </div>
+            <div className="resource-links">
+              {group.links.map(([title, text, href]) => (
+                <a href={href} key={title} target={href.startsWith("http") ? "_blank" : undefined} rel="noreferrer">
+                  <div><h3>{title}</h3><p>{text}</p></div><span>↗</span>
+                </a>
+              ))}
+            </div>
+          </article>
+        ))}
+      </section>
+
+      <section className="portal-callout">
+        <div>
+          <p className="kicker">READY TO APPLY?</p>
+          <h2>The Reach Action Hub helps you prepare. The EFF Scholarship Portal is where you apply.</h2>
+          <p>Create or access your secure account, explore EFF scholarship programs, upload documents, and follow your application status.</p>
+        </div>
+        <a className="button light" href="https://portal.estherfundsfoundation.org/">Go to the Scholarship Portal ↗</a>
+      </section>
+
+      <section className="take-action" id="take-action">
+        <div className="section-heading">
+          <p className="kicker">TURN CARE INTO ACTION</p>
+          <h2>Help another student hold on.</h2>
+        </div>
+        <div className="action-grid">
+          <a href="https://estherfundsfoundation.org/r-e-a-c-h"><span>01</span><h3>Request or support a REACH Box</h3><p>Care packages with essentials, resources, and encouragement for students facing hardship.</p></a>
+          <a href="https://estherfundsfoundation.org/become-a-partner"><span>02</span><h3>Partner with EFF</h3><p>Help expand college-retention resources, emergency response, and campus support.</p></a>
+          <a href="https://givebutter.com/estherfundsfoundation"><span>03</span><h3>Fund a student's next step</h3><p>Support scholarships, emergency aid, educational tools, and student care.</p></a>
+        </div>
+      </section>
+
+      <footer>
+        <div className="footer-brand"><img src="/eff-logo.png" alt="" /><div><strong>Esther Funds Foundation</strong><span>We are working to prevent college dropouts around the world.</span></div></div>
+        <div className="footer-links"><a href="https://estherfundsfoundation.org/">EFF Home</a><a href="https://portal.estherfundsfoundation.org/">Scholarship Portal</a><a href="https://estherfundsfoundation.org/programs">Programs</a><a href="mailto:nationals@estherfundsinc.org">Contact</a></div>
+        <p className="disclaimer">EFF provides educational information and resource navigation. External services set their own eligibility rules and availability. EFF cannot guarantee funding or assistance from outside organizations.</p>
+        <div className="footer-bottom"><span>© 2026 Esther Funds Foundation</span><span>Every Future Fulfilled.</span></div>
+      </footer>
+    </main>
+  );
+}
