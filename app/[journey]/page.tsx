@@ -1,0 +1,73 @@
+import { notFound } from "next/navigation";
+
+type LinkItem = { label: string; href: string; alt?: boolean };
+type Section = { title: string; text: string; bullets: string[]; links: LinkItem[] };
+type Journey = { eyebrow: string; title: string; intro: string; heading: string; description: string; urgent?: string; sections: Section[] };
+
+const journeys: Record<string, Journey> = {
+  "reach-yourself": {
+    eyebrow:"REACH FOR YOURSELF", title:"You deserve options before you give up.", intro:"Start with the problem in front of you—money, food, housing, academics, belonging, or your mental health—and take one supported next step.", heading:"Build your stay-enrolled plan", description:"The original REACH Yourself tools are organized into clear actions, with the EFF Scholarship Portal handling secure applications.", urgent:"Immediate danger: call 911. Mental-health crisis: call or text 988. Local food, housing, and essentials: dial 211.",
+    sections:[
+      {title:"Stabilize today",text:"Handle the barrier most likely to interrupt school first.",bullets:["Food, housing, utilities, transportation, childcare, books, and technology","Campus emergency grants, student affairs, dean of students, and financial aid","Local benefits and community assistance"],links:[{label:"EFF emergency resources",href:"https://portal.estherfundsfoundation.org/resources",alt:true},{label:"Call 211",href:"https://www.211.org/"},{label:"Find local help",href:"https://www.findhelp.org/"}]},
+      {title:"Fund your education",text:"Stack federal, state, institutional, private, and EFF opportunities.",bullets:["Complete or correct the FAFSA","Review aid gaps and prepare a professional judgment appeal","Search scholarships by need, major, service, identity, and experience"],links:[{label:"EFF Scholarship Portal",href:"https://portal.estherfundsfoundation.org/",alt:true},{label:"Federal Student Aid",href:"https://studentaid.gov/"},{label:"Scholarship Finder",href:"https://www.careeronestop.org/Toolkit/Training/find-scholarships.aspx"}]},
+      {title:"Prepare a stronger application",text:"Build one reusable scholarship packet instead of starting over each time.",bullets:["Essay, recommendation, and emergency-aid email templates","Application tracker and 30-minute application sessions","Never pay to apply or trust guaranteed-award promises"],links:[{label:"Download EFF toolkits",href:"https://portal.estherfundsfoundation.org/resources#toolkits",alt:true},{label:"Search scholarships",href:"https://portal.estherfundsfoundation.org/scholarships"}]},
+      {title:"Protect your wellbeing",text:"Your health and belonging are part of finishing school.",bullets:["Campus counseling, mentors, trusted faculty, and student organizations","Pause before withdrawing; ask how it affects aid, SAP, balances, and graduation","Tell one safe person exactly what is happening"],links:[{label:"Call or text 988",href:"https://988lifeline.org/",alt:true},{label:"Find a health center",href:"https://findahealthcenter.hrsa.gov/"}]},
+    ]
+  },
+  "reach-a-friend": {
+    eyebrow:"REACH FOR A FRIEND", title:"You do not need perfect words to show up.", intro:"Use the L.E.C.F. approach—Listen, Encourage, Connect, Follow Up—to care for a friend without carrying everything alone.", heading:"Be a bridge, not the whole rescue team", description:"Conversation scripts, safety referrals, and caring boundaries from the original friend-support journey.", urgent:"If your friend may be in immediate danger, call 911. For suicidal thoughts or a mental-health crisis, call or text 988 with them. Never promise secrecy when someone may be unsafe.",
+    sections:[
+      {title:"Listen",text:"Start with presence, not solutions.",bullets:["“I noticed you seem overwhelmed. How are you really doing?”","“You do not have to explain everything, but I am here to listen.”","Avoid judgment, comparisons, lectures, and taking control"],links:[]},
+      {title:"Encourage",text:"Reflect their strength without minimizing the situation.",bullets:["“I am glad you told me.”","“This sounds heavy, and you deserve support.”","“One hard semester does not erase everything you worked for.”"],links:[]},
+      {title:"Connect and follow up",text:"Help them reach the right person, then check back specifically.",bullets:["Offer to sit with them while they call financial aid, counseling, or 211","Share one or two relevant resources—not a giant list","Ask later: “How did the financial-aid call go?”"],links:[{label:"EFF student resources",href:"https://portal.estherfundsfoundation.org/resources",alt:true},{label:"Find local help",href:"https://www.findhelp.org/"}]},
+      {title:"Know the safety options",text:"Match the referral to the situation and protect your wellbeing too.",bullets:["988: suicide and mental-health crisis","741741: text HOME for Crisis Text Line","RAINN and the Domestic Violence Hotline for safety support","You can care deeply and still set healthy boundaries"],links:[{label:"988 Lifeline",href:"https://988lifeline.org/",alt:true},{label:"RAINN",href:"https://www.rainn.org/"},{label:"Domestic Violence Hotline",href:"https://www.thehotline.org/"}]},
+    ]
+  },
+  "reach-your-campus": {
+    eyebrow:"REACH YOUR CAMPUS", title:"Turn one caring idea into campus action.", intro:"Host practical retention programming: scholarship search parties, financial-aid workshops, resource drives, care events, and peer support.", heading:"Your campus action plan", description:"The original workshop sequence, presentation resources, and ambassador pathway in one place.",
+    sections:[
+      {title:"Pick your workshop",text:"Choose one problem students already talk about.",bullets:["Scholarship Search Party","Financial Aid 101 and appeal preparation","Basic-needs resource map","REACH peer-support and dropout-prevention conversation"],links:[{label:"REACH Workshop I",href:"https://drive.google.com/file/d/1d5SA4e7koSU-ONuviFrA6Fl1LEXknXix/view",alt:true},{label:"REACH Workshop II",href:"https://drive.google.com/file/d/1vP8Nv256d9FRCVsiH3GyKygHbP8rfS6t/view"}]},
+      {title:"Plan and fund it",text:"Make the event accessible, useful, and easy to attend.",bullets:["Reserve a room and coordinate with student affairs or financial aid","Request food, printing, promotion, and small-event funding early","Build a focused 45–60 minute agenda"],links:[{label:"Campus event materials",href:"https://www.canva.com/design/DAHL1vZJQFY/EwLN-e-IT8q2vbgvTij9bg/view",alt:true}]},
+      {title:"Present and follow up",text:"Give students an action—not only information.",bullets:["Include time to complete one real next step","Share verified links and EFF toolkits","Collect attendance and anonymous feedback, never sensitive financial data"],links:[{label:"EFF toolkits",href:"https://portal.estherfundsfoundation.org/resources#toolkits",alt:true}]},
+      {title:"Become an ambassador",text:"Keep resource awareness active throughout the year.",bullets:["Share support resources and scholarship opportunities","Create student-centered content and events","Develop leadership, advocacy, and professional skills"],links:[{label:"Explore EFF opportunities",href:"https://linktr.ee/estherfundsfoundation",alt:true},{label:"Scholarship Portal",href:"https://portal.estherfundsfoundation.org/"}]},
+    ]
+  },
+  "reach-your-community": {
+    eyebrow:"REACH YOUR COMMUNITY", title:"Service can remove a barrier to graduation.", intro:"Choose visible, practical action that connects community care to college persistence.", heading:"Serve with purpose", description:"A project menu for schools, churches, businesses, families, and volunteers.",
+    sections:[
+      {title:"Build care packages",text:"Collect practical items and encouragement for students facing hardship.",bullets:["Hygiene products, snacks, supplies, and transit support","Include verified local resources and an encouragement card","Distribute through trusted campus or community partners"],links:[{label:"Support EFF",href:"https://givebutter.com/estherfundsfoundation",alt:true}]},
+      {title:"Support basic needs",text:"Strengthen existing local programs.",bullets:["Pantry restocks and hygiene drives","Move-in, winter, and exam-season essentials","Referral lists for food, housing, childcare, and transportation"],links:[{label:"Find local needs",href:"https://www.211.org/",alt:true}]},
+      {title:"Mentor and prepare",text:"Help students build confidence before a crisis.",bullets:["Scholarship essay and application support","College and career readiness events","Mock interviews, professional clothing, and career exposure"],links:[{label:"Scholarship toolkits",href:"https://portal.estherfundsfoundation.org/resources#toolkits",alt:true}]},
+      {title:"Advocate for change",text:"Turn care into stronger student-retention systems.",bullets:["Promote emergency-aid and basic-needs awareness","Ask institutions to publish clear support pathways","Invite organizations to partner on retention"],links:[{label:"Join the movement",href:"https://www.change.org/p/join-the-everyfuturefulfilled-movement-every-student-deserves-the-chance-to-graduate",alt:true}]},
+    ]
+  },
+  "reach-beyond-campus": {
+    eyebrow:"REACH BEYOND CAMPUS", title:"Build support that lasts beyond one event.", intro:"Grow the movement through chapters, ambassadors, donors, institutions, and long-term partners.", heading:"Choose your leadership lane", description:"The original chapter, ambassador, and mission-funding opportunities organized clearly.",
+    sections:[
+      {title:"Start an EFF chapter",text:"Create a campus extension of EFF's dropout-prevention mission.",bullets:["Peer-led support and resource awareness","Retention-focused events and service","Leadership development and campus partnerships"],links:[{label:"Chapter opportunities",href:"https://linktr.ee/estherfundsfoundation",alt:true}]},
+      {title:"Become an ambassador",text:"Represent the mission on campus and online.",bullets:["Share resources and campaigns","Connect students to credible support","Build advocacy and professional experience"],links:[{label:"Explore opportunities",href:"https://linktr.ee/estherfundsfoundation",alt:true}]},
+      {title:"Fuel the mission",text:"Help EFF provide tools, emergency support, scholarships, and care.",bullets:["One-time and recurring gifts","Campaign and event sponsorship","In-kind products, services, and career opportunities"],links:[{label:"Donate to EFF",href:"https://givebutter.com/estherfundsfoundation",alt:true}]},
+      {title:"Connect an institution",text:"Invite a college, employer, church, or organization into the movement.",bullets:["Campus resource collaborations","Research and student-success partnerships","Career access, mentors, speakers, and volunteers"],links:[{label:"Become a partner",href:"https://estherfundsfoundation.org/become-a-partner",alt:true}]},
+    ]
+  },
+  "reach-for-professionals": {
+    eyebrow:"REACH FOR PROFESSIONALS", title:"Your experience can become a student's lifeline.", intro:"Mentor, partner, sponsor, hire, teach, or return to EFF as an alumni leader.", heading:"Put your expertise to work", description:"Professionals can contribute more than donations. Choose a practical role.",
+    sections:[
+      {title:"Mentor a student",text:"Offer perspective, encouragement, and career navigation.",bullets:["Career and major exploration","Resume, interview, and professional communication support","First-generation and transition-to-college guidance"],links:[{label:"Contact EFF",href:"mailto:info@estherfundsfoundation.org",alt:true}]},
+      {title:"Open a career door",text:"Create access students may not find in their networks.",bullets:["Internships, job shadowing, and apprenticeships","Speakers, mock interviews, and workplace visits","Technology and certification support"],links:[{label:"Partner with EFF",href:"https://estherfundsfoundation.org/become-a-partner",alt:true}]},
+      {title:"Sponsor student success",text:"Direct support toward retention barriers.",bullets:["Scholarships and emergency assistance","REACH Boxes and resource events","Transportation, books, childcare, and technology"],links:[{label:"Donate to EFF",href:"https://givebutter.com/estherfundsfoundation",alt:true}]},
+      {title:"Former member? Return and lead",text:"Bring your lived experience back to the next generation.",bullets:["Serve as a mentor or speaker","Support chapters and national programming","Build institutional and corporate relationships"],links:[{label:"Explore EFF membership",href:"https://app.joinit.com/o/esther-funds-foundation/jRuTrBy6Sk4ntaYaa",alt:true}]},
+    ]
+  }
+};
+
+export default async function JourneyPage({params}:{params:Promise<{journey:string}>}) {
+  const {journey:slug}=await params; const journey=journeys[slug]; if(!journey)notFound();
+  return <main className="journey-page"><nav className="journey-nav"><a href="/">← EFF Reach Action Hub</a><a className="portal-link" href="https://portal.estherfundsfoundation.org/">Scholarship Portal ↗</a></nav>
+    <section className="journey-hero"><p className="kicker">{journey.eyebrow}</p><h1>{journey.title}</h1><p>{journey.intro}</p></section>
+    {journey.urgent&&<div className="journey-emergency">{journey.urgent}</div>}
+    <section className="journey-content"><header><p className="kicker">YOUR GUIDED PATH</p><h2>{journey.heading}</h2><p>{journey.description}</p></header>
+      <div className="journey-sections">{journey.sections.map((section,index)=><article className="journey-section" key={section.title}><span className="step">STEP {String(index+1).padStart(2,"0")}</span><h3>{section.title}</h3><p>{section.text}</p><ul>{section.bullets.map(item=><li key={item}>{item}</li>)}</ul>{section.links.length>0&&<div className="journey-links">{section.links.map(link=><a className={link.alt?"alt":""} href={link.href} key={link.label} target={link.href.startsWith("http")?"_blank":undefined} rel="noreferrer">{link.label} ↗</a>)}</div>}</article>)}</div>
+      <div className="journey-bottom"><div><p className="kicker">KEEP REACHING</p><h2>One next step is enough for today.</h2></div><a className="button primary" href="/">Return to the full hub</a></div>
+    </section></main>;
+}

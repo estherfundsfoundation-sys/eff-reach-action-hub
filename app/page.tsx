@@ -14,6 +14,15 @@ const pathways = [
   { number: "06", title: "Scholarship portal", text: "Apply to EFF programs, claim an application, manage documents, and view your secure dashboard.", href: "https://portal.estherfundsfoundation.org/" },
 ];
 
+const actionJourneys = [
+  { tag: "SUPPORT FOR ME", title: "Reach for Yourself", text: "Find immediate help, funding, benefits, academic support, wellness care, and a plan to stay enrolled.", href: "/reach-yourself", color: "yellow" },
+  { tag: "SUPPORT SOMEONE", title: "Reach for a Friend", text: "Learn how to listen, encourage, connect, follow up, set boundaries, and respond when safety is at risk.", href: "/reach-a-friend", color: "pink" },
+  { tag: "CREATE CAMPUS CARE", title: "Reach Your Campus", text: "Run a workshop, request support, host a scholarship search party, or become an EFF ambassador.", href: "/reach-your-campus", color: "blue" },
+  { tag: "SERVE LOCALLY", title: "Reach Your Community", text: "Lead care packages, pantry and hygiene drives, advocacy, mentorship, and readiness projects.", href: "/reach-your-community", color: "lavender" },
+  { tag: "BUILD THE MOVEMENT", title: "Reach Beyond Campus", text: "Start a chapter, grow student leadership, donate, and build partnerships that outlast one event.", href: "/reach-beyond-campus", color: "yellow" },
+  { tag: "MENTOR + PARTNER", title: "REACH for Professionals", text: "Mentor students, sponsor programming, offer career access, partner with EFF, or return as an alum leader.", href: "/reach-for-professionals", color: "pink" },
+];
+
 const resourceGroups = [
   {
     id: "college-money",
@@ -129,6 +138,22 @@ export default function Home() {
         </div>
       </section>
 
+      <section className="journeys" id="action-paths">
+        <div className="section-heading">
+          <p className="kicker">THE COMPLETE REACH ACTION PATH</p>
+          <h2>Who do you want to reach?</h2>
+          <p>Choose a guided journey for yourself, someone you care about, your campus, your community, or the wider movement.</p>
+        </div>
+        <div className="journey-grid">
+          {actionJourneys.map((item, index) => (
+            <a className={`journey-card ${item.color}`} href={item.href} key={item.title}>
+              <span className="journey-number">0{index + 1}</span>
+              <p>{item.tag}</p><h3>{item.title}</h3><div>{item.text}</div><b>Open this path →</b>
+            </a>
+          ))}
+        </div>
+      </section>
+
       <section className="pathways" id="reach-path">
         <div className="pathways-intro">
           <p className="kicker">YOUR SUPPORT MAP</p>
@@ -184,7 +209,7 @@ export default function Home() {
           <h2>Help another student hold on.</h2>
         </div>
         <div className="action-grid">
-          <a href="https://estherfundsfoundation.org/r-e-a-c-h"><span>01</span><h3>Request or support a REACH Box</h3><p>Care packages with essentials, resources, and encouragement for students facing hardship.</p></a>
+          <a href="/reach-yourself"><span>01</span><h3>Request or support a REACH Box</h3><p>Care packages with essentials, resources, and encouragement for students facing hardship.</p></a>
           <a href="https://estherfundsfoundation.org/become-a-partner"><span>02</span><h3>Partner with EFF</h3><p>Help expand college-retention resources, emergency response, and campus support.</p></a>
           <a href="https://givebutter.com/estherfundsfoundation"><span>03</span><h3>Fund a student's next step</h3><p>Support scholarships, emergency aid, educational tools, and student care.</p></a>
         </div>
