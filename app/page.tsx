@@ -23,6 +23,18 @@ const actionJourneys = [
   { tag: "MENTOR + PARTNER", title: "REACH for Professionals", text: "Mentor students, sponsor programming, offer career access, partner with EFF, or return as an alum leader.", href: "/reach-for-professionals", color: "pink" },
 ];
 
+const downloads = [
+  { type: "WRITE YOUR STORY", title: "Scholarship Essay Workbook", text: "Story-bank prompts, the EFF STORY structure, drafting space, and a final-review checklist.", href: "/downloads/eff-scholarship-essay-workbook.pdf", color: "yellow", pages: "3 pages" },
+  { type: "STAY ORGANIZED", title: "Scholarship Application Organizer", text: "Build a reusable application packet, track deadlines, and complete a safe pre-submit review.", href: "/downloads/eff-scholarship-application-organizer.pdf", color: "pink", pages: "3 pages" },
+  { type: "GET UNSTUCK", title: "FAFSA + Aid Appeal Toolkit", text: "FAFSA rescue steps, professional-judgment guidance, documentation prompts, and an email template.", href: "/downloads/eff-fafsa-aid-appeal-toolkit.pdf", color: "blue", pages: "3 pages" },
+  { type: "COMPARE OFFERS", title: "Financial Aid Offer Decoder", text: "Separate free aid, work, and loans, calculate the real gap, and ask better questions.", href: "/downloads/eff-financial-aid-offer-decoder.pdf", color: "lavender", pages: "2 pages" },
+  { type: "URGENT BALANCE", title: "Tuition Balance Emergency Plan", text: "A focused 48-hour action plan, balance-response email, and backup support map.", href: "/downloads/eff-tuition-balance-emergency-plan.pdf", color: "yellow", pages: "2 pages" },
+  { type: "FOR FAMILIES", title: "Parent + Family College Guide", text: "FAFSA roles, a family planning worksheet, and safer questions before parent or private loans.", href: "/downloads/eff-parent-family-college-guide.pdf", color: "pink", pages: "2 pages" },
+  { type: "HELP SOMEONE", title: "REACH for a Friend Guide", text: "L.E.C.F. conversation scripts, referral options, crisis contacts, and caring boundaries.", href: "/downloads/eff-reach-for-a-friend-guide.pdf", color: "blue", pages: "2 pages" },
+  { type: "LEAD ON CAMPUS", title: "EFF Campus Action Kit", text: "Event ideas, a ready-to-use 60-minute plan, safety checklist, and impact worksheet.", href: "/downloads/eff-campus-action-kit.pdf", color: "lavender", pages: "3 pages" },
+  { type: "KEEP GOING", title: "Stay-Enrolled Action Plan", text: "Name the barrier, build a support team, and review consequences before changing enrollment.", href: "/downloads/eff-stay-enrolled-plan.pdf", color: "yellow", pages: "3 pages" },
+];
+
 const resourceGroups = [
   {
     id: "college-money",
@@ -86,6 +98,7 @@ export default function Home() {
         <nav aria-label="Main navigation">
           <a href="#find-help">Find help</a>
           <a href="#reach-path">The REACH path</a>
+          <a href="#downloads">Toolkits</a>
           <a href="#families">For families</a>
           <a href="#take-action">Take action</a>
         </nav>
@@ -99,7 +112,7 @@ export default function Home() {
           <p className="hero-lead">One welcoming place to find college funding, emergency support, family guidance, career tools, wellness resources, and a clear next step.</p>
           <div className="hero-actions">
             <a className="button primary" href="#find-help">Help me find my next step</a>
-            <a className="button secondary" href="https://portal.estherfundsfoundation.org/resources#toolkits">Download free toolkits</a>
+            <a className="button secondary" href="#downloads">Download free toolkits</a>
           </div>
           <p className="microcopy">No account required to explore resources. Never email passwords, Social Security numbers, or verification codes.</p>
         </div>
@@ -152,6 +165,28 @@ export default function Home() {
             </a>
           ))}
         </div>
+      </section>
+
+      <section className="download-library" id="downloads">
+        <div className="download-intro">
+          <div>
+            <p className="kicker">THE EFF DOWNLOAD LIBRARY</p>
+            <h2>Print it. Write on it. Take your next step.</h2>
+          </div>
+          <p>Nine free, EFF-branded toolkits built around the questions students and families ask us most. Every download includes practical worksheets, scripts, or checklists.</p>
+        </div>
+        <div className="download-grid">
+          {downloads.map((item, index) => (
+            <a className={`download-card ${item.color}`} href={item.href} download key={item.title}>
+              <div className="download-top"><span>{String(index + 1).padStart(2, "0")}</span><b>PDF · {item.pages}</b></div>
+              <p>{item.type}</p>
+              <h3>{item.title}</h3>
+              <div>{item.text}</div>
+              <strong>Download free PDF ↓</strong>
+            </a>
+          ))}
+        </div>
+        <div className="download-note"><strong>Free means free.</strong><span>No account, payment, or email address is required to download these resources.</span></div>
       </section>
 
       <section className="pathways" id="reach-path">
