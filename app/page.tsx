@@ -24,15 +24,15 @@ const actionJourneys = [
 ];
 
 const downloads = [
-  { type: "WRITE YOUR STORY", title: "Scholarship Essay Workbook", text: "Story-bank prompts, the EFF STORY structure, drafting space, and a final-review checklist.", href: "/downloads/eff-scholarship-essay-workbook.pdf", color: "yellow", pages: "3 pages" },
-  { type: "STAY ORGANIZED", title: "Scholarship Application Organizer", text: "Build a reusable application packet, track deadlines, and complete a safe pre-submit review.", href: "/downloads/eff-scholarship-application-organizer.pdf", color: "pink", pages: "3 pages" },
-  { type: "GET UNSTUCK", title: "FAFSA + Aid Appeal Toolkit", text: "FAFSA rescue steps, professional-judgment guidance, documentation prompts, and an email template.", href: "/downloads/eff-fafsa-aid-appeal-toolkit.pdf", color: "blue", pages: "3 pages" },
-  { type: "COMPARE OFFERS", title: "Financial Aid Offer Decoder", text: "Separate free aid, work, and loans, calculate the real gap, and ask better questions.", href: "/downloads/eff-financial-aid-offer-decoder.pdf", color: "lavender", pages: "2 pages" },
-  { type: "URGENT BALANCE", title: "Tuition Balance Emergency Plan", text: "A focused 48-hour action plan, balance-response email, and backup support map.", href: "/downloads/eff-tuition-balance-emergency-plan.pdf", color: "yellow", pages: "2 pages" },
-  { type: "FOR FAMILIES", title: "Parent + Family College Guide", text: "FAFSA roles, a family planning worksheet, and safer questions before parent or private loans.", href: "/downloads/eff-parent-family-college-guide.pdf", color: "pink", pages: "2 pages" },
-  { type: "HELP SOMEONE", title: "REACH for a Friend Guide", text: "L.E.C.F. conversation scripts, referral options, crisis contacts, and caring boundaries.", href: "/downloads/eff-reach-for-a-friend-guide.pdf", color: "blue", pages: "2 pages" },
-  { type: "LEAD ON CAMPUS", title: "EFF Campus Action Kit", text: "Event ideas, a ready-to-use 60-minute plan, safety checklist, and impact worksheet.", href: "/downloads/eff-campus-action-kit.pdf", color: "lavender", pages: "3 pages" },
-  { type: "KEEP GOING", title: "Stay-Enrolled Action Plan", text: "Name the barrier, build a support team, and review consequences before changing enrollment.", href: "/downloads/eff-stay-enrolled-plan.pdf", color: "yellow", pages: "3 pages" },
+  { type: "WRITE YOUR STORY", title: "Scholarship Essay Builder", text: "Answer five quick prompts and instantly get a scholarship-ready STORY outline.", href: "/tools", color: "yellow", pages: "interactive" },
+  { type: "STAY ORGANIZED", title: "Scholarship Action Center", text: "Build a reusable application plan without reading another giant guide.", href: "/tools", color: "pink", pages: "interactive" },
+  { type: "GET UNSTUCK", title: "FAFSA + Appeal Helper", text: "Get the right next steps and a ready-to-use request instead of researching jargon.", href: "/tools", color: "blue", pages: "interactive" },
+  { type: "COMPARE OFFERS", title: "Financial Aid Offer Decoder", text: "Enter six numbers and see the real gap instantly.", href: "/tools", color: "lavender", pages: "calculator" },
+  { type: "URGENT BALANCE", title: "Tuition Rescue Plan", text: "Get a personalized 48-hour plan and email opener based on your deadline.", href: "/tools", color: "yellow", pages: "interactive" },
+  { type: "FOR FAMILIES", title: "Family Funding Check", text: "Pressure-test the college gap and a parent or private-loan decision.", href: "/tools", color: "pink", pages: "calculator" },
+  { type: "HELP SOMEONE", title: "Help-a-Friend Script", text: "Choose the situation and tone to get words you can actually say or text.", href: "/tools", color: "blue", pages: "script maker" },
+  { type: "LEAD ON CAMPUS", title: "Campus Event Builder", text: "Create a useful 60-minute REACH event in under three minutes.", href: "/tools", color: "lavender", pages: "interactive" },
+  { type: "KEEP GOING", title: "Stay-Enrolled Planner", text: "Name the barrier and get a support-team plan before changing enrollment.", href: "/tools", color: "yellow", pages: "interactive" },
 ];
 
 const resourceGroups = [
@@ -171,22 +171,22 @@ export default function Home() {
         <div className="download-intro">
           <div>
             <p className="kicker">THE EFF DOWNLOAD LIBRARY</p>
-            <h2>Print it. Write on it. Take your next step.</h2>
+            <h2>Tap it. Answer it. Get your next move.</h2>
           </div>
-          <p>Nine free, EFF-branded toolkits built around the questions students and families ask us most. Every download includes practical worksheets, scripts, or checklists.</p>
+          <p>Fast, mobile-first EFF tools built around the questions students and families ask us most. No research assignment and no wall of text.</p>
         </div>
         <div className="download-grid">
           {downloads.map((item, index) => (
             <a className={`download-card ${item.color}`} href={item.href} download key={item.title}>
-              <div className="download-top"><span>{String(index + 1).padStart(2, "0")}</span><b>PDF · {item.pages}</b></div>
+              <div className="download-top"><span>{String(index + 1).padStart(2, "0")}</span><b>{item.pages}</b></div>
               <p>{item.type}</p>
               <h3>{item.title}</h3>
               <div>{item.text}</div>
-              <strong>Download free PDF ↓</strong>
+              <strong>Open the tool →</strong>
             </a>
           ))}
         </div>
-        <div className="download-note"><strong>Free means free.</strong><span>No account, payment, or email address is required to download these resources.</span></div>
+        <div className="download-note"><strong>Private by design.</strong><span>No account is required, and answers stay in the student's browser.</span></div>
       </section>
 
       <section className="pathways" id="reach-path">
