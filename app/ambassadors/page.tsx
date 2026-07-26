@@ -36,13 +36,14 @@ export default async function AmbassadorDirectoryPage() {
     <div className="announcement">Every public profile is published by an ambassador who intentionally chooses what to share.</div>
     <header className="site-header">
       <Link className="brand" href="/" aria-label="EFF Reach Action Hub home"><img src="/eff-logo.png" alt="Esther Funds Foundation"/><span><strong>REACH</strong> Action Hub</span></Link>
-      <nav aria-label="Directory navigation"><Link href="/">Action Hub</Link><Link href="/ambassadors">Ambassadors</Link><a href="https://portal.estherfundsfoundation.org/reach/claim">Claim invitation</a></nav>
+      <nav aria-label="Directory navigation"><Link href="/">Action Hub</Link><Link href="/ambassadors">Ambassadors</Link><a href="https://portal.estherfundsfoundation.org/reach/apply">Apply</a><a href="https://portal.estherfundsfoundation.org/reach/claim">Sign in</a></nav>
       <a className="header-cta" href="https://portal.estherfundsfoundation.org/">Scholarship Portal ↗</a>
     </header>
     <section className="ambassador-directory-hero"><div>
       <p className="kicker">REACH AMBASSADOR DIRECTORY</p>
       <h1>Real people.<br/><em>Real campus care.</em></h1>
       <p>Meet the students and community leaders who help others find resources, build confidence, and hold on when college gets hard.</p>
+      <div className="hero-actions"><a className="button light" href="https://portal.estherfundsfoundation.org/reach/apply">Apply to become an ambassador</a><a className="button secondary" href="https://portal.estherfundsfoundation.org/reach/ambassador/training">Open ambassador training</a></div>
     </div><aside><strong>{ambassadors.length}</strong><span>public ambassador profile{ambassadors.length===1?"":"s"}</span><p>Private login details and anything the ambassador does not publish remain hidden.</p></aside></section>
     <section className="ambassador-directory-shell">
       {ambassadors.length ? <div className="ambassador-directory-grid">{ambassadors.map((ambassador) => <Link className="ambassador-directory-card" href={`/ambassadors/${ambassador.slug}`} key={ambassador.slug}>
@@ -55,7 +56,7 @@ export default async function AmbassadorDirectoryPage() {
         <b>View profile →</b>
       </Link>)}</div> : <div className="ambassador-empty"><div className="empty-star">★</div><p className="kicker">DIRECTORY OPENING SOON</p><h2>Our ambassadors are building their profiles.</h2><p>Profiles appear here immediately after each ambassador chooses what to share and publishes from the secure workspace.</p><a className="button primary" href="https://portal.estherfundsfoundation.org/reach/ambassador">Open Ambassador Workspace</a></div>}
     </section>
-    <section className="ambassador-directory-cta"><div><p className="kicker">ALREADY AN APPROVED AMBASSADOR?</p><h2>Build the profile your community will see.</h2><p>Sign in to your private workspace, choose your public details, confirm consent, and publish.</p></div><a className="button light" href="https://portal.estherfundsfoundation.org/reach/ambassador">Edit my profile ↗</a></section>
+    <section className="ambassador-directory-cta"><div><p className="kicker">BECOME A REACH CAMPUS AMBASSADOR</p><h2>Apply, train, serve, and share your impact.</h2><p>New ambassadors receive an automatic acceptance letter, secure account, EFF-hosted training, professional certificate, official social template, and workshop toolkits.</p></div><div className="hero-actions"><a className="button light" href="https://portal.estherfundsfoundation.org/reach/apply">Apply now ↗</a><a className="button secondary" href="https://portal.estherfundsfoundation.org/reach/ambassador">Ambassador workspace ↗</a></div></section>
     <footer><div className="footer-brand"><img src="/eff-logo.png" alt=""/><div><strong>Esther Funds Foundation</strong><span>Every Future Fulfilled.</span></div></div><div className="footer-links"><Link href="/">REACH Action Hub</Link><a href="https://portal.estherfundsfoundation.org/">Scholarship Portal</a><a href="mailto:nationals@estherfundsinc.org">Contact EFF</a></div><p className="disclaimer">Profiles and impact stories appear only after the ambassador confirms public-sharing permission.</p></footer>
   </main>;
 }

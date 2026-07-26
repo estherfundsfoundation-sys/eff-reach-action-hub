@@ -180,7 +180,8 @@ export default function Home() {
           <p>Explore opt-in profiles, focus areas, and consent-confirmed campus-impact stories from the people helping students take their next step.</p>
           <div className="hero-actions">
             <Link className="button primary" href="/ambassadors">Meet our ambassadors</Link>
-            <a className="button secondary" href="https://portal.estherfundsfoundation.org/reach/claim">Claim an invited account</a>
+            <a className="button secondary" href="https://portal.estherfundsfoundation.org/reach/apply">Apply to become an ambassador</a>
+            <a className="button secondary" href="https://portal.estherfundsfoundation.org/reach/ambassador/training">Ambassador training</a>
           </div>
         </div>
       </section>
