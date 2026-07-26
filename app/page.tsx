@@ -102,6 +102,7 @@ export default function Home() {
         <nav aria-label="Main navigation">
           <a href="#find-help">Find help</a>
           <a href="#action-paths">7 pathways</a>
+          <Link href="/ambassadors">Ambassadors</Link>
           <a href="#downloads">Interactive tools</a>
           <a href="#families">For families</a>
           <a href="#take-action">Take action</a>
@@ -168,6 +169,19 @@ export default function Home() {
               <p>{item.tag}</p><h3>{item.title}</h3><div>{item.text}</div><b>Open this path →</b>
             </a>
           ))}
+        </div>
+      </section>
+
+      <section className="ambassador-callout">
+        <div className="ambassador-callout-art" aria-hidden="true"><span>R</span><span>E</span><span>A</span><span>C</span><span>H</span></div>
+        <div>
+          <p className="kicker">STUDENT LEADERS IN ACTION</p>
+          <h2>Meet the REACH Ambassadors bringing care, resources, and connection to campus.</h2>
+          <p>Explore opt-in profiles, focus areas, and approved campus-impact stories from the people helping students take their next step.</p>
+          <div className="hero-actions">
+            <Link className="button primary" href="/ambassadors">Meet our ambassadors</Link>
+            <a className="button secondary" href="https://portal.estherfundsfoundation.org/reach/claim">Claim an invited account</a>
+          </div>
         </div>
       </section>
 
@@ -256,7 +270,7 @@ export default function Home() {
 
       <footer>
         <div className="footer-brand"><img src="/eff-logo.png" alt="" /><div><strong>Esther Funds Foundation</strong><span>We are working to prevent college dropouts around the world.</span></div></div>
-        <div className="footer-links"><a href="https://estherfundsfoundation.org/">EFF Home</a><a href="https://portal.estherfundsfoundation.org/">Scholarship Portal</a><a href="https://estherfundsfoundation.org/programs">Programs</a><a href="mailto:nationals@estherfundsinc.org">Contact</a></div>
+        <div className="footer-links"><a href="https://estherfundsfoundation.org/">EFF Home</a><Link href="/ambassadors">Ambassador Directory</Link><a href="https://portal.estherfundsfoundation.org/">Scholarship Portal</a><a href="https://estherfundsfoundation.org/programs">Programs</a><a href="mailto:nationals@estherfundsinc.org">Contact</a></div>
         <p className="disclaimer">EFF provides educational information and resource navigation. External services set their own eligibility rules and availability. EFF cannot guarantee funding or assistance from outside organizations.</p>
         <div className="footer-bottom"><span>© 2026 Esther Funds Foundation</span><span>Every Future Fulfilled.</span></div>
       </footer>
