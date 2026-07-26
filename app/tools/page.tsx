@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useMemo, useState } from "react";
 
 const tools = [
@@ -28,7 +29,7 @@ export default function InteractiveTools() {
   const print = () => window.print();
 
   return <main className="tool-page">
-    <header className="tool-header"><a href="/">← REACH Action Hub</a><span>EFF INTERACTIVE TOOLKITS</span><a href="https://portal.estherfundsfoundation.org/">Scholarship Portal ↗</a></header>
+    <header className="tool-header"><Link href="/">← REACH Action Hub</Link><span>EFF INTERACTIVE TOOLKITS</span><a href="https://portal.estherfundsfoundation.org/">Scholarship Portal ↗</a></header>
     <section className="tool-hero"><p className="kicker">NO HOMEWORK. JUST YOUR NEXT MOVE.</p><h1>Tap. Answer.<br/><em>Get a plan.</em></h1><p>Six quick, private tools built around real student problems. Your answers stay in your browser and are not sent to EFF.</p></section>
     <section className="tool-shell">
       <div className="tool-picker" aria-label="Choose an interactive toolkit">{tools.map(t=><button key={t.id} className={`${t.color} ${active===t.id?"active":""}`} onClick={()=>setActive(t.id)}><small>{t.tag}</small><strong>{t.title}</strong><span>{t.desc}</span></button>)}</div>
@@ -64,7 +65,7 @@ export default function InteractiveTools() {
 
         {active==="family" && <Tool title="Check the family funding plan" intro="See what is truly covered and whether new borrowing fits the family budget.">
           <div className="field-grid"><Field label="Annual direct cost" value={family.cost} set={v=>setFamily({...family,cost:v})} prefix="$"/><Field label="Grants + scholarships" value={family.freeAid} set={v=>setFamily({...family,freeAid:v})} prefix="$"/><Field label="Student loans" value={family.studentLoans} set={v=>setFamily({...family,studentLoans:v})} prefix="$"/><Field label="Proposed parent/private loan" value={family.parentLoan} set={v=>setFamily({...family,parentLoan:v})} prefix="$"/><Field label="Affordable monthly payment" value={family.monthly} set={v=>setFamily({...family,monthly:v})} prefix="$"/></div>
-          <Result title="Family decision snapshot" print={print}><div className={`big-number ${familyGap>0?"warn":"good"}`}>{fmt(Math.abs(familyGap))}</div><p>{familyGap>0?"still uncovered after the amounts listed.":"listed funding covers the annual direct cost."}</p><ol><li>Ask the lender for the actual interest rate, fees, repayment start, and estimated monthly payment.</li><li>Do not rely on the student's future income to make a parent loan affordable.</li><li>Ask the college for four-year cost and renewal estimates.</li><li>Your stated comfortable payment is {fmt(money(family.monthly))}/month. Compare the lender estimate to that number.</li></ol></Result>
+          <Result title="Family decision snapshot" print={print}><div className={`big-number ${familyGap>0?"warn":"good"}`}>{fmt(Math.abs(familyGap))}</div><p>{familyGap>0?"still uncovered after the amounts listed.":"listed funding covers the annual direct cost."}</p><ol><li>Ask the lender for the actual interest rate, fees, repayment start, and estimated monthly payment.</li><li>Do not rely on the student’s future income to make a parent loan affordable.</li><li>Ask the college for four-year cost and renewal estimates.</li><li>Your stated comfortable payment is {fmt(money(family.monthly))}/month. Compare the lender estimate to that number.</li></ol></Result>
         </Tool>}
 
         {active==="campus" && <Tool title="Build a REACH campus event" intro="Pick one problem. Leave with a simple event plan people can actually use.">
@@ -73,7 +74,7 @@ export default function InteractiveTools() {
         </Tool>}
       </div>
     </section>
-    <footer className="tool-footer"><strong>Esther Funds Foundation</strong><span>We are working to prevent college dropouts around the world.</span><a href="/">Back to the Hub</a></footer>
+    <footer className="tool-footer"><strong>Esther Funds Foundation</strong><span>We are working to prevent college dropouts around the world.</span><Link href="/">Back to the Hub</Link></footer>
   </main>;
 }
 

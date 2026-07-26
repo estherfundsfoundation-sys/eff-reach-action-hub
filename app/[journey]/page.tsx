@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import Link from "next/link";
 
 type LinkItem = { label: string; href: string; alt?: boolean };
 type Section = { title: string; text: string; bullets: string[]; links: LinkItem[] };
@@ -50,6 +51,15 @@ const journeys: Record<string, Journey> = {
       {title:"Connect an institution",text:"Invite a college, employer, church, or organization into the movement.",bullets:["Campus resource collaborations","Research and student-success partnerships","Career access, mentors, speakers, and volunteers"],links:[{label:"Become a partner",href:"https://estherfundsfoundation.org/become-a-partner",alt:true}]},
     ]
   },
+  "reach-k-12": {
+    eyebrow:"REACH K–12", title:"College readiness starts before move-in day.", intro:"Students, families, schools, and community partners can build financial-aid knowledge, confidence, belonging, and support systems before college barriers become emergencies.", heading:"Build a stronger bridge to college", description:"Practical preparation for middle and high school students, first-generation families, educators, and youth-serving organizations.",
+    sections:[
+      {title:"Start the college conversation",text:"Help students connect education to their goals without treating one path as the only successful path.",bullets:["Explore college, trade, apprenticeship, service, and career options","Talk honestly about interests, support needs, cost, and distance from home","Build a balanced college list using fit, affordability, support, and completion data"],links:[{label:"College Scorecard",href:"https://collegescorecard.ed.gov/",alt:true},{label:"CareerOneStop",href:"https://www.careeronestop.org/"}]},
+      {title:"Prepare for financial aid",text:"Make FAFSA and college-cost conversations familiar before senior-year deadlines.",bullets:["Create StudentAid.gov accounts only through the official website","Learn who may need to participate as a FAFSA contributor","Compare grants, scholarships, work-study, and loans before accepting an offer"],links:[{label:"Federal Student Aid",href:"https://studentaid.gov/",alt:true},{label:"FAFSA for parents",href:"https://studentaid.gov/articles/fafsa-for-parents/"}]},
+      {title:"Build the student toolkit",text:"Practice the habits and documents that make applications and transitions easier.",bullets:["Create a professional email address and check it regularly","Track activities, service, awards, work, and leadership for applications","Draft a reusable personal story and ask for recommendations early"],links:[{label:"EFF interactive tools",href:"/tools",alt:true},{label:"EFF Scholarship Portal",href:"https://portal.estherfundsfoundation.org/"}]},
+      {title:"Plan for belonging and support",text:"A strong transition plan includes people and resources—not only admission.",bullets:["Identify tutoring, counseling, disability services, mentoring, and cultural support","Discuss transportation, food, housing, health, technology, and emergency plans","Choose three trusted people the student can contact when college gets hard"],links:[{label:"EFF student resources",href:"https://portal.estherfundsfoundation.org/resources",alt:true},{label:"Find local support",href:"https://www.211.org/"}]},
+    ]
+  },
   "reach-for-professionals": {
     eyebrow:"REACH FOR PROFESSIONALS", title:"Your experience can become a student's lifeline.", intro:"Mentor, partner, sponsor, hire, teach, or return to EFF as an alumni leader.", heading:"Put your expertise to work", description:"Professionals can contribute more than donations. Choose a practical role.",
     sections:[
@@ -63,11 +73,11 @@ const journeys: Record<string, Journey> = {
 
 export default async function JourneyPage({params}:{params:Promise<{journey:string}>}) {
   const {journey:slug}=await params; const journey=journeys[slug]; if(!journey)notFound();
-  return <main className="journey-page"><nav className="journey-nav"><a href="/">← EFF Reach Action Hub</a><a className="portal-link" href="https://portal.estherfundsfoundation.org/">Scholarship Portal ↗</a></nav>
+  return <main className="journey-page"><nav className="journey-nav"><Link href="/">← EFF Reach Action Hub</Link><a className="portal-link" href="https://portal.estherfundsfoundation.org/">Scholarship Portal ↗</a></nav>
     <section className="journey-hero"><p className="kicker">{journey.eyebrow}</p><h1>{journey.title}</h1><p>{journey.intro}</p></section>
     {journey.urgent&&<div className="journey-emergency">{journey.urgent}</div>}
     <section className="journey-content"><header><p className="kicker">YOUR GUIDED PATH</p><h2>{journey.heading}</h2><p>{journey.description}</p></header>
       <div className="journey-sections">{journey.sections.map((section,index)=><article className="journey-section" key={section.title}><span className="step">STEP {String(index+1).padStart(2,"0")}</span><h3>{section.title}</h3><p>{section.text}</p><ul>{section.bullets.map(item=><li key={item}>{item}</li>)}</ul>{section.links.length>0&&<div className="journey-links">{section.links.map(link=><a className={link.alt?"alt":""} href={link.href} key={link.label} target={link.href.startsWith("http")?"_blank":undefined} rel="noreferrer">{link.label} ↗</a>)}</div>}</article>)}</div>
-      <div className="journey-bottom"><div><p className="kicker">KEEP REACHING</p><h2>One next step is enough for today.</h2></div><a className="button primary" href="/">Return to the full hub</a></div>
+      <div className="journey-bottom"><div><p className="kicker">KEEP REACHING</p><h2>One next step is enough for today.</h2></div><Link className="button primary" href="/">Return to the full hub</Link></div>
     </section></main>;
 }

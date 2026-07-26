@@ -1,3 +1,6 @@
+/* eslint-disable @next/next/no-img-element */
+import Link from "next/link";
+
 const urgentHelp = [
   { title: "Food & essentials", text: "Find local food, SNAP, campus pantry, and basic-needs support.", href: "https://portal.estherfundsfoundation.org/resources#basic-needs", tone: "yellow" },
   { title: "Housing & utilities", text: "Start with local assistance, campus housing support, and 211.", href: "https://portal.estherfundsfoundation.org/resources", tone: "pink" },
@@ -20,7 +23,8 @@ const actionJourneys = [
   { tag: "CREATE CAMPUS CARE", title: "Reach Your Campus", text: "Run a workshop, request support, host a scholarship search party, or become an EFF ambassador.", href: "/reach-your-campus", color: "blue" },
   { tag: "SERVE LOCALLY", title: "Reach Your Community", text: "Lead care packages, pantry and hygiene drives, advocacy, mentorship, and readiness projects.", href: "/reach-your-community", color: "lavender" },
   { tag: "BUILD THE MOVEMENT", title: "Reach Beyond Campus", text: "Start a chapter, grow student leadership, donate, and build partnerships that outlast one event.", href: "/reach-beyond-campus", color: "yellow" },
-  { tag: "MENTOR + PARTNER", title: "REACH for Professionals", text: "Mentor students, sponsor programming, offer career access, partner with EFF, or return as an alum leader.", href: "/reach-for-professionals", color: "pink" },
+  { tag: "START EARLY", title: "REACH K–12", text: "Help students and families prepare for college, financial aid, belonging, and the transition before a crisis begins.", href: "/reach-k-12", color: "pink" },
+  { tag: "MENTOR + PARTNER", title: "REACH for Professionals", text: "Mentor students, sponsor programming, offer career access, partner with EFF, or return as an alum leader.", href: "/reach-for-professionals", color: "blue" },
 ];
 
 const downloads = [
@@ -97,8 +101,8 @@ export default function Home() {
         </a>
         <nav aria-label="Main navigation">
           <a href="#find-help">Find help</a>
-          <a href="#reach-path">The REACH path</a>
-          <a href="#downloads">Toolkits</a>
+          <a href="#action-paths">7 pathways</a>
+          <a href="#downloads">Interactive tools</a>
           <a href="#families">For families</a>
           <a href="#take-action">Take action</a>
         </nav>
@@ -153,9 +157,9 @@ export default function Home() {
 
       <section className="journeys" id="action-paths">
         <div className="section-heading">
-          <p className="kicker">THE COMPLETE REACH ACTION PATH</p>
+          <p className="kicker">THE COMPLETE REACH ACTION HUB</p>
           <h2>Who do you want to reach?</h2>
-          <p>Choose a guided journey for yourself, someone you care about, your campus, your community, or the wider movement.</p>
+          <p>Choose one of seven guided pathways. Every REACH pathway now lives on this website—no embedded pages and no extra scrollbars.</p>
         </div>
         <div className="journey-grid">
           {actionJourneys.map((item, index) => (
@@ -177,7 +181,7 @@ export default function Home() {
         </div>
         <div className="download-grid">
           {downloads.map((item, index) => (
-            <a className={`download-card ${item.color}`} href={item.href} download key={item.title}>
+            <a className={`download-card ${item.color}`} href={item.href} key={item.title}>
               <div className="download-top"><span>{String(index + 1).padStart(2, "0")}</span><b>{item.pages}</b></div>
               <p>{item.type}</p>
               <h3>{item.title}</h3>
@@ -186,13 +190,13 @@ export default function Home() {
             </a>
           ))}
         </div>
-        <div className="download-note"><strong>Private by design.</strong><span>No account is required, and answers stay in the student's browser.</span></div>
+        <div className="download-note"><strong>Private by design.</strong><span>No account is required, and answers stay in the student’s browser.</span></div>
       </section>
 
       <section className="pathways" id="reach-path">
         <div className="pathways-intro">
           <p className="kicker">YOUR SUPPORT MAP</p>
-          <h2>One hub.<br />Six clear pathways.</h2>
+          <h2>One hub.<br />Every next step.</h2>
           <p>Resources are organized around real-life problems—not complicated systems.</p>
         </div>
         <div className="pathway-list">
@@ -244,9 +248,9 @@ export default function Home() {
           <h2>Help another student hold on.</h2>
         </div>
         <div className="action-grid">
-          <a href="/reach-yourself"><span>01</span><h3>Request or support a REACH Box</h3><p>Care packages with essentials, resources, and encouragement for students facing hardship.</p></a>
+          <Link href="/reach-yourself"><span>01</span><h3>Request or support a REACH Box</h3><p>Care packages with essentials, resources, and encouragement for students facing hardship.</p></Link>
           <a href="https://estherfundsfoundation.org/become-a-partner"><span>02</span><h3>Partner with EFF</h3><p>Help expand college-retention resources, emergency response, and campus support.</p></a>
-          <a href="https://givebutter.com/estherfundsfoundation"><span>03</span><h3>Fund a student's next step</h3><p>Support scholarships, emergency aid, educational tools, and student care.</p></a>
+          <a href="https://givebutter.com/estherfundsfoundation"><span>03</span><h3>Fund a student’s next step</h3><p>Support scholarships, emergency aid, educational tools, and student care.</p></a>
         </div>
       </section>
 
