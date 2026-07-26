@@ -177,7 +177,7 @@ export default function Home() {
         <div>
           <p className="kicker">STUDENT LEADERS IN ACTION</p>
           <h2>Meet the REACH Ambassadors bringing care, resources, and connection to campus.</h2>
-          <p>Explore opt-in profiles, focus areas, and approved campus-impact stories from the people helping students take their next step.</p>
+          <p>Explore opt-in profiles, focus areas, and consent-confirmed campus-impact stories from the people helping students take their next step.</p>
           <div className="hero-actions">
             <Link className="button primary" href="/ambassadors">Meet our ambassadors</Link>
             <a className="button secondary" href="https://portal.estherfundsfoundation.org/reach/claim">Claim an invited account</a>

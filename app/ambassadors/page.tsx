@@ -33,7 +33,7 @@ const initials = (name:string) => name.split(/\s+/).slice(0,2).map((part) => par
 export default async function AmbassadorDirectoryPage() {
   const ambassadors = await loadAmbassadors();
   return <main className="public-ambassador-page">
-    <div className="announcement">Every public profile is submitted by the ambassador and reviewed by Esther Funds Foundation.</div>
+    <div className="announcement">Every public profile is published by an ambassador who intentionally chooses what to share.</div>
     <header className="site-header">
       <Link className="brand" href="/" aria-label="EFF Reach Action Hub home"><img src="/eff-logo.png" alt="Esther Funds Foundation"/><span><strong>REACH</strong> Action Hub</span></Link>
       <nav aria-label="Directory navigation"><Link href="/">Action Hub</Link><Link href="/ambassadors">Ambassadors</Link><a href="https://portal.estherfundsfoundation.org/reach/claim">Claim invitation</a></nav>
@@ -43,7 +43,7 @@ export default async function AmbassadorDirectoryPage() {
       <p className="kicker">REACH AMBASSADOR DIRECTORY</p>
       <h1>Real people.<br/><em>Real campus care.</em></h1>
       <p>Meet the students and community leaders who help others find resources, build confidence, and hold on when college gets hard.</p>
-    </div><aside><strong>{ambassadors.length}</strong><span>approved public profile{ambassadors.length===1?"":"s"}</span><p>Private contact details and unapproved submissions are never displayed.</p></aside></section>
+    </div><aside><strong>{ambassadors.length}</strong><span>public ambassador profile{ambassadors.length===1?"":"s"}</span><p>Private login details and anything the ambassador does not publish remain hidden.</p></aside></section>
     <section className="ambassador-directory-shell">
       {ambassadors.length ? <div className="ambassador-directory-grid">{ambassadors.map((ambassador) => <Link className="ambassador-directory-card" href={`/ambassadors/${ambassador.slug}`} key={ambassador.slug}>
         <div className="ambassador-photo">{ambassador.photo_url ? <img src={ambassador.photo_url} alt=""/> : <span>{initials(ambassador.display_name)}</span>}</div>
@@ -53,9 +53,9 @@ export default async function AmbassadorDirectoryPage() {
         <p className="ambassador-school">{ambassador.institution}</p>
         {ambassador.focus_areas.length > 0 && <div className="ambassador-tags">{ambassador.focus_areas.slice(0,3).map((area) => <span key={area}>{area}</span>)}</div>}
         <b>View profile →</b>
-      </Link>)}</div> : <div className="ambassador-empty"><div className="empty-star">★</div><p className="kicker">DIRECTORY OPENING SOON</p><h2>Our ambassadors are building their profiles.</h2><p>Approved profiles will appear here after each ambassador chooses what to share and EFF completes its review.</p><a className="button primary" href="https://portal.estherfundsfoundation.org/reach/ambassador">Open Ambassador Workspace</a></div>}
+      </Link>)}</div> : <div className="ambassador-empty"><div className="empty-star">★</div><p className="kicker">DIRECTORY OPENING SOON</p><h2>Our ambassadors are building their profiles.</h2><p>Profiles appear here immediately after each ambassador chooses what to share and publishes from the secure workspace.</p><a className="button primary" href="https://portal.estherfundsfoundation.org/reach/ambassador">Open Ambassador Workspace</a></div>}
     </section>
-    <section className="ambassador-directory-cta"><div><p className="kicker">ALREADY AN APPROVED AMBASSADOR?</p><h2>Build the profile your community will see.</h2><p>Sign in to your private workspace, choose your public details, and submit your profile for EFF review.</p></div><a className="button light" href="https://portal.estherfundsfoundation.org/reach/ambassador">Edit my profile ↗</a></section>
-    <footer><div className="footer-brand"><img src="/eff-logo.png" alt=""/><div><strong>Esther Funds Foundation</strong><span>Every Future Fulfilled.</span></div></div><div className="footer-links"><Link href="/">REACH Action Hub</Link><a href="https://portal.estherfundsfoundation.org/">Scholarship Portal</a><a href="mailto:nationals@estherfundsinc.org">Contact EFF</a></div><p className="disclaimer">Profiles and impact stories are published only after ambassador consent and EFF review.</p></footer>
+    <section className="ambassador-directory-cta"><div><p className="kicker">ALREADY AN APPROVED AMBASSADOR?</p><h2>Build the profile your community will see.</h2><p>Sign in to your private workspace, choose your public details, confirm consent, and publish.</p></div><a className="button light" href="https://portal.estherfundsfoundation.org/reach/ambassador">Edit my profile ↗</a></section>
+    <footer><div className="footer-brand"><img src="/eff-logo.png" alt=""/><div><strong>Esther Funds Foundation</strong><span>Every Future Fulfilled.</span></div></div><div className="footer-links"><Link href="/">REACH Action Hub</Link><a href="https://portal.estherfundsfoundation.org/">Scholarship Portal</a><a href="mailto:nationals@estherfundsinc.org">Contact EFF</a></div><p className="disclaimer">Profiles and impact stories appear only after the ambassador confirms public-sharing permission.</p></footer>
   </main>;
 }
