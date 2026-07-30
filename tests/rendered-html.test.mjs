@@ -1,25 +1,46 @@
 import assert from "node:assert/strict";
-import test from "node:test";
+import {spawn} from "node:child_process";
+import {fileURLToPath} from "node:url";
+import path from "node:path";
+import test, {after, before} from "node:test";
+
+const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
+const port = 3219;
+const origin = `http://127.0.0.1:${port}`;
+let server;
+
+before(async () => {
+  const nextBin = path.join(root, "node_modules", "next", "dist", "bin", "next");
+  server = spawn(process.execPath, [nextBin, "start", "-p", String(port)], {
+    cwd: root,
+    stdio: "ignore",
+  });
+
+  const deadline = Date.now() + 20_000;
+  while (Date.now() < deadline) {
+    if (server.exitCode !== null) {
+      throw new Error(`Next.js test server exited with code ${server.exitCode}.`);
+    }
+    try {
+      const response = await fetch(origin);
+      if (response.ok) return;
+    } catch {
+      // The server is still starting.
+    }
+    await new Promise((resolve) => setTimeout(resolve, 250));
+  }
+  throw new Error("Next.js test server did not become ready.");
+});
+
+after(() => {
+  server?.kill();
+});
 
 async function render(pathname = "/") {
-  const workerUrl = new URL("../dist/server/index.js", import.meta.url);
-  workerUrl.searchParams.set("test", `${process.pid}-${Date.now()}`);
-  const { default: worker } = await import(workerUrl.href);
-
-  return worker.fetch(
-    new Request(`http://localhost${pathname}`, {
-      headers: { accept: "text/html" },
-    }),
-    {
-      ASSETS: {
-        fetch: async () => new Response("Not found", { status: 404 }),
-      },
-    },
-    {
-      waitUntil() {},
-      passThroughOnException() {},
-    },
-  );
+  return fetch(`${origin}${pathname}`, {
+    headers: {accept: "text/html"},
+    redirect: "follow",
+  });
 }
 
 test("renders the complete public REACH hub", async () => {
