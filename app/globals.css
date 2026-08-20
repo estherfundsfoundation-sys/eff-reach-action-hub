@@ -149,3 +149,65 @@ footer { background:var(--ink); color:white; padding:65px clamp(24px,6vw,88px) 3
 .workshop-request-footer a{color:var(--yellow);font-weight:900}
 @media(max-width:900px){.workshop-request-hero{grid-template-columns:1fr;align-items:start}.workshop-request-hero aside{max-width:440px}.workshop-request-notes{grid-template-columns:1fr}.workshop-request-notes>div{border-right:0;border-bottom:2px solid var(--line)}.workshop-request-notes>div:last-child{border-bottom:0}}
 @media(max-width:640px){.workshop-request-hero{padding:70px 20px}.workshop-form-shell{padding:65px 14px 80px}.workshop-form-frame{height:2550px;box-shadow:5px 5px 0 var(--line)}.workshop-request-footer{align-items:flex-start;flex-direction:column}}
+
+/* REACH Lead Ambassador shipping confirmation */
+.lead-shipping-page{min-height:100vh;background:var(--cream)}
+.lead-shipping-hero{display:grid;grid-template-columns:1.3fr .7fr;gap:60px;align-items:end;padding:92px clamp(24px,7vw,105px);background:var(--purple);color:white;border-bottom:2px solid var(--line);position:relative;overflow:hidden}
+.lead-shipping-hero:after{content:"REACH";position:absolute;right:-.05em;bottom:-.22em;font-family:Georgia,serif;font-size:clamp(150px,25vw,370px);font-style:italic;color:#ffffff0d;line-height:1;pointer-events:none}
+.lead-shipping-hero>div,.lead-shipping-hero aside{position:relative;z-index:1}
+.lead-shipping-hero .kicker{color:var(--yellow)}
+.lead-shipping-hero h1{font-size:clamp(54px,7.7vw,112px);margin:12px 0 30px;max-width:980px}
+.lead-shipping-hero h1 em{color:var(--yellow)}
+.lead-shipping-hero>div>p:last-child{max-width:770px;font-size:18px;line-height:1.65;color:#efe9f4}
+.lead-shipping-hero aside{padding:32px;background:var(--yellow);color:var(--ink);border:2px solid var(--line);box-shadow:9px 9px 0 white;transform:rotate(1deg)}
+.lead-shipping-hero aside>span{display:block;font-size:56px;margin-bottom:22px}
+.lead-shipping-hero aside strong{display:block;font-family:Georgia,serif;font-size:30px;line-height:1.05}
+.lead-shipping-hero aside p{margin:14px 0 0;line-height:1.5}
+.lead-shipping-impact{display:grid;grid-template-columns:1.1fr .9fr;gap:70px;align-items:end;padding:66px clamp(24px,7vw,105px);background:var(--yellow);border-bottom:2px solid var(--line)}
+.lead-shipping-impact h2{font-family:Georgia,serif;font-size:clamp(38px,5vw,64px);line-height:1;margin:0}
+.lead-shipping-impact>p{margin:0;font-size:17px;line-height:1.65}
+.lead-shipping-steps{display:grid;grid-template-columns:repeat(3,1fr);background:white;border-bottom:2px solid var(--line)}
+.lead-shipping-steps>div{display:flex;gap:18px;padding:28px clamp(20px,3.5vw,52px);border-right:2px solid var(--line)}
+.lead-shipping-steps>div:last-child{border-right:0}
+.lead-shipping-steps b{display:grid;place-items:center;flex:0 0 38px;height:38px;border-radius:50%;background:var(--purple);color:white;font-size:13px}
+.lead-shipping-steps span{font-size:13px;line-height:1.5;color:#5a5663}
+.lead-shipping-steps strong{display:block;color:var(--ink);font-family:Georgia,serif;font-size:19px;margin-bottom:4px}
+.lead-shipping-form-shell{padding:82px clamp(16px,6vw,88px) 105px}
+.lead-shipping-form-shell>header{max-width:850px;margin:0 auto 36px;text-align:center}
+.lead-shipping-form-shell>header h2{font-family:Georgia,serif;font-size:clamp(46px,6vw,78px);line-height:1;margin:8px 0 16px}
+.lead-shipping-form-shell>header>p:last-child{color:#625d6a;line-height:1.55}
+.shipping-confirmation-form{width:min(100%,1050px);margin:0 auto;padding:clamp(22px,5vw,58px);background:white;border:2px solid var(--line);box-shadow:10px 10px 0 var(--line)}
+.shipping-confirmation-form fieldset{border:0;border-top:3px solid var(--ink);padding:34px 0 20px;margin:0 0 24px}
+.shipping-confirmation-form legend{padding:0 14px 0 0;font-family:Georgia,serif;font-size:30px;font-weight:700}
+.shipping-confirmation-form label:not(.shipping-consent):not(.shipping-choice-grid label){display:block;margin-bottom:20px}
+.shipping-confirmation-form label>span:first-child{display:block;margin-bottom:8px;font-size:12px;font-weight:900;letter-spacing:.035em}
+.shipping-confirmation-form input,.shipping-confirmation-form select{width:100%;min-height:52px;padding:12px 14px;border:2px solid var(--line);background:var(--cream);font:inherit;color:var(--ink)}
+.shipping-confirmation-form input:focus,.shipping-confirmation-form select:focus{outline:3px solid var(--lavender);outline-offset:1px}
+.shipping-field-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:0 18px}
+.shipping-city-grid{display:grid;grid-template-columns:1.3fr .7fr .7fr;gap:0 18px}
+.shipping-choice-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:8px 0 25px}
+.shipping-choice-grid label{display:flex;flex-direction:column;gap:9px;min-height:170px;padding:20px;border:2px solid var(--line);cursor:pointer;background:var(--cream)}
+.shipping-choice-grid label.chosen{background:var(--yellow);box-shadow:4px 4px 0 var(--line)}
+.shipping-choice-grid input{width:19px;min-height:19px;margin:0 0 8px}
+.shipping-choice-grid strong{font-family:Georgia,serif;font-size:21px;line-height:1.1}
+.shipping-choice-grid span{font-size:12px;line-height:1.5;color:#5d5864}
+.shipping-address-box{margin:22px 0 25px;padding:24px;background:var(--lavender);border:2px solid var(--line)}
+.shipping-consent{display:flex;gap:13px;align-items:flex-start;padding:20px;background:var(--pink);border:2px solid var(--line);font-size:13px;line-height:1.55}
+.shipping-consent input{width:20px;min-height:20px;margin:0;flex:0 0 20px}
+.shipping-submit{display:block;width:100%;min-height:62px;margin-top:22px;border:2px solid var(--line);background:var(--purple);color:white;font:inherit;font-weight:900;cursor:pointer;box-shadow:6px 6px 0 var(--line)}
+.shipping-submit:hover{background:#421f69}.shipping-submit:disabled{opacity:.7;cursor:wait}
+.shipping-form-error{padding:14px 17px;margin:16px 0 0;background:#ffe0e4;border:2px solid #8c1d31;color:#681322;font-weight:800}
+.shipping-privacy-note{margin:18px 0 0;text-align:center;font-size:11px;line-height:1.5;color:#686270}
+.shipping-success{width:min(100%,850px);margin:0 auto;padding:70px 35px;text-align:center;background:white;border:3px solid var(--line);box-shadow:12px 12px 0 var(--yellow)}
+.shipping-success>span{display:grid;place-items:center;width:82px;height:82px;margin:0 auto 25px;border-radius:50%;background:var(--purple);color:white;font-size:42px;font-weight:900}
+.shipping-success h2{font-family:Georgia,serif;font-size:clamp(42px,6vw,72px);line-height:1;margin:12px 0 22px}.shipping-success>p:not(.kicker){max-width:670px;margin:0 auto 18px;line-height:1.6}
+@media(max-width:900px){.lead-shipping-hero,.lead-shipping-impact{grid-template-columns:1fr;align-items:start}.lead-shipping-hero aside{max-width:460px}.lead-shipping-steps{grid-template-columns:1fr}.lead-shipping-steps>div{border-right:0;border-bottom:2px solid var(--line)}.lead-shipping-steps>div:last-child{border-bottom:0}.shipping-choice-grid{grid-template-columns:1fr}.shipping-choice-grid label{min-height:0}}
+@media(max-width:650px){.lead-shipping-hero{padding:68px 20px}.lead-shipping-impact{padding:50px 20px}.lead-shipping-form-shell{padding:60px 14px 80px}.shipping-confirmation-form{padding:24px 16px;box-shadow:5px 5px 0 var(--line)}.shipping-field-grid,.shipping-city-grid{grid-template-columns:1fr}.shipping-confirmation-form legend{font-size:25px}.shipping-address-box{padding:18px 14px}}
+
+/* Private REACH shipping operations dashboard */
+.shipping-admin-page{min-height:100vh;background:#f4f0f8}.shipping-admin-gate{min-height:100vh;display:grid;place-content:center;justify-items:start;padding:40px;max-width:850px;margin:auto}.shipping-admin-gate h1{font-size:clamp(48px,7vw,90px)}.shipping-admin-gate>p:not(.kicker){font-size:18px;line-height:1.55;margin-bottom:30px}
+.shipping-admin-header{display:flex;align-items:end;justify-content:space-between;gap:40px;padding:65px clamp(20px,5vw,75px);background:var(--ink);color:white}.shipping-admin-header>div{max-width:930px}.shipping-admin-header h1{font-size:clamp(45px,6vw,80px);line-height:.95;margin:8px 0 22px}.shipping-admin-header>div>p:last-child{max-width:780px;color:#d9d3df;line-height:1.55}.shipping-admin-header .kicker{color:var(--yellow)}
+.shipping-admin-stats{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;padding:25px clamp(20px,5vw,75px);background:var(--purple);border-bottom:2px solid var(--line)}.shipping-admin-stats article{min-height:120px;display:flex;flex-direction:column;justify-content:center;padding:19px;background:white;border:2px solid var(--line);box-shadow:4px 4px 0 var(--line)}.shipping-admin-stats article.warning{background:#ffe2e7}.shipping-admin-stats strong{font-family:Georgia,serif;font-size:45px;line-height:1;color:var(--purple)}.shipping-admin-stats span{margin-top:8px;font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:.05em}
+.shipping-admin-error{margin:25px clamp(20px,5vw,75px) 0;padding:16px;background:#ffe2e7;border:2px solid #8c1d31;font-weight:800}.shipping-admin-table-shell{padding:55px clamp(20px,5vw,75px) 85px}.shipping-admin-table-heading{display:flex;justify-content:space-between;align-items:end;gap:30px;margin-bottom:22px}.shipping-admin-table-heading h2{font-family:Georgia,serif;font-size:clamp(35px,4vw,54px);margin:0 0 7px}.shipping-admin-table-heading p{margin:0;color:#5f5968}.shipping-admin-table-heading>span{font-size:11px;font-weight:900;color:#7b1731}.shipping-admin-empty{padding:55px;background:white;border:2px dashed var(--purple);text-align:center}.shipping-admin-empty strong{font-family:Georgia,serif;font-size:30px}.shipping-admin-empty p{margin:10px 0 0;color:#5f5968}
+.shipping-admin-table-scroll{overflow:auto;background:white;border:2px solid var(--line);box-shadow:7px 7px 0 var(--line)}.shipping-admin-table{width:100%;min-width:1500px;border-collapse:collapse;font-size:12px}.shipping-admin-table th{position:sticky;top:0;z-index:1;padding:14px;text-align:left;background:var(--ink);color:white;text-transform:uppercase;letter-spacing:.06em;font-size:10px}.shipping-admin-table td{vertical-align:top;padding:15px 14px;border-bottom:1px solid #d8d2dd;line-height:1.45}.shipping-admin-table tr.has-issue td:first-child{border-left:7px solid #a41f3d}.shipping-admin-table tr.is-ready td:first-child{border-left:7px solid #258057}.shipping-admin-table td strong,.shipping-admin-table td small{display:block}.shipping-admin-table td small{margin-top:5px;color:#625c69}.shipping-admin-table td ul{margin:0;padding-left:16px;color:#85162f;font-weight:800}.admin-badge{display:inline-block;padding:7px 9px;font-size:10px;font-weight:900;text-transform:uppercase}.admin-badge.ready{background:#d9f4e7;color:#125537}.admin-badge.neutral{background:#e5e0e9;color:#4c4654}
+@media(max-width:1100px){.shipping-admin-stats{grid-template-columns:repeat(3,1fr)}}@media(max-width:720px){.shipping-admin-header,.shipping-admin-table-heading{align-items:flex-start;flex-direction:column}.shipping-admin-stats{grid-template-columns:repeat(2,1fr)}.shipping-admin-page .journey-nav span{display:none}}
