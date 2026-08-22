@@ -1,10 +1,9 @@
 import Link from "next/link";
-import ShippingConfirmationForm from "./ShippingConfirmationForm";
 
 export const metadata = {
-  title: "Confirm Your REACH Packet | Esther Funds Foundation",
+  title: "REACH Packet Confirmations Closed | Esther Funds Foundation",
   description:
-    "REACH Lead Ambassadors can confirm their role, campus, Shopify shipping address, and packet needs for weekend fulfillment.",
+    "REACH Lead Ambassador packet confirmations are now closed while Esther Funds Foundation prepares the current shipment.",
 };
 
 export default function LeadAmbassadorShippingPage() {
@@ -17,22 +16,21 @@ export default function LeadAmbassadorShippingPage() {
 
       <section className="lead-shipping-hero">
         <div>
-          <p className="kicker">REACH LEAD AMBASSADORS · ACTION REQUIRED</p>
+          <p className="kicker">REACH LEAD AMBASSADORS · CONFIRMATIONS CLOSED</p>
           <h1>
-            Confirm your packet.
+            Current responses are in.
             <br />
             <em>Lead your campus.</em>
           </h1>
           <p>
-            We’re preparing encouragement packets for weekend shipping. Confirm
-            your Lead Ambassador status, school, and newest Shopify address so
-            your label is printed correctly.
+            The confirmation period has ended while the Esther Funds Foundation
+            team reviews the current orders and prepares shipping labels.
           </p>
         </div>
         <aside>
           <span>📦</span>
-          <strong>Confirm by Thursday, August 20</strong>
-          <p>Labels are being prepared now for weekend shipping.</p>
+          <strong>Submissions are now closed</strong>
+          <p>Previously submitted confirmations remain safely on file.</p>
         </aside>
       </section>
 
@@ -48,22 +46,19 @@ export default function LeadAmbassadorShippingPage() {
         </p>
       </section>
 
-      <section className="lead-shipping-steps" aria-label="Shipping confirmation steps">
-        <div><b>1</b><span><strong>Find your newest order</strong>Use the address on your most recent $0 REACH Shopify order.</span></div>
-        <div><b>2</b><span><strong>Confirm or correct it</strong>Only enter a new address if the Shopify address is outdated.</span></div>
-        <div><b>3</b><span><strong>We prepare the label</strong>EFF reviews your response before printing in Shopify.</span></div>
-      </section>
-
       <section className="lead-shipping-form-shell" id="confirm">
         <header>
-          <p className="kicker">ONE CONFIRMATION PER LEAD</p>
-          <h2>Ready for the label table.</h2>
+          <p className="kicker">CURRENT SHIPPING ROUND</p>
+          <h2>We are preparing the confirmed orders.</h2>
           <p>
-            Use the same email you used for REACH or Shopify whenever possible.
-            Submitting again updates your prior confirmation.
+            No additional confirmations are being accepted for this round. If
+            you already submitted, no further action is needed. For an urgent
+            correction, email the REACH team directly.
           </p>
         </header>
-        <ShippingConfirmationForm />
+        <a className="button primary" href="mailto:reach@estherfundsinc.org?subject=Urgent%20REACH%20shipping%20correction">
+          Email an urgent correction
+        </a>
       </section>
 
       <footer className="workshop-request-footer">

@@ -33,6 +33,12 @@ function isEmail(value: string) {
 }
 
 export async function POST(request: Request) {
+  return Response.json(
+    { error: "This REACH shipping confirmation round is closed." },
+    { status: 410 }
+  );
+
+  /* The intake logic is retained below so it can be reopened for a future round. */
   let body: Submission;
 
   try {
