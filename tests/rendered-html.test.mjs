@@ -56,11 +56,12 @@ test("renders every guided pathway", async () => {
   }
 });
 
-test("renders all ten private student action tools", async () => {
+test("renders all eleven private student action tools", async () => {
   const response = await render("/tools");
   assert.equal(response.status, 200);
   const html = await response.text();
   for (const title of [
+    "Award Letter &amp; Balance Decoder",
     "Essay Story Builder",
     "Scholarship Action Center",
     "FAFSA Decoder",
@@ -77,7 +78,7 @@ test("renders all ten private student action tools", async () => {
 
 test("homepage deep-links every tool and contains no retired 404 routes", async () => {
   const source = await readFile(new URL("../app/page.tsx", import.meta.url), "utf8");
-  for (const id of ["essay", "scholarship", "fafsa", "aid", "balance", "reminders", "family", "friend", "campus", "persist"]) {
+  for (const id of ["award", "essay", "scholarship", "fafsa", "aid", "balance", "reminders", "family", "friend", "campus", "persist"]) {
     assert.match(source, new RegExp(`/tools\\?tool=${id}`));
   }
   assert.doesNotMatch(source, /https:\/\/estherfundsfoundation\.org\/become-a-partner/);
@@ -89,4 +90,13 @@ test("deadline reminders are local calendar alerts", async () => {
   assert.match(source, /text\/calendar/);
   assert.match(source, /\[20160,4320,1440\]/);
   assert.match(source, /Your calendar app—not EFF—delivers these alerts/);
+});
+
+test("award decoder keeps documents in-browser and includes editable funding inputs", async () => {
+  const source = await readFile(new URL("../app/tools/page.tsx", import.meta.url), "utf8");
+  assert.match(source, /import\("pdfjs-dist"\)/);
+  assert.match(source, /Your document stays on this device/);
+  assert.match(source, /Average work hours each week/);
+  assert.match(source, /STILL NEEDED/);
+  assert.match(source, /special-circumstances/);
 });

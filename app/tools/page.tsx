@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 
 const tools = [
+  { id: "award", tag: "NEW · UPLOAD", title: "Award Letter & Balance Decoder", desc: "Upload an aid letter, add work income, and see what is still uncovered.", color: "featured" },
   { id: "essay", tag: "WRITE", title: "Essay Story Builder", desc: "Turn one real moment into a scholarship-ready outline.", color: "yellow" },
   { id: "scholarship", tag: "APPLY", title: "Scholarship Action Center", desc: "Turn a deadline into a clear application plan.", color: "pink" },
   { id: "fafsa", tag: "DECODE", title: "FAFSA Decoder", desc: "Understand your status, SAI, verification, and next move.", color: "blue" },
@@ -19,8 +20,36 @@ const tools = [
 const money = (value: string) => Number(value.replace(/[^0-9.]/g, "")) || 0;
 const fmt = (value: number) => new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(value);
 
+type AwardNumbers = { currentBill:string; pendingAid:string; tuitionFees:string; housingMeals:string; grants:string; scholarships:string; loans:string; workStudy:string; otherCredits:string; savings:string; familySupport:string; hourlyWage:string; hoursWeek:string; weeksUntilDue:string; incomePercent:string; school:string; deadline:string };
+
+const amountFromLine = (line:string) => {
+  const dollars = [...line.matchAll(/\$\s*(-?[\d,]+(?:\.\d{1,2})?)/g)].map(match => Number(match[1].replaceAll(",", "")));
+  if (dollars.length) return dollars.at(-1) || 0;
+  const numbers = [...line.matchAll(/(?:^|\s)(-?[\d,]+\.\d{2})(?:\s|$)/g)].map(match => Number(match[1].replaceAll(",", "")));
+  return numbers.at(-1) || 0;
+};
+
+function extractAwardNumbers(text:string) {
+  const lines = text.split(/\r?\n/).map(line => line.replace(/\s+/g, " ").trim()).filter(Boolean);
+  const sum = (include:RegExp, exclude:RegExp = /\btotal\b|cost of attendance|net price|estimated cost/i) => lines.filter(line => include.test(line) && !exclude.test(line)).reduce((total,line) => total + amountFromLine(line), 0);
+  const one = (include:RegExp) => amountFromLine(lines.find(line => include.test(line)) || "");
+  const detected = {
+    currentBill: one(/amount due|balance due|current balance|student account balance/i),
+    tuitionFees: sum(/tuition|mandatory fee|required fee/i),
+    housingMeals: sum(/housing|room and board|room\/board|meal plan|meals/i),
+    grants: sum(/\bgrant\b|pell|waiver/i, /\btotal\b|loan|work.?study|cost of attendance|estimated cost/i),
+    scholarships: sum(/scholarship/i),
+    loans: sum(/\bloan\b|subsidized|unsubsidized|parent plus|grad plus/i, /\btotal\b|loan fee/i),
+    workStudy: sum(/work.?study/i),
+  };
+  return { detected, found: Object.values(detected).filter(value => value > 0).length };
+}
+
 export default function InteractiveTools() {
-  const [active, setActive] = useState("essay");
+  const [active, setActive] = useState("award");
+  const [award, setAward] = useState<AwardNumbers>({ currentBill:"", pendingAid:"", tuitionFees:"", housingMeals:"", grants:"", scholarships:"", loans:"", workStudy:"", otherCredits:"", savings:"", familySupport:"", hourlyWage:"", hoursWeek:"", weeksUntilDue:"", incomePercent:"50", school:"", deadline:"" });
+  const [awardText, setAwardText] = useState("");
+  const [awardFile, setAwardFile] = useState({ name:"", status:"Upload a text-based PDF or paste the award details below.", tone:"idle" });
   const [essay, setEssay] = useState({ moment: "", challenge: "", action: "", lesson: "", goal: "" });
   const [scholarship, setScholarship] = useState({ name: "", deadline: "", essay: "yes", recommendation: "no", transcript: "no" });
   const [fafsa, setFafsa] = useState({ status: "started", sai: "", note: "" });
@@ -38,6 +67,13 @@ export default function InteractiveTools() {
   const billGap = useMemo(() => directCost - giftAid - money(aid.loans) - money(aid.other), [aid, directCost, giftAid]);
   const fullGap = useMemo(() => fullCost - giftAid - money(aid.loans) - money(aid.other), [aid, fullCost, giftAid]);
   const familyGap = useMemo(() => money(family.cost) - money(family.freeAid) - money(family.studentLoans) - money(family.parentLoan), [family]);
+  const awardDirectCost = useMemo(() => money(award.tuitionFees) + money(award.housingMeals), [award]);
+  const awardAid = useMemo(() => money(award.grants) + money(award.scholarships) + money(award.loans) + money(award.otherCredits), [award]);
+  const awardStartingGap = useMemo(() => Math.max((money(award.currentBill) || awardDirectCost - awardAid) - money(award.pendingAid), 0), [award, awardDirectCost, awardAid]);
+  const awardGrossIncome = useMemo(() => money(award.hourlyWage) * money(award.hoursWeek) * money(award.weeksUntilDue), [award]);
+  const awardUsableIncome = useMemo(() => awardGrossIncome * Math.min(Math.max(money(award.incomePercent),0),100) / 100, [awardGrossIncome, award.incomePercent]);
+  const awardAvailable = useMemo(() => money(award.savings) + money(award.familySupport) + awardUsableIncome, [award, awardUsableIncome]);
+  const awardNeed = useMemo(() => Math.max(awardStartingGap - awardAvailable, 0), [awardStartingGap, awardAvailable]);
   const print = () => window.print();
 
   useEffect(() => {
@@ -48,6 +84,46 @@ export default function InteractiveTools() {
   const chooseTool = (id: string) => {
     setActive(id);
     window.history.replaceState({}, "", `/tools?tool=${id}`);
+  };
+
+  const applyAwardText = (text:string, fileName = "Pasted award details") => {
+    const { detected, found } = extractAwardNumbers(text);
+    setAward(current => ({
+      ...current,
+      currentBill: detected.currentBill ? String(detected.currentBill) : current.currentBill,
+      tuitionFees: detected.tuitionFees ? String(detected.tuitionFees) : current.tuitionFees,
+      housingMeals: detected.housingMeals ? String(detected.housingMeals) : current.housingMeals,
+      grants: detected.grants ? String(detected.grants) : current.grants,
+      scholarships: detected.scholarships ? String(detected.scholarships) : current.scholarships,
+      loans: detected.loans ? String(detected.loans) : current.loans,
+      workStudy: detected.workStudy ? String(detected.workStudy) : current.workStudy,
+    }));
+    setAwardFile({ name:fileName, status:found ? `${found} possible totals detected. Review and correct every field before using the result.` : "No reliable dollar totals were detected. Enter the amounts manually below.", tone:found ? "success" : "warning" });
+  };
+
+  const readAwardFile = async (file?:File) => {
+    if (!file) return;
+    if (file.size > 10 * 1024 * 1024) { setAwardFile({ name:file.name, status:"This file is larger than 10 MB. Download a smaller PDF or paste the award details instead.", tone:"error" }); return; }
+    setAwardFile({ name:file.name, status:"Reading the document privately in your browser…", tone:"loading" });
+    try {
+      let text = "";
+      if (file.type === "application/pdf" || file.name.toLowerCase().endsWith(".pdf")) {
+        const pdfjs = await import("pdfjs-dist");
+        pdfjs.GlobalWorkerOptions.workerSrc = new URL("pdfjs-dist/build/pdf.worker.min.mjs", import.meta.url).toString();
+        const pdf = await pdfjs.getDocument({ data:await file.arrayBuffer() }).promise;
+        for (let pageNumber = 1; pageNumber <= pdf.numPages; pageNumber++) {
+          const page = await pdf.getPage(pageNumber);
+          const content = await page.getTextContent();
+          text += content.items.map(item => "str" in item ? `${item.str}${item.hasEOL ? "\n" : " "}` : "").join("") + "\n";
+        }
+      } else {
+        text = await file.text();
+      }
+      setAwardText(text);
+      applyAwardText(text, file.name);
+    } catch {
+      setAwardFile({ name:file.name, status:"We could not read this PDF. It may be a scanned image or protected file—paste the visible award details below and continue.", tone:"error" });
+    }
   };
 
   const downloadReminder = () => {
@@ -67,10 +143,33 @@ export default function InteractiveTools() {
 
   return <main className="tool-page">
     <header className="tool-header"><Link href="/">← REACH Action Hub</Link><span>EFF INTERACTIVE TOOLKITS</span><a href="https://portal.estherfundsfoundation.org/">Scholarship Portal ↗</a></header>
-    <section className="tool-hero"><p className="kicker">NO HOMEWORK. JUST YOUR NEXT MOVE.</p><h1>Tap. Answer.<br/><em>Get a plan.</em></h1><p>Ten quick, private tools built around real student problems. Your answers stay in your browser and are not sent to EFF.</p></section>
+    <section className="tool-hero"><p className="kicker">NO HOMEWORK. JUST YOUR NEXT MOVE.</p><h1>Tap. Answer.<br/><em>Get a plan.</em></h1><p>Eleven quick, private tools built around real student problems. Your answers stay in your browser and are not sent to EFF.</p></section>
     <section className="tool-shell">
       <div className="tool-picker" aria-label="Choose an interactive toolkit">{tools.map(t=><button type="button" key={t.id} className={`${t.color} ${active===t.id?"active":""}`} onClick={()=>chooseTool(t.id)}><small>{t.tag}</small><strong>{t.title}</strong><span>{t.desc}</span></button>)}</div>
       <div className="tool-workspace">
+        {active==="award" && <Tool title="Upload your award. Find the real gap." intro="Start with your award letter, then add your current bill and the money you can realistically use before it is due.">
+          <section className="privacy-banner"><span aria-hidden="true">◆</span><div><strong>Your document stays on this device.</strong><p>REACH reads text inside your browser. It does not save or send the file to EFF. Remove Social Security numbers, student IDs, addresses, and account numbers before pasting text.</p></div></section>
+          <label className="award-upload"><input type="file" accept=".pdf,.txt,application/pdf,text/plain" onChange={event=>readAwardFile(event.target.files?.[0])}/><span aria-hidden="true">↑</span><strong>Choose an award-letter PDF</strong><small>Text-based PDF or TXT · 10 MB maximum</small></label>
+          <p className={`file-status ${awardFile.tone}`} aria-live="polite">{awardFile.name&&<b>{awardFile.name}: </b>}{awardFile.status}</p>
+          <details className="paste-award"><summary>Or paste the award details</summary><Field label="Paste the costs and aid exactly as shown" value={awardText} set={setAwardText} placeholder="Example: Tuition and fees $8,400&#10;Federal Pell Grant $7,395&#10;Direct Subsidized Loan $3,500" area/><button type="button" className="analyze-button" onClick={()=>applyAwardText(awardText)}>Detect the dollar amounts</button></details>
+
+          <p className="field-section-title">1 · REVIEW THE AWARD AND BILL</p>
+          <p className="field-help">Award letters are not standardized. Confirm every detected amount against the school document. Only include loans you actually plan to accept.</p>
+          <div className="field-grid"><Field label="School" value={award.school} set={v=>setAward({...award,school:v})} placeholder="College or program"/><Field label="Payment deadline" value={award.deadline} set={v=>setAward({...award,deadline:v})} placeholder="Example: August 12"/><Field label="Current bill due after aid, if known" value={award.currentBill} set={v=>setAward({...award,currentBill:v})} prefix="$"/><Field label="Confirmed pending aid not yet on the bill" value={award.pendingAid} set={v=>setAward({...award,pendingAid:v})} prefix="$"/><Field label="Tuition + required fees" value={award.tuitionFees} set={v=>setAward({...award,tuitionFees:v})} prefix="$"/><Field label="School-billed housing + meals" value={award.housingMeals} set={v=>setAward({...award,housingMeals:v})} prefix="$"/><Field label="Grants" value={award.grants} set={v=>setAward({...award,grants:v})} prefix="$"/><Field label="Scholarships" value={award.scholarships} set={v=>setAward({...award,scholarships:v})} prefix="$"/><Field label="Accepted student loans" value={award.loans} set={v=>setAward({...award,loans:v})} prefix="$"/><Field label="Work-study offered" value={award.workStudy} set={v=>setAward({...award,workStudy:v})} prefix="$"/><Field label="Other confirmed bill credits" value={award.otherCredits} set={v=>setAward({...award,otherCredits:v})} prefix="$"/></div>
+
+          <p className="field-section-title">2 · ADD WHAT YOU CAN REALISTICALLY USE</p>
+          <p className="field-help">Do not promise every paycheck to tuition. Enter the percentage left after taxes and essential living costs.</p>
+          <div className="field-grid"><Field label="Current savings available for this bill" value={award.savings} set={v=>setAward({...award,savings:v})} prefix="$"/><Field label="Confirmed family or sponsor support" value={award.familySupport} set={v=>setAward({...award,familySupport:v})} prefix="$"/><Field label="Hourly pay" value={award.hourlyWage} set={v=>setAward({...award,hourlyWage:v})} prefix="$"/><Field label="Average work hours each week" value={award.hoursWeek} set={v=>setAward({...award,hoursWeek:v})} placeholder="Example: 18"/><Field label="Weeks until the bill is due" value={award.weeksUntilDue} set={v=>setAward({...award,weeksUntilDue:v})} placeholder="Example: 6"/><Field label="Percent of gross pay you can use" value={award.incomePercent} set={v=>setAward({...award,incomePercent:v})} suffix="%"/></div>
+
+          <Result title="Your stay-enrolled funding snapshot" print={print}>
+            <div className="award-summary"><div><small>STARTING BALANCE TO PLAN FOR</small><strong>{fmt(awardStartingGap)}</strong><span>{money(award.currentBill)>0?"Using the current bill you entered":"Estimated from school-billed costs minus confirmed aid"}</span></div><div><small>ESTIMATED GROSS PAY BEFORE DUE DATE</small><strong>{fmt(awardGrossIncome)}</strong><span>{fmt(award.hourlyWage?money(award.hourlyWage)*money(award.hoursWeek):0)} gross per week</span></div><div><small>PAY YOU PLAN TO USE</small><strong>{fmt(awardUsableIncome)}</strong><span>{Math.min(Math.max(money(award.incomePercent),0),100)}% of estimated gross pay</span></div><div className={awardNeed>0?"need":"covered"}><small>STILL NEEDED</small><strong>{fmt(awardNeed)}</strong><span>{awardNeed>0?`Build a verified plan before ${award.deadline||"the deadline"}`:"Your entered resources cover this balance"}</span></div></div>
+            <p className="decoder-note"><b>Work-study check:</b> {fmt(money(award.workStudy))} was kept out of the upfront bill calculation. Work-study is generally earned through paychecks after a student finds and works a qualifying job.</p>
+            <GapResources gap={awardNeed} school={award.school} deadline={award.deadline}/>
+            <div className="result-prompt"><b>Message to the school:</b><br/>“I am working to remain enrolled at {award.school||"[school]"}. After reviewing my award and current resources, I estimate that I still need {fmt(awardNeed)} before {award.deadline||"[deadline]"}. Please review my account for missing or pending aid, institutional emergency or completion grants, special-circumstances appeal options, and the safest payment-plan choices. Please also confirm the amount due and each deadline in writing.”</div>
+            <div className="resource-actions"><a href="https://studentaid.gov/articles/evaluating-financial-aid-offers/">Official aid-offer guide ↗</a><a href="https://studentaid.gov/articles/financial-aid-not-enough/">When aid is not enough ↗</a><button type="button" onClick={()=>chooseTool("balance")}>Open the 48-hour rescue plan →</button><a href="https://portal.estherfundsfoundation.org/resources">Open EFF resources ↗</a></div>
+          </Result>
+        </Tool>}
+
         {active==="essay" && <Tool title="Build your essay backbone" intro="Skip the blank page. Give us five short answers—messy is fine.">
           <Field label="What moment can the reader picture?" value={essay.moment} set={v=>setEssay({...essay,moment:v})} placeholder="Example: I was stocking the food pantry after class..." area/>
           <Field label="What made it difficult or meaningful?" value={essay.challenge} set={v=>setEssay({...essay,challenge:v})} placeholder="The pressure, choice, or problem"/>
@@ -165,7 +264,7 @@ export default function InteractiveTools() {
 }
 
 function Tool({title,intro,children}:{title:string;intro:string;children:React.ReactNode}){return <div className="tool-panel"><div className="panel-heading"><p className="kicker">QUICK TOOL · PRIVATE IN YOUR BROWSER</p><h2>{title}</h2><p>{intro}</p></div>{children}</div>}
-function Field({label,value,set,placeholder,prefix,area}:{label:string;value:string;set:(v:string)=>void;placeholder?:string;prefix?:string;area?:boolean}){return <label className="tool-field"><span>{label}</span><div>{prefix&&<b>{prefix}</b>}{area?<textarea value={value} onChange={e=>set(e.target.value)} placeholder={placeholder}/>:<input value={value} onChange={e=>set(e.target.value)} placeholder={placeholder} inputMode={prefix?"decimal":undefined}/>}</div></label>}
+function Field({label,value,set,placeholder,prefix,suffix,area}:{label:string;value:string;set:(v:string)=>void;placeholder?:string;prefix?:string;suffix?:string;area?:boolean}){return <label className="tool-field"><span>{label}</span><div>{prefix&&<b>{prefix}</b>}{area?<textarea value={value} onChange={e=>set(e.target.value)} placeholder={placeholder}/>:<input value={value} onChange={e=>set(e.target.value)} placeholder={placeholder} inputMode={prefix||suffix?"decimal":undefined}/>} {suffix&&<b className="suffix">{suffix}</b>}</div></label>}
 function DateField({label,value,set}:{label:string;value:string;set:(v:string)=>void}){return <label className="tool-field"><span>{label}</span><div><input type="date" value={value} onChange={e=>set(e.target.value)}/></div></label>}
 function Choice({label,value,set,options}:{label:string;value:string;set:(v:string)=>void;options:string[][]}){return <fieldset className="tool-choice"><legend>{label}</legend><div>{options.map(([v,l])=><button type="button" key={v} className={value===v?"chosen":""} onClick={()=>set(v)}>{l}</button>)}</div></fieldset>}
 function Result({title,children,print}:{title:string;children:React.ReactNode;print:()=>void}){return <section className="tool-result"><div className="result-head"><div><small>YOUR INSTANT RESULT</small><h3>{title}</h3></div><button onClick={print}>Save / print ↓</button></div><div className="result-body">{children}</div><p className="result-disclaimer">This is an educational planning tool, not a funding decision or guarantee. Verify requirements and availability with the responsible school or provider.</p></section>}
@@ -198,4 +297,14 @@ function PersistSteps({barrier}:{barrier:string}) {
     wellness: ["Campus counseling", "Dean of students", "Accessibility office; 988 for immediate crisis support"],
   };
   return <><p className="result-lead"><b>Barrier:</b> {barrierLabel(barrier)}</p><ol>{(routes[barrier]||routes.money).map((route,index)=><li key={route}><b>{index===0?"Start":"Also contact"}:</b> {route}. Ask what can be done before withdrawal, a schedule change, or a missed payment.</li>)}</ol></>;
+}
+
+function GapResources({gap,school,deadline}:{gap:number;school:string;deadline:string}) {
+  if (gap <= 0) return <section className="gap-plan covered"><h4>Your entered funding covers the balance.</h4><ol><li>Confirm the final bill and every pending credit with {school||"the school"}.</li><li>Keep emergency savings for books, transportation, food, and unexpected costs.</li><li>Check whether every grant and scholarship renews next year.</li></ol></section>;
+  const actions = gap <= 500
+    ? ["Ask about a small emergency grant, short payment extension, or fee waiver.", "Check whether a book charge, meal-plan level, insurance fee, or optional campus charge can be reduced.", "Use the EFF Scholarship Action Center for short-deadline opportunities."]
+    : gap <= 2500
+      ? ["Request an institutional emergency, retention, completion, or student-success grant review.", "Ask whether changed finances support a special-circumstances or professional-judgment review.", "Compare a written payment plan with the amount you can truly pay each month before accepting additional debt."]
+      : ["Request a coordinated account review with financial aid, student accounts, and the dean of students.", "Ask for a special-circumstances review and written information about institutional grants, housing or meal-plan changes, and enrollment options.", "Do not cover a large recurring gap with private debt until you compare the four-year cost and realistic repayment."];
+  return <section className="gap-plan"><h4>Your next moves for a {fmt(gap)} gap</h4><p>{deadline?`Start before ${deadline}; do not wait for the final day.`:"Confirm the payment and enrollment deadlines today."}</p><ol>{actions.map(action=><li key={action}>{action}</li>)}</ol></section>;
 }
