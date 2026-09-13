@@ -29,6 +29,7 @@ const actionJourneys = [
 
 const downloads = [
   { type: "UPLOAD + DECODE", title: "Award Letter & Balance Decoder", text: "Upload an aid letter, add your bill, wages, work hours, savings, and support, then see what is still uncovered.", href: "/tools?tool=award", color: "purple", pages: "featured calculator" },
+  { type: "COMPARE + REQUEST", title: "Financial Aid Counter-Offer Engine", text: "Compare competing offers, check a federal net-price benchmark, and draft a respectful institutional-aid reconsideration request.", href: "/tools?tool=counteroffer", color: "pink", pages: "new interactive engine" },
   { type: "WRITE YOUR STORY", title: "Scholarship Essay Builder", text: "Answer five quick prompts and instantly get a scholarship-ready STORY outline.", href: "/tools?tool=essay", color: "yellow", pages: "interactive" },
   { type: "STAY ORGANIZED", title: "Scholarship Action Center", text: "Turn one deadline and its requirements into a complete application checklist.", href: "/tools?tool=scholarship", color: "pink", pages: "interactive" },
   { type: "GET UNSTUCK", title: "FAFSA Decoder", text: "Decode your FAFSA status, SAI, verification request, or changed financial circumstances.", href: "/tools?tool=fafsa", color: "blue", pages: "interactive" },

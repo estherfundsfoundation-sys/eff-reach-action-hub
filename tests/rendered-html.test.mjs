@@ -56,12 +56,13 @@ test("renders every guided pathway", async () => {
   }
 });
 
-test("renders all eleven private student action tools", async () => {
+test("renders all twelve private student action tools", async () => {
   const response = await render("/tools");
   assert.equal(response.status, 200);
   const html = await response.text();
   for (const title of [
     "Award Letter &amp; Balance Decoder",
+    "Financial Aid Counter-Offer Engine",
     "Essay Story Builder",
     "Scholarship Action Center",
     "FAFSA Decoder",
@@ -78,7 +79,7 @@ test("renders all eleven private student action tools", async () => {
 
 test("homepage deep-links every tool and contains no retired 404 routes", async () => {
   const source = await readFile(new URL("../app/page.tsx", import.meta.url), "utf8");
-  for (const id of ["award", "essay", "scholarship", "fafsa", "aid", "balance", "reminders", "family", "friend", "campus", "persist"]) {
+  for (const id of ["award", "counteroffer", "essay", "scholarship", "fafsa", "aid", "balance", "reminders", "family", "friend", "campus", "persist"]) {
     assert.match(source, new RegExp(`/tools\\?tool=${id}`));
   }
   assert.doesNotMatch(source, /https:\/\/estherfundsfoundation\.org\/become-a-partner/);
@@ -90,6 +91,17 @@ test("deadline reminders are local calendar alerts", async () => {
   assert.match(source, /text\/calendar/);
   assert.match(source, /\[20160,4320,1440\]/);
   assert.match(source, /Your calendar app—not EFF—delivers these alerts/);
+});
+
+test("counter-offer engine compares gift aid separately from debt and uses official public context", async () => {
+  const source = await readFile(new URL("../app/tools/CounterOfferEngine.tsx", import.meta.url), "utf8");
+  const route = await readFile(new URL("../app/api/scorecard/route.ts", import.meta.url), "utf8");
+  assert.match(source, /Loans and work-study are not gift aid/);
+  assert.match(source, /Potential comparison gap/i);
+  assert.match(source, /This is a request—not a promise or entitlement/);
+  assert.match(source, /Your award letters stay on this device/);
+  assert.match(route, /api\.data\.gov\/ed\/collegescorecard/);
+  assert.match(route, /latest\.cost\.avg_net_price\.overall/);
 });
 
 test("award decoder keeps documents in-browser and includes editable funding inputs", async () => {
