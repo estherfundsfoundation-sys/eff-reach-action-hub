@@ -47,6 +47,74 @@ export default function RecommendationLetterTool() {
 
   const copy = async () => { try { await navigator.clipboard.writeText(letter); setCopied(true); window.setTimeout(() => setCopied(false), 1800); } catch { setCopied(false); } };
   const printLetter = () => { if (!ready) return; document.body.classList.add("print-recommendation"); window.print(); window.setTimeout(() => document.body.classList.remove("print-recommendation"), 250); };
+  const downloadPdf = async () => {
+    if (!ready) return;
+    const [{ jsPDF }, logoResponse] = await Promise.all([
+      import("jspdf"),
+      fetch("/eff-recommendation-letter-logo.png"),
+    ]);
+    const logoBlob = await logoResponse.blob();
+    const logoData = await new Promise<string>((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(String(reader.result));
+      reader.onerror = () => reject(reader.error);
+      reader.readAsDataURL(logoBlob);
+    });
+    const pdf = new jsPDF({ unit: "pt", format: "letter" });
+    const purple = "#5B167D";
+    const gold = "#D7A526";
+    pdf.setFillColor(purple);
+    pdf.rect(0, 0, 612, 106, "F");
+    pdf.addImage(logoData, "PNG", 42, 17, 72, 72);
+    pdf.setTextColor("#FFFFFF");
+    pdf.setFont("times", "bold");
+    pdf.setFontSize(19);
+    pdf.text("ESTHER FUNDS FOUNDATION", 130, 48);
+    pdf.setTextColor(gold);
+    pdf.setFont("helvetica", "bold");
+    pdf.setFontSize(9);
+    pdf.text("OFFICIAL RECOMMENDATION · EVERY FUTURE FULFILLED", 130, 68);
+
+    const unsignedLetter = letter.replace(/\n\nSincerely,[\s\S]*$/, "");
+    const lines = pdf.splitTextToSize(unsignedLetter, 516) as string[];
+    pdf.setTextColor("#1E1723");
+    pdf.setFont("times", "normal");
+    pdf.setFontSize(10.5);
+    let y = 134;
+    for (const line of lines) {
+      if (y > 690) {
+        pdf.addPage();
+        y = 54;
+      }
+      pdf.text(line, 48, y);
+      y += 14.5;
+    }
+    if (y > 625) {
+      pdf.addPage();
+      y = 60;
+    }
+    y += 22;
+    pdf.setTextColor(purple);
+    pdf.setFont("times", "italic");
+    pdf.setFontSize(22);
+    pdf.text("Shayna Vincent", 48, y);
+    y += 18;
+    pdf.setTextColor("#1E1723");
+    pdf.setFont("helvetica", "bold");
+    pdf.setFontSize(9.5);
+    pdf.text("Shayna Vincent · Founder & Executive Director", 48, y);
+    y += 13;
+    pdf.setFont("helvetica", "normal");
+    pdf.setFontSize(8.5);
+    pdf.text("Esther Funds Foundation · nationals@estherfundsinc.org", 48, y);
+    y += 13;
+    pdf.setTextColor("#625B67");
+    pdf.setFontSize(7.5);
+    pdf.text(`Electronically signed through the authorized EFF letter workflow · ${issuedDate}`, 48, y);
+    const safeName = (details.studentName.trim() || "student").replace(/[^a-z0-9]+/gi, "-").replace(/^-|-$/g, "").toLowerCase();
+    pdf.save(`EFF-Recommendation-${safeName}.pdf`);
+  };
+  const requestHref = `mailto:nationals@estherfundsinc.org?subject=${encodeURIComponent("Request for another type of EFF recommendation letter")}&body=${encodeURIComponent(`Hello EFF National Office,\n\nI would like to request another type of recommendation letter.\n\nStudent name: ${details.studentName.trim()}\nPurpose or opportunity: ${details.opportunity.trim()}\nDeadline: \nSpecial requirements: \n\nThank you.`)}`;
 
   return <section className="recommendation-engine">
     <header className="recommendation-heading">
@@ -78,12 +146,12 @@ export default function RecommendationLetterTool() {
     <section className="recommendation-output">
       <div className="recommendation-output-heading"><div><p className="kicker">OFFICIAL EFF LETTER</p><h3>{ready ? "Signed and ready to save." : "Complete the intake to issue."}</h3></div><span className={ready ? "ready" : "incomplete"}>{ready ? "AUTHORIZED EFF LETTER" : `${9 - filled} essential fact${9 - filled === 1 ? "" : "s"} still needed`}</span></div>
       <div className={`recommendation-letter${ready ? " issued" : ""}`} aria-label="Generated Esther Funds Foundation recommendation letter">
-        <div className="letter-brand"><Image src="/eff-logo.png" alt="Esther Funds Foundation logo" width={68} height={68}/><div><span>ESTHER FUNDS FOUNDATION</span><strong>Official Recommendation</strong><small>EVERY FUTURE FULFILLED.</small></div></div>
+        <div className="letter-brand"><Image src="/eff-recommendation-letter-logo.png" alt="Esther Funds Foundation logo" width={82} height={82}/><div><span>ESTHER FUNDS FOUNDATION</span><strong>Official Recommendation</strong><small>EVERY FUTURE FULFILLED.</small></div></div>
         <pre>{letter}</pre>
         <div className="letter-signature-block"><span className="letter-signature">Shayna Vincent</span><b>Shayna Vincent</b><small>Founder &amp; Executive Director · Esther Funds Foundation</small><em>Electronically signed through the authorized EFF letter workflow · {issuedDate}</em></div>
         <p>This letter is personalized from information submitted to Esther Funds Foundation by the applicant. The signed letter does not independently certify a GPA, title, award, or activity unless EFF separately confirms it.</p>
       </div>
-      <div className="recommendation-actions"><button type="button" onClick={copy}>{copied ? "Copied ✓" : "Copy letter"}</button><button type="button" disabled={!ready} onClick={printLetter}>{ready ? "Save official letter / PDF" : "Complete + attest to save"}</button></div>
+      <div className="recommendation-actions"><button type="button" onClick={copy}>{copied ? "Copied ✓" : "Copy letter"}</button><button type="button" disabled={!ready} onClick={downloadPdf}>{ready ? "Download signed PDF" : "Complete + attest to download"}</button><button type="button" disabled={!ready} onClick={printLetter}>Print letter</button><a href={requestHref}>Request another type of letter ↗</a></div>
     </section>
   </section>;
 }

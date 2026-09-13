@@ -98,11 +98,12 @@ test("recommendation tool issues an attributed EFF letter with consent and discl
   const source = await readFile(new URL("../app/tools/RecommendationLetterTool.tsx", import.meta.url), "utf8");
   assert.match(source, /Esther Funds Foundation · Official Letter Tool/i);
   assert.match(source, /Shayna Vincent/);
-  assert.match(source, /eff-logo\.png/);
+  assert.match(source, /eff-recommendation-letter-logo\.png/);
   assert.match(source, /I confirm that the information I submitted is truthful/i);
   assert.match(source, /personalized from information submitted/i);
   assert.match(source, /does not independently certify/i);
-  assert.match(source, /Save official letter \/ PDF/i);
+  assert.match(source, /Download signed PDF/i);
+  assert.match(source, /Request another type of letter/i);
 });
 
 test("counter-offer engine compares gift aid separately from debt and uses official public context", async () => {
