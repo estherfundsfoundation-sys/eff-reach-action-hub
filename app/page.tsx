@@ -119,7 +119,7 @@ export default function Home() {
       <section className="hero" id="top">
         <div className="hero-copy">
           <p className="kicker">A FREE STUDENT + FAMILY SUPPORT CENTER</p>
-          <h1>College gets hard.<br /><em>Keep reaching.</em></h1>
+          <h1><span>College gets <i>hard.</i></span><em>Keep <i>reaching.</i></em></h1>
           <p className="hero-lead">One welcoming place to find college funding, emergency support, family guidance, career tools, wellness resources, and a clear next step.</p>
           <div className="hero-actions">
             <a className="button primary" href="#find-help">Help me find my next step</a>
