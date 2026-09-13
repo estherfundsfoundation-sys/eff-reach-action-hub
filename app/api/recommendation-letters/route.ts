@@ -147,7 +147,9 @@ export async function POST(request: Request) {
   const hourAgo = new Date(Date.now() - 60 * 60 * 1000).toISOString();
   const emailCount = await env.DB.prepare(`SELECT COUNT(*) AS total FROM recommendation_letter_issuances WHERE student_email=? AND created_at>=?`).bind(record.studentEmail, dayAgo).first<{ total: number }>();
   const networkCount = await env.DB.prepare(`SELECT COUNT(*) AS total FROM recommendation_letter_issuances WHERE request_fingerprint=? AND created_at>=?`).bind(requestFingerprint, hourAgo).first<{ total: number }>();
-  if (Number(emailCount?.total || 0) >= 5 || Number(networkCount?.total || 0) >= 10) {
+  // Allow a real student to prepare several scholarship applications and avoid
+  // penalizing a campus lab or residence hall whose devices share an address.
+  if (Number(emailCount?.total || 0) >= 15 || Number(networkCount?.total || 0) >= 60) {
     return Response.json({ error: "For security, this contact has reached the letter limit. Email nationals@estherfundsinc.org for help." }, { status: 429 });
   }
 

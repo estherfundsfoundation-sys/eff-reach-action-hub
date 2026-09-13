@@ -134,8 +134,8 @@ test("recommendation issuance is recorded, reviewable, verifiable, and revocable
   assert.match(route, /AbortSignal\.timeout/);
   assert.match(route, /request_fingerprint/);
   assert.match(route, /student_email=\?/);
-  assert.match(route, />= 5/);
-  assert.match(route, />= 10/);
+  assert.match(route, />= 15/);
+  assert.match(route, />= 60/);
   assert.match(route, /nationals@estherfundsinc\.org/);
   assert.match(admin, /getChatGPTUser/);
   assert.match(admin, /Review everything the student submitted/);
