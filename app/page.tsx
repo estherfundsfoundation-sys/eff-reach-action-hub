@@ -28,15 +28,16 @@ const actionJourneys = [
 ];
 
 const downloads = [
-  { type: "WRITE YOUR STORY", title: "Scholarship Essay Builder", text: "Answer five quick prompts and instantly get a scholarship-ready STORY outline.", href: "/tools", color: "yellow", pages: "interactive" },
-  { type: "STAY ORGANIZED", title: "Scholarship Action Center", text: "Build a reusable application plan without reading another giant guide.", href: "/tools", color: "pink", pages: "interactive" },
-  { type: "GET UNSTUCK", title: "FAFSA + Appeal Helper", text: "Get the right next steps and a ready-to-use request instead of researching jargon.", href: "/tools", color: "blue", pages: "interactive" },
-  { type: "COMPARE OFFERS", title: "Financial Aid Offer Decoder", text: "Enter six numbers and see the real gap instantly.", href: "/tools", color: "lavender", pages: "calculator" },
-  { type: "URGENT BALANCE", title: "Tuition Rescue Plan", text: "Get a personalized 48-hour plan and email opener based on your deadline.", href: "/tools", color: "yellow", pages: "interactive" },
-  { type: "FOR FAMILIES", title: "Family Funding Check", text: "Pressure-test the college gap and a parent or private-loan decision.", href: "/tools", color: "pink", pages: "calculator" },
-  { type: "HELP SOMEONE", title: "Help-a-Friend Script", text: "Choose the situation and tone to get words you can actually say or text.", href: "/tools", color: "blue", pages: "script maker" },
-  { type: "LEAD ON CAMPUS", title: "Campus Event Builder", text: "Create a useful 60-minute REACH event in under three minutes.", href: "/tools", color: "lavender", pages: "interactive" },
-  { type: "KEEP GOING", title: "Stay-Enrolled Planner", text: "Name the barrier and get a support-team plan before changing enrollment.", href: "/tools", color: "yellow", pages: "interactive" },
+  { type: "WRITE YOUR STORY", title: "Scholarship Essay Builder", text: "Answer five quick prompts and instantly get a scholarship-ready STORY outline.", href: "/tools?tool=essay", color: "yellow", pages: "interactive" },
+  { type: "STAY ORGANIZED", title: "Scholarship Action Center", text: "Turn one deadline and its requirements into a complete application checklist.", href: "/tools?tool=scholarship", color: "pink", pages: "interactive" },
+  { type: "GET UNSTUCK", title: "FAFSA Decoder", text: "Decode your FAFSA status, SAI, verification request, or changed financial circumstances.", href: "/tools?tool=fafsa", color: "blue", pages: "interactive" },
+  { type: "COMPARE OFFERS", title: "Financial Aid Offer Decoder", text: "Separate gift aid, debt, work-study, bill gap, and the full cost of attendance.", href: "/tools?tool=aid", color: "lavender", pages: "calculator" },
+  { type: "URGENT BALANCE", title: "Tuition Rescue Plan", text: "Get a personalized 48-hour plan and email opener based on your deadline.", href: "/tools?tool=balance", color: "yellow", pages: "interactive" },
+  { type: "DON'T MISS IT", title: "Deadline Reminder Builder", text: "Download private calendar alerts for two weeks, three days, and one day before.", href: "/tools?tool=reminders", color: "pink", pages: "calendar tool" },
+  { type: "FOR FAMILIES", title: "Family Funding Check", text: "Pressure-test the college gap and a parent or private-loan decision.", href: "/tools?tool=family", color: "pink", pages: "calculator" },
+  { type: "HELP SOMEONE", title: "Help-a-Friend Script", text: "Choose the situation and tone to get words you can actually say or text.", href: "/tools?tool=friend", color: "blue", pages: "script maker" },
+  { type: "LEAD ON CAMPUS", title: "Campus Event Builder", text: "Create a useful 60-minute REACH event in under three minutes.", href: "/tools?tool=campus", color: "lavender", pages: "interactive" },
+  { type: "KEEP GOING", title: "Stay-Enrolled Planner", text: "Name the barrier and build a support-team plan before changing enrollment.", href: "/tools?tool=persist", color: "yellow", pages: "interactive" },
 ];
 
 const resourceGroups = [
@@ -47,7 +48,7 @@ const resourceGroups = [
     intro: "Make a plan before a financial gap becomes a reason to leave school.",
     links: [
       ["EFF Scholarship Portal", "Search scholarships and apply to current EFF programs.", "https://portal.estherfundsfoundation.org/"],
-      ["FAFSA Rescue & Aid Appeals", "Get unstuck, understand your offer, and prepare a strong appeal.", "https://portal.estherfundsfoundation.org/resources"],
+      ["FAFSA Decoder", "Understand your status, SAI, verification request, and exact next move.", "/tools?tool=fafsa"],
       ["College Cost Decision Lab", "Compare real costs, debt, graduation outcomes, and likely monthly payments.", "https://www.consumerfinance.gov/paying-for-college/your-financial-path-to-graduation/"],
       ["College Scorecard", "Compare institutions by costs, completion, fields of study, and earnings.", "https://collegescorecard.ed.gov/"],
     ],
@@ -61,7 +62,7 @@ const resourceGroups = [
       ["Parent & Family Toolkit", "Download EFF's college funding guide and family conversation worksheets.", "https://portal.estherfundsfoundation.org/resources#toolkits"],
       ["FAFSA for Parents", "Understand contributor invitations, consent, tax information, and common mistakes.", "https://studentaid.gov/articles/fafsa-for-parents/"],
       ["Childcare & Family Assistance", "Find state childcare subsidies, campus childcare, WIC, SNAP, and family supports.", "https://www.childcare.gov/consumer-education/get-help-paying-for-child-care/child-care-financial-assistance-options"],
-      ["Questions to Ask the College", "Use EFF's checklist before accepting an aid offer or private loan.", "https://portal.estherfundsfoundation.org/resources"],
+      ["Financial Aid Offer Decoder", "See your net price, estimated bill gap, full cost gap, and accepted debt.", "/tools?tool=aid"],
     ],
   },
   {
@@ -118,7 +119,7 @@ export default function Home() {
           <p className="hero-lead">One welcoming place to find college funding, emergency support, family guidance, career tools, wellness resources, and a clear next step.</p>
           <div className="hero-actions">
             <a className="button primary" href="#find-help">Help me find my next step</a>
-            <a className="button secondary" href="#downloads">Download free toolkits</a>
+            <a className="button secondary" href="#downloads">Open free action tools</a>
           </div>
           <p className="microcopy">No account required to explore resources. Never email passwords, Social Security numbers, or verification codes.</p>
         </div>
@@ -191,7 +192,7 @@ export default function Home() {
       <section className="download-library" id="downloads">
         <div className="download-intro">
           <div>
-            <p className="kicker">THE EFF DOWNLOAD LIBRARY</p>
+            <p className="kicker">THE EFF STUDENT ACTION CENTER</p>
             <h2>Tap it. Answer it. Get your next move.</h2>
           </div>
           <p>Fast, mobile-first EFF tools built around the questions students and families ask us most. No research assignment and no wall of text.</p>
@@ -266,14 +267,14 @@ export default function Home() {
         </div>
         <div className="action-grid">
           <Link href="/reach-yourself"><span>01</span><h3>Request or support a REACH Box</h3><p>Care packages with essentials, resources, and encouragement for students facing hardship.</p></Link>
-          <a href="https://estherfundsfoundation.org/become-a-partner"><span>02</span><h3>Partner with EFF</h3><p>Help expand college-retention resources, emergency response, and campus support.</p></a>
+          <a href="https://portal.estherfundsfoundation.org/partners"><span>02</span><h3>Partner with EFF</h3><p>Help expand college-retention resources, emergency response, and campus support.</p></a>
           <a href="https://givebutter.com/estherfundsfoundation"><span>03</span><h3>Fund a student’s next step</h3><p>Support scholarships, emergency aid, educational tools, and student care.</p></a>
         </div>
       </section>
 
       <footer>
         <div className="footer-brand"><img src="/eff-logo.png" alt="" /><div><strong>Esther Funds Foundation</strong><span>We are working to prevent college dropouts around the world.</span></div></div>
-        <div className="footer-links"><a href="https://estherfundsfoundation.org/">EFF Home</a><Link href="/ambassadors">Ambassador Directory</Link><a href="https://portal.estherfundsfoundation.org/">Scholarship Portal</a><a href="https://estherfundsfoundation.org/programs">Programs</a><a href="mailto:nationals@estherfundsinc.org">Contact</a></div>
+        <div className="footer-links"><a href="https://estherfundsfoundation.org/">EFF Home</a><Link href="/ambassadors">Ambassador Directory</Link><a href="https://portal.estherfundsfoundation.org/">Scholarship Portal</a><a href="https://portal.estherfundsfoundation.org/programs">Programs</a><a href="mailto:nationals@estherfundsinc.org">Contact</a></div>
         <p className="disclaimer">EFF provides educational information and resource navigation. External services set their own eligibility rules and availability. EFF cannot guarantee funding or assistance from outside organizations.</p>
         <div className="footer-bottom"><span>© 2026 Esther Funds Foundation</span><span>Every Future Fulfilled.</span></div>
       </footer>

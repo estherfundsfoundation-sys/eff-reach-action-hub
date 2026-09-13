@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
+import { readFile } from "node:fs/promises";
 
 async function render(pathname = "/") {
   const workerUrl = new URL("../dist/server/index.js", import.meta.url);
@@ -53,4 +54,39 @@ test("renders every guided pathway", async () => {
     assert.match(html, /YOUR GUIDED PATH/, pathname);
     assert.match(html, /Return to the full hub/, pathname);
   }
+});
+
+test("renders all ten private student action tools", async () => {
+  const response = await render("/tools");
+  assert.equal(response.status, 200);
+  const html = await response.text();
+  for (const title of [
+    "Essay Story Builder",
+    "Scholarship Action Center",
+    "FAFSA Decoder",
+    "Aid Offer Decoder",
+    "Tuition Rescue Plan",
+    "Deadline Reminder Builder",
+    "Family Funding Check",
+    "Help-a-Friend Script",
+    "Campus Event Builder",
+    "Stay-Enrolled Planner",
+  ]) assert.match(html, new RegExp(title));
+  assert.match(html, /answers stay in your browser/i);
+});
+
+test("homepage deep-links every tool and contains no retired 404 routes", async () => {
+  const source = await readFile(new URL("../app/page.tsx", import.meta.url), "utf8");
+  for (const id of ["essay", "scholarship", "fafsa", "aid", "balance", "reminders", "family", "friend", "campus", "persist"]) {
+    assert.match(source, new RegExp(`/tools\\?tool=${id}`));
+  }
+  assert.doesNotMatch(source, /https:\/\/estherfundsfoundation\.org\/become-a-partner/);
+  assert.doesNotMatch(source, /https:\/\/estherfundsfoundation\.org\/programs/);
+});
+
+test("deadline reminders are local calendar alerts", async () => {
+  const source = await readFile(new URL("../app/tools/page.tsx", import.meta.url), "utf8");
+  assert.match(source, /text\/calendar/);
+  assert.match(source, /\[20160,4320,1440\]/);
+  assert.match(source, /Your calendar app—not EFF—delivers these alerts/);
 });
