@@ -99,7 +99,8 @@ test("recommendation tool requires human review and never invents an EFF endorse
   assert.match(source, /without inventing a single fact/i);
   assert.match(source, /must review, edit, verify, sign, and submit/i);
   assert.match(source, /never issued automatically from unverified student input/i);
-  assert.match(source, /Request EFF review/);
+  assert.match(source, /Open a secure EFF review case/);
+  assert.match(source, /portal\.estherfundsfoundation\.org\/help-desk\/open-case/);
 });
 
 test("counter-offer engine compares gift aid separately from debt and uses official public context", async () => {
@@ -120,4 +121,48 @@ test("award decoder keeps documents in-browser and includes editable funding inp
   assert.match(source, /Average work hours each week/);
   assert.match(source, /STILL NEEDED/);
   assert.match(source, /special-circumstances/);
+});
+
+test("renders the complete student defense suite and all thirteen engines", async () => {
+  const response = await render("/defense");
+  assert.equal(response.status, 200);
+  const html = await response.text();
+  for (const title of [
+    "What Do I Do First?",
+    "SAP Appeal Builder",
+    "Grade Rescue Calculator",
+    "Bursar Fee Review",
+    "Employer Tuition Finder",
+    "Transcript Hold Navigator",
+    "Syllabus Collision Map",
+    "Course Sequence Checker",
+    "Reverse Transfer Navigator",
+    "Housing Evidence Builder",
+    "Grade Grievance Builder",
+    "Micro-Hold Rescue",
+    "Campus Reality Receipt",
+  ]) assert.match(html, new RegExp(title));
+  assert.match(html, /No account needed/);
+});
+
+test("student defense tools preserve human decisions and cite official baselines", async () => {
+  const source = await readFile(new URL("../app/defense/DefenseSuite.tsx", import.meta.url), "utf8");
+  assert.match(source, /school—not this tool—sets the appeal process/i);
+  assert.match(source, /does not pay a balance, issue a card, promise EFF funding/i);
+  assert.match(source, /does not guarantee a credential/i);
+  assert.match(source, /fsapartners\.ed\.gov\/knowledge-center\/fsa-handbook/);
+  assert.match(source, /irs\.gov\/publications\/p15b/);
+  assert.match(source, /processed in this browser/i);
+});
+
+test("renders a de-identified outcome check-in and protects sensitive fields", async () => {
+  const response = await render("/outcome");
+  assert.equal(response.status, 200);
+  const html = await response.text();
+  assert.match(html, /WHAT HAPPENED NEXT/);
+  assert.match(html, /de-identified, aggregate impact reporting/i);
+  assert.match(html, /Please do not enter/i);
+  const route = await readFile(new URL("../app/api/outcomes/route.ts", import.meta.url), "utf8");
+  assert.match(route, /student_defense_outcomes/);
+  assert.doesNotMatch(route, /email|student_id|social_security/i);
 });

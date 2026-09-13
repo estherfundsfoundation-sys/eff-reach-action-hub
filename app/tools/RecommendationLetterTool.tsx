@@ -104,7 +104,7 @@ ${student}`, [details.deadline, details.recommenderName, opportunity, student]);
     window.setTimeout(() => document.body.classList.remove("print-recommendation"), 250);
   };
 
-  const mailto = `mailto:nationals@estherfundsinc.org?subject=${encodeURIComponent(`EFF recommendation review request — ${details.opportunity || "opportunity"}`)}&body=${encodeURIComponent(`Student: ${details.studentName}\nSchool / major: ${details.schoolMajor}\nOpportunity: ${details.opportunity}\nOrganization: ${details.organization}\nDeadline: ${details.deadline}\n\nI understand EFF must review and verify any participation, title, service, or achievement before issuing an EFF recommendation.`)}`;
+  const reviewUrl = "https://portal.estherfundsfoundation.org/help-desk/open-case";
 
   return <section className="recommendation-engine">
     <header className="recommendation-heading">
@@ -161,7 +161,7 @@ ${student}`, [details.deadline, details.recommenderName, opportunity, student]);
 
     <section className="recommendation-guardrail">
       <div><b>Need an official EFF recommendation?</b><p>Submit the facts for National Office review. EFF may verify appropriate participation or service, but a branded letter, signature, seal, or endorsement is never issued automatically from unverified student input.</p></div>
-      <a href={mailto}>Request EFF review →</a>
+      <a href={reviewUrl}>Open a secure EFF review case →</a>
     </section>
   </section>;
 }

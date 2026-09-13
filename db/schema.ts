@@ -27,3 +27,14 @@ export const leadAmbassadorShippingConfirmations = sqliteTable(
     updatedAt: text("updated_at").notNull(),
   }
 );
+
+export const studentDefenseOutcomes = sqliteTable("student_defense_outcomes",{
+  id:text("id").primaryKey(),
+  tool:text("tool").notNull(),
+  status:text("status").notNull(),
+  school:text("school"),
+  amountCents:integer("amount_cents"),
+  outcome:text("outcome").notNull(),
+  consentAt:text("consent_at").notNull(),
+  createdAt:text("created_at").notNull(),
+});

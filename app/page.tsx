@@ -28,6 +28,7 @@ const actionJourneys = [
 ];
 
 const downloads = [
+  { type: "13 STUDENT DEFENSE ENGINES", title: "EFF Student Defense Suite", text: "Protect your aid, grades, transcript, housing, degree path, and registration with one focused next-step system.", href: "/defense?tool=triage", color: "purple", pages: "complete defense suite" },
   { type: "UPLOAD + DECODE", title: "Award Letter & Balance Decoder", text: "Upload an aid letter, add your bill, wages, work hours, savings, and support, then see what is still uncovered.", href: "/tools?tool=award", color: "purple", pages: "featured calculator" },
   { type: "COMPARE + REQUEST", title: "Financial Aid Counter-Offer Engine", text: "Compare competing offers, check a federal net-price benchmark, and draft a respectful institutional-aid reconsideration request.", href: "/tools?tool=counteroffer", color: "pink", pages: "new interactive engine" },
   { type: "60-SECOND TOOL", title: "Recommendation Letter Builder", text: "Turn verified facts into a polished starter letter and a professional request email for your recommender.", href: "/tools?tool=recommendation", color: "purple", pages: "new interactive builder" },
@@ -123,6 +124,7 @@ export default function Home() {
           <div className="hero-actions">
             <a className="button primary" href="#find-help">Help me find my next step</a>
             <a className="button secondary" href="#downloads">Open free action tools</a>
+            <Link className="button secondary" href="/defense?tool=triage">Open Student Defense Suite</Link>
           </div>
           <p className="microcopy">No account required to explore resources. Never email passwords, Social Security numbers, or verification codes.</p>
         </div>
