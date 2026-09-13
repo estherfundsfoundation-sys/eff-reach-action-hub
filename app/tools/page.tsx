@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import CounterOfferEngine from "./CounterOfferEngine";
 import RecommendationLetterTool from "./RecommendationLetterTool";
 
@@ -51,6 +51,7 @@ function extractAwardNumbers(text:string) {
 
 export default function InteractiveTools() {
   const [active, setActive] = useState("award");
+  const workspaceRef = useRef<HTMLDivElement>(null);
   const [award, setAward] = useState<AwardNumbers>({ currentBill:"", pendingAid:"", tuitionFees:"", housingMeals:"", grants:"", scholarships:"", loans:"", workStudy:"", otherCredits:"", savings:"", familySupport:"", hourlyWage:"", hoursWeek:"", weeksUntilDue:"", incomePercent:"50", school:"", deadline:"" });
   const [awardText, setAwardText] = useState("");
   const [awardFile, setAwardFile] = useState({ name:"", status:"Upload a text-based PDF or paste the award details below.", tone:"idle" });
@@ -78,16 +79,26 @@ export default function InteractiveTools() {
   const awardUsableIncome = useMemo(() => awardGrossIncome * Math.min(Math.max(money(award.incomePercent),0),100) / 100, [awardGrossIncome, award.incomePercent]);
   const awardAvailable = useMemo(() => money(award.savings) + money(award.familySupport) + awardUsableIncome, [award, awardUsableIncome]);
   const awardNeed = useMemo(() => Math.max(awardStartingGap - awardAvailable, 0), [awardStartingGap, awardAvailable]);
+  const activeTool = tools.find((tool) => tool.id === active) || tools[0];
   const print = () => window.print();
+
+  const revealWorkspace = () => window.setTimeout(() => {
+    workspaceRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    workspaceRef.current?.focus({ preventScroll: true });
+  }, 60);
 
   useEffect(() => {
     const requested = new URLSearchParams(window.location.search).get("tool");
-    if (requested && tools.some(tool => tool.id === requested)) queueMicrotask(() => setActive(requested));
+    if (requested && tools.some(tool => tool.id === requested)) {
+      queueMicrotask(() => setActive(requested));
+      revealWorkspace();
+    }
   }, []);
 
   const chooseTool = (id: string) => {
     setActive(id);
     window.history.replaceState({}, "", `/tools?tool=${id}`);
+    revealWorkspace();
   };
 
   const applyAwardText = (text:string, fileName = "Pasted award details") => {
@@ -149,8 +160,9 @@ export default function InteractiveTools() {
     <header className="tool-header"><Link href="/">← REACH Action Hub</Link><span>EFF INTERACTIVE TOOLKITS</span><a href="https://portal.estherfundsfoundation.org/">Scholarship Portal ↗</a></header>
     <section className="tool-hero"><p className="kicker">NO HOMEWORK. JUST YOUR NEXT MOVE.</p><h1>Tap. Answer.<br/><em>Get a plan.</em></h1><p>Thirteen quick, private tools built around real student problems. Your answers stay in your browser and are not sent to EFF.</p></section>
     <section className="tool-shell">
-      <div className="tool-picker" aria-label="Choose an interactive toolkit">{tools.map(t=><button type="button" key={t.id} className={`${t.color} ${active===t.id?"active":""}`} onClick={()=>chooseTool(t.id)}><small>{t.tag}</small><strong>{t.title}</strong><span>{t.desc}</span></button>)}</div>
-      <div className="tool-workspace">
+      <div id="tool-picker" className="tool-picker" aria-label="Choose an interactive toolkit">{tools.map(t=><button type="button" key={t.id} aria-pressed={active===t.id} className={`${t.color} ${active===t.id?"active":""}`} onClick={()=>chooseTool(t.id)}><small>{t.tag}</small><strong>{t.title}</strong><span>{t.desc}</span><b className="tool-card-action">{active===t.id?"OPEN NOW ↓":"Open tool →"}</b></button>)}</div>
+      <div className="tool-open-confirmation" role="status" aria-live="polite"><span aria-hidden="true">✓</span><div><small>TOOL OPENED</small><strong>{activeTool.title}</strong><p>Start below—your selected tool is ready.</p></div><button type="button" onClick={()=>document.getElementById("tool-picker")?.scrollIntoView({behavior:"smooth",block:"start"})}>Choose a different tool ↑</button></div>
+      <div ref={workspaceRef} tabIndex={-1} className="tool-workspace" role="region" aria-label={`${activeTool.title} workspace`}>
         {active==="counteroffer" && <CounterOfferEngine/>}
         {active==="recommendation" && <RecommendationLetterTool/>}
         {active==="award" && <Tool title="Upload your award. Find the real gap." intro="Start with your award letter, then add your current bill and the money you can realistically use before it is due.">

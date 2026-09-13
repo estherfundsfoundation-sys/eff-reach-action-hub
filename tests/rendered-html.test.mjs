@@ -78,6 +78,15 @@ test("renders all thirteen private student action tools", async () => {
   assert.match(html, /answers stay in your browser/i);
 });
 
+test("tool selection is visually confirmed and reveals the workspace", async () => {
+  const source = await readFile(new URL("../app/tools/page.tsx", import.meta.url), "utf8");
+  assert.match(source, /TOOL OPENED/);
+  assert.match(source, /Start below—your selected tool is ready/);
+  assert.match(source, /scrollIntoView/);
+  assert.match(source, /aria-pressed/);
+  assert.match(source, /Choose a different tool/);
+});
+
 test("homepage deep-links every tool and contains no retired 404 routes", async () => {
   const source = await readFile(new URL("../app/page.tsx", import.meta.url), "utf8");
   for (const id of ["award", "counteroffer", "recommendation", "essay", "scholarship", "fafsa", "aid", "balance", "reminders", "family", "friend", "campus", "persist"]) {
