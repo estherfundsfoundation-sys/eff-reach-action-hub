@@ -108,6 +108,10 @@ test("recommendation tool issues an attributed EFF letter with consent and discl
   assert.match(source, /SCHOLARSHIP USE ONLY/i);
   assert.match(source, /EIN 93-4917509/);
   assert.match(source, /352-999-3232/);
+  assert.match(source, /Student’s email/);
+  assert.match(source, /Student’s phone/);
+  assert.match(source, /EFF issuance recorded/);
+  assert.match(source, /ensureIssued/);
   assert.match(source, /may not be reused, altered, or presented for employment/i);
   assert.match(source, /screenRecommendationDetails/);
   assert.match(policy, /inappropriate language/);
@@ -115,6 +119,29 @@ test("recommendation tool issues an attributed EFF letter with consent and discl
   assert.match(policy, /illegal or accusatory content/);
   assert.match(policy, /instruction manipulation/);
   assert.match(policy, /non-scholarship use/);
+});
+
+test("recommendation issuance is recorded, reviewable, verifiable, and revocable", async () => {
+  const route = await readFile(new URL("../app/api/recommendation-letters/route.ts", import.meta.url), "utf8");
+  const admin = await readFile(new URL("../app/admin/recommendation-letters/page.tsx", import.meta.url), "utf8");
+  const revoke = await readFile(new URL("../app/api/admin/recommendation-letters/revoke/route.ts", import.meta.url), "utf8");
+  const verify = await readFile(new URL("../app/recommendation/[reference]/page.tsx", import.meta.url), "utf8");
+  assert.match(route, /recommendation_letter_issuances/);
+  assert.match(route, /screenRecommendationDetails/);
+  assert.match(route, /RESEND_API_KEY/);
+  assert.match(route, /response\.status !== 429/);
+  assert.match(route, /Idempotency-Key/);
+  assert.match(route, /AbortSignal\.timeout/);
+  assert.match(route, /request_fingerprint/);
+  assert.match(route, /student_email=\?/);
+  assert.match(route, />= 5/);
+  assert.match(route, />= 10/);
+  assert.match(route, /nationals@estherfundsinc\.org/);
+  assert.match(admin, /getChatGPTUser/);
+  assert.match(admin, /Review everything the student submitted/);
+  assert.match(revoke, /status='revoked'/);
+  assert.match(verify, /Active scholarship letter/);
+  assert.match(verify, /This letter has been revoked/);
 });
 
 test("recommendation content policy blocks prohibited and non-scholarship submissions", async () => {

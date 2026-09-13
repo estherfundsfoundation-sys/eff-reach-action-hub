@@ -5,6 +5,8 @@ export type RecommendationSafetyIssue = {
 
 const FIELD_LABELS: Record<string, string> = {
   studentName: "student name",
+  studentEmail: "student email",
+  studentPhone: "student phone",
   school: "college or university",
   major: "major or program",
   gpa: "GPA",
