@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import Image from "next/image";
-import { screenRecommendationDetails } from "./recommendation-content-policy";
+import { sanitizeScholarName, screenRecommendationDetails } from "./recommendation-content-policy";
 
 type LetterDetails = {
   studentName: string; school: string; major: string; gpa: string;
@@ -28,7 +28,7 @@ export default function RecommendationLetterTool() {
     setCopied(false);
   };
 
-  const student = clean(details.studentName, "student name");
+  const student = clean(sanitizeScholarName(details.studentName), "student name");
   const firstName = details.studentName.trim().split(/\s+/)[0] || "the student";
   const recipient = details.organization.trim() ? `${details.organization.trim()} Selection Committee` : "Selection Committee";
   const subject = clean(details.opportunity, "scholarship");
@@ -86,21 +86,27 @@ export default function RecommendationLetterTool() {
     pdf.setFontSize(8);
     pdf.text("AUTHORIZED USE: SCHOLARSHIP APPLICATION ONLY", 130, 84);
 
+    const pageWidth = pdf.internal.pageSize.getWidth();
+    const pageHeight = pdf.internal.pageSize.getHeight();
+    const margin = 48;
+    const contentWidth = pageWidth - margin * 2;
+    const bodyBottom = pageHeight - 96;
     const unsignedLetter = letter.replace(/\n\nSincerely,[\s\S]*$/, "");
-    const lines = pdf.splitTextToSize(unsignedLetter, 516) as string[];
+    const lines = pdf.splitTextToSize(unsignedLetter, contentWidth) as string[];
     pdf.setTextColor("#1E1723");
     pdf.setFont("times", "normal");
     pdf.setFontSize(10.5);
     let y = 134;
     for (const line of lines) {
-      if (y > 690) {
+      if (y + 14.5 > bodyBottom) {
         pdf.addPage();
         y = 54;
       }
-      pdf.text(line, 48, y);
+      pdf.text(line, margin, y, { maxWidth: contentWidth });
       y += 14.5;
     }
-    if (y > 625) {
+    // Keep the full signature and organization contact block together.
+    if (y + 138 > bodyBottom) {
       pdf.addPage();
       y = 60;
     }
@@ -108,36 +114,46 @@ export default function RecommendationLetterTool() {
     pdf.setTextColor(purple);
     pdf.setFont("times", "italic");
     pdf.setFontSize(22);
-    pdf.text("Shayna Vincent", 48, y);
+    pdf.text("Shayna Vincent", margin, y, { maxWidth: contentWidth });
     y += 18;
     pdf.setTextColor("#1E1723");
     pdf.setFont("helvetica", "bold");
     pdf.setFontSize(9.5);
-    pdf.text("Shayna Vincent · Founder & Executive Director", 48, y);
-    y += 13;
+    for (const line of pdf.splitTextToSize("Shayna Vincent · Founder & Executive Director", contentWidth) as string[]) {
+      pdf.text(line, margin, y, { maxWidth: contentWidth });
+      y += 13;
+    }
     pdf.setFont("helvetica", "normal");
     pdf.setFontSize(8.5);
-    pdf.text("Esther Funds Foundation · Faith-Based 501(c)(3) Public Charity · EIN 93-4917509", 48, y);
-    y += 13;
-    pdf.text("nationals@estherfundsinc.org · 352-999-3232 · estherfundsfoundation.org", 48, y);
-    y += 13;
+    for (const contactLine of [
+      "Esther Funds Foundation · Faith-Based 501(c)(3) Public Charity · EIN 93-4917509",
+      "nationals@estherfundsinc.org · 352-999-3232 · estherfundsfoundation.org",
+    ]) {
+      for (const line of pdf.splitTextToSize(contactLine, contentWidth) as string[]) {
+        pdf.text(line, margin, y, { maxWidth: contentWidth });
+        y += 13;
+      }
+    }
     pdf.setTextColor("#625B67");
     pdf.setFontSize(7.5);
-    pdf.text(`Electronically signed through the authorized EFF letter workflow · ${issuedDate}`, 48, y);
+    for (const line of pdf.splitTextToSize(`Electronically signed through the authorized EFF letter workflow · ${issuedDate}`, contentWidth) as string[]) {
+      pdf.text(line, margin, y, { maxWidth: contentWidth });
+      y += 11;
+    }
     const pageCount = pdf.getNumberOfPages();
     for (let page = 1; page <= pageCount; page += 1) {
       pdf.setPage(page);
       pdf.setDrawColor(purple);
-      pdf.line(48, 756, 564, 756);
+      pdf.line(margin, pageHeight - 36, pageWidth - margin, pageHeight - 36);
       pdf.setTextColor(purple);
       pdf.setFont("helvetica", "bold");
       pdf.setFontSize(7.5);
-      pdf.text("SCHOLARSHIP USE ONLY · NOT VALID FOR ANY OTHER PURPOSE", 306, 770, { align: "center" });
+      pdf.text("SCHOLARSHIP USE ONLY · NOT VALID FOR ANY OTHER PURPOSE", pageWidth / 2, pageHeight - 22, { align: "center", maxWidth: contentWidth });
     }
-    const safeName = (details.studentName.trim() || "student").replace(/[^a-z0-9]+/gi, "-").replace(/^-|-$/g, "").toLowerCase();
+    const safeName = (sanitizeScholarName(details.studentName) || "student").replace(/[^a-z0-9]+/gi, "-").replace(/^-|-$/g, "").toLowerCase();
     pdf.save(`EFF-Recommendation-${safeName}.pdf`);
   };
-  const requestHref = `mailto:nationals@estherfundsinc.org?subject=${encodeURIComponent("Request for another type of EFF recommendation letter")}&body=${encodeURIComponent(`Hello EFF National Office,\n\nI would like to request another type of recommendation letter.\n\nStudent name: ${details.studentName.trim()}\nPurpose or opportunity: ${details.opportunity.trim()}\nDeadline: \nSpecial requirements: \n\nThank you.`)}`;
+  const requestHref = `mailto:nationals@estherfundsinc.org?subject=${encodeURIComponent("Request for another type of EFF recommendation letter")}&body=${encodeURIComponent(`Hello EFF National Office,\n\nI would like to request another type of recommendation letter.\n\nStudent name: ${sanitizeScholarName(details.studentName)}\nPurpose or opportunity: ${details.opportunity.trim()}\nDeadline: \nSpecial requirements: \n\nThank you.`)}`;
 
   return <section className="recommendation-engine">
     <header className="recommendation-heading">

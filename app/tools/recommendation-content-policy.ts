@@ -17,14 +17,59 @@ const FIELD_LABELS: Record<string, string> = {
   futureGoal: "future goal",
 };
 
+const INAPPROPRIATE_TERMS = [
+  // Profanity and degrading language.
+  "fuck", "fucks", "fucked", "fucker", "fuckers", "fuckin", "fuckinh", "fucking", "motherfucker", "motherfucking",
+  "shit", "shits", "shitted", "shitting", "shitty", "bullshit", "bitch", "bitches", "bitchy", "cunt", "ass",
+  "asses", "asshole", "assholes", "arsehole", "bastard", "damn", "dammit", "goddamn", "god damn", "hell",
+  "piss", "pissed", "prick", "pricks", "dick", "dicks", "cock", "cocks", "pussy", "pussies",
+  "twat", "slut", "sluts", "whore", "whores", "hoe", "hoes", "thot", "skank", "douche", "douchebag", "jackass", "dumbass",
+  "badass", "shithead", "dipshit", "fuckboy", "fuckgirl", "bimbo", "crap", "arse", "wanker", "bollocks",
+  "bugger", "sod off", "son of a bitch", "piece of shit", "screw you", "fuck you", "f off", "wtf",
+
+  // Sexual language, explicit acts, exploitation, and sexualized platforms.
+  "sex", "sexual", "porn", "porno", "pornography", "pornographic", "xxx", "onlyfans", "sex tape", "sex video", "sex work",
+  "sex worker", "escort service", "prostitute", "prostitution", "stripper", "strip club", "nude", "nudes",
+  "naked photo", "sext", "sexting", "blowjob", "blow job", "handjob", "hand job", "rimjob", "rim job",
+  "oral sex", "anal sex", "vaginal sex", "intercourse", "masturbate", "masturbation", "orgasm", "ejaculate",
+  "ejaculation", "semen", "sperm", "cum", "penis", "vagina", "vulva", "clitoris", "labia", "anus", "butthole",
+  "testicle", "testicles", "scrotum", "nipple", "nipples", "boob", "boobs", "tits", "titties", "boner",
+  "erection", "penetrate", "penetration", "dildo", "vibrator", "sex toy", "butt plug", "fetish", "kink", "horny",
+  "erotic", "erotica", "bdsm", "dominatrix", "hentai", "deep throat", "doggy style", "gangbang", "three some",
+  "threesome", "orgy", "rape", "rapist", "molest", "molested", "molestation", "pedophile", "sexual assault",
+  "sexual abuse", "sexual favor", "sexual favors", "send nude", "send nudes", "explicit sexual", "hookup", "hook up",
+  "one night stand", "friends with benefits", "sugar daddy", "sugar mama", "sugar baby", "cam girl", "cam boy",
+  "incest", "bestiality", "necrophilia", "sixty nine",
+
+  // Hate speech and dehumanizing slurs.
+  "nigger", "nigga", "faggot", "tranny", "chink", "spic", "kike", "dyke", "retard",
+];
+
+const escapeRegExp = (value: string) => value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
+// Allow punctuation, spaces, or repeated separators between letters so entries
+// such as d.i.c.k, h0e, f-u-c-k, and spaced-out profanity are still caught.
+const flexibleTerm = (term: string) => term
+  .trim()
+  .split(/\s+/)
+  .map((word) => [...word].map(escapeRegExp).join("\\s*"))
+  .join("\\s+");
+
+const INAPPROPRIATE_LANGUAGE = new RegExp(
+  `\\b(?:${INAPPROPRIATE_TERMS.map(flexibleTerm).join("|")})\\b`,
+  "i",
+);
+
+export function sanitizeScholarName(value: string) {
+  const trimmed = value.trim().replace(/\s+/g, " ");
+  // Respect legitimate surnames without printing a term prohibited elsewhere.
+  return trimmed.replace(/\s+dick(?=(?:\s+(?:jr|sr|ii|iii|iv)\.?)?$)/i, " D.");
+}
+
 const RULES: Array<{ category: RecommendationSafetyIssue["category"]; pattern: RegExp }> = [
   {
     category: "inappropriate language",
-    pattern: /\b(?:f\s*u\s*c\s*k|s\s*h\s*i\s*t|b\s*i\s*t\s*c\s*h|c\s*u\s*n\s*t|a\s*s\s*s\s*h\s*o\s*l\s*e|m\s*o\s*t\s*h\s*e\s*r\s*f\s*u\s*c\s*k\s*e\s*r|w\s*h\s*o\s*r\s*e|s\s*l\s*u\s*t|n\s*i\s*g\s*g\s*(?:e\s*r|a)|f\s*a\s*g\s*g\s*o\s*t|t\s*r\s*a\s*n\s*n\s*y|c\s*h\s*i\s*n\s*k|s\s*p\s*i\s*c|k\s*i\s*k\s*e)\b/i,
-  },
-  {
-    category: "inappropriate language",
-    pattern: /\b(?:porn(?:ography|ographic)?|sex\s*tape|explicit\s*sexual|send\s*nudes?)\b/i,
+    pattern: INAPPROPRIATE_LANGUAGE,
   },
   {
     category: "threatening content",
@@ -60,6 +105,9 @@ function normalizeForScreening(value: string) {
     .replace(/[0]/g, "o")
     .replace(/[$5]/g, "s")
     .replace(/[7]/g, "t")
+    .replace(/[8]/g, "b")
+    .replace(/[6]/g, "g")
+    .replace(/[9]/g, "g")
     .replace(/[^a-z0-9]+/g, " ")
     .replace(/\s+/g, " ")
     .trim();
@@ -69,7 +117,9 @@ export function screenRecommendationDetails(details: Record<string, string>) {
   const issues: RecommendationSafetyIssue[] = [];
   for (const [field, rawValue] of Object.entries(details)) {
     if (!FIELD_LABELS[field] || !rawValue.trim()) continue;
-    const value = normalizeForScreening(rawValue);
+    const screenedValue = field === "studentName" ? sanitizeScholarName(rawValue) : rawValue;
+    // "cum laude" is a legitimate academic distinction, not sexual language.
+    const value = normalizeForScreening(screenedValue).replace(/\bcum\s+laude\b/g, "academic honor");
     for (const rule of RULES) {
       if (rule.pattern.test(value)) {
         issues.push({ field: FIELD_LABELS[field], category: rule.category });
