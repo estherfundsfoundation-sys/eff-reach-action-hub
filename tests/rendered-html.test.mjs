@@ -63,7 +63,7 @@ test("renders all thirteen private student action tools", async () => {
   for (const title of [
     "Award Letter &amp; Balance Decoder",
     "Financial Aid Counter-Offer Engine",
-    "Recommendation Letter Builder",
+    "Official EFF Recommendation Letter",
     "Essay Story Builder",
     "Scholarship Action Center",
     "FAFSA Decoder",
@@ -94,13 +94,15 @@ test("deadline reminders are local calendar alerts", async () => {
   assert.match(source, /Your calendar app—not EFF—delivers these alerts/);
 });
 
-test("recommendation tool requires human review and never invents an EFF endorsement", async () => {
+test("recommendation tool issues an attributed EFF letter with consent and disclosure", async () => {
   const source = await readFile(new URL("../app/tools/RecommendationLetterTool.tsx", import.meta.url), "utf8");
-  assert.match(source, /without inventing a single fact/i);
-  assert.match(source, /must review, edit, verify, sign, and submit/i);
-  assert.match(source, /never issued automatically from unverified student input/i);
-  assert.match(source, /Open a secure EFF review case/);
-  assert.match(source, /portal\.estherfundsfoundation\.org\/help-desk\/open-case/);
+  assert.match(source, /Esther Funds Foundation · Official Letter Tool/i);
+  assert.match(source, /Shayna Vincent/);
+  assert.match(source, /eff-logo\.png/);
+  assert.match(source, /I confirm that the information I submitted is truthful/i);
+  assert.match(source, /personalized from information submitted/i);
+  assert.match(source, /does not independently certify/i);
+  assert.match(source, /Save official letter \/ PDF/i);
 });
 
 test("counter-offer engine compares gift aid separately from debt and uses official public context", async () => {

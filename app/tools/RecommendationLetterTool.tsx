@@ -1,167 +1,89 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import Image from "next/image";
 
 type LetterDetails = {
-  studentName: string;
-  schoolMajor: string;
-  opportunity: string;
-  organization: string;
-  recommenderName: string;
-  recommenderRole: string;
-  relationship: string;
-  strengths: string;
-  example: string;
-  futureGoal: string;
-  deadline: string;
+  studentName: string; school: string; major: string; gpa: string;
+  opportunity: string; organization: string; effConnection: string;
+  strengths: string; achievement: string; challenge: string; futureGoal: string;
+  pronouns: "she" | "he" | "they";
 };
 
 const initialDetails: LetterDetails = {
-  studentName: "",
-  schoolMajor: "",
-  opportunity: "",
-  organization: "",
-  recommenderName: "",
-  recommenderRole: "",
-  relationship: "",
-  strengths: "",
-  example: "",
-  futureGoal: "",
-  deadline: "",
+  studentName:"", school:"", major:"", gpa:"", opportunity:"", organization:"",
+  effConnection:"", strengths:"", achievement:"", challenge:"", futureGoal:"", pronouns:"they",
 };
 
 const clean = (value: string, fallback: string) => value.trim() || `[${fallback}]`;
 
 export default function RecommendationLetterTool() {
   const [details, setDetails] = useState(initialDetails);
-  const [copied, setCopied] = useState<"letter" | "request" | "">("");
-
+  const [attested, setAttested] = useState(false);
+  const [copied, setCopied] = useState(false);
   const update = (field: keyof LetterDetails, value: string) => setDetails((current) => ({ ...current, [field]: value }));
+
   const student = clean(details.studentName, "student name");
   const firstName = details.studentName.trim().split(/\s+/)[0] || "the student";
-  const opportunity = clean(details.opportunity, "opportunity name");
   const recipient = details.organization.trim() ? `${details.organization.trim()} Selection Committee` : "Selection Committee";
+  const subject = clean(details.opportunity, "scholarship or opportunity");
+  const pronoun = details.pronouns === "she" ? { s:"she", o:"her", p:"her", S:"She" } : details.pronouns === "he" ? { s:"he", o:"him", p:"his", S:"He" } : { s:"they", o:"them", p:"their", S:"They" };
+  const issuedDate = new Intl.DateTimeFormat("en-US", { month:"long", day:"numeric", year:"numeric" }).format(new Date());
+  const essentials = [details.studentName, details.school, details.major, details.opportunity, details.organization, details.effConnection, details.strengths, details.achievement, details.futureGoal];
+  const filled = essentials.filter((value) => value.trim()).length;
+  const ready = filled === essentials.length && attested;
 
   const letter = useMemo(() => {
-    const schoolMajor = clean(details.schoolMajor, "school, major, or program");
-    const relationship = clean(details.relationship, "how the recommender knows the student and for how long");
-    const strengths = clean(details.strengths, "two or three qualities the recommender can personally verify");
-    const example = clean(details.example, "one specific example the recommender personally observed");
-    const goal = clean(details.futureGoal, "the student’s education or career goal");
-    const signer = clean(details.recommenderName, "recommender name");
-    const signerRole = clean(details.recommenderRole, "title and organization");
+    const school = clean(details.school, "college or university");
+    const major = clean(details.major, "major or program");
+    const connection = clean(details.effConnection, "EFF program, chapter, service, or other connection");
+    const strengths = clean(details.strengths, "qualities demonstrated");
+    const achievement = clean(details.achievement, "specific achievement, leadership, or service example");
+    const goal = clean(details.futureGoal, "education or career goal");
+    const gpa = details.gpa.trim() ? ` and reports a cumulative GPA of ${details.gpa.trim()}` : "";
+    const challenge = details.challenge.trim() ? ` ${pronoun.S} also shared that ${details.challenge.trim()}, demonstrating persistence while continuing ${pronoun.p} education.` : "";
+    return `${issuedDate}\n\n${recipient}\n\nDear Selection Committee:\n\nOn behalf of Esther Funds Foundation, I am pleased to recommend ${student} for the ${subject}. Esther Funds Foundation works to prevent college dropouts and help underrepresented students remain enrolled, graduate, and move into purpose-filled careers.\n\n${firstName} attends ${school}, where ${pronoun.s} studies ${major}${gpa}. In the information submitted to EFF, ${firstName} described ${pronoun.p} connection to our work through ${connection}. ${firstName} identified ${strengths} as qualities reflected in ${pronoun.p} academic, leadership, and service journey.\n\nOne example ${firstName} shared is ${achievement}.${challenge} These experiences reflect initiative, resilience, and a commitment to using opportunity with purpose.\n\n${firstName} is working toward ${goal}. We believe support through the ${subject} would help ${pronoun.o} continue that work and move closer to graduation. Esther Funds Foundation is honored to recommend ${firstName} for your thoughtful consideration.\n\nSincerely,\n\nShayna Vincent\nFounder & Executive Director\nEsther Funds Foundation\nnationals@estherfundsinc.org\nestherfundsfoundation.org`;
+  }, [details, firstName, issuedDate, pronoun.S, pronoun.o, pronoun.p, pronoun.s, recipient, student, subject]);
 
-    return `${new Intl.DateTimeFormat("en-US", { month: "long", day: "numeric", year: "numeric" }).format(new Date())}
-
-${recipient}
-
-Dear Selection Committee:
-
-I am pleased to recommend ${student} for the ${opportunity}. ${firstName} is currently connected to ${schoolMajor}, and I have known ${firstName} through ${relationship}.
-
-In my experience with ${firstName}, ${strengths} stand out most clearly. One example is ${example}. This moment demonstrates not only what ${firstName} has accomplished, but also the character, initiative, and follow-through brought to the work.
-
-${firstName} is working toward ${goal}. I believe this opportunity would help ${firstName} continue that progress and expand the impact already being made. Based on what I can personally verify, I recommend ${firstName} for your consideration.
-
-Thank you for reviewing ${firstName}’s application. Please contact me if additional information would be helpful.
-
-Sincerely,
-
-${signer}
-${signerRole}
-[recommender email or phone]`;
-  }, [details, firstName, opportunity, recipient, student]);
-
-  const requestEmail = useMemo(() => `Subject: Recommendation request for ${opportunity}
-
-Hello ${details.recommenderName.trim() || "[recommender name]"},
-
-Would you be comfortable writing a recommendation for my ${opportunity} application? The deadline is ${details.deadline.trim() || "[deadline and time zone]"}.
-
-To make this easier, I prepared a starter draft and the facts you may want to reference. Please change anything that does not reflect your own experience with me, and only sign or submit a letter you have personally reviewed and can verify.
-
-I can also send the official opportunity instructions, my résumé, and any required submission link. Thank you for considering my request.
-
-Best,
-${student}`, [details.deadline, details.recommenderName, opportunity, student]);
-
-  const filled = [details.studentName, details.schoolMajor, details.opportunity, details.recommenderName, details.relationship, details.strengths, details.example, details.futureGoal].filter((value) => value.trim()).length;
-  const ready = filled === 8;
-
-  const copy = async (value: string, type: "letter" | "request") => {
-    try {
-      await navigator.clipboard.writeText(value);
-      setCopied(type);
-      window.setTimeout(() => setCopied(""), 1800);
-    } catch {
-      setCopied("");
-    }
-  };
-
-  const printLetter = () => {
-    document.body.classList.add("print-recommendation");
-    window.print();
-    window.setTimeout(() => document.body.classList.remove("print-recommendation"), 250);
-  };
-
-  const reviewUrl = "https://portal.estherfundsfoundation.org/help-desk/open-case";
+  const copy = async () => { try { await navigator.clipboard.writeText(letter); setCopied(true); window.setTimeout(() => setCopied(false), 1800); } catch { setCopied(false); } };
+  const printLetter = () => { if (!ready) return; document.body.classList.add("print-recommendation"); window.print(); window.setTimeout(() => document.body.classList.remove("print-recommendation"), 250); };
 
   return <section className="recommendation-engine">
     <header className="recommendation-heading">
-      <div>
-        <p className="kicker">REACH · OPPORTUNITY-READY</p>
-        <h2>The 60-Second<br/><em>Recommendation Letter</em></h2>
-        <p>Answer the prompts once. Get a polished starter letter and a ready-to-send request email—without inventing a single fact.</p>
-      </div>
-      <aside><strong>{filled}/8</strong><span>essential facts added</span><b>{ready ? "READY TO REVIEW" : "KEEP GOING"}</b></aside>
+      <div><p className="kicker">ESTHER FUNDS FOUNDATION · OFFICIAL LETTER TOOL</p><h2>The 60-Second<br/><em>EFF Recommendation Letter</em></h2><p>Submit the facts once. The letter is written from Esther Funds Foundation, personalized from the information provided, and signed by Founder &amp; Executive Director Shayna Vincent.</p></div>
+      <aside><strong>{filled}/9</strong><span>essential facts added</span><b>{ready ? "LETTER READY" : "COMPLETE + ATTEST"}</b></aside>
     </header>
 
-    <div className="recommendation-steps" aria-label="How the tool works">
-      <span><b>1</b> Add the facts</span><span><b>2</b> Build the draft</span><span><b>3</b> Recommender reviews</span><span><b>4</b> Recommender submits</span>
-    </div>
+    <div className="recommendation-steps" aria-label="How the tool works"><span><b>1</b> Submit your facts</span><span><b>2</b> EFF builds the letter</span><span><b>3</b> Confirm accuracy</span><span><b>4</b> Save the signed PDF</span></div>
 
     <section className="recommendation-form">
-      <div className="recommendation-form-heading"><p className="kicker">QUICK INTAKE</p><h3>Give the recommender what they need.</h3><p>Short phrases are enough. Use only information the signer can truthfully confirm.</p></div>
+      <div className="recommendation-form-heading"><p className="kicker">60-SECOND INTAKE</p><h3>Tell EFF what the letter should say.</h3><p>Use complete, truthful details. The letter identifies the content as information submitted to EFF.</p></div>
       <div className="recommendation-grid">
         <RecField label="Student’s full name" value={details.studentName} set={(value) => update("studentName", value)} placeholder="First and last name"/>
-        <RecField label="School + major, program, or role" value={details.schoolMajor} set={(value) => update("schoolMajor", value)} placeholder="Example: FAMU junior studying public health"/>
-        <RecField label="Scholarship, internship, or opportunity" value={details.opportunity} set={(value) => update("opportunity", value)} placeholder="Official opportunity name"/>
-        <RecField label="Organization receiving the letter" value={details.organization} set={(value) => update("organization", value)} placeholder="Optional"/>
-        <RecField label="Recommender’s name" value={details.recommenderName} set={(value) => update("recommenderName", value)} placeholder="Person who will review and sign"/>
-        <RecField label="Recommender’s title + organization" value={details.recommenderRole} set={(value) => update("recommenderRole", value)} placeholder="Example: Professor, Howard University"/>
-        <RecField wide label="How do they know the student—and for how long?" value={details.relationship} set={(value) => update("relationship", value)} placeholder="Example: my student in two biology courses since August 2025"/>
-        <RecField wide label="Two or three strengths they have personally seen" value={details.strengths} set={(value) => update("strengths", value)} placeholder="Example: dependable leadership, thoughtful problem-solving, and care for peers"/>
-        <RecField wide area label="One specific moment or measurable example" value={details.example} set={(value) => update("example", value)} placeholder="Example: She organized a campus food drive, recruited 18 volunteers, and delivered 240 items to the pantry."/>
-        <RecField wide label="Education, service, or career goal" value={details.futureGoal} set={(value) => update("futureGoal", value)} placeholder="Example: become a pediatric nurse serving rural communities"/>
-        <RecField label="Deadline + time zone" value={details.deadline} set={(value) => update("deadline", value)} placeholder="Example: October 1 at 11:59 p.m. ET"/>
+        <RecField label="College or university" value={details.school} set={(value) => update("school", value)} placeholder="Official school name"/>
+        <RecField label="Major or program" value={details.major} set={(value) => update("major", value)} placeholder="Example: Public Health"/>
+        <RecField label="Cumulative GPA (optional)" value={details.gpa} set={(value) => update("gpa", value)} placeholder="Example: 3.42"/>
+        <RecField label="Scholarship or opportunity" value={details.opportunity} set={(value) => update("opportunity", value)} placeholder="Official opportunity name"/>
+        <RecField label="Organization receiving the letter" value={details.organization} set={(value) => update("organization", value)} placeholder="Scholarship sponsor or program"/>
+        <label className="recommendation-field"><span>Pronouns used in the letter</span><select value={details.pronouns} onChange={(event) => update("pronouns", event.target.value)}><option value="she">She / her</option><option value="he">He / him</option><option value="they">They / them</option></select></label>
+        <RecField label="Connection to EFF" value={details.effConnection} set={(value) => update("effConnection", value)} placeholder="Program, chapter, service, ambassador, or resource"/>
+        <RecField wide area label="Strengths the letter should highlight" value={details.strengths} set={(value) => update("strengths", value)} placeholder="Example: resilient leadership, compassion, and academic discipline"/>
+        <RecField wide area label="One specific achievement, leadership, or service example" value={details.achievement} set={(value) => update("achievement", value)} placeholder="Include what happened and the measurable result."/>
+        <RecField wide area label="Challenge overcome (optional)" value={details.challenge} set={(value) => update("challenge", value)} placeholder="Use respectful facts and share only what belongs in the letter."/>
+        <RecField wide area label="Education, service, or career goal" value={details.futureGoal} set={(value) => update("futureGoal", value)} placeholder="Explain the future this opportunity will help make possible."/>
       </div>
+      <label className="recommendation-attestation"><input type="checkbox" checked={attested} onChange={(event) => setAttested(event.target.checked)}/><span>I confirm that the information I submitted is truthful and may appear in an Esther Funds Foundation recommendation letter. I understand that EFF is relying on my submission and may revoke a letter containing false information.</span></label>
     </section>
 
     <section className="recommendation-output">
-      <div className="recommendation-output-heading">
-        <div><p className="kicker">LIVE DRAFT</p><h3>A strong start—not a fake signature.</h3></div>
-        <span className={ready ? "ready" : "incomplete"}>{ready ? "All essential facts included" : `${8 - filled} essential fact${8 - filled === 1 ? "" : "s"} still needed`}</span>
-      </div>
-      <div className="recommendation-letter" aria-label="Generated recommendation letter">
-        <div className="letter-brand"><span>ESTHER FUNDS FOUNDATION</span><strong>REACH</strong><small>EVERY FUTURE FULFILLED.</small></div>
+      <div className="recommendation-output-heading"><div><p className="kicker">OFFICIAL EFF LETTER</p><h3>{ready ? "Signed and ready to save." : "Complete the intake to issue."}</h3></div><span className={ready ? "ready" : "incomplete"}>{ready ? "AUTHORIZED EFF LETTER" : `${9 - filled} essential fact${9 - filled === 1 ? "" : "s"} still needed`}</span></div>
+      <div className={`recommendation-letter${ready ? " issued" : ""}`} aria-label="Generated Esther Funds Foundation recommendation letter">
+        <div className="letter-brand"><Image src="/eff-logo.png" alt="Esther Funds Foundation logo" width={68} height={68}/><div><span>ESTHER FUNDS FOUNDATION</span><strong>Official Recommendation</strong><small>EVERY FUTURE FULFILLED.</small></div></div>
         <pre>{letter}</pre>
-        <p>This draft is based on student-provided information. The recommender must review, edit, verify, sign, and submit it.</p>
+        <div className="letter-signature-block"><span className="letter-signature">Shayna Vincent</span><b>Shayna Vincent</b><small>Founder &amp; Executive Director · Esther Funds Foundation</small><em>Electronically signed through the authorized EFF letter workflow · {issuedDate}</em></div>
+        <p>This letter is personalized from information submitted to Esther Funds Foundation by the applicant. The signed letter does not independently certify a GPA, title, award, or activity unless EFF separately confirms it.</p>
       </div>
-      <div className="recommendation-actions">
-        <button type="button" onClick={() => copy(letter, "letter")}>{copied === "letter" ? "Copied ✓" : "Copy letter"}</button>
-        <button type="button" onClick={printLetter}>Save / print letter</button>
-      </div>
-    </section>
-
-    <section className="recommendation-request">
-      <div><p className="kicker">ASK PROFESSIONALLY</p><h3>Your request email is ready, too.</h3><p>Send the official deadline, instructions, résumé, and draft together. Give the recommender enough time to make the letter their own.</p></div>
-      <pre>{requestEmail}</pre>
-      <div className="recommendation-actions"><button type="button" onClick={() => copy(requestEmail, "request")}>{copied === "request" ? "Copied ✓" : "Copy request email"}</button></div>
-    </section>
-
-    <section className="recommendation-guardrail">
-      <div><b>Need an official EFF recommendation?</b><p>Submit the facts for National Office review. EFF may verify appropriate participation or service, but a branded letter, signature, seal, or endorsement is never issued automatically from unverified student input.</p></div>
-      <a href={reviewUrl}>Open a secure EFF review case →</a>
+      <div className="recommendation-actions"><button type="button" onClick={copy}>{copied ? "Copied ✓" : "Copy letter"}</button><button type="button" disabled={!ready} onClick={printLetter}>{ready ? "Save official letter / PDF" : "Complete + attest to save"}</button></div>
     </section>
   </section>;
 }

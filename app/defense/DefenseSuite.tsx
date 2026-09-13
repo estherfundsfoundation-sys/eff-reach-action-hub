@@ -1,4 +1,5 @@
 "use client";
+/* eslint-disable @next/next/no-html-link-for-pages */
 
 import { useEffect, useMemo, useState } from "react";
 
@@ -24,7 +25,7 @@ export default function DefenseSuite() {
   const [active, setActive] = useState<ModuleId>("triage");
   useEffect(() => {
     const requested = new URLSearchParams(window.location.search).get("tool") as ModuleId | null;
-    if (requested && modules.some((module) => module.id === requested)) setActive(requested);
+    if (requested && modules.some((module) => module.id === requested)) queueMicrotask(() => setActive(requested));
   }, []);
   const choose = (id: ModuleId) => { setActive(id); window.history.replaceState({}, "", `/defense?tool=${id}`); window.scrollTo({ top: 700, behavior:"smooth" }); };
 
@@ -84,7 +85,7 @@ function Triage({ choose }: { choose:(id:ModuleId)=>void }) {
   ];
   const go=(kind:string,id:ModuleId|"external")=>{
     if(id!=="external") return choose(id);
-    window.location.href=kind==="spirit"?"https://portal.estherfundsfoundation.org/resources/selah":"https://portal.estherfundsfoundation.org/resources/student-help";
+    window.location.assign(kind==="spirit"?"https://portal.estherfundsfoundation.org/resources/selah":"https://portal.estherfundsfoundation.org/resources/student-help");
   };
   return <Panel eyebrow="INTAKE · 30 SECONDS" title="What is putting school at risk right now?" intro="Choose the most urgent barrier. If your immediate safety is at risk, call 911. If you are in emotional crisis or thinking about suicide, call or text 988."><div className="triage-grid">{paths.map(([title,desc,kind,id,cta])=><button key={title} onClick={()=>go(kind,id)}><span>{kind.toUpperCase()}</span><strong>{title}</strong><p>{desc}</p><b>{cta} →</b></button>)}</div><div className="defense-links"><a href="tel:988">Call or text 988</a><a href="https://www.211.org/">Find local help through 211</a><a href="https://mentor.estherfundsfoundation.org/">Find an EFF mentor</a></div></Panel>;
 }
@@ -145,7 +146,7 @@ type CourseNode={code:string;terms:string[];prereqs:string[]};
 function CourseSequence() {
   const [text,setText]=useState(""); const [completed,setCompleted]=useState("");
   const nodes=useMemo<CourseNode[]>(()=>text.split(/\r?\n/).map((line)=>line.trim()).filter(Boolean).map((line)=>{const [code="",terms="",prereqs=""]=line.split("|").map((x)=>x.trim());return {code:code.toUpperCase(),terms:terms.toLowerCase().split(",").map((x)=>x.trim()).filter(Boolean),prereqs:prereqs.toUpperCase().split(",").map((x)=>x.trim()).filter(Boolean)};}).filter((x)=>x.code),[text]);
-  const done=new Set(completed.toUpperCase().split(/[,\n]/).map((x)=>x.trim()).filter(Boolean));
+  const done=useMemo(()=>new Set(completed.toUpperCase().split(/[,\n]/).map((x)=>x.trim()).filter(Boolean)),[completed]);
   const problems=useMemo(()=>{const codes=new Set(nodes.map((x)=>x.code));const missing=nodes.flatMap((node)=>node.prereqs.filter((pre)=>!codes.has(pre)&&!done.has(pre)).map((pre)=>`${node.code} requires ${pre}, which is not listed as completed or planned.`));const limited=nodes.filter((node)=>node.terms.length===1).map((node)=>`${node.code} is entered as ${node.terms[0]}-only; missing it may add a term.`);const cycles:string[]=[];const visiting=new Set<string>(),visited=new Set<string>();const byCode=new Map(nodes.map((x)=>[x.code,x]));const visit=(code:string,path:string[])=>{if(visiting.has(code)){cycles.push(`Prerequisite cycle entered: ${[...path,code].join(" → ")}`);return;}if(visited.has(code))return;visiting.add(code);for(const pre of byCode.get(code)?.prereqs||[])visit(pre,[...path,code]);visiting.delete(code);visited.add(code);};nodes.forEach((node)=>visit(node.code,[]));return [...new Set([...missing,...limited,...cycles])];},[nodes,done]);
   return <Panel eyebrow="DEGREE PATH DEFENSE" title="Find the course that can delay three others." intro="Build a quick map from the official catalog and degree audit. Course availability changes, so confirm the final plan with an academic adviser."><Field wide area label="One course per line: CODE | offered terms | prerequisite codes" value={text} set={setText} placeholder="BIO 101 | fall,spring |&#10;BIO 201 | spring | BIO 101&#10;BIO 301 | fall | BIO 201"/><Field wide area label="Completed course codes, separated by commas" value={completed} set={setCompleted} placeholder="ENC 1101, MAT 1033"/><div className="sequence-grid">{nodes.map((node)=><article key={node.code}><small>{node.terms.join(" + ")||"TERM UNKNOWN"}</small><strong>{node.code}</strong><span>{node.prereqs.length?`After ${node.prereqs.join(", ")}`:"No prerequisite entered"}</span></article>)}</div><section className="risk-list"><h3>Items to verify</h3>{problems.length?problems.map((problem)=><p key={problem}>⚠ {problem}</p>):<p>Enter the official sequence. No issues are flagged yet.</p>}</section><div className="defense-links"><a href="https://portal.estherfundsfoundation.org/resources/student-help">Ask EFF for planning support ↗</a></div></Panel>;
 }

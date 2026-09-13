@@ -8,7 +8,7 @@ import RecommendationLetterTool from "./RecommendationLetterTool";
 const tools = [
   { id: "award", tag: "NEW · UPLOAD", title: "Award Letter & Balance Decoder", desc: "Upload an aid letter, add work income, and see what is still uncovered.", color: "featured" },
   { id: "counteroffer", tag: "NEW · COMPARE", title: "Financial Aid Counter-Offer Engine", desc: "Compare competing offers and draft an institutional aid reconsideration request.", color: "featured" },
-  { id: "recommendation", tag: "60-SECOND TOOL", title: "Recommendation Letter Builder", desc: "Build a truthful starter letter and professional request email in one place.", color: "featured" },
+  { id: "recommendation", tag: "60-SECOND TOOL", title: "Official EFF Recommendation Letter", desc: "Submit truthful facts and save a personalized EFF letter bearing the foundation’s logo and authorized signature.", color: "featured" },
   { id: "essay", tag: "WRITE", title: "Essay Story Builder", desc: "Turn one real moment into a scholarship-ready outline.", color: "yellow" },
   { id: "scholarship", tag: "APPLY", title: "Scholarship Action Center", desc: "Turn a deadline into a clear application plan.", color: "pink" },
   { id: "fafsa", tag: "DECODE", title: "FAFSA Decoder", desc: "Understand your status, SAI, verification, and next move.", color: "blue" },
@@ -82,7 +82,7 @@ export default function InteractiveTools() {
 
   useEffect(() => {
     const requested = new URLSearchParams(window.location.search).get("tool");
-    if (requested && tools.some(tool => tool.id === requested)) setActive(requested);
+    if (requested && tools.some(tool => tool.id === requested)) queueMicrotask(() => setActive(requested));
   }, []);
 
   const chooseTool = (id: string) => {

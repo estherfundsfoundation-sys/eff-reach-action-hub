@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-html-link-for-pages */
 import Link from "next/link";
 import { chatGPTSignInPath } from "@/app/chatgpt-auth";
 import {
