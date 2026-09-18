@@ -4,11 +4,15 @@ import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
 import CounterOfferEngine from "./CounterOfferEngine";
 import RecommendationLetterTool from "./RecommendationLetterTool";
+import OneSheetResumeEngine from "./OneSheetResumeEngine";
+import CareerLaunchpadProfile from "./CareerLaunchpadProfile";
 
 const tools = [
   { id: "award", tag: "NEW · UPLOAD", title: "Award Letter & Balance Decoder", desc: "Upload an aid letter, add work income, and see what is still uncovered.", color: "featured" },
   { id: "counteroffer", tag: "NEW · COMPARE", title: "Financial Aid Counter-Offer Engine", desc: "Compare competing offers and draft an institutional aid reconsideration request.", color: "featured" },
   { id: "recommendation", tag: "60-SECOND TOOL", title: "Official EFF Recommendation Letter", desc: "Submit truthful facts and save a personalized EFF letter bearing the foundation’s logo and authorized signature.", color: "featured" },
+  { id: "resume", tag: "NEW · DOWNLOAD", title: "EFF One-Sheet Résumé Engine", desc: "Turn everyday work, coursework, and projects into a truthful, editable one-page résumé PDF.", color: "featured" },
+  { id: "career-profile", tag: "NEW · PROFILE", title: "Career Launchpad Profile", desc: "Shape your headline, bio, projects, skills, and reference metadata into a private career profile.", color: "featured" },
   { id: "essay", tag: "WRITE", title: "Essay Story Builder", desc: "Turn one real moment into a scholarship-ready outline.", color: "yellow" },
   { id: "scholarship", tag: "APPLY", title: "Scholarship Action Center", desc: "Turn a deadline into a clear application plan.", color: "pink" },
   { id: "fafsa", tag: "DECODE", title: "FAFSA Decoder", desc: "Understand your status, SAI, verification, and next move.", color: "blue" },
@@ -158,13 +162,15 @@ export default function InteractiveTools() {
 
   return <main className="tool-page">
     <header className="tool-header"><Link href="/">← REACH Action Hub</Link><span>EFF INTERACTIVE TOOLKITS</span><a href="https://portal.estherfundsfoundation.org/">Scholarship Portal ↗</a></header>
-    <section className="tool-hero"><p className="kicker">NO HOMEWORK. JUST YOUR NEXT MOVE.</p><h1>Tap. Answer.<br/><em>Get a plan.</em></h1><p>Thirteen quick, private tools built around real student problems. Your answers stay in your browser and are not sent to EFF.</p></section>
+    <section className="tool-hero"><p className="kicker">NO HOMEWORK. JUST YOUR NEXT MOVE.</p><h1>Tap. Answer.<br/><em>Get a plan.</em></h1><p>Practical tools built around real student problems. Check each tool’s privacy note before entering personal information.</p></section>
     <section className="tool-shell">
       <div id="tool-picker" className="tool-picker" aria-label="Choose an interactive toolkit">{tools.map(t=><button type="button" key={t.id} aria-pressed={active===t.id} className={`${t.color} ${active===t.id?"active":""}`} onClick={()=>chooseTool(t.id)}><small>{t.tag}</small><strong>{t.title}</strong><span>{t.desc}</span><b className="tool-card-action">{active===t.id?"OPEN NOW ↓":"Open tool →"}</b></button>)}</div>
       <div className="tool-open-confirmation" role="status" aria-live="polite"><span aria-hidden="true">✓</span><div><small>TOOL OPENED</small><strong>{activeTool.title}</strong><p>Start below—your selected tool is ready.</p></div><button type="button" onClick={()=>document.getElementById("tool-picker")?.scrollIntoView({behavior:"smooth",block:"start"})}>Choose a different tool ↑</button></div>
       <div ref={workspaceRef} tabIndex={-1} className="tool-workspace" role="region" aria-label={`${activeTool.title} workspace`}>
         {active==="counteroffer" && <CounterOfferEngine/>}
         {active==="recommendation" && <RecommendationLetterTool/>}
+        {active==="resume" && <OneSheetResumeEngine/>}
+        {active==="career-profile" && <CareerLaunchpadProfile/>}
         {active==="award" && <Tool title="Upload your award. Find the real gap." intro="Start with your award letter, then add your current bill and the money you can realistically use before it is due.">
           <section className="privacy-banner"><span aria-hidden="true">◆</span><div><strong>Your document stays on this device.</strong><p>REACH reads text inside your browser. It does not save or send the file to EFF. Remove Social Security numbers, student IDs, addresses, and account numbers before pasting text.</p></div></section>
           <label className="award-upload"><input type="file" accept=".pdf,.txt,application/pdf,text/plain" onChange={event=>readAwardFile(event.target.files?.[0])}/><span aria-hidden="true">↑</span><strong>Choose an award-letter PDF</strong><small>Text-based PDF or TXT · 10 MB maximum</small></label>

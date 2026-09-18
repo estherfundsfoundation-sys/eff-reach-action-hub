@@ -1,0 +1,65 @@
+.resume-engine{max-width:1160px;margin:auto;background:#fff;color:#171827;border:2px solid #29263a;box-shadow:9px 9px 0 #29263a;font-family:Manrope,Arial,sans-serif}
+.resume-engine-head{display:flex;justify-content:space-between;gap:32px;align-items:end;padding:clamp(26px,4vw,48px);background:#532783;color:white}
+.resume-engine-head p,.resume-preview-heading p{margin:0 0 10px;font-size:.78rem;font-weight:800;letter-spacing:.15em;color:#ffd84a}
+.resume-engine-head h2{font-family:'DM Serif Display',Georgia,serif;font-size:clamp(2.5rem,5vw,4.9rem);font-weight:400;line-height:.96;margin:0 0 18px;letter-spacing:-.035em}
+.resume-engine-head h2 em{color:#ffd84a;font-weight:400}
+.resume-engine-head span{font-size:1rem;line-height:1.5;color:#f2eaf9}
+.resume-engine-mark{flex:0 0 auto;width:130px;height:130px;border:2px solid #ffd84a;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:'DM Serif Display',Georgia,serif;font-size:2.6rem;line-height:.95;transform:rotate(7deg)}
+.resume-engine-mark span{font-family:Manrope,Arial,sans-serif;font-size:.7rem;letter-spacing:.18em;font-weight:800;color:#ffd84a;margin-top:5px}
+.resume-privacy{margin:0;padding:18px clamp(20px,4vw,48px);background:#fff3cd;border-bottom:1px solid #d9c273;font-size:.9rem;line-height:1.5}
+.resume-form{padding:16px clamp(20px,4vw,48px) 40px}
+.resume-step{display:grid;grid-template-columns:54px 1fr;column-gap:16px;align-items:center;margin:34px 0 17px}
+.resume-step>span{grid-row:1/3;display:grid;place-items:center;width:48px;height:48px;border-radius:50%;background:#532783;color:#fff;font-weight:900;font-size:.9rem}
+.resume-step h3{margin:0;font-family:'DM Serif Display',Georgia,serif;font-size:1.75rem;font-weight:400}
+.resume-step p{grid-column:2;margin:2px 0 0;font-size:.88rem;line-height:1.5;color:#545363}
+.resume-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.resume-field{display:flex;flex-direction:column;gap:7px;min-width:0;font-size:.84rem;font-weight:800}
+.resume-field.wide{grid-column:1/-1}
+.resume-field input,.resume-field textarea{width:100%;min-height:46px;padding:12px 14px;border:1.5px solid #aaa6b2;border-radius:8px;background:#fff;color:#171827;font:500 1rem/1.45 Manrope,Arial,sans-serif}
+.resume-field textarea{resize:vertical;min-height:92px}
+.resume-field input:focus,.resume-field textarea:focus,.resume-bullet-edit textarea:focus{outline:3px solid #d5c0ee;outline-offset:2px;border-color:#532783}
+.resume-entry-form{margin:0 0 16px;padding:19px;border:1.5px solid #b7b1c0;border-radius:12px;background:#fbf9ff}
+.resume-entry-form legend{padding:0 8px;font-size:.88rem;font-weight:900;color:#532783}
+.resume-text-button{margin-top:13px;border:0;background:transparent;color:#6d2853;text-decoration:underline;font:800 .84rem Manrope,Arial,sans-serif;cursor:pointer}
+.resume-add{padding:11px 16px;border:1.5px dashed #532783;border-radius:8px;background:white;color:#532783;font:800 .88rem Manrope,Arial,sans-serif;cursor:pointer}
+.resume-create{display:flex;align-items:center;flex-wrap:wrap;gap:18px;margin-top:32px;padding-top:26px;border-top:1px solid #ddd7e3}
+.resume-create button,.resume-preview-heading button{min-height:52px;padding:13px 18px;border:2px solid #29263a;border-radius:8px;background:#ffd84a;color:#171827;font:900 .9rem Manrope,Arial,sans-serif;cursor:pointer}
+.resume-create button:hover,.resume-preview-heading button:hover{background:#f7b9d2}
+.resume-create p{font-size:.86rem;color:#545363}
+.resume-status{min-height:24px;margin:0;padding:0 clamp(20px,4vw,48px) 18px;font-size:.9rem;font-weight:700;color:#532783}
+.resume-preview{padding:36px clamp(16px,4vw,48px) 46px;background:#eae5f0;border-top:2px solid #29263a;scroll-margin-top:26px}
+.resume-preview-heading{display:flex;align-items:end;justify-content:space-between;gap:24px;margin-bottom:23px}
+.resume-preview-heading p{color:#532783}
+.resume-preview-heading h3{font-family:'DM Serif Display',Georgia,serif;font-size:2.35rem;font-weight:400;line-height:1;margin:0 0 8px}
+.resume-preview-heading span{font-size:.9rem;line-height:1.5}
+.resume-paper{width:min(100%,840px);min-height:740px;margin:auto;padding:clamp(22px,5vw,58px);background:white;box-shadow:0 12px 35px #29263a26;font-family:Arial,Helvetica,sans-serif;color:#171827}
+.resume-paper header{text-align:center;border:0}
+.resume-paper h3{font-family:Arial,Helvetica,sans-serif;font-size:1.55rem;line-height:1.2;letter-spacing:.04em;text-transform:uppercase;margin:0 0 6px}
+.resume-paper header p{font-size:.75rem;line-height:1.45;overflow-wrap:anywhere}
+.resume-paper section{margin-top:19px}
+.resume-paper h4{font-family:Arial,Helvetica,sans-serif;font-size:.8rem;letter-spacing:.06em;border-bottom:1px solid #171827;margin:0 0 8px;padding-bottom:4px}
+.resume-paper-row{display:flex;justify-content:space-between;gap:10px;font-size:.83rem}
+.resume-paper-row span{flex:0 0 auto}
+.resume-paper p{font-size:.8rem;margin:3px 0;line-height:1.4}
+.resume-paper-entry{margin-bottom:10px}
+.resume-bullet-edit{display:grid;grid-template-columns:11px 1fr;gap:5px;align-items:start;margin:4px 0;font-size:.8rem}
+.resume-bullet-edit textarea{width:100%;min-height:43px;padding:3px 5px;border:1px solid transparent;border-radius:4px;resize:vertical;background:#faf9fc;color:#171827;font:400 .8rem/1.4 Arial,Helvetica,sans-serif}
+.resume-bullet-edit textarea:hover{border-color:#c4b8d1}
+.resume-preview-note{max-width:840px;margin:16px auto 0;color:#545363;font-size:.8rem;line-height:1.5}
+@media(max-width:680px){.resume-engine-head{align-items:start}.resume-engine-mark{width:66px;height:66px;font-size:1.4rem}.resume-engine-mark span{font-size:.38rem}.resume-grid{grid-template-columns:1fr}.resume-preview-heading{align-items:stretch;flex-direction:column}.resume-paper{min-height:0}.resume-paper-row{display:block}.resume-paper-row span{display:block;margin-top:2px}.resume-bullet-edit textarea{min-height:68px}}
+.career-actions{display:flex;flex-wrap:wrap;gap:10px}
+.career-card{max-width:850px;margin:auto;padding:clamp(25px,5vw,55px);background:#fff;box-shadow:0 12px 35px #29263a26}
+.career-kicker{margin:0 0 14px;color:#532783;font-size:.73rem;font-weight:900;letter-spacing:.17em}
+.career-card h3{font-family:'DM Serif Display',Georgia,serif;font-size:clamp(1.7rem,3vw,2.65rem);font-weight:400;line-height:1.12;margin:0 0 18px}
+.career-summary{max-width:66ch;font-size:1rem;line-height:1.7}
+.career-tags{display:flex;flex-wrap:wrap;gap:7px;margin:23px 0 30px}
+.career-tags span{border:1px solid #d6c3e5;border-radius:999px;background:#faf6ff;padding:5px 10px;color:#532783;font-size:.78rem;font-weight:800}
+.career-card section{border-top:1px solid #d9d2e3;margin-top:25px;padding-top:20px}
+.career-card h4{font-family:'DM Serif Display',Georgia,serif;font-size:1.5rem;font-weight:400;margin:0 0 13px}
+.career-project{padding:14px 0;border-top:1px solid #e7e1eb}
+.career-project:first-of-type{border-top:0}
+.career-project strong{display:block;font-size:1rem}
+.career-project small{display:block;color:#666070;margin:3px 0 7px}
+.career-project p{line-height:1.5;margin:7px 0}
+.career-project a{color:#532783;font-weight:800;font-size:.88rem}
+.career-warning{max-width:850px;margin:13px auto 0;padding:10px 14px;background:#fff3cd;border-left:4px solid #c2791d;font-size:.86rem}
