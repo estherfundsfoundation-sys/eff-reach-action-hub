@@ -56,7 +56,7 @@ test("renders every guided pathway", async () => {
   }
 });
 
-test("renders all thirteen private student action tools", async () => {
+test("renders the student action tools and accurate privacy guidance", async () => {
   const response = await render("/tools");
   assert.equal(response.status, 200);
   const html = await response.text();
@@ -64,6 +64,8 @@ test("renders all thirteen private student action tools", async () => {
     "Award Letter &amp; Balance Decoder",
     "Financial Aid Counter-Offer Engine",
     "Official EFF Recommendation Letter",
+    "EFF One-Sheet Résumé Engine",
+    "Career Launchpad Profile",
     "Essay Story Builder",
     "Scholarship Action Center",
     "FAFSA Decoder",
@@ -75,7 +77,7 @@ test("renders all thirteen private student action tools", async () => {
     "Campus Event Builder",
     "Stay-Enrolled Planner",
   ]) assert.match(html, new RegExp(title));
-  assert.match(html, /answers stay in your browser/i);
+  assert.match(html, /Check each tool.s privacy note/i);
 });
 
 test("tool selection is visually confirmed and reveals the workspace", async () => {
