@@ -108,6 +108,17 @@ test("deadline reminders are local calendar alerts", async () => {
   assert.match(source, /Your calendar app—not EFF—delivers these alerts/);
 });
 
+test("resume engine supports evidence-rich multi-tier education on one page", async () => {
+  const source = await readFile(new URL("../public/eff-builds-your-resume/index.html", import.meta.url), "utf8");
+  assert.match(source, /MULTI-TIER EDUCATION/);
+  assert.match(source, /Thesis \/ Capstone/);
+  assert.match(source, /Fellowship \/ Award/);
+  assert.match(source, /state\.degrees/);
+  assert.match(source, /paper\.compact/);
+  assert.match(source, /paper\.ultra/);
+  assert.match(source, /paper\.micro/);
+});
+
 test("recommendation tool issues an attributed EFF letter with consent and disclosure", async () => {
   const source = await readFile(new URL("../app/tools/RecommendationLetterTool.tsx", import.meta.url), "utf8");
   const policy = await readFile(new URL("../app/tools/recommendation-content-policy.ts", import.meta.url), "utf8");
