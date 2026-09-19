@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
+import ReachDecisionGuide from "./ReachDecisionGuide";
 
 const urgentHelp = [
   { title: "Food & essentials", text: "Find local food, SNAP, campus pantry, and basic-needs support.", href: "https://portal.estherfundsfoundation.org/resources#basic-needs", tone: "yellow" },
@@ -101,35 +102,31 @@ const resourceGroups = [
 
 export default function Home() {
   return (
-    <main>
+    <main className="reach-home-v2">
       <div className="announcement">If you are in immediate danger, call 911. For mental-health crisis support, call or text 988.</div>
       <header className="site-header">
         <a className="brand" href="#top" aria-label="EFF Reach Action Hub home">
           <img src="/eff-logo.png" alt="Esther Funds Foundation" />
-          <span><strong>REACH</strong> Action Hub</span>
+          <span><strong>REACH</strong><small>by Esther Funds Foundation</small></span>
         </a>
         <nav aria-label="Main navigation">
-          <a href="#find-help">Find help</a>
-          <Link href="/resume">Résumé + letters</Link>
-          <a href="#action-paths">7 pathways</a>
+          <a href="#find-help">Get support</a>
+          <a href="#downloads">Tools</a>
+          <a href="#stay-enrolled">Resources</a>
           <Link href="/ambassadors">Ambassadors</Link>
-          <Link href="/workshop-request">Workshop request</Link>
-          <a href="#downloads">Interactive tools</a>
-          <a href="#families">For families</a>
-          <a href="#take-action">Take action</a>
+          <Link href="/workshop-request">For campuses</Link>
         </nav>
         <a className="header-cta" href="https://portal.estherfundsfoundation.org/">Scholarship Portal ↗</a>
       </header>
 
       <section className="hero" id="top">
         <div className="hero-copy">
-          <p className="kicker">A FREE STUDENT + FAMILY SUPPORT CENTER</p>
-          <h1><span>College gets <i>hard.</i></span><em>Keep <i>reaching.</i></em></h1>
-          <p className="hero-lead">One welcoming place to find college funding, emergency support, family guidance, career tools, wellness resources, and a clear next step.</p>
+          <p className="kicker">EFF’S RESPONSE TO COLLEGE DROPOUT PREVENTION</p>
+          <h1><span>Before you</span><em>drop out, <i>reach.</i></em></h1>
+          <p className="hero-lead">Free, practical tools that help students solve the problems pushing them out of college—from balances and basic needs to academic pressure, mental health, and career uncertainty.</p>
           <div className="hero-actions">
-            <a className="button primary" href="#find-help">Help me find my next step</a>
-            <a className="button secondary" href="#downloads">Open free action tools</a>
-            <Link className="button secondary" href="/defense?tool=triage">Open Student Defense Suite</Link>
+            <a className="button primary" href="#decision-guide-title">Find my next step</a>
+            <Link className="button secondary" href="/tools/friend">Help a friend stay enrolled</Link>
           </div>
           <p className="microcopy">No account required to explore resources. Never email passwords, Social Security numbers, or verification codes.</p>
         </div>
@@ -146,6 +143,8 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      <ReachDecisionGuide />
 
       <section className="career-studio-feature" aria-labelledby="career-studio-title">
         <div className="career-studio-intro">
