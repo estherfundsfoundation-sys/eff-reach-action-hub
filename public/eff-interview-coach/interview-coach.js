@@ -24,6 +24,7 @@ let currentRecordingUrl = "";
 let recordingStart = 0;
 let timerId = null;
 let finalTranscript = "";
+let recordingFinalized = true;
 
 function showScreen(name) {
   Object.entries(screens).forEach(([key, node]) => {
@@ -196,8 +197,11 @@ function renderQuestion({ preserveTranscript = false } = {}) {
   $("#scoreAnswer").disabled = !$("#transcript").value.trim();
   $("#speechStatus").textContent = detectSpeechSupport() ? "Ready for live transcription when you start." : "Live speech transcription is unavailable here. Record if supported, then type your answer.";
   $("#recordAnswer").classList.remove("hidden");
+  $("#recordAnswer").textContent = "Start answer";
   $("#finishAnswer").classList.add("hidden");
   currentRecordingUrl = "";
+  recordingStart = 0;
+  recordingFinalized = true;
   finalTranscript = "";
   saveSession();
 }
@@ -211,9 +215,13 @@ function startAnswer() {
       const preferred = ["video/webm;codecs=vp9,opus", "video/webm;codecs=vp8,opus", "video/webm"];
       const mimeType = preferred.find((type) => MediaRecorder.isTypeSupported?.(type));
       mediaRecorder = new MediaRecorder(mediaStream, mimeType ? { mimeType } : undefined);
+      recordingFinalized = false;
       mediaRecorder.ondataavailable = (event) => { if (event.data.size) recordedChunks.push(event.data); };
       mediaRecorder.onstop = () => {
         if (recordedChunks.length) currentRecordingUrl = URL.createObjectURL(new Blob(recordedChunks, { type: mediaRecorder.mimeType || "video/webm" }));
+        recordingFinalized = true;
+        $("#scoreAnswer").disabled = !$("#transcript").value.trim();
+        $("#speechStatus").textContent = "Recording ready. Review the transcript, make corrections, then score the answer.";
       };
       mediaRecorder.start(400);
     } catch (error) {
@@ -278,12 +286,13 @@ function finishAnswer() {
   $("#recordAnswer").classList.remove("hidden");
   $("#recordAnswer").textContent = "Record again";
   $("#finishAnswer").classList.add("hidden");
-  $("#speechStatus").textContent = "Recording finished. Review the transcript, make corrections, then score the answer.";
-  $("#scoreAnswer").disabled = !$("#transcript").value.trim();
+  $("#speechStatus").textContent = recordingFinalized ? "Recording ready. Review the transcript, make corrections, then score the answer." : "Finalizing your local recording…";
+  $("#scoreAnswer").disabled = !recordingFinalized || !$("#transcript").value.trim();
   $("#transcript").focus();
 }
 
 function scoreCurrentAnswer() {
+  if (!recordingFinalized) return toast("Your browser is still finalizing the recording. Try again in a moment.");
   const transcript = $("#transcript").value.trim();
   if (!transcript) return toast("Add your answer transcript before scoring.");
   const question = state.questions[state.currentIndex];
@@ -341,6 +350,7 @@ function skipQuestion() {
 
 function finishInterview() {
   stopActiveRecording();
+  stopMedia();
   renderReport();
   showScreen("report");
   saveSession();
@@ -479,7 +489,7 @@ function bindEvents() {
   $("#beginFirstQuestion").addEventListener("click", () => { $("#welcomeOverlay").classList.add("hidden"); renderQuestion(); });
   $("#recordAnswer").addEventListener("click", startAnswer);
   $("#finishAnswer").addEventListener("click", finishAnswer);
-  $("#transcript").addEventListener("input", () => { $("#scoreAnswer").disabled = !$("#transcript").value.trim(); });
+  $("#transcript").addEventListener("input", () => { $("#scoreAnswer").disabled = !recordingFinalized || !$("#transcript").value.trim(); });
   $("#scoreAnswer").addEventListener("click", scoreCurrentAnswer);
   $("#skipQuestion").addEventListener("click", skipQuestion);
   $("#retryQuestion").addEventListener("click", retryQuestion);
