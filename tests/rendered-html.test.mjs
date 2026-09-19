@@ -64,7 +64,7 @@ test("renders the student action tools and accurate privacy guidance", async () 
     "Award Letter &amp; Balance Decoder",
     "Financial Aid Counter-Offer Engine",
     "Official EFF Recommendation Letter",
-    "EFF One-Sheet Résumé Engine",
+    "EFF Builds Your Résumé",
     "Career Launchpad Profile",
     "Essay Story Builder",
     "Scholarship Action Center",
@@ -77,22 +77,25 @@ test("renders the student action tools and accurate privacy guidance", async () 
     "Campus Event Builder",
     "Stay-Enrolled Planner",
   ]) assert.match(html, new RegExp(title));
-  assert.match(html, /Check each tool.s privacy note/i);
+  assert.match(html, /Choose one tool/i);
+  assert.match(html, /Open its page/i);
 });
 
-test("tool selection is visually confirmed and reveals the workspace", async () => {
-  const source = await readFile(new URL("../app/tools/page.tsx", import.meta.url), "utf8");
-  assert.match(source, /TOOL OPENED/);
-  assert.match(source, /Start below—your selected tool is ready/);
-  assert.match(source, /scrollIntoView/);
-  assert.match(source, /aria-pressed/);
-  assert.match(source, /Choose a different tool/);
+test("every tool opens on a focused route without the directory grid", async () => {
+  const response = await render("/tools/fafsa");
+  assert.equal(response.status, 200);
+  const html = await response.text();
+  assert.match(html, /FAFSA Decoder/);
+  assert.match(html, /Decode your FAFSA status/);
+  assert.match(html, /All REACH tools/);
+  assert.doesNotMatch(html, /id="tool-picker"/);
+  assert.doesNotMatch(html, /TOOL OPENED/);
 });
 
 test("homepage deep-links every tool and contains no retired 404 routes", async () => {
   const source = await readFile(new URL("../app/page.tsx", import.meta.url), "utf8");
   for (const id of ["award", "counteroffer", "recommendation", "essay", "scholarship", "fafsa", "aid", "balance", "reminders", "family", "friend", "campus", "persist"]) {
-    assert.match(source, new RegExp(`/tools\\?tool=${id}`));
+    assert.match(source, new RegExp(`/tools/${id}`));
   }
   assert.doesNotMatch(source, /https:\/\/estherfundsfoundation\.org\/become-a-partner/);
   assert.doesNotMatch(source, /https:\/\/estherfundsfoundation\.org\/programs/);

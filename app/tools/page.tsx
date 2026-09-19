@@ -1,17 +1,16 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import CounterOfferEngine from "./CounterOfferEngine";
 import RecommendationLetterTool from "./RecommendationLetterTool";
-import OneSheetResumeEngine from "./OneSheetResumeEngine";
 import CareerLaunchpadProfile from "./CareerLaunchpadProfile";
 
 const tools = [
   { id: "award", tag: "NEW · UPLOAD", title: "Award Letter & Balance Decoder", desc: "Upload an aid letter, add work income, and see what is still uncovered.", color: "featured" },
   { id: "counteroffer", tag: "NEW · COMPARE", title: "Financial Aid Counter-Offer Engine", desc: "Compare competing offers and draft an institutional aid reconsideration request.", color: "featured" },
   { id: "recommendation", tag: "60-SECOND TOOL", title: "Official EFF Recommendation Letter", desc: "Submit truthful facts and save a personalized EFF letter bearing the foundation’s logo and authorized signature.", color: "featured" },
-  { id: "resume", tag: "NEW · DOWNLOAD", title: "EFF One-Sheet Résumé Engine", desc: "Turn everyday work, coursework, and projects into a truthful, editable one-page résumé PDF.", color: "featured" },
+  { id: "resume", tag: "NEW · DOWNLOAD", title: "EFF Builds Your Résumé", desc: "Turn everyday work, coursework, and projects into a truthful, editable one-page résumé PDF.", color: "featured" },
   { id: "career-profile", tag: "NEW · PROFILE", title: "Career Launchpad Profile", desc: "Shape your headline, bio, projects, skills, and reference metadata into a private career profile.", color: "featured" },
   { id: "essay", tag: "WRITE", title: "Essay Story Builder", desc: "Turn one real moment into a scholarship-ready outline.", color: "yellow" },
   { id: "scholarship", tag: "APPLY", title: "Scholarship Action Center", desc: "Turn a deadline into a clear application plan.", color: "pink" },
@@ -53,9 +52,8 @@ function extractAwardNumbers(text:string) {
   return { detected, found: Object.values(detected).filter(value => value > 0).length };
 }
 
-export default function InteractiveTools() {
-  const [active, setActive] = useState("award");
-  const workspaceRef = useRef<HTMLDivElement>(null);
+export default function InteractiveTools({initialTool="award",dedicated=false}:{initialTool?:string;dedicated?:boolean}) {
+  const active = tools.some(tool=>tool.id===initialTool) ? initialTool : "award";
   const [award, setAward] = useState<AwardNumbers>({ currentBill:"", pendingAid:"", tuitionFees:"", housingMeals:"", grants:"", scholarships:"", loans:"", workStudy:"", otherCredits:"", savings:"", familySupport:"", hourlyWage:"", hoursWeek:"", weeksUntilDue:"", incomePercent:"50", school:"", deadline:"" });
   const [awardText, setAwardText] = useState("");
   const [awardFile, setAwardFile] = useState({ name:"", status:"Upload a text-based PDF or paste the award details below.", tone:"idle" });
@@ -86,23 +84,16 @@ export default function InteractiveTools() {
   const activeTool = tools.find((tool) => tool.id === active) || tools[0];
   const print = () => window.print();
 
-  const revealWorkspace = () => window.setTimeout(() => {
-    workspaceRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-    workspaceRef.current?.focus({ preventScroll: true });
-  }, 60);
-
   useEffect(() => {
+    if (dedicated) return;
     const requested = new URLSearchParams(window.location.search).get("tool");
     if (requested && tools.some(tool => tool.id === requested)) {
-      queueMicrotask(() => setActive(requested));
-      revealWorkspace();
+      window.location.replace(requested === "resume" ? "/resume" : `/tools/${requested}`);
     }
-  }, []);
+  }, [dedicated]);
 
   const chooseTool = (id: string) => {
-    setActive(id);
-    window.history.replaceState({}, "", `/tools?tool=${id}`);
-    revealWorkspace();
+    window.location.assign(id === "resume" ? "/resume" : `/tools/${id}`);
   };
 
   const applyAwardText = (text:string, fileName = "Pasted award details") => {
@@ -160,16 +151,15 @@ export default function InteractiveTools() {
     const link = document.createElement("a"); link.href = url; link.download = `${reminder.name.toLowerCase().replace(/[^a-z0-9]+/g, "-") || "eff-deadline"}.ics`; link.click(); URL.revokeObjectURL(url);
   };
 
-  return <main className="tool-page">
+  return <main className={`tool-page ${dedicated?"dedicated-tool-page":"tool-directory-page"}`}>
     <header className="tool-header"><Link href="/">← REACH Action Hub</Link><span>EFF INTERACTIVE TOOLKITS</span><a href="https://portal.estherfundsfoundation.org/">Scholarship Portal ↗</a></header>
-    <section className="tool-hero"><p className="kicker">NO HOMEWORK. JUST YOUR NEXT MOVE.</p><h1>Tap. Answer.<br/><em>Get a plan.</em></h1><p>Practical tools built around real student problems. Check each tool’s privacy note before entering personal information.</p></section>
-    <section className="tool-shell">
-      <div id="tool-picker" className="tool-picker" aria-label="Choose an interactive toolkit">{tools.map(t=><button type="button" key={t.id} aria-pressed={active===t.id} className={`${t.color} ${active===t.id?"active":""}`} onClick={()=>chooseTool(t.id)}><small>{t.tag}</small><strong>{t.title}</strong><span>{t.desc}</span><b className="tool-card-action">{active===t.id?"OPEN NOW ↓":"Open tool →"}</b></button>)}</div>
-      <div className="tool-open-confirmation" role="status" aria-live="polite"><span aria-hidden="true">✓</span><div><small>TOOL OPENED</small><strong>{activeTool.title}</strong><p>Start below—your selected tool is ready.</p></div><button type="button" onClick={()=>document.getElementById("tool-picker")?.scrollIntoView({behavior:"smooth",block:"start"})}>Choose a different tool ↑</button></div>
-      <div ref={workspaceRef} tabIndex={-1} className="tool-workspace" role="region" aria-label={`${activeTool.title} workspace`}>
+    <section className={`tool-hero ${dedicated?"tool-hero-focused":""}`}><p className="kicker">{dedicated?activeTool.tag:"ONE TOOL. ONE CLEAR NEXT STEP."}</p><h1>{dedicated?<>{activeTool.title}</>:<>Choose one tool.<br/><em>Finish one task.</em></>}</h1><p>{dedicated?activeTool.desc:"Open a focused page for the exact problem you are solving. Nothing else opens underneath it, and you can return here whenever you need a different tool."}</p></section>
+    <section className={`tool-shell ${dedicated?"tool-shell-focused":""}`}>
+      {!dedicated ? <div id="tool-picker" className="tool-picker" aria-label="Choose an interactive toolkit">{tools.map(t=><Link key={t.id} className={t.color} href={t.id==="resume"?"/resume":`/tools/${t.id}`}><small>{t.tag}</small><strong>{t.title}</strong><span>{t.desc}</span><b className="tool-card-action">Open its page →</b></Link>)}</div> : <>
+      <nav className="focused-tool-nav" aria-label="Tool navigation"><Link href="/tools">← All REACH tools</Link><Link href="/resume">Résumé builder</Link><Link href="/tools/recommendation">Recommendation letter</Link></nav>
+      <div className="tool-workspace" role="region" aria-label={`${activeTool.title} workspace`}>
         {active==="counteroffer" && <CounterOfferEngine/>}
         {active==="recommendation" && <RecommendationLetterTool/>}
-        {active==="resume" && <OneSheetResumeEngine/>}
         {active==="career-profile" && <CareerLaunchpadProfile/>}
         {active==="award" && <Tool title="Upload your award. Find the real gap." intro="Start with your award letter, then add your current bill and the money you can realistically use before it is due.">
           <section className="privacy-banner"><span aria-hidden="true">◆</span><div><strong>Your document stays on this device.</strong><p>REACH reads text inside your browser. It does not save or send the file to EFF. Remove Social Security numbers, student IDs, addresses, and account numbers before pasting text.</p></div></section>
@@ -281,7 +271,7 @@ export default function InteractiveTools() {
             <div className="resource-actions"><a href="https://portal.estherfundsfoundation.org/resources">Open EFF resources ↗</a><a href="https://www.211.org/">Find local help through 211 ↗</a></div>
           </Result>
         </Tool>}
-      </div>
+      </div></>}
     </section>
     <footer className="tool-footer"><strong>Esther Funds Foundation</strong><span>We are working to prevent college dropouts around the world.</span><Link href="/">Back to the Hub</Link></footer>
   </main>;

@@ -30,21 +30,21 @@ const actionJourneys = [
 const downloads = [
   { type: "STOP THE DROP", title: "College Retention Emergency Terminal", text: "Diagnose urgent barriers, build formal petitions, prepare evidence, and escalate to the right campus or public authority.", href: "/defense?tool=tuition", color: "yellow", pages: "7 guided defense areas" },
   { type: "13 STUDENT DEFENSE ENGINES", title: "EFF Student Defense Suite", text: "Protect your aid, grades, transcript, housing, degree path, and registration with one focused next-step system.", href: "/defense?tool=triage", color: "purple", pages: "complete defense suite" },
-  { type: "UPLOAD + DECODE", title: "Award Letter & Balance Decoder", text: "Upload an aid letter, add your bill, wages, work hours, savings, and support, then see what is still uncovered.", href: "/tools?tool=award", color: "purple", pages: "featured calculator" },
-  { type: "COMPARE + REQUEST", title: "Financial Aid Counter-Offer Engine", text: "Compare competing offers, check a federal net-price benchmark, and draft a respectful institutional-aid reconsideration request.", href: "/tools?tool=counteroffer", color: "pink", pages: "new interactive engine" },
-  { type: "60-SECOND TOOL", title: "Official EFF Recommendation Letter", text: "Submit truthful facts and save a personalized Esther Funds Foundation letter with EFF branding and Shayna Vincent’s authorized signature.", href: "/tools?tool=recommendation", color: "purple", pages: "official letter workflow" },
+  { type: "UPLOAD + DECODE", title: "Award Letter & Balance Decoder", text: "Upload an aid letter, add your bill, wages, work hours, savings, and support, then see what is still uncovered.", href: "/tools/award", color: "purple", pages: "featured calculator" },
+  { type: "COMPARE + REQUEST", title: "Financial Aid Counter-Offer Engine", text: "Compare competing offers, check a federal net-price benchmark, and draft a respectful institutional-aid reconsideration request.", href: "/tools/counteroffer", color: "pink", pages: "new interactive engine" },
+  { type: "60-SECOND TOOL", title: "Official EFF Recommendation Letter", text: "Submit truthful facts and save a personalized Esther Funds Foundation letter with EFF branding and Shayna Vincent’s authorized signature.", href: "/tools/recommendation", color: "purple", pages: "official letter workflow" },
   { type: "BUILD + DOWNLOAD", title: "EFF Builds Your Résumé", text: "Tap through your real experience and generate an editable, ATS-ready one-page résumé with interview-defense coaching.", href: "/resume", color: "purple", pages: "30-second career engine" },
-  { type: "BUILD YOUR PROFILE", title: "Career Launchpad Profile", text: "Organize your story, projects, skills, and reference details into a private, editable professional profile.", href: "/tools?tool=career-profile", color: "lavender", pages: "new career resource" },
-  { type: "WRITE YOUR STORY", title: "Scholarship Essay Builder", text: "Answer five quick prompts and instantly get a scholarship-ready STORY outline.", href: "/tools?tool=essay", color: "yellow", pages: "interactive" },
-  { type: "STAY ORGANIZED", title: "Scholarship Action Center", text: "Turn one deadline and its requirements into a complete application checklist.", href: "/tools?tool=scholarship", color: "pink", pages: "interactive" },
-  { type: "GET UNSTUCK", title: "FAFSA Decoder", text: "Decode your FAFSA status, SAI, verification request, or changed financial circumstances.", href: "/tools?tool=fafsa", color: "blue", pages: "interactive" },
-  { type: "COMPARE OFFERS", title: "Financial Aid Offer Decoder", text: "Separate gift aid, debt, work-study, bill gap, and the full cost of attendance.", href: "/tools?tool=aid", color: "lavender", pages: "calculator" },
-  { type: "URGENT BALANCE", title: "Tuition Rescue Plan", text: "Get a personalized 48-hour plan and email opener based on your deadline.", href: "/tools?tool=balance", color: "yellow", pages: "interactive" },
-  { type: "DON'T MISS IT", title: "Deadline Reminder Builder", text: "Download private calendar alerts for two weeks, three days, and one day before.", href: "/tools?tool=reminders", color: "pink", pages: "calendar tool" },
-  { type: "FOR FAMILIES", title: "Family Funding Check", text: "Pressure-test the college gap and a parent or private-loan decision.", href: "/tools?tool=family", color: "pink", pages: "calculator" },
-  { type: "HELP SOMEONE", title: "Help-a-Friend Script", text: "Choose the situation and tone to get words you can actually say or text.", href: "/tools?tool=friend", color: "blue", pages: "script maker" },
-  { type: "LEAD ON CAMPUS", title: "Campus Event Builder", text: "Create a useful 60-minute REACH event in under three minutes.", href: "/tools?tool=campus", color: "lavender", pages: "interactive" },
-  { type: "KEEP GOING", title: "Stay-Enrolled Planner", text: "Name the barrier and build a support-team plan before changing enrollment.", href: "/tools?tool=persist", color: "yellow", pages: "interactive" },
+  { type: "BUILD YOUR PROFILE", title: "Career Launchpad Profile", text: "Organize your story, projects, skills, and reference details into a private, editable professional profile.", href: "/tools/career-profile", color: "lavender", pages: "new career resource" },
+  { type: "WRITE YOUR STORY", title: "Scholarship Essay Builder", text: "Answer five quick prompts and instantly get a scholarship-ready STORY outline.", href: "/tools/essay", color: "yellow", pages: "interactive" },
+  { type: "STAY ORGANIZED", title: "Scholarship Action Center", text: "Turn one deadline and its requirements into a complete application checklist.", href: "/tools/scholarship", color: "pink", pages: "interactive" },
+  { type: "GET UNSTUCK", title: "FAFSA Decoder", text: "Decode your FAFSA status, SAI, verification request, or changed financial circumstances.", href: "/tools/fafsa", color: "blue", pages: "interactive" },
+  { type: "COMPARE OFFERS", title: "Financial Aid Offer Decoder", text: "Separate gift aid, debt, work-study, bill gap, and the full cost of attendance.", href: "/tools/aid", color: "lavender", pages: "calculator" },
+  { type: "URGENT BALANCE", title: "Tuition Rescue Plan", text: "Get a personalized 48-hour plan and email opener based on your deadline.", href: "/tools/balance", color: "yellow", pages: "interactive" },
+  { type: "DON'T MISS IT", title: "Deadline Reminder Builder", text: "Download private calendar alerts for two weeks, three days, and one day before.", href: "/tools/reminders", color: "pink", pages: "calendar tool" },
+  { type: "FOR FAMILIES", title: "Family Funding Check", text: "Pressure-test the college gap and a parent or private-loan decision.", href: "/tools/family", color: "pink", pages: "calculator" },
+  { type: "HELP SOMEONE", title: "Help-a-Friend Script", text: "Choose the situation and tone to get words you can actually say or text.", href: "/tools/friend", color: "blue", pages: "script maker" },
+  { type: "LEAD ON CAMPUS", title: "Campus Event Builder", text: "Create a useful 60-minute REACH event in under three minutes.", href: "/tools/campus", color: "lavender", pages: "interactive" },
+  { type: "KEEP GOING", title: "Stay-Enrolled Planner", text: "Name the barrier and build a support-team plan before changing enrollment.", href: "/tools/persist", color: "yellow", pages: "interactive" },
 ];
 
 const resourceGroups = [
@@ -55,7 +55,7 @@ const resourceGroups = [
     intro: "Make a plan before a financial gap becomes a reason to leave school.",
     links: [
       ["EFF Scholarship Portal", "Search scholarships and apply to current EFF programs.", "https://portal.estherfundsfoundation.org/"],
-      ["FAFSA Decoder", "Understand your status, SAI, verification request, and exact next move.", "/tools?tool=fafsa"],
+      ["FAFSA Decoder", "Understand your status, SAI, verification request, and exact next move.", "/tools/fafsa"],
       ["College Cost Decision Lab", "Compare real costs, debt, graduation outcomes, and likely monthly payments.", "https://www.consumerfinance.gov/paying-for-college/your-financial-path-to-graduation/"],
       ["College Scorecard", "Compare institutions by costs, completion, fields of study, and earnings.", "https://collegescorecard.ed.gov/"],
     ],
@@ -69,7 +69,7 @@ const resourceGroups = [
       ["Parent & Family Toolkit", "Download EFF's college funding guide and family conversation worksheets.", "https://portal.estherfundsfoundation.org/resources#toolkits"],
       ["FAFSA for Parents", "Understand contributor invitations, consent, tax information, and common mistakes.", "https://studentaid.gov/articles/fafsa-for-parents/"],
       ["Childcare & Family Assistance", "Find state childcare subsidies, campus childcare, WIC, SNAP, and family supports.", "https://www.childcare.gov/consumer-education/get-help-paying-for-child-care/child-care-financial-assistance-options"],
-      ["Financial Aid Offer Decoder", "See your net price, estimated bill gap, full cost gap, and accepted debt.", "/tools?tool=aid"],
+      ["Financial Aid Offer Decoder", "See your net price, estimated bill gap, full cost gap, and accepted debt.", "/tools/aid"],
     ],
   },
   {
@@ -159,7 +159,7 @@ export default function Home() {
             <p>A tap-first, ATS-ready one-page résumé with corporate or civic language and an interview-defense guide for every bullet.</p>
             <b>Start the 30-second builder →</b>
           </Link>
-          <Link href="/tools?tool=recommendation" className="career-studio-card letter-card">
+          <Link href="/tools/recommendation" className="career-studio-card letter-card">
             <span>02 · OFFICIAL EFF LETTER</span>
             <h3>60-Second Recommendation Letter</h3>
             <p>Generate a scholarship-purpose EFF recommendation letter using truthful details, authorized branding, and a downloadable PDF.</p>
