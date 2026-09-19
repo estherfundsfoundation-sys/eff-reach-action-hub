@@ -235,8 +235,9 @@ export default function FriendWalkthrough() {
     window.speechSynthesis.cancel();
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.voice = preferredVoice(tone);
-    utterance.rate = tone === "coach" ? 0.9 : tone === "nia" ? 0.94 : 0.88;
-    utterance.pitch = tone === "coach" ? 1.08 : tone === "nia" ? 1.2 : 1.14;
+    utterance.rate = tone === "coach" ? 0.98 : tone === "nia" ? 1.06 : 0.96;
+    utterance.pitch = tone === "coach" ? 1.22 : tone === "nia" ? 1.42 : 1.3;
+    utterance.volume = 1;
     utterance.onend = () => setSpeaking(null);
     utterance.onerror = () => setSpeaking(null);
     setSpeaking(label);
