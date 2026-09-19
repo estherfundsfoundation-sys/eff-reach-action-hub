@@ -1,56 +1,2999 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="Build a truthful, ATS-ready one-page resume with Esther Funds Foundation in under 30 seconds after entering your details.">
-  <title>EFF Builds Your Resume | REACH Career Studio</title>
-  <style>
-    :root{--ink:#110b19;--purple:#5b21b6;--gold:#f5c74d;--cream:#fbf9ff;--muted:#665e70;--line:rgba(49,25,70,.16);--serif:Georgia,"Times New Roman",serif;--sans:Inter,"Avenir Next","Segoe UI",Arial,sans-serif}
-    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--cream);color:var(--ink);font-family:var(--sans)}button,input{font:inherit}button,a{touch-action:manipulation}.topbar{position:sticky;top:0;z-index:20;display:flex;align-items:center;justify-content:space-between;gap:24px;min-height:76px;padding:12px clamp(18px,5vw,76px);border-bottom:1px solid var(--line);background:rgba(255,255,255,.93);backdrop-filter:blur(18px)}.brand{display:flex;align-items:center;gap:11px;color:var(--ink);text-decoration:none}.brand-mark{display:grid;place-items:center;width:44px;height:44px;border-radius:50%;background:var(--purple);color:white;font:700 17px var(--serif)}.brand span{font-size:13px}.brand b{display:block;color:var(--purple);font-size:9px;letter-spacing:.18em}.topbar nav{display:flex;align-items:center;gap:18px}.topbar nav a{color:#302639;text-decoration:none;font-size:11px;font-weight:800}.topbar nav a:first-child{padding:11px 15px;border-radius:999px;background:var(--purple);color:white}.hero{display:grid;grid-template-columns:minmax(0,1.12fr) minmax(340px,.88fr);min-height:700px;background:radial-gradient(circle at 84% 12%,rgba(165,113,255,.38),transparent 25%),linear-gradient(135deg,#100817,#26113b 53%,#4d1782);color:white}.hero-copy{display:flex;flex-direction:column;justify-content:center;padding:clamp(72px,9vw,132px) clamp(24px,6vw,96px)}.kicker{margin:0 0 14px;color:var(--gold);font-size:9px;font-weight:900;letter-spacing:.2em;text-transform:uppercase}.hero h1{max-width:780px;margin:0;font:400 clamp(62px,8.5vw,118px)/.86 var(--serif);letter-spacing:-.06em}.hero-copy>p:not(.kicker){max-width:700px;margin:28px 0;color:#e8e0ee;font-size:clamp(17px,1.6vw,22px);line-height:1.65}.hero-actions{display:flex;flex-wrap:wrap;gap:10px}.hero-actions a{display:inline-flex;align-items:center;justify-content:center;min-height:54px;padding:13px 21px;border:1px solid rgba(255,255,255,.23);border-radius:999px;color:white;text-decoration:none;font-size:12px;font-weight:900}.hero-actions a:first-child{border-color:var(--gold);background:var(--gold);color:var(--ink)}.hero small{max-width:680px;margin-top:17px;color:#cbbfd4;line-height:1.5}.preset-board{align-self:center;margin-right:clamp(24px,6vw,90px);padding:32px;border:1px solid rgba(255,255,255,.18);border-radius:28px;background:linear-gradient(145deg,rgba(255,255,255,.14),rgba(255,255,255,.05));box-shadow:0 35px 90px rgba(0,0,0,.35);backdrop-filter:blur(22px)}.preset-board h2{margin:0 0 7px;font:400 32px/1.05 var(--serif)}.preset-board>p{margin:0 0 20px;color:#d6cadf;font-size:12px;line-height:1.5}.preset-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.preset{min-height:105px;padding:14px;border:1px solid rgba(255,255,255,.16);border-radius:16px;background:rgba(255,255,255,.07);color:white;text-align:left;cursor:pointer}.preset:hover,.preset:focus-visible{border-color:var(--gold);background:rgba(255,255,255,.12)}.preset span,.preset b{display:block}.preset span{color:var(--gold);font-size:8px;font-weight:900;letter-spacing:.13em}.preset b{margin-top:8px;font:400 20px/1 var(--serif)}.preset small{display:block;margin-top:6px;color:#d6cadf;font-size:9px}.preset-status{min-height:18px;margin:14px 0 0!important;color:#f6d976!important;font-size:10px!important;font-weight:800}.builder-head{display:flex;align-items:end;justify-content:space-between;gap:28px;padding:clamp(75px,8vw,112px) clamp(20px,6vw,92px) 46px;background:white}.builder-head h2,.output-head h2,.letter-cta h2{margin:0;font:400 clamp(43px,6vw,78px)/.96 var(--serif);letter-spacing:-.045em}.timer{display:grid;min-width:210px;padding:20px;border:1px solid var(--line);border-radius:20px;background:#f5efff;box-shadow:0 18px 45px rgba(50,19,80,.09)}.timer.running{box-shadow:0 0 0 4px rgba(245,199,77,.22),0 18px 45px rgba(50,19,80,.12)}.timer small{font-size:8px;font-weight:900;letter-spacing:.18em;color:var(--purple)}.timer strong{font:400 44px/1 var(--serif);font-variant-numeric:tabular-nums}.timer span{margin-top:5px;color:var(--muted);font-size:10px;font-weight:800}.builder-body{padding:0 clamp(20px,6vw,92px) 100px;background:white}.step{display:grid;grid-template-columns:54px minmax(220px,.34fr) minmax(0,.66fr);gap:18px 28px;padding:50px 0;border-top:1px solid var(--line)}.step-number{display:grid;place-items:center;width:48px;height:48px;border-radius:50%;background:var(--purple);color:white;font-size:11px;font-weight:900}.step-copy h3{margin:0 0 8px;font:400 29px var(--serif)}.step-copy p{max-width:34ch;margin:0;color:var(--muted);font-size:13px;line-height:1.55}.step-content{min-width:0}.text-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}.field{display:grid;gap:7px}.field span,.choice-title{font-size:10px;font-weight:900;letter-spacing:.07em;text-transform:uppercase}.field input{width:100%;min-height:48px;padding:11px 13px;border:1px solid rgba(54,28,77,.24);border-radius:12px;background:white;color:var(--ink);font-weight:600}.field input:focus{outline:3px solid #d9c8ff;outline-offset:1px;border-color:var(--purple)}.choice{margin-bottom:18px}.pills{display:flex;flex-wrap:wrap;gap:7px;margin-top:8px}.pill,.skill{min-height:39px;padding:8px 12px;border:1px solid var(--line);border-radius:999px;background:white;color:#302539;font-size:11px;font-weight:800;cursor:pointer;transition:.18s ease}.pill:hover,.skill:hover{border-color:var(--purple);transform:translateY(-1px)}.pill.selected,.skill.selected{border-color:var(--purple);background:var(--purple);color:white;box-shadow:0 7px 18px rgba(91,33,182,.21)}.role-card{margin-bottom:17px;padding:23px;border:1px solid var(--line);border-radius:22px;background:#fbf9ff;box-shadow:0 15px 40px rgba(39,13,62,.07)}.role-card header{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}.role-card header small,.role-card header b{display:block}.role-card header small{color:var(--purple);font-size:8px;font-weight:900;letter-spacing:.17em}.role-card header b{margin-top:4px;font:400 22px var(--serif)}.role-card header button{border:0;background:none;color:#7c1d45;font-size:11px;font-weight:900;text-decoration:underline;cursor:pointer}.add-role{padding:11px 16px;border:1px dashed var(--purple);border-radius:999px;background:white;color:var(--purple);font-size:11px;font-weight:900;cursor:pointer}.skill-grid{display:flex;flex-wrap:wrap;gap:8px}.attestation{display:grid;grid-template-columns:1fr auto;gap:5px 25px;align-items:center;padding:29px;border-radius:24px;background:linear-gradient(135deg,#1a0b28,#4c1682);color:white}.attestation b{font:400 25px var(--serif)}.attestation p{max-width:760px;margin:0;color:#dcd2e4;font-size:12px;line-height:1.55}.attestation button{grid-column:2;grid-row:1/3;min-height:56px;padding:13px 22px;border:0;border-radius:999px;background:var(--gold);color:var(--ink);font-size:12px;font-weight:900;cursor:pointer}.status{min-height:22px;margin:14px 0 0;color:var(--purple);font-size:12px;font-weight:800}.output{display:none;padding:82px clamp(20px,5vw,76px);background:#eee8f5;scroll-margin-top:86px}.output.visible{display:block}.output-head{display:flex;align-items:end;justify-content:space-between;gap:28px;margin-bottom:34px}.output-head h2{font-size:clamp(38px,5vw,63px)}.output-head>div:last-child{display:flex;flex-wrap:wrap;gap:9px}.output-head button{min-height:46px;padding:10px 15px;border:1px solid var(--purple);border-radius:999px;background:white;color:var(--purple);font-size:11px;font-weight:900;cursor:pointer}.output-head button.primary{background:var(--purple);color:white}.output-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(300px,.42fr);gap:27px;align-items:start}.paper{width:min(100%,8.5in);min-height:11in;margin:0 auto;padding:.58in .62in;background:white;color:#111;box-shadow:0 22px 70px rgba(31,14,45,.18);font-family:Arial,Helvetica,sans-serif;outline:none}.paper>header{text-align:center}.paper>header h2{margin:0 0 6px;font:700 21px/1.1 Arial,Helvetica,sans-serif;letter-spacing:.05em}.paper>header p,.paper p{margin:3px 0;font-size:11px;line-height:1.35}.paper section{margin-top:15px}.paper h3{margin:0 0 7px;padding-bottom:3px;border-bottom:1px solid #111;font:700 11px Arial,Helvetica,sans-serif;letter-spacing:.08em}.paper-row{display:flex;justify-content:space-between;gap:16px;font-size:11.5px}.paper-entry{margin-bottom:11px}.paper-entry ul{margin:5px 0 0;padding-left:17px}.paper-entry li{margin:3px 0;font-size:11px;line-height:1.38}.paper [contenteditable]:hover{background:#fff5bd}.paper [contenteditable]:focus{outline:2px solid var(--purple);background:white}.defense{position:sticky;top:94px;padding:24px;border-radius:22px;background:#160c20;color:white;box-shadow:0 20px 55px rgba(25,9,39,.2)}.defense h3{margin:0 0 18px;font:400 28px/1.05 var(--serif)}.defense details{border-top:1px solid rgba(255,255,255,.13)}.defense summary{padding:14px 0;color:#f1eaf5;font-size:11px;font-weight:900;cursor:pointer}.defense details div{padding:0 0 17px}.defense details b{display:block;margin-top:11px;color:var(--gold);font-size:8px;letter-spacing:.12em;text-transform:uppercase}.defense details p{margin:5px 0 0;color:#d6cadf;font-size:11px;line-height:1.55}.keyword-box{margin-top:19px;padding:15px;border-radius:14px;background:#29143b}.keyword-box b{color:var(--gold);font-size:9px;letter-spacing:.12em}.keyword-box p{color:#e8dff0}.letter-cta{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:34px;align-items:end;padding:clamp(70px,9vw,122px) clamp(24px,6vw,94px);background:radial-gradient(circle at 90% 10%,rgba(255,255,255,.16),transparent 24%),linear-gradient(135deg,#4c1682,#6d28d9);color:white}.letter-cta h2{font-size:clamp(42px,6vw,75px)}.letter-cta p:last-child{max-width:740px;color:#e8def1;line-height:1.65}.letter-cta a{display:inline-flex;align-items:center;justify-content:center;min-height:55px;padding:13px 21px;border-radius:999px;background:var(--gold);color:var(--ink);text-decoration:none;font-size:12px;font-weight:900}footer{display:flex;justify-content:space-between;gap:20px;padding:29px clamp(20px,6vw,94px);background:var(--ink);color:#cabfd2;font-size:11px}footer a{color:white}
-    @media(max-width:980px){.hero{grid-template-columns:1fr}.preset-board{margin:0 24px 60px}.step{grid-template-columns:54px 1fr}.step-content{grid-column:2}.output-grid{grid-template-columns:1fr}.defense{position:static}.letter-cta{grid-template-columns:1fr;align-items:start}}
-    @media(max-width:700px){.topbar nav a:not(:first-child){display:none}.hero h1{font-size:clamp(58px,18vw,82px)}.preset-board{padding:26px}.preset-grid{grid-template-columns:1fr}.builder-head,.output-head{align-items:flex-start;flex-direction:column}.timer{width:100%}.step{grid-template-columns:1fr}.step-content{grid-column:1}.text-grid{grid-template-columns:1fr}.attestation{grid-template-columns:1fr}.attestation button{grid-column:1;grid-row:auto;margin-top:14px}.paper{min-height:0;padding:28px 22px}.paper-row{display:block}.paper-row span{display:block;margin-top:2px}footer{flex-direction:column}}
-    @media print{body.printing *{visibility:hidden!important}body.printing #resume-paper,body.printing #resume-paper *{visibility:visible!important}body.printing #resume-paper{position:absolute;inset:0;width:8.5in;min-height:11in;margin:0;padding:.5in;box-shadow:none}body.printing .paper [contenteditable]:hover{background:transparent}@page{size:letter;margin:0}}
-    /* Keep the builder readable while scrolling: nothing floats over the form or résumé. */
-    .topbar{position:relative;top:auto;z-index:auto;background:#fff;backdrop-filter:none}
-    .defense{position:static;top:auto}
-    .identity-grid{margin-bottom:28px}.degree-builder{padding:24px;border:1px solid var(--line);border-radius:24px;background:#f8f4ff}.degree-builder>header{display:flex;align-items:flex-start;justify-content:space-between;gap:22px;margin-bottom:16px}.degree-builder h4{margin:4px 0 6px;font:400 25px/1.05 var(--serif)}.degree-builder header p:last-child{max-width:560px;margin:0;color:var(--muted);font-size:11px;line-height:1.5}.degree-stack{display:grid;gap:13px}.degree-card{padding:20px;border:1px solid rgba(54,28,77,.18);border-radius:18px;background:white;box-shadow:0 12px 32px rgba(39,13,62,.06)}.degree-card>header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}.degree-card>header small{color:var(--purple);font-size:8px;font-weight:900;letter-spacing:.16em}.degree-card>header button{border:0;background:none;color:#7c1d45;font-size:10px;font-weight:900;text-decoration:underline;cursor:pointer}.degree-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}.degree-fields .wide{grid-column:1/-1}.paper{height:11in;min-height:11in;overflow:hidden}.resume-hook{padding-bottom:9px;border-bottom:1px solid #111;text-align:center}.resume-hook .positioning-title{font-weight:800;font-size:11.5px;letter-spacing:.035em;text-transform:uppercase}.resume-hook .competency-row{font-size:9.6px;color:#333}.resume-hook .value-pitch{margin-top:6px;font-size:10.2px;line-height:1.3}.paper strong{font-weight:800}.education-entry .education-degree{font-weight:700}.education-entry .academic-proof{font-size:10.4px;line-height:1.28}.paper.compact{padding:.46in .51in}.paper.compact section{margin-top:11px}.paper.compact .paper-entry{margin-bottom:8px}.paper.compact .paper-entry li{margin:2px 0;font-size:10px;line-height:1.27}.paper.compact .academic-proof{font-size:9.6px;line-height:1.2}.paper.ultra{padding:.36in .44in}.paper.ultra section{margin-top:8px}.paper.ultra h3{margin-bottom:5px;font-size:10px}.paper.ultra .paper-entry{margin-bottom:5px}.paper.ultra .paper-row{font-size:10.4px}.paper.ultra .paper-entry li,.paper.ultra>header p,.paper.ultra p{font-size:9.2px;line-height:1.16}.paper.micro{padding:.28in .36in}.paper.micro section{margin-top:5px}.paper.micro h3{margin-bottom:3px;font-size:9px}.paper.micro .paper-entry{margin-bottom:3px}.paper.micro .paper-row{font-size:9.5px}.paper.micro .paper-entry ul{margin:2px 0 0}.paper.micro .paper-entry li,.paper.micro>header p,.paper.micro p{margin:1px 0;font-size:8.2px;line-height:1.08}
-    @media(max-width:700px){.degree-builder{padding:18px}.degree-builder>header{flex-direction:column}.degree-fields{grid-template-columns:1fr}.degree-fields .wide{grid-column:auto}.paper{height:auto;min-height:11in}}
-    @media print{body.printing #resume-paper{height:11in!important;max-height:11in!important;min-height:11in!important;overflow:hidden!important}}
-  </style>
-</head>
-<body>
-  <header class="topbar"><a class="brand" href="/"><span class="brand-mark">EFF</span><span><b>REACH</b> Career Studio</span></a><nav><a href="#builder">Build my resume</a><a href="/tools/recommendation">Recommendation letter</a><a href="/">REACH home</a></nav></header>
-  <main>
-    <section class="hero"><div class="hero-copy"><p class="kicker">FREE · PRIVATE · ATS-READY</p><h1>EFF builds<br>your resume.</h1><p>You did the work. We help you put it into words—without a workshop, a blank page, or made-up accomplishments.</p><div class="hero-actions"><a href="#builder">Start the 30-second builder →</a><a href="/tools/recommendation">Need a recommendation letter?</a></div><small>The 30-second promise covers generation after your verified details are entered. Always review before applying.</small></div><aside class="preset-board"><p class="kicker">1-TAP ARTIFACT PRESETS</p><h2>See the engine work.</h2><p>Load a sample candidate, multi-role allocation, and Google X-Y-Z bullet set in under one second. Replace all sample details before applying.</p><div class="preset-grid"><button class="preset" data-preset="campus"><span>UNDERGRADUATE</span><b>Campus leader</b><small>Leadership + service</small></button><button class="preset" data-preset="working"><span>EARLY CAREER</span><b>Working student</b><small>Job + campus role</small></button><button class="preset" data-preset="graduate"><span>GRADUATE</span><b>Researcher</b><small>Research + teaching</small></button><button class="preset" data-preset="service"><span>FELLOWSHIP</span><b>Service advocate</b><small>Community + leadership</small></button></div><p id="preset-status" class="preset-status" aria-live="polite"></p></aside></section>
-    <section id="builder"><header class="builder-head"><div><p class="kicker">THE EFF 30-SECOND CAREER ENGINE</p><h2>Tap your experience.<br>Leave with a resume.</h2></div><div class="timer" id="timer"><small>BUILD TIMER</small><strong id="clock">00:00</strong><span id="pace">30-second pace</span></div></header><div class="builder-body">
-      <section class="step"><div class="step-number">01</div><div class="step-copy"><h3>Set your direction</h3><p>EFF turns this into a positioning title, competency row, and two-sentence value pitch—without changing the truth of your experience.</p></div><div class="step-content"><div class="choice"><div class="choice-title">Where are you now?</div><div class="pills" id="profile-pills"></div></div><div class="choice"><div class="choice-title">Choose your resume lens</div><div class="pills" id="lens-pills"></div></div><label class="field"><span>Target job, internship, fellowship, or field</span><input id="target-role" placeholder="Example: Summer marketing internship"></label></div></section>
-      <section class="step"><div class="step-number">02</div><div class="step-copy"><h3>Build your academic record</h3><p>Add undergraduate and graduate degrees separately. Use only verified GPA, honors, thesis, fellowship, and coursework details.</p></div><div class="step-content"><div class="text-grid identity-grid"><label class="field"><span>Full name</span><input id="full-name" placeholder="Jordan Taylor"></label><label class="field"><span>Email</span><input id="email" type="email" placeholder="jordan@university.edu"></label><label class="field"><span>Phone</span><input id="phone" placeholder="(555) 123-4567"></label><label class="field"><span>City, state</span><input id="location" placeholder="Atlanta, GA"></label><label class="field"><span>LinkedIn (optional)</span><input id="linkedin" placeholder="linkedin.com/in/jordan"></label></div><section class="degree-builder"><header><div><p class="choice-title">MULTI-TIER EDUCATION</p><h4>Give each degree its own evidence.</h4><p>Specific academic proof beats generic phrases. Leave any field blank if it does not apply.</p></div><button class="add-role" id="add-degree" type="button">+ Add another degree</button></header><div id="degrees" class="degree-stack"></div></section></div></section>
-      <section class="step"><div class="step-number">03</div><div class="step-copy"><h3>Tap what you actually did</h3><p>No experience essay. Choose the closest truthful match, then refine the generated resume.</p></div><div class="step-content"><div id="roles"></div><button class="add-role" id="add-role" type="button">+ Add another role</button></div></section>
-      <section class="step"><div class="step-number">04</div><div class="step-copy"><h3>Choose verified skills</h3><p>Select only skills you can demonstrate in an interview or work sample.</p></div><div class="step-content skill-grid" id="skills"></div></section>
-      <div class="attestation"><b>Truth before polish.</b><p>By building, you confirm the selected ranges and accomplishments are accurate enough for you to explain. EFF does not verify or endorse applicant claims.</p><button id="build" type="button">EFF, build my resume →</button></div><p class="status" id="status" role="status" aria-live="polite">Choose truthful ranges you can defend. EFF will never invent a result for you.</p>
-    </div></section>
-    <section class="output" id="output"><header class="output-head"><div><p class="kicker">YOUR EDITABLE FIRST DRAFT</p><h2>One page. Real experience. Strong language.</h2><span>Click any heading or bullet on the page to correct it before export.</span></div><div><button id="copy" type="button">Copy ATS text</button><button id="print" class="primary" type="button">Print / Save PDF</button></div></header><div class="output-grid"><article class="paper" id="resume-paper" contenteditable="true" aria-label="Editable ATS resume preview"></article><aside class="defense" id="defense"></aside></div></section>
-    <section class="letter-cta"><div><p class="kicker">COMPLETE YOUR APPLICATION</p><h2>Resume done?<br>Build your EFF recommendation letter.</h2><p>Use the official 60-second EFF letter builder for a scholarship-purpose recommendation based only on the truthful information you submit.</p></div><a href="/tools/recommendation">Open the recommendation-letter builder →</a></section>
-  </main>
-  <footer><span>Esther Funds Foundation · Every Future Fulfilled</span><a href="mailto:nationals@estherfundsinc.org">nationals@estherfundsinc.org</a></footer>
-  <script>
-  (()=>{"use strict";
-    const catalog={paid:{label:"Job or internship",roles:["Team Member","Shift Lead","Intern","Customer Service Associate","Administrative Assistant","Sales Associate"],wins:["customer service","daily operations","team onboarding","inventory accuracy","sales support","process improvement"],methods:["coordinating shift priorities","using a digital tracking system","training peers on standard procedures","resolving customer concerns","monitoring inventory and handoffs"],keywords:["operations","customer experience","process improvement","team coordination"]},campus:{label:"Campus leadership",roles:["President","Vice President","Treasurer","Secretary","Committee Chair","Campus Ambassador"],wins:["member engagement","event execution","fundraising","budget stewardship","recruitment","campus partnerships"],methods:["coordinating a cross-functional student team","building a multi-channel outreach campaign","tracking milestones and ownership","partnering with campus departments","standardizing chapter workflows"],keywords:["leadership","stakeholder engagement","event operations","budget management"]},service:{label:"Volunteer service",roles:["Volunteer","Volunteer Lead","Community Outreach Coordinator","Service Chair","Peer Advocate","Program Volunteer"],wins:["community outreach","resource distribution","volunteer coordination","service delivery","donor engagement","program access"],methods:["organizing field logistics","coordinating volunteer assignments","maintaining a resource tracker","conducting direct community outreach","partnering with local organizations"],keywords:["community outreach","program delivery","volunteer coordination","resource navigation"]},research:{label:"Research or capstone",roles:["Student Researcher","Graduate Researcher","Capstone Team Lead","Lab Assistant","Policy Researcher","Project Analyst"],wins:["data analysis","literature synthesis","research reporting","survey collection","policy evaluation","technical documentation"],methods:["applying a structured research methodology","analyzing data in Excel or statistical software","synthesizing peer-reviewed sources","presenting findings to faculty reviewers","documenting methods and limitations"],keywords:["research","data analysis","technical reporting","quality assurance"]},peer:{label:"Teaching or peer support",roles:["Peer Mentor","Tutor","Resident Assistant","Teaching Assistant","Orientation Leader","Student Success Coach"],wins:["student support","academic engagement","peer onboarding","resource referrals","learning progress","community belonging"],methods:["providing individualized guidance","facilitating small-group learning","connecting students to campus resources","tracking follow-up needs","adapting explanations to student questions"],keywords:["mentoring","student success","facilitation","resource referral"]},creative:{label:"Technical or creative project",roles:["Project Lead","Designer","Developer","Content Strategist","Data Analyst","Creative Director"],wins:["digital product delivery","accessible design","audience engagement","content production","workflow automation","data visualization"],methods:["using iterative design and testing","building with industry-standard software","incorporating stakeholder feedback","auditing the final work against requirements","documenting a repeatable production workflow"],keywords:["project management","design","digital production","user experience"]}};
-    const scopes=["1-10 people","11-50 people","51-150 people","151-500 people","500+ people","1-10 hours","11-50 hours","51-100 hours","100+ hours","1-10% improvement","11-25% improvement","26-50% improvement","$1-$999","$1,000-$4,999","$5,000+"];const periods=["Current","This semester","One semester","One academic year","Two or more years","Summer experience"];const skillOptions=["Microsoft Excel","Google Workspace","Canva","PowerPoint","Data analysis","Project management","Public speaking","Research","Social media","Customer service","Event planning","Budget tracking","Python","Figma","Qualtrics","Bilingual communication"];const state={profile:"undergraduate",lens:"corporate",roles:[],degrees:[],skills:[],started:null,timer:null,lastDraft:null};
-    const archetypes={paid:"Operational Performance Specialist",campus:"Student Organization Strategist",service:"0-to-1 Community Program Builder",research:"Applied Research Analyst",peer:"Instructional Systems Specialist",creative:"Digital Product Builder"};
-    const $=id=>document.getElementById(id),clean=v=>(v||"").replace(/\s+/g," ").trim().replace(/[.;,\s]+$/,""),esc=v=>clean(v).replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"})[ch]),sentence=v=>{const s=clean(v);return s?`${s[0].toUpperCase()}${s.slice(1)}.`:""};
-    function startTimer(){if(state.started!==null)return;state.started=Date.now();$("timer").classList.add("running");state.timer=setInterval(()=>{const sec=Math.floor((Date.now()-state.started)/1000);$("clock").textContent=`${String(Math.floor(sec/60)).padStart(2,"0")}:${String(sec%60).padStart(2,"0")}`;$("pace").textContent=sec<=30?"30-second pace":"Accuracy comes first"},250)}function stopTimer(){clearInterval(state.timer);state.timer=null;$("timer").classList.remove("running")}function makeRole(category="campus"){const c=catalog[category];return{category,role:c.roles[0],win:c.wins[0],scope:scopes[1],method:c.methods[0],period:periods[0]}}function makeDegree(school="",degree="",graduation="",details={}){return{school,degree,graduation,gpa:details.gpa||"",honors:details.honors||"",thesis:details.thesis||"",fellowship:details.fellowship||"",coursework:details.coursework||""}}
-    function pills(values,selected,action,attr=""){return `<div class="pills">${values.map(v=>`<button type="button" class="pill ${v===selected?"selected":""}" data-action="${action}" ${attr} data-value="${esc(v)}" aria-pressed="${v===selected}">${esc(v)}</button>`).join("")}</div>`}function renderFixed(){$("profile-pills").innerHTML=pills(["undergraduate","graduate","early-career"],state.profile,"profile");$("lens-pills").innerHTML=pills(["corporate","civic"],state.lens,"lens")}
-    function renderRoles(){$("roles").innerHTML=state.roles.map((r,i)=>{const c=catalog[r.category],cats=Object.keys(catalog);return `<article class="role-card"><header><div><small>ROLE ${i+1}</small><b>${esc(c.label)}</b></div>${state.roles.length>1?`<button type="button" data-action="remove" data-index="${i}">Remove</button>`:""}</header><div class="choice"><div class="choice-title">Experience type</div>${pills(cats.map(k=>catalog[k].label),c.label,"category",`data-index="${i}"`)}</div><div class="choice"><div class="choice-title">Closest official title</div>${pills(c.roles,r.role,"role",`data-index="${i}"`)}</div><div class="choice"><div class="choice-title">Primary accomplishment</div>${pills(c.wins,r.win,"win",`data-index="${i}"`)}</div><div class="choice"><div class="choice-title">Verified scope bracket</div>${pills(scopes,r.scope,"scope",`data-index="${i}"`)}</div><div class="choice"><div class="choice-title">How you did it</div>${pills(c.methods,r.method,"method",`data-index="${i}"`)}</div><div class="choice"><div class="choice-title">Time period</div>${pills(periods,r.period,"period",`data-index="${i}"`)}</div></article>`}).join("");$("add-role").style.display=state.roles.length<3?"inline-block":"none"}function renderSkills(){$("skills").innerHTML=skillOptions.map(s=>`<button type="button" class="skill ${state.skills.includes(s)?"selected":""}" data-skill="${esc(s)}" aria-pressed="${state.skills.includes(s)}">${state.skills.includes(s)?"✓":"+"} ${esc(s)}</button>`).join("")}function renderDegrees(){$("degrees").innerHTML=state.degrees.map((d,i)=>`<article class="degree-card"><header><small>${i===0?"PRIMARY OR MOST RECENT DEGREE":`ADDITIONAL DEGREE ${i}`}</small>${state.degrees.length>1?`<button type="button" data-degree-action="remove" data-degree-index="${i}">Remove</button>`:""}</header><div class="degree-fields"><label class="field"><span>Institution</span><input data-degree-index="${i}" data-degree-field="school" value="${esc(d.school)}" placeholder="Florida A&amp;M University"></label><label class="field"><span>Degree + field</span><input data-degree-index="${i}" data-degree-field="degree" value="${esc(d.degree)}" placeholder="M.S. in Data Science"></label><label class="field"><span>Graduation</span><input data-degree-index="${i}" data-degree-field="graduation" value="${esc(d.graduation)}" placeholder="May 2027"></label><label class="field"><span>Verified GPA</span><input data-degree-index="${i}" data-degree-field="gpa" value="${esc(d.gpa)}" placeholder="3.92/4.00"></label><label class="field wide"><span>Latin honors or distinctions</span><input data-degree-index="${i}" data-degree-field="honors" value="${esc(d.honors)}" placeholder="Summa Cum Laude · Honors College"></label><label class="field wide"><span>Thesis or capstone title</span><input data-degree-index="${i}" data-degree-field="thesis" value="${esc(d.thesis)}" placeholder="Predictive Modeling of Student Retention"></label><label class="field wide"><span>Departmental fellowship or academic award</span><input data-degree-index="${i}" data-degree-field="fellowship" value="${esc(d.fellowship)}" placeholder="Graduate Research Fellowship"></label><label class="field wide"><span>High-value coursework cluster</span><input data-degree-index="${i}" data-degree-field="coursework" value="${esc(d.coursework)}" placeholder="Regression Analysis · Machine Learning · Database Systems"></label></div></article>`).join("");$("add-degree").style.display=state.degrees.length<3?"inline-block":"none"}
-    function budget(total,index){return total===1?4:total===2?2:index===0?2:1}function escapeHtml(v){return String(v||"").replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"})[ch])}function strategicBold(v){const safe=escapeHtml(v);return safe.replace(/(\$[\d,.]+\+?|\b\d\.\d{1,2}\/4\.00\b|\b\d+(?:\.\d+)?(?:\s*[–-]\s*\d+(?:\.\d+)?)?%\s*(?:improvement|gain)?|\b\d+(?:\s*[–-]\s*\d+)?\+?\s+(?:people|hours)|\b(?:SPSS|Excel|Python|Figma|Qualtrics|Canva|PowerPoint|Google Workspace)\b)/gi,"<strong>$1</strong>")}function impactLead(scope,win,i){const n=i%4;if(scope.includes("$"))return `${["Stewarded","Generated","Managed","Secured"][n]} ${scope} through ${win}`;if(scope.includes("hour"))return `${["Invested","Completed","Delivered","Sustained"][n]} ${scope} in ${win}`;if(scope.includes("%"))return `${["Improved","Increased","Accelerated","Elevated"][n]} ${win} by ${scope}`;return `${["Reached","Engaged","Served","Mobilized"][n]} ${scope} through ${win}`}function compileBullet(r,i){const emphasis=state.lens==="corporate"?["operational delivery","stakeholder execution","workflow accountability","service consistency"]:["community stewardship","institutional reach","equitable access","collective impact"],text=sentence(`${impactLead(r.scope,r.win,i)} by ${r.method}, strengthening ${emphasis[i%4]}`);return{text,html:strategicBold(text),defense:{intent:`The recruiter is testing whether you can explain your ownership of ${r.win} with a concrete, credible scope.`,script:`In my ${r.role} role, I focused on ${r.win}. I reached ${r.scope} by ${r.method}, and I can explain the exact steps I owned.`,defusal:"If asked for a more exact number, do not guess. Say the selected range is your honest estimate, describe the source, and offer a verified figure later."}}}function buildHook(roles,keywords){const target=val("target-role").replace(/^(looking for|seeking|applying for)\s+/i,"").trim(),labels=[...new Set(roles.map(r=>archetypes[r.category]))],title=[target||labels[0]||"Early-Career Professional",labels.find(label=>label!==(target||labels[0]))].filter(Boolean).join(" | "),competencies=[...new Set([...keywords,...state.skills])].slice(0,6),scopes=[...new Set(roles.map(r=>r.scope))].slice(0,2),wins=[...new Set(roles.map(r=>r.win))].slice(0,2),profile=state.profile==="graduate"?"Graduate-level":state.profile==="undergraduate"?"Undergraduate":"Early-career";return{title,competencies,value:`${profile} candidate translating ${wins.join(" and ")||"academic and professional experience"} into defensible impact across ${scopes.join(" and ")||"student-selected scope"}. Applies ${competencies.slice(0,4).join(", ")||"cross-functional execution"} to ${target||"high-accountability work"} with every claim tied to evidence the candidate can explain.`}}function compile(){const selected=state.roles.slice(0,3),keywords=[...new Set(selected.flatMap(r=>catalog[r.category].keywords))].slice(0,10);return{roles:selected.map((r,i)=>({category:r.category,heading:`${r.role} | ${archetypes[r.category]}`,subheading:r.period,bullets:Array.from({length:budget(selected.length,i)},(_,j)=>compileBullet(r,j))})),keywords,hook:buildHook(selected,keywords)}}function val(id){return clean($(id).value)}
-    function academicProof(d){return[["GPA",d.gpa],["Honors",d.honors],["Thesis / Capstone",d.thesis],["Fellowship / Award",d.fellowship],["Coursework",d.coursework]].filter(([,v])=>clean(v)).map(([label,v])=>`<p class="academic-proof" contenteditable="true"><b>${label}:</b> ${strategicBold(v)}</p>`).join("")}function autoScalePaper(){const paper=$("resume-paper");paper.classList.remove("compact","ultra","micro");requestAnimationFrame(()=>{if(paper.scrollHeight>paper.clientHeight)paper.classList.add("compact");if(paper.scrollHeight>paper.clientHeight)paper.classList.add("ultra");if(paper.scrollHeight>paper.clientHeight)paper.classList.add("micro");const mode=paper.classList.contains("micro")?"maximum compression":paper.classList.contains("ultra")?"high compression":paper.classList.contains("compact")?"light compression":"standard spacing";$("status").textContent=`One-page layout check: ${mode}. Review every line before exporting.`})}function renderOutput(d){const contact=[val("location"),val("phone"),val("email"),val("linkedin")].filter(Boolean).join(" | "),education=state.degrees.map(degree=>`<div class="paper-entry education-entry"><div class="paper-row"><b contenteditable="true">${esc(degree.school||"College or university")}</b><span contenteditable="true">${esc(degree.graduation)}</span></div><p class="education-degree" contenteditable="true">${esc(degree.degree||"Degree or program")}</p>${academicProof(degree)}</div>`).join("");$("resume-paper").innerHTML=`<header><h2 contenteditable="true">${esc((val("full-name")||"YOUR NAME").toUpperCase())}</h2><p contenteditable="true">${esc(contact)}</p></header><section class="resume-hook"><p class="positioning-title" contenteditable="true">${esc(d.hook.title)}</p><p class="competency-row" contenteditable="true">${strategicBold(d.hook.competencies.join(" · "))}</p><p class="value-pitch" contenteditable="true">${strategicBold(d.hook.value)}</p></section><section><h3>EDUCATION</h3>${education}</section><section><h3>EXPERIENCE &amp; LEADERSHIP</h3>${d.roles.map(r=>`<div class="paper-entry"><div class="paper-row"><b contenteditable="true">${esc(r.heading)}</b><span contenteditable="true">${esc(r.subheading)}</span></div><ul>${r.bullets.map(b=>`<li contenteditable="true">${b.html}</li>`).join("")}</ul></div>`).join("")}</section>${state.skills.length?`<section><h3>SKILLS</h3><p contenteditable="true">${strategicBold(state.skills.join(" · "))}</p></section>`:""}`;$("defense").innerHTML=`<p class="kicker">ANTI-IMPOSTER INTERVIEW DEFENSE</p><h3>Know how to defend every line.</h3>${d.roles.flatMap((r,ri)=>r.bullets.map((b,bi)=>`<details><summary>Bullet ${ri+1}.${bi+1}: What if they ask?</summary><div><b>Recruiter intent</b><p>${esc(b.defense.intent)}</p><b>Your 20-second script</b><p>“${esc(b.defense.script)}”</p><b>Trap-question defusal</b><p>${esc(b.defense.defusal)}</p></div></details>`)).join("")}<div class="keyword-box"><b>ATS LANGUAGE INCLUDED</b><p>${esc(d.keywords.join(" · "))}</p></div>`;$("output").classList.add("visible");autoScalePaper()}
-    function build(){startTimer();const missing=[];if(!val("full-name"))missing.push("your name");if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val("email")))missing.push("a valid email");if(!state.degrees[0]?.school)missing.push("your primary school");if(!state.degrees[0]?.degree)missing.push("your primary degree or program");if(state.degrees.some(d=>(d.school&&!d.degree)||(!d.school&&d.degree)))missing.push("both the institution and degree for every academic entry");if(missing.length){$("status").textContent=`Add ${missing.join(", ")} before building your resume.`;return}const started=performance.now();state.lastDraft=compile();renderOutput(state.lastDraft);const ms=(performance.now()-started).toFixed(1);stopTimer();const seconds=state.started?Math.max(1,Math.floor((Date.now()-state.started)/1000)):1;$("status").textContent=`Draft built in ${ms} ms. Guided input time: ${seconds} second${seconds===1?"":"s"}. Edit exact names and verify every claim before exporting.`;$("output").scrollIntoView({behavior:"smooth",block:"start"})}
-    const presets={campus:{profile:"undergraduate",lens:"civic",values:["Jordan Taylor","jordan@university.edu","(555) 123-4567","Atlanta, GA","","Georgia State University","B.S. in Psychology","May 2027","Student affairs internship"],roles:[{category:"campus",role:"Vice President",win:"member engagement",scope:"51-150 people",method:"coordinating a cross-functional student team",period:"Current"},{category:"service",role:"Volunteer Lead",win:"resource distribution",scope:"51-100 hours",method:"organizing field logistics",period:"One academic year"}],skills:["Google Workspace","Public speaking","Event planning"]},working:{profile:"early-career",lens:"corporate",values:["Morgan Lee","morgan@university.edu","(555) 222-0189","Charlotte, NC","","UNC Charlotte","B.S. in Business Administration","December 2026","Operations analyst role"],roles:[{category:"paid",role:"Shift Lead",win:"daily operations",scope:"11-50 people",method:"coordinating shift priorities",period:"Two or more years"},{category:"campus",role:"Treasurer",win:"budget stewardship",scope:"$1,000-$4,999",method:"tracking milestones and ownership",period:"One academic year"}],skills:["Microsoft Excel","Customer service","Budget tracking"]},graduate:{profile:"graduate",lens:"corporate",values:["Alexis Brooks","alexis@university.edu","(555) 442-9910","Tallahassee, FL","","Florida State University","M.S. in Public Policy","May 2027","Policy research fellowship"],roles:[{category:"research",role:"Graduate Researcher",win:"data analysis",scope:"151-500 people",method:"analyzing data in Excel or statistical software",period:"Current"},{category:"peer",role:"Teaching Assistant",win:"academic engagement",scope:"51-150 people",method:"facilitating small-group learning",period:"One academic year"}],skills:["Data analysis","Research","Microsoft Excel","Public speaking"]},service:{profile:"undergraduate",lens:"civic",values:["Taylor Reed","taylor@university.edu","(555) 901-2234","Norfolk, VA","","Norfolk State University","B.A. in Sociology","May 2028","Community leadership fellowship"],roles:[{category:"service",role:"Community Outreach Coordinator",win:"program access",scope:"151-500 people",method:"partnering with local organizations",period:"One academic year"},{category:"campus",role:"Campus Ambassador",win:"campus partnerships",scope:"51-150 people",method:"partnering with campus departments",period:"Current"}],skills:["Public speaking","Event planning","Social media","Canva"]}};
-    function loadPreset(key){const p=presets[key],started=performance.now(),contactIds=["full-name","email","phone","location","linkedin"];state.profile=p.profile;state.lens=p.lens;state.roles=p.roles.map(r=>({...r}));state.skills=[...p.skills];contactIds.forEach((id,i)=>$(id).value=p.values[i]);$("target-role").value=p.values[8];state.degrees=[makeDegree(p.values[5],p.values[6],p.values[7],key==="graduate"?{gpa:"3.92/4.00",fellowship:"Graduate Dean’s Fellowship",thesis:"Predictive Modeling of Student Retention",coursework:"Program Evaluation · Applied Statistics · Policy Analytics"}:{})];if(key==="graduate")state.degrees.push(makeDegree("Florida A&M University","B.S. in Political Science","May 2025",{honors:"Summa Cum Laude",coursework:"Research Methods · Econometrics · Public Administration"}));renderFixed();renderDegrees();renderRoles();renderSkills();state.lastDraft=compile();renderOutput(state.lastDraft);$("preset-status").textContent=`Preset compiled in ${(performance.now()-started).toFixed(1)} ms. Replace every sample fact before exporting.`;$("output").scrollIntoView({behavior:"smooth",block:"start"})}
-    document.addEventListener("click",e=>{const t=e.target.closest("button");if(!t)return;if(t.dataset.preset){loadPreset(t.dataset.preset);return}if(t.dataset.degreeAction==="remove"){startTimer();state.degrees.splice(Number(t.dataset.degreeIndex),1);renderDegrees();return}if(t.dataset.skill){startTimer();state.skills=state.skills.includes(t.dataset.skill)?state.skills.filter(s=>s!==t.dataset.skill):[...state.skills,t.dataset.skill];renderSkills();return}const a=t.dataset.action;if(!a)return;startTimer();if(a==="profile"){state.profile=t.dataset.value;renderFixed()}else if(a==="lens"){state.lens=t.dataset.value;renderFixed()}else if(a==="remove"){state.roles.splice(Number(t.dataset.index),1);renderRoles()}else{const i=Number(t.dataset.index),v=t.dataset.value;if(a==="category"){const key=Object.keys(catalog).find(k=>catalog[k].label===v)||"campus";state.roles[i]=makeRole(key)}else state.roles[i][a]=v;renderRoles()}});document.addEventListener("input",e=>{const t=e.target;if(!(t instanceof HTMLInputElement)||t.dataset.degreeField===undefined)return;startTimer();state.degrees[Number(t.dataset.degreeIndex)][t.dataset.degreeField]=clean(t.value)});
-    document.querySelectorAll("input").forEach(i=>i.addEventListener("focus",startTimer,{once:true}));$("add-degree").addEventListener("click",()=>{startTimer();if(state.degrees.length<3){state.degrees.push(makeDegree());renderDegrees()}});$("add-role").addEventListener("click",()=>{startTimer();if(state.roles.length<3){state.roles.push(makeRole());renderRoles()}});$("build").addEventListener("click",build);$("resume-paper").addEventListener("input",autoScalePaper);$("copy").addEventListener("click",async()=>{await navigator.clipboard.writeText($("resume-paper").innerText.replace(/\n{3,}/g,"\n\n"));$("status").textContent="ATS plain text copied. Paste it into the employer's plain-text resume field."});$("print").addEventListener("click",()=>{autoScalePaper();document.body.classList.add("printing");window.print();setTimeout(()=>document.body.classList.remove("printing"),500)});state.degrees=[makeDegree()];state.roles=[makeRole()];renderFixed();renderDegrees();renderRoles();renderSkills();
-  })();
-  </script>
-</body>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta
+      name="description"
+      content="Build a truthful, ATS-ready one-page resume with Esther Funds Foundation in under 30 seconds after entering your details."
+    />
+    <title>EFF Builds Your Resume | REACH Career Studio</title>
+    <style>
+      :root {
+        --ink: #110b19;
+        --purple: #5b21b6;
+        --gold: #f5c74d;
+        --cream: #fbf9ff;
+        --muted: #665e70;
+        --line: rgba(49, 25, 70, 0.16);
+        --serif: Georgia, "Times New Roman", serif;
+        --sans: Inter, "Avenir Next", "Segoe UI", Arial, sans-serif;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        margin: 0;
+        background: var(--cream);
+        color: var(--ink);
+        font-family: var(--sans);
+      }
+      button,
+      input {
+        font: inherit;
+      }
+      button,
+      a {
+        touch-action: manipulation;
+      }
+      .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 20;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+        min-height: 76px;
+        padding: 12px clamp(18px, 5vw, 76px);
+        border-bottom: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.93);
+        backdrop-filter: blur(18px);
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 11px;
+        color: var(--ink);
+        text-decoration: none;
+      }
+      .brand-mark {
+        display: grid;
+        place-items: center;
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        background: var(--purple);
+        color: white;
+        font: 700 17px var(--serif);
+      }
+      .brand span {
+        font-size: 13px;
+      }
+      .brand b {
+        display: block;
+        color: var(--purple);
+        font-size: 9px;
+        letter-spacing: 0.18em;
+      }
+      .topbar nav {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+      }
+      .topbar nav a {
+        color: #302639;
+        text-decoration: none;
+        font-size: 11px;
+        font-weight: 800;
+      }
+      .topbar nav a:first-child {
+        padding: 11px 15px;
+        border-radius: 999px;
+        background: var(--purple);
+        color: white;
+      }
+      .hero {
+        display: grid;
+        grid-template-columns: minmax(0, 1.12fr) minmax(340px, 0.88fr);
+        min-height: 700px;
+        background: radial-gradient(
+            circle at 84% 12%,
+            rgba(165, 113, 255, 0.38),
+            transparent 25%
+          ),
+          linear-gradient(135deg, #100817, #26113b 53%, #4d1782);
+        color: white;
+      }
+      .hero-copy {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: clamp(72px, 9vw, 132px) clamp(24px, 6vw, 96px);
+      }
+      .kicker {
+        margin: 0 0 14px;
+        color: var(--gold);
+        font-size: 9px;
+        font-weight: 900;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+      }
+      .hero h1 {
+        max-width: 780px;
+        margin: 0;
+        font: 400 clamp(62px, 8.5vw, 118px) / 0.86 var(--serif);
+        letter-spacing: -0.06em;
+      }
+      .hero-copy > p:not(.kicker) {
+        max-width: 700px;
+        margin: 28px 0;
+        color: #e8e0ee;
+        font-size: clamp(17px, 1.6vw, 22px);
+        line-height: 1.65;
+      }
+      .hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+      .hero-actions a {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 54px;
+        padding: 13px 21px;
+        border: 1px solid rgba(255, 255, 255, 0.23);
+        border-radius: 999px;
+        color: white;
+        text-decoration: none;
+        font-size: 12px;
+        font-weight: 900;
+      }
+      .hero-actions a:first-child {
+        border-color: var(--gold);
+        background: var(--gold);
+        color: var(--ink);
+      }
+      .hero small {
+        max-width: 680px;
+        margin-top: 17px;
+        color: #cbbfd4;
+        line-height: 1.5;
+      }
+      .preset-board {
+        align-self: center;
+        margin-right: clamp(24px, 6vw, 90px);
+        padding: 32px;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        border-radius: 28px;
+        background: linear-gradient(
+          145deg,
+          rgba(255, 255, 255, 0.14),
+          rgba(255, 255, 255, 0.05)
+        );
+        box-shadow: 0 35px 90px rgba(0, 0, 0, 0.35);
+        backdrop-filter: blur(22px);
+      }
+      .preset-board h2 {
+        margin: 0 0 7px;
+        font: 400 32px/1.05 var(--serif);
+      }
+      .preset-board > p {
+        margin: 0 0 20px;
+        color: #d6cadf;
+        font-size: 12px;
+        line-height: 1.5;
+      }
+      .preset-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 9px;
+      }
+      .preset {
+        min-height: 105px;
+        padding: 14px;
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        border-radius: 16px;
+        background: rgba(255, 255, 255, 0.07);
+        color: white;
+        text-align: left;
+        cursor: pointer;
+      }
+      .preset:hover,
+      .preset:focus-visible {
+        border-color: var(--gold);
+        background: rgba(255, 255, 255, 0.12);
+      }
+      .preset span,
+      .preset b {
+        display: block;
+      }
+      .preset span {
+        color: var(--gold);
+        font-size: 8px;
+        font-weight: 900;
+        letter-spacing: 0.13em;
+      }
+      .preset b {
+        margin-top: 8px;
+        font: 400 20px/1 var(--serif);
+      }
+      .preset small {
+        display: block;
+        margin-top: 6px;
+        color: #d6cadf;
+        font-size: 9px;
+      }
+      .preset-status {
+        min-height: 18px;
+        margin: 14px 0 0 !important;
+        color: #f6d976 !important;
+        font-size: 10px !important;
+        font-weight: 800;
+      }
+      .builder-head {
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+        gap: 28px;
+        padding: clamp(75px, 8vw, 112px) clamp(20px, 6vw, 92px) 46px;
+        background: white;
+      }
+      .builder-head h2,
+      .output-head h2,
+      .letter-cta h2 {
+        margin: 0;
+        font: 400 clamp(43px, 6vw, 78px) / 0.96 var(--serif);
+        letter-spacing: -0.045em;
+      }
+      .timer {
+        display: grid;
+        min-width: 210px;
+        padding: 20px;
+        border: 1px solid var(--line);
+        border-radius: 20px;
+        background: #f5efff;
+        box-shadow: 0 18px 45px rgba(50, 19, 80, 0.09);
+      }
+      .timer.running {
+        box-shadow:
+          0 0 0 4px rgba(245, 199, 77, 0.22),
+          0 18px 45px rgba(50, 19, 80, 0.12);
+      }
+      .timer small {
+        font-size: 8px;
+        font-weight: 900;
+        letter-spacing: 0.18em;
+        color: var(--purple);
+      }
+      .timer strong {
+        font: 400 44px/1 var(--serif);
+        font-variant-numeric: tabular-nums;
+      }
+      .timer span {
+        margin-top: 5px;
+        color: var(--muted);
+        font-size: 10px;
+        font-weight: 800;
+      }
+      .builder-body {
+        padding: 0 clamp(20px, 6vw, 92px) 100px;
+        background: white;
+      }
+      .step {
+        display: grid;
+        grid-template-columns: 54px minmax(220px, 0.34fr) minmax(0, 0.66fr);
+        gap: 18px 28px;
+        padding: 50px 0;
+        border-top: 1px solid var(--line);
+      }
+      .step-number {
+        display: grid;
+        place-items: center;
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background: var(--purple);
+        color: white;
+        font-size: 11px;
+        font-weight: 900;
+      }
+      .step-copy h3 {
+        margin: 0 0 8px;
+        font: 400 29px var(--serif);
+      }
+      .step-copy p {
+        max-width: 34ch;
+        margin: 0;
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.55;
+      }
+      .step-content {
+        min-width: 0;
+      }
+      .text-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 13px;
+      }
+      .field {
+        display: grid;
+        gap: 7px;
+      }
+      .field span,
+      .choice-title {
+        font-size: 10px;
+        font-weight: 900;
+        letter-spacing: 0.07em;
+        text-transform: uppercase;
+      }
+      .field input {
+        width: 100%;
+        min-height: 48px;
+        padding: 11px 13px;
+        border: 1px solid rgba(54, 28, 77, 0.24);
+        border-radius: 12px;
+        background: white;
+        color: var(--ink);
+        font-weight: 600;
+      }
+      .field input:focus {
+        outline: 3px solid #d9c8ff;
+        outline-offset: 1px;
+        border-color: var(--purple);
+      }
+      .choice {
+        margin-bottom: 18px;
+      }
+      .pills {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 7px;
+        margin-top: 8px;
+      }
+      .pill,
+      .skill {
+        min-height: 39px;
+        padding: 8px 12px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: white;
+        color: #302539;
+        font-size: 11px;
+        font-weight: 800;
+        cursor: pointer;
+        transition: 0.18s ease;
+      }
+      .pill:hover,
+      .skill:hover {
+        border-color: var(--purple);
+        transform: translateY(-1px);
+      }
+      .pill.selected,
+      .skill.selected {
+        border-color: var(--purple);
+        background: var(--purple);
+        color: white;
+        box-shadow: 0 7px 18px rgba(91, 33, 182, 0.21);
+      }
+      .role-card {
+        margin-bottom: 17px;
+        padding: 23px;
+        border: 1px solid var(--line);
+        border-radius: 22px;
+        background: #fbf9ff;
+        box-shadow: 0 15px 40px rgba(39, 13, 62, 0.07);
+      }
+      .role-card header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 18px;
+      }
+      .role-card header small,
+      .role-card header b {
+        display: block;
+      }
+      .role-card header small {
+        color: var(--purple);
+        font-size: 8px;
+        font-weight: 900;
+        letter-spacing: 0.17em;
+      }
+      .role-card header b {
+        margin-top: 4px;
+        font: 400 22px var(--serif);
+      }
+      .role-card header button {
+        border: 0;
+        background: none;
+        color: #7c1d45;
+        font-size: 11px;
+        font-weight: 900;
+        text-decoration: underline;
+        cursor: pointer;
+      }
+      .add-role {
+        padding: 11px 16px;
+        border: 1px dashed var(--purple);
+        border-radius: 999px;
+        background: white;
+        color: var(--purple);
+        font-size: 11px;
+        font-weight: 900;
+        cursor: pointer;
+      }
+      .skill-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      .attestation {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 5px 25px;
+        align-items: center;
+        padding: 29px;
+        border-radius: 24px;
+        background: linear-gradient(135deg, #1a0b28, #4c1682);
+        color: white;
+      }
+      .attestation b {
+        font: 400 25px var(--serif);
+      }
+      .attestation p {
+        max-width: 760px;
+        margin: 0;
+        color: #dcd2e4;
+        font-size: 12px;
+        line-height: 1.55;
+      }
+      .attestation button {
+        grid-column: 2;
+        grid-row: 1/3;
+        min-height: 56px;
+        padding: 13px 22px;
+        border: 0;
+        border-radius: 999px;
+        background: var(--gold);
+        color: var(--ink);
+        font-size: 12px;
+        font-weight: 900;
+        cursor: pointer;
+      }
+      .status {
+        min-height: 22px;
+        margin: 14px 0 0;
+        color: var(--purple);
+        font-size: 12px;
+        font-weight: 800;
+      }
+      .output {
+        display: none;
+        padding: 82px clamp(20px, 5vw, 76px);
+        background: #eee8f5;
+        scroll-margin-top: 86px;
+      }
+      .output.visible {
+        display: block;
+      }
+      .output-head {
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+        gap: 28px;
+        margin-bottom: 34px;
+      }
+      .output-head h2 {
+        font-size: clamp(38px, 5vw, 63px);
+      }
+      .output-head > div:last-child {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 9px;
+      }
+      .output-head button {
+        min-height: 46px;
+        padding: 10px 15px;
+        border: 1px solid var(--purple);
+        border-radius: 999px;
+        background: white;
+        color: var(--purple);
+        font-size: 11px;
+        font-weight: 900;
+        cursor: pointer;
+      }
+      .output-head button.primary {
+        background: var(--purple);
+        color: white;
+      }
+      .output-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(300px, 0.42fr);
+        gap: 27px;
+        align-items: start;
+      }
+      .paper {
+        width: min(100%, 8.5in);
+        min-height: 11in;
+        margin: 0 auto;
+        padding: 0.58in 0.62in;
+        background: white;
+        color: #111;
+        box-shadow: 0 22px 70px rgba(31, 14, 45, 0.18);
+        font-family: Arial, Helvetica, sans-serif;
+        outline: none;
+      }
+      .paper > header {
+        text-align: center;
+      }
+      .paper > header h2 {
+        margin: 0 0 6px;
+        font:
+          700 21px/1.1 Arial,
+          Helvetica,
+          sans-serif;
+        letter-spacing: 0.05em;
+      }
+      .paper > header p,
+      .paper p {
+        margin: 3px 0;
+        font-size: 11px;
+        line-height: 1.35;
+      }
+      .paper section {
+        margin-top: 15px;
+      }
+      .paper h3 {
+        margin: 0 0 7px;
+        padding-bottom: 3px;
+        border-bottom: 1px solid #111;
+        font:
+          700 11px Arial,
+          Helvetica,
+          sans-serif;
+        letter-spacing: 0.08em;
+      }
+      .paper-row {
+        display: flex;
+        justify-content: space-between;
+        gap: 16px;
+        font-size: 11.5px;
+      }
+      .paper-entry {
+        margin-bottom: 11px;
+      }
+      .paper-entry ul {
+        margin: 5px 0 0;
+        padding-left: 17px;
+      }
+      .paper-entry li {
+        margin: 3px 0;
+        font-size: 11px;
+        line-height: 1.38;
+      }
+      .paper [contenteditable]:hover {
+        background: #fff5bd;
+      }
+      .paper [contenteditable]:focus {
+        outline: 2px solid var(--purple);
+        background: white;
+      }
+      .defense {
+        position: sticky;
+        top: 94px;
+        padding: 24px;
+        border-radius: 22px;
+        background: #160c20;
+        color: white;
+        box-shadow: 0 20px 55px rgba(25, 9, 39, 0.2);
+      }
+      .defense h3 {
+        margin: 0 0 18px;
+        font: 400 28px/1.05 var(--serif);
+      }
+      .defense details {
+        border-top: 1px solid rgba(255, 255, 255, 0.13);
+      }
+      .defense summary {
+        padding: 14px 0;
+        color: #f1eaf5;
+        font-size: 11px;
+        font-weight: 900;
+        cursor: pointer;
+      }
+      .defense details div {
+        padding: 0 0 17px;
+      }
+      .defense details b {
+        display: block;
+        margin-top: 11px;
+        color: var(--gold);
+        font-size: 8px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+      .defense details p {
+        margin: 5px 0 0;
+        color: #d6cadf;
+        font-size: 11px;
+        line-height: 1.55;
+      }
+      .keyword-box {
+        margin-top: 19px;
+        padding: 15px;
+        border-radius: 14px;
+        background: #29143b;
+      }
+      .keyword-box b {
+        color: var(--gold);
+        font-size: 9px;
+        letter-spacing: 0.12em;
+      }
+      .keyword-box p {
+        color: #e8dff0;
+      }
+      .letter-cta {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 34px;
+        align-items: end;
+        padding: clamp(70px, 9vw, 122px) clamp(24px, 6vw, 94px);
+        background: radial-gradient(
+            circle at 90% 10%,
+            rgba(255, 255, 255, 0.16),
+            transparent 24%
+          ),
+          linear-gradient(135deg, #4c1682, #6d28d9);
+        color: white;
+      }
+      .letter-cta h2 {
+        font-size: clamp(42px, 6vw, 75px);
+      }
+      .letter-cta p:last-child {
+        max-width: 740px;
+        color: #e8def1;
+        line-height: 1.65;
+      }
+      .letter-cta a {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 55px;
+        padding: 13px 21px;
+        border-radius: 999px;
+        background: var(--gold);
+        color: var(--ink);
+        text-decoration: none;
+        font-size: 12px;
+        font-weight: 900;
+      }
+      footer {
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+        padding: 29px clamp(20px, 6vw, 94px);
+        background: var(--ink);
+        color: #cabfd2;
+        font-size: 11px;
+      }
+      footer a {
+        color: white;
+      }
+      @media (max-width: 980px) {
+        .hero {
+          grid-template-columns: 1fr;
+        }
+        .preset-board {
+          margin: 0 24px 60px;
+        }
+        .step {
+          grid-template-columns: 54px 1fr;
+        }
+        .step-content {
+          grid-column: 2;
+        }
+        .output-grid {
+          grid-template-columns: 1fr;
+        }
+        .defense {
+          position: static;
+        }
+        .letter-cta {
+          grid-template-columns: 1fr;
+          align-items: start;
+        }
+      }
+      @media (max-width: 700px) {
+        .topbar nav a:not(:first-child) {
+          display: none;
+        }
+        .hero h1 {
+          font-size: clamp(58px, 18vw, 82px);
+        }
+        .preset-board {
+          padding: 26px;
+        }
+        .preset-grid {
+          grid-template-columns: 1fr;
+        }
+        .builder-head,
+        .output-head {
+          align-items: flex-start;
+          flex-direction: column;
+        }
+        .timer {
+          width: 100%;
+        }
+        .step {
+          grid-template-columns: 1fr;
+        }
+        .step-content {
+          grid-column: 1;
+        }
+        .text-grid {
+          grid-template-columns: 1fr;
+        }
+        .attestation {
+          grid-template-columns: 1fr;
+        }
+        .attestation button {
+          grid-column: 1;
+          grid-row: auto;
+          margin-top: 14px;
+        }
+        .paper {
+          min-height: 0;
+          padding: 28px 22px;
+        }
+        .paper-row {
+          display: block;
+        }
+        .paper-row span {
+          display: block;
+          margin-top: 2px;
+        }
+        footer {
+          flex-direction: column;
+        }
+      }
+      @media print {
+        body.printing * {
+          visibility: hidden !important;
+        }
+        body.printing.resume-print #resume-paper,
+        body.printing.resume-print #resume-paper * {
+          visibility: visible !important;
+        }
+        body.printing.resume-print #resume-paper {
+          position: absolute;
+          inset: 0;
+          width: 8.5in;
+          min-height: 11in;
+          margin: 0;
+          padding: 0.4in;
+          box-shadow: none;
+        }
+        body.printing .paper [contenteditable]:hover {
+          background: transparent;
+        }
+        @page {
+          size: letter;
+          margin: 0;
+        }
+      }
+      /* Keep the builder readable while scrolling: nothing floats over the form or résumé. */
+      .topbar {
+        position: relative;
+        top: auto;
+        z-index: auto;
+        background: #fff;
+        backdrop-filter: none;
+      }
+      .defense {
+        position: static;
+        top: auto;
+      }
+      .identity-grid {
+        margin-bottom: 28px;
+      }
+      .degree-builder {
+        padding: 24px;
+        border: 1px solid var(--line);
+        border-radius: 24px;
+        background: #f8f4ff;
+      }
+      .degree-builder > header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 22px;
+        margin-bottom: 16px;
+      }
+      .degree-builder h4 {
+        margin: 4px 0 6px;
+        font: 400 25px/1.05 var(--serif);
+      }
+      .degree-builder header p:last-child {
+        max-width: 560px;
+        margin: 0;
+        color: var(--muted);
+        font-size: 11px;
+        line-height: 1.5;
+      }
+      .degree-stack {
+        display: grid;
+        gap: 13px;
+      }
+      .degree-card {
+        padding: 20px;
+        border: 1px solid rgba(54, 28, 77, 0.18);
+        border-radius: 18px;
+        background: white;
+        box-shadow: 0 12px 32px rgba(39, 13, 62, 0.06);
+      }
+      .degree-card > header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 14px;
+      }
+      .degree-card > header small {
+        color: var(--purple);
+        font-size: 8px;
+        font-weight: 900;
+        letter-spacing: 0.16em;
+      }
+      .degree-card > header button {
+        border: 0;
+        background: none;
+        color: #7c1d45;
+        font-size: 10px;
+        font-weight: 900;
+        text-decoration: underline;
+        cursor: pointer;
+      }
+      .degree-fields {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 11px;
+      }
+      .degree-fields .wide {
+        grid-column: 1/-1;
+      }
+      .paper {
+        height: 11in;
+        min-height: 11in;
+        overflow: hidden;
+      }
+      .resume-hook {
+        padding-bottom: 9px;
+        border-bottom: 1px solid #111;
+        text-align: center;
+      }
+      .resume-hook .positioning-title {
+        font-weight: 800;
+        font-size: 11.5px;
+        letter-spacing: 0.035em;
+        text-transform: uppercase;
+      }
+      .resume-hook .competency-row {
+        font-size: 9.6px;
+        color: #333;
+      }
+      .resume-hook .value-pitch {
+        margin-top: 6px;
+        font-size: 10.2px;
+        line-height: 1.3;
+      }
+      .paper strong {
+        font-weight: 800;
+      }
+      .education-entry .education-degree {
+        font-weight: 700;
+      }
+      .education-entry .academic-proof {
+        font-size: 10.4px;
+        line-height: 1.28;
+      }
+      .paper.compact {
+        padding: 0.46in 0.51in;
+      }
+      .paper.compact section {
+        margin-top: 11px;
+      }
+      .paper.compact .paper-entry {
+        margin-bottom: 8px;
+      }
+      .paper.compact .paper-entry li {
+        margin: 2px 0;
+        font-size: 10px;
+        line-height: 1.27;
+      }
+      .paper.compact .academic-proof {
+        font-size: 9.6px;
+        line-height: 1.2;
+      }
+      .paper.ultra {
+        padding: 0.36in 0.44in;
+      }
+      .paper.ultra section {
+        margin-top: 8px;
+      }
+      .paper.ultra h3 {
+        margin-bottom: 5px;
+        font-size: 10px;
+      }
+      .paper.ultra .paper-entry {
+        margin-bottom: 5px;
+      }
+      .paper.ultra .paper-row {
+        font-size: 10.4px;
+      }
+      .paper.ultra .paper-entry li,
+      .paper.ultra > header p,
+      .paper.ultra p {
+        font-size: 9.2px;
+        line-height: 1.16;
+      }
+      .paper.micro {
+        padding: 0.28in 0.36in;
+      }
+      .paper.micro section {
+        margin-top: 5px;
+      }
+      .paper.micro h3 {
+        margin-bottom: 3px;
+        font-size: 9px;
+      }
+      .paper.micro .paper-entry {
+        margin-bottom: 3px;
+      }
+      .paper.micro .paper-row {
+        font-size: 9.5px;
+      }
+      .paper.micro .paper-entry ul {
+        margin: 2px 0 0;
+      }
+      .paper.micro .paper-entry li,
+      .paper.micro > header p,
+      .paper.micro p {
+        margin: 1px 0;
+        font-size: 8.2px;
+        line-height: 1.08;
+      }
+      @media (max-width: 700px) {
+        .degree-builder {
+          padding: 18px;
+        }
+        .degree-builder > header {
+          flex-direction: column;
+        }
+        .degree-fields {
+          grid-template-columns: 1fr;
+        }
+        .degree-fields .wide {
+          grid-column: auto;
+        }
+        .paper {
+          height: auto;
+          min-height: 11in;
+        }
+      }
+      @media print {
+        body.printing.resume-print #resume-paper {
+          height: 11in !important;
+          max-height: 11in !important;
+          min-height: 11in !important;
+          overflow: hidden !important;
+        }
+      }
+      /* Unified Career Engine V2 — one focused workspace, three synchronized artifacts. */
+      .hero {
+        min-height: 500px;
+        grid-template-columns: minmax(0, 1.05fr) minmax(330px, 0.72fr);
+      }
+      .hero h1 {
+        font-size: clamp(52px, 7vw, 92px);
+      }
+      .hero-copy {
+        padding-top: 72px;
+        padding-bottom: 72px;
+      }
+      .preset-board {
+        margin-right: clamp(20px, 4vw, 58px);
+      }
+      .builder-head {
+        padding-top: 58px;
+      }
+      .suite-label {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 14px;
+        padding: 8px 11px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 999px;
+        color: #eadff2;
+        font-size: 10px;
+        font-weight: 800;
+      }
+      .suite-dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--gold);
+      }
+      .skill-explorer {
+        display: grid;
+        gap: 13px;
+      }
+      .skill-toolbar {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 10px;
+        align-items: center;
+      }
+      .skill-search {
+        min-height: 46px;
+        padding: 11px 13px;
+        border: 1px solid rgba(54, 28, 77, 0.24);
+        border-radius: 12px;
+        background: white;
+      }
+      .skill-count {
+        padding: 10px 12px;
+        border-radius: 12px;
+        background: #f0e8ff;
+        color: var(--purple);
+        font-size: 11px;
+        font-weight: 900;
+        white-space: nowrap;
+      }
+      .skill-categories {
+        display: flex;
+        gap: 7px;
+        overflow-x: auto;
+        padding: 2px 0 5px;
+      }
+      .skill-categories button {
+        min-height: 36px;
+        padding: 7px 11px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: white;
+        color: #3a2f43;
+        font-size: 10px;
+        font-weight: 900;
+        white-space: nowrap;
+        cursor: pointer;
+      }
+      .skill-categories button.active {
+        border-color: var(--purple);
+        background: var(--purple);
+        color: white;
+      }
+      .skill-grid.taxonomy {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        max-height: 420px;
+        overflow: auto;
+        padding: 4px;
+        gap: 7px;
+      }
+      .skill-grid.taxonomy .skill {
+        text-align: left;
+        border-radius: 12px;
+      }
+      .skill-empty {
+        grid-column: 1/-1;
+        padding: 24px;
+        border: 1px dashed var(--line);
+        border-radius: 16px;
+        color: var(--muted);
+        text-align: center;
+        font-size: 13px;
+      }
+      .artifact-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+      }
+      .artifact-choice {
+        min-height: 120px;
+        padding: 17px;
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        background: white;
+        color: var(--ink);
+        text-align: left;
+        cursor: pointer;
+      }
+      .artifact-choice.selected {
+        border-color: var(--purple);
+        box-shadow: 0 0 0 3px rgba(91, 33, 182, 0.12);
+      }
+      .artifact-choice small,
+      .artifact-choice b,
+      .artifact-choice span {
+        display: block;
+      }
+      .artifact-choice small {
+        color: var(--purple);
+        font-size: 8px;
+        font-weight: 900;
+        letter-spacing: 0.13em;
+      }
+      .artifact-choice b {
+        margin: 7px 0 5px;
+        font: 400 20px/1.05 var(--serif);
+      }
+      .artifact-choice span {
+        color: var(--muted);
+        font-size: 11px;
+        line-height: 1.4;
+      }
+      .document-tabs {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 7px;
+        margin-top: 16px;
+      }
+      .document-tab {
+        min-height: 40px;
+        padding: 8px 13px;
+        border: 1px solid rgba(91, 33, 182, 0.25);
+        border-radius: 999px;
+        background: white;
+        color: var(--purple);
+        font-size: 10px;
+        font-weight: 900;
+        cursor: pointer;
+      }
+      .document-tab.active {
+        background: var(--purple);
+        color: white;
+      }
+      .document-pane[hidden] {
+        display: none !important;
+      }
+      .cover-paper {
+        font-family: Arial, Helvetica, sans-serif;
+      }
+      .cover-paper .cover-meta {
+        margin: 26px 0 22px;
+      }
+      .cover-paper .cover-body p {
+        margin: 0 0 14px;
+        font-size: 11px;
+        line-height: 1.55;
+      }
+      .cover-paper .signature {
+        margin-top: 24px;
+      }
+      .portfolio-pane {
+        width: min(100%, 8.5in);
+        margin: 0 auto;
+      }
+      .portfolio-intro {
+        padding: 25px;
+        border-radius: 22px;
+        background: linear-gradient(135deg, #190b28, #542087);
+        color: white;
+      }
+      .portfolio-intro h3 {
+        margin: 0 0 8px;
+        font: 400 32px var(--serif);
+      }
+      .portfolio-intro p {
+        max-width: 65ch;
+        margin: 0;
+        color: #ded3e6;
+        font-size: 12px;
+        line-height: 1.55;
+      }
+      .portfolio-cards {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 13px;
+        margin-top: 15px;
+      }
+      .portfolio-card {
+        min-height: 210px;
+        padding: 20px;
+        border: 1px solid var(--line);
+        border-radius: 20px;
+        background: white;
+        box-shadow: 0 13px 34px rgba(39, 13, 62, 0.08);
+        text-align: left;
+        cursor: pointer;
+      }
+      .portfolio-card small {
+        color: var(--purple);
+        font-size: 8px;
+        font-weight: 900;
+        letter-spacing: 0.14em;
+      }
+      .portfolio-card h4 {
+        margin: 10px 0 7px;
+        font: 400 24px/1.02 var(--serif);
+      }
+      .portfolio-card p {
+        color: var(--muted);
+        font-size: 11px;
+        line-height: 1.5;
+      }
+      .portfolio-card b {
+        display: inline-block;
+        margin-top: 13px;
+        color: var(--purple);
+        font-size: 10px;
+      }
+      .portfolio-empty {
+        grid-column: 1/-1;
+        padding: 35px;
+        border: 1px dashed var(--line);
+        border-radius: 20px;
+        background: white;
+        text-align: center;
+        color: var(--muted);
+      }
+      .modal {
+        position: fixed;
+        inset: 0;
+        z-index: 100;
+        display: grid;
+        place-items: center;
+        padding: 20px;
+        background: rgba(15, 7, 23, 0.7);
+      }
+      .modal[hidden] {
+        display: none;
+      }
+      .modal-card {
+        width: min(100%, 620px);
+        max-height: 88vh;
+        overflow: auto;
+        padding: 26px;
+        border-radius: 24px;
+        background: white;
+        box-shadow: 0 30px 100px rgba(0, 0, 0, 0.4);
+      }
+      .modal-head {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 20px;
+        padding-bottom: 14px;
+        border-bottom: 1px solid var(--line);
+      }
+      .modal-head h3 {
+        margin: 5px 0 0;
+        font: 400 28px/1.05 var(--serif);
+      }
+      .modal-close {
+        display: grid;
+        place-items: center;
+        width: 38px;
+        height: 38px;
+        border: 1px solid var(--line);
+        border-radius: 50%;
+        background: white;
+        color: var(--ink);
+        font-size: 20px;
+        cursor: pointer;
+      }
+      .defense-block {
+        margin-top: 13px;
+        padding: 15px;
+        border-radius: 15px;
+        background: #f8f4ff;
+      }
+      .defense-block b {
+        display: block;
+        margin-bottom: 5px;
+        color: var(--purple);
+        font-size: 9px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+      .defense-block p {
+        margin: 0;
+        color: #3f3448;
+        font-size: 12px;
+        line-height: 1.55;
+      }
+      .bullet-line {
+        position: relative;
+        padding-right: 78px;
+      }
+      .coach-button {
+        position: absolute;
+        right: 0;
+        top: 0;
+        padding: 4px 7px;
+        border: 1px solid #d6c4ff;
+        border-radius: 999px;
+        background: #f7f2ff;
+        color: var(--purple);
+        font-size: 8px;
+        font-weight: 900;
+        cursor: pointer;
+      }
+      .privacy-note {
+        margin-top: 12px;
+        color: var(--muted);
+        font-size: 11px;
+        line-height: 1.5;
+      }
+      @media (max-width: 700px) {
+        .hero {
+          grid-template-columns: 1fr;
+        }
+        .skill-toolbar {
+          grid-template-columns: 1fr;
+        }
+        .skill-grid.taxonomy,
+        .artifact-grid,
+        .portfolio-cards {
+          grid-template-columns: 1fr;
+        }
+        .document-tabs {
+          width: 100%;
+        }
+        .document-tab {
+          flex: 1;
+        }
+        .portfolio-card {
+          min-height: 0;
+        }
+        .hero {
+          min-height: 0;
+        }
+        .hero-copy {
+          padding-top: 56px;
+          padding-bottom: 46px;
+        }
+      }
+      @media print {
+        body.printing * {
+          visibility: hidden !important;
+        }
+        body.printing.resume-print #resume-paper,
+        body.printing.resume-print #resume-paper *,
+        body.printing.cover-print #cover-paper,
+        body.printing.cover-print #cover-paper *,
+        body.printing.portfolio-print #portfolio-grid,
+        body.printing.portfolio-print #portfolio-grid * {
+          visibility: visible !important;
+        }
+        body.printing.resume-print #resume-paper,
+        body.printing.cover-print #cover-paper,
+        body.printing.portfolio-print #portfolio-grid {
+          position: absolute;
+          inset: 0;
+          width: 8.5in;
+          max-width: 8.5in;
+          min-height: 11in;
+          margin: 0;
+          padding: 0.4in;
+          box-shadow: none;
+          overflow: hidden;
+        }
+        body.printing.portfolio-print #portfolio-grid {
+          height: auto;
+          overflow: visible;
+        }
+        .coach-button {
+          display: none !important;
+        }
+        @page {
+          size: letter;
+          margin: 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="/"
+        ><span class="brand-mark">EFF</span
+        ><span><b>REACH</b> Career Studio</span></a
+      >
+      <nav>
+        <a href="#builder">Build my resume</a
+        ><a href="/tools/recommendation">Recommendation letter</a
+        ><a href="/">REACH home</a>
+      </nav>
+    </header>
+    <main>
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="kicker">FREE · PRIVATE · ATS-READY</p>
+          <h1>EFF builds your<br />career suite.</h1>
+          <p>
+            Create one truthful candidate story across an ATS resume,
+            synchronized cover letter, and executive evidence portfolio.
+          </p>
+          <div class="hero-actions">
+            <a href="#builder">Start the 30-second builder →</a
+            ><a href="/tools/recommendation">Need a recommendation letter?</a>
+          </div>
+          <span class="suite-label"
+            ><span class="suite-dot"></span> Resume · Cover letter · Portfolio ·
+            200 verified skills</span
+          ><small
+            >The 30-second promise covers generation after your verified details
+            are entered. Your information stays in this browser and is not
+            uploaded by this tool.</small
+          >
+        </div>
+        <aside class="preset-board">
+          <p class="kicker">1-TAP ARTIFACT PRESETS</p>
+          <h2>See the engine work.</h2>
+          <p>
+            Load a sample candidate, multi-role allocation, and Google X-Y-Z
+            bullet set in under one second. Replace all sample details before
+            applying.
+          </p>
+          <div class="preset-grid">
+            <button class="preset" data-preset="campus">
+              <span>UNDERGRADUATE</span><b>Campus leader</b
+              ><small>Leadership + service</small></button
+            ><button class="preset" data-preset="working">
+              <span>EARLY CAREER</span><b>Working student</b
+              ><small>Job + campus role</small></button
+            ><button class="preset" data-preset="graduate">
+              <span>GRADUATE</span><b>Researcher</b
+              ><small>Research + teaching</small></button
+            ><button class="preset" data-preset="service">
+              <span>FELLOWSHIP</span><b>Service advocate</b
+              ><small>Community + leadership</small>
+            </button>
+          </div>
+          <p id="preset-status" class="preset-status" aria-live="polite"></p>
+        </aside>
+      </section>
+      <section id="builder">
+        <header class="builder-head">
+          <div>
+            <p class="kicker">THE EFF 30-SECOND CAREER ENGINE</p>
+            <h2>Tap your experience.<br />Leave with a resume.</h2>
+          </div>
+          <div class="timer" id="timer">
+            <small>BUILD TIMER</small><strong id="clock">00:00</strong
+            ><span id="pace">30-second pace</span>
+          </div>
+        </header>
+        <div class="builder-body">
+          <section class="step">
+            <div class="step-number">01</div>
+            <div class="step-copy">
+              <h3>Set your direction</h3>
+              <p>
+                EFF turns this into a positioning title, competency row, and
+                two-sentence value pitch—without changing the truth of your
+                experience.
+              </p>
+            </div>
+            <div class="step-content">
+              <div class="choice">
+                <div class="choice-title">Where are you now?</div>
+                <div class="pills" id="profile-pills"></div>
+              </div>
+              <div class="choice">
+                <div class="choice-title">Choose your resume lens</div>
+                <div class="pills" id="lens-pills"></div>
+              </div>
+              <div class="text-grid">
+                <label class="field"
+                  ><span>Target job, internship, fellowship, or field</span
+                  ><input
+                    id="target-role"
+                    placeholder="Example: Summer marketing internship" /></label
+                ><label class="field"
+                  ><span>Target organization (optional)</span
+                  ><input
+                    id="target-org"
+                    placeholder="Example: City Year" /></label
+                ><label class="field"
+                  ><span>Cover-letter recipient (optional)</span
+                  ><input
+                    id="target-recipient"
+                    placeholder="Example: Hiring Committee"
+                /></label>
+              </div>
+            </div>
+          </section>
+          <section class="step">
+            <div class="step-number">02</div>
+            <div class="step-copy">
+              <h3>Build your academic record</h3>
+              <p>
+                Add undergraduate and graduate degrees separately. Use only
+                verified GPA, honors, thesis, fellowship, and coursework
+                details.
+              </p>
+            </div>
+            <div class="step-content">
+              <div class="text-grid identity-grid">
+                <label class="field"
+                  ><span>Full name</span
+                  ><input id="full-name" placeholder="Jordan Taylor" /></label
+                ><label class="field"
+                  ><span>Email</span
+                  ><input
+                    id="email"
+                    type="email"
+                    placeholder="jordan@university.edu" /></label
+                ><label class="field"
+                  ><span>Phone</span
+                  ><input id="phone" placeholder="(555) 123-4567" /></label
+                ><label class="field"
+                  ><span>City, state</span
+                  ><input id="location" placeholder="Atlanta, GA" /></label
+                ><label class="field"
+                  ><span>LinkedIn (optional)</span
+                  ><input id="linkedin" placeholder="linkedin.com/in/jordan"
+                /></label>
+              </div>
+              <section class="degree-builder">
+                <header>
+                  <div>
+                    <p class="choice-title">MULTI-TIER EDUCATION</p>
+                    <h4>Give each degree its own evidence.</h4>
+                    <p>
+                      Specific academic proof beats generic phrases. Leave any
+                      field blank if it does not apply.
+                    </p>
+                  </div>
+                  <button class="add-role" id="add-degree" type="button">
+                    + Add another degree
+                  </button>
+                </header>
+                <div id="degrees" class="degree-stack"></div>
+              </section>
+            </div>
+          </section>
+          <section class="step">
+            <div class="step-number">03</div>
+            <div class="step-copy">
+              <h3>Tap what you actually did</h3>
+              <p>
+                No experience essay. Choose the closest truthful match, then
+                refine the generated resume.
+              </p>
+            </div>
+            <div class="step-content">
+              <div id="roles"></div>
+              <button class="add-role" id="add-role" type="button">
+                + Add another role
+              </button>
+            </div>
+          </section>
+          <section class="step">
+            <div class="step-number">04</div>
+            <div class="step-copy">
+              <h3>Choose verified skills</h3>
+              <p>
+                Search 200 hard skills across eight industries. Add only skills
+                you can demonstrate in an interview or work sample.
+              </p>
+            </div>
+            <div class="step-content skill-explorer">
+              <div class="skill-toolbar">
+                <input
+                  class="skill-search"
+                  id="skill-search"
+                  type="search"
+                  placeholder="Search skills: Excel, SPSS, IEP, grant writing, SQL…"
+                  aria-label="Search verified skills"
+                /><span class="skill-count" id="skill-count">0 selected</span>
+              </div>
+              <div
+                class="skill-categories"
+                id="skill-categories"
+                aria-label="Skill categories"
+              ></div>
+              <div class="skill-grid taxonomy" id="skills"></div>
+            </div>
+          </section>
+          <section class="step">
+            <div class="step-number">05</div>
+            <div class="step-copy">
+              <h3>Choose proof artifacts</h3>
+              <p>
+                Select only portfolio items you actually created or can show.
+                Each card becomes an evidence deep-dive tied to your verified
+                inputs.
+              </p>
+            </div>
+            <div class="step-content artifact-grid" id="artifacts"></div>
+          </section>
+          <div class="attestation">
+            <b>Truth before polish.</b>
+            <p>
+              By building, you confirm the selected ranges, skills, artifacts,
+              and accomplishments are accurate enough for you to explain. EFF
+              does not verify or endorse applicant claims.
+            </p>
+            <button id="build" type="button">
+              EFF, build my career suite →
+            </button>
+          </div>
+          <p class="status" id="status" role="status" aria-live="polite">
+            Choose truthful ranges you can defend. EFF will never invent a
+            result for you.
+          </p>
+        </div>
+      </section>
+      <section class="output" id="output">
+        <header class="output-head">
+          <div>
+            <p class="kicker">YOUR SYNCHRONIZED CAREER SUITE</p>
+            <h2>One story. Three application assets.</h2>
+            <span
+              >Review every line and replace sample preset details before
+              applying.</span
+            >
+            <div
+              class="document-tabs"
+              role="tablist"
+              aria-label="Career documents"
+            >
+              <button
+                class="document-tab active"
+                type="button"
+                data-document-tab="resume"
+                role="tab"
+                aria-selected="true"
+              >
+                ATS Resume</button
+              ><button
+                class="document-tab"
+                type="button"
+                data-document-tab="cover"
+                role="tab"
+                aria-selected="false"
+              >
+                Cover Letter</button
+              ><button
+                class="document-tab"
+                type="button"
+                data-document-tab="portfolio"
+                role="tab"
+                aria-selected="false"
+              >
+                Portfolio
+              </button>
+            </div>
+          </div>
+          <div>
+            <button id="copy" type="button">Copy plain text</button
+            ><button id="print" class="primary" type="button">
+              Print / Save PDF
+            </button>
+          </div>
+        </header>
+        <div class="output-grid">
+          <div>
+            <article
+              class="paper document-pane"
+              id="resume-paper"
+              aria-label="Editable ATS resume preview"
+            ></article>
+            <article
+              class="paper cover-paper document-pane"
+              id="cover-paper"
+              aria-label="Editable synchronized cover letter"
+              hidden
+            ></article>
+            <section
+              class="portfolio-pane document-pane"
+              id="portfolio-grid"
+              aria-label="Executive evidence portfolio"
+              hidden
+            ></section>
+          </div>
+          <aside class="defense" id="defense"></aside>
+        </div>
+      </section>
+      <div
+        class="modal"
+        id="defense-modal"
+        hidden
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="defense-modal-title"
+      >
+        <div class="modal-card">
+          <header class="modal-head">
+            <div>
+              <p class="kicker">ANTI-IMPOSTER INTERVIEW DEFENSE</p>
+              <h3 id="defense-modal-title">Defend this accomplishment.</h3>
+            </div>
+            <button
+              class="modal-close"
+              type="button"
+              data-close-modal="defense-modal"
+              aria-label="Close interview defense"
+            >
+              ×
+            </button>
+          </header>
+          <div class="defense-block">
+            <b>Resume line</b>
+            <p id="modal-bullet"></p>
+          </div>
+          <div class="defense-block">
+            <b>What the recruiter is testing</b>
+            <p id="modal-intent"></p>
+          </div>
+          <div class="defense-block">
+            <b>Your 20-second verbal script</b>
+            <p id="modal-script"></p>
+          </div>
+          <div class="defense-block">
+            <b>Trap-question defusal</b>
+            <p id="modal-defusal"></p>
+          </div>
+        </div>
+      </div>
+      <div
+        class="modal"
+        id="portfolio-modal"
+        hidden
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="portfolio-modal-title"
+      >
+        <div class="modal-card">
+          <header class="modal-head">
+            <div>
+              <p class="kicker" id="portfolio-modal-type">VERIFIED ARTIFACT</p>
+              <h3 id="portfolio-modal-title">Portfolio evidence</h3>
+            </div>
+            <button
+              class="modal-close"
+              type="button"
+              data-close-modal="portfolio-modal"
+              aria-label="Close portfolio detail"
+            >
+              ×
+            </button>
+          </header>
+          <div class="defense-block">
+            <b>What this artifact verifies</b>
+            <p id="portfolio-modal-summary"></p>
+          </div>
+          <div class="defense-block">
+            <b>Evidence to prepare</b>
+            <p id="portfolio-modal-evidence"></p>
+          </div>
+          <div class="defense-block">
+            <b>Resume and cover-letter connection</b>
+            <p id="portfolio-modal-echo"></p>
+          </div>
+        </div>
+      </div>
+      <section class="letter-cta">
+        <div>
+          <p class="kicker">COMPLETE YOUR APPLICATION</p>
+          <h2>Resume done?<br />Build your EFF recommendation letter.</h2>
+          <p>
+            Use the official 60-second EFF letter builder for a
+            scholarship-purpose recommendation based only on the truthful
+            information you submit.
+          </p>
+        </div>
+        <a href="/tools/recommendation"
+          >Open the recommendation-letter builder →</a
+        >
+      </section>
+    </main>
+    <footer>
+      <span>Esther Funds Foundation · Every Future Fulfilled</span
+      ><a href="mailto:nationals@estherfundsinc.org"
+        >nationals@estherfundsinc.org</a
+      >
+    </footer>
+    <script>
+      (() => {
+        "use strict";
+        const catalog = {
+          paid: {
+            label: "Job or internship",
+            roles: [
+              "Team Member",
+              "Shift Lead",
+              "Intern",
+              "Customer Service Associate",
+              "Administrative Assistant",
+              "Sales Associate",
+            ],
+            wins: [
+              "customer service",
+              "daily operations",
+              "team onboarding",
+              "inventory accuracy",
+              "sales support",
+              "process improvement",
+            ],
+            methods: [
+              "coordinating shift priorities",
+              "using a digital tracking system",
+              "training peers on standard procedures",
+              "resolving customer concerns",
+              "monitoring inventory and handoffs",
+            ],
+            keywords: [
+              "operations",
+              "customer experience",
+              "process improvement",
+              "team coordination",
+            ],
+          },
+          campus: {
+            label: "Campus leadership",
+            roles: [
+              "President",
+              "Vice President",
+              "Treasurer",
+              "Secretary",
+              "Committee Chair",
+              "Campus Ambassador",
+            ],
+            wins: [
+              "member engagement",
+              "event execution",
+              "fundraising",
+              "budget stewardship",
+              "recruitment",
+              "campus partnerships",
+            ],
+            methods: [
+              "coordinating a cross-functional student team",
+              "building a multi-channel outreach campaign",
+              "tracking milestones and ownership",
+              "partnering with campus departments",
+              "standardizing chapter workflows",
+            ],
+            keywords: [
+              "leadership",
+              "stakeholder engagement",
+              "event operations",
+              "budget management",
+            ],
+          },
+          service: {
+            label: "Volunteer service",
+            roles: [
+              "Volunteer",
+              "Volunteer Lead",
+              "Community Outreach Coordinator",
+              "Service Chair",
+              "Peer Advocate",
+              "Program Volunteer",
+            ],
+            wins: [
+              "community outreach",
+              "resource distribution",
+              "volunteer coordination",
+              "service delivery",
+              "donor engagement",
+              "program access",
+            ],
+            methods: [
+              "organizing field logistics",
+              "coordinating volunteer assignments",
+              "maintaining a resource tracker",
+              "conducting direct community outreach",
+              "partnering with local organizations",
+            ],
+            keywords: [
+              "community outreach",
+              "program delivery",
+              "volunteer coordination",
+              "resource navigation",
+            ],
+          },
+          research: {
+            label: "Research or capstone",
+            roles: [
+              "Student Researcher",
+              "Graduate Researcher",
+              "Capstone Team Lead",
+              "Lab Assistant",
+              "Policy Researcher",
+              "Project Analyst",
+            ],
+            wins: [
+              "data analysis",
+              "literature synthesis",
+              "research reporting",
+              "survey collection",
+              "policy evaluation",
+              "technical documentation",
+            ],
+            methods: [
+              "applying a structured research methodology",
+              "analyzing data in Excel or statistical software",
+              "synthesizing peer-reviewed sources",
+              "presenting findings to faculty reviewers",
+              "documenting methods and limitations",
+            ],
+            keywords: [
+              "research",
+              "data analysis",
+              "technical reporting",
+              "quality assurance",
+            ],
+          },
+          peer: {
+            label: "Teaching or peer support",
+            roles: [
+              "Peer Mentor",
+              "Tutor",
+              "Resident Assistant",
+              "Teaching Assistant",
+              "Orientation Leader",
+              "Student Success Coach",
+            ],
+            wins: [
+              "student support",
+              "academic engagement",
+              "peer onboarding",
+              "resource referrals",
+              "learning progress",
+              "community belonging",
+            ],
+            methods: [
+              "providing individualized guidance",
+              "facilitating small-group learning",
+              "connecting students to campus resources",
+              "tracking follow-up needs",
+              "adapting explanations to student questions",
+            ],
+            keywords: [
+              "mentoring",
+              "student success",
+              "facilitation",
+              "resource referral",
+            ],
+          },
+          creative: {
+            label: "Technical or creative project",
+            roles: [
+              "Project Lead",
+              "Designer",
+              "Developer",
+              "Content Strategist",
+              "Data Analyst",
+              "Creative Director",
+            ],
+            wins: [
+              "digital product delivery",
+              "accessible design",
+              "audience engagement",
+              "content production",
+              "workflow automation",
+              "data visualization",
+            ],
+            methods: [
+              "using iterative design and testing",
+              "building with industry-standard software",
+              "incorporating stakeholder feedback",
+              "auditing the final work against requirements",
+              "documenting a repeatable production workflow",
+            ],
+            keywords: [
+              "project management",
+              "design",
+              "digital production",
+              "user experience",
+            ],
+          },
+        };
+        const scopes = [
+          "1-10 people",
+          "11-50 people",
+          "51-150 people",
+          "151-500 people",
+          "500+ people",
+          "1-10 hours",
+          "11-50 hours",
+          "51-100 hours",
+          "100+ hours",
+          "1-10% improvement",
+          "11-25% improvement",
+          "26-50% improvement",
+          "$1-$999",
+          "$1,000-$4,999",
+          "$5,000+",
+        ];
+        const periods = [
+          "Current",
+          "This semester",
+          "One semester",
+          "One academic year",
+          "Two or more years",
+          "Summer experience",
+        ];
+        const skillGroups = {
+          Education:
+            "Formative & Summative Assessment Design|Individualized Education Program (IEP) Compliance|Differentiated Instruction Frameworks|Multi-Tiered System of Supports (MTSS)|Response to Intervention (RTI) Tier Scaffolding|Phonics & Phonemic Awareness Diagnostics|Orton-Gillingham Methodology|Guided Reading & Running Records Analysis|Gamified STEM Curriculum Design|Backward Design / Understanding by Design (UbD)|LMS Administration (Canvas, Blackboard, Google Classroom)|Positive Behavioral Interventions & Supports (PBIS)|Restorative Classroom Management|Student Information Systems (PowerSchool, Skyward)|English Language Learner (ELL / ESL) Scaffolding|Common Core State Standards (CCSS) Alignment|Early Literacy Diagnostic Scoring (DIBELS / Acadience)|Inquiry-Based Learning Pedagogy|Universal Design for Learning (UDL) Principles|Social-Emotional Learning (SEL) Integration|Standardized Benchmark Testing (FAST, i-Ready, MAP)|Parent-Teacher Portal Administration|EdTech Integration (Nearpod, Edpuzzle, Kahoot)|Cross-Curricular Thematic Lesson Architecture|Diagnostic IEP Goal Progress Monitoring".split(
+              "|",
+            ),
+          Nonprofit:
+            "Federal & Foundation Grant Proposal Writing|Notice of Funding Opportunity (NOFO) Evaluation|Donor Database Administration (Raiser’s Edge, Bloomerang)|501(c)(3) Statutory Compliance & Reporting|IRS Form 990 Line-Item Reconciliation|Programmatic Logic Modeling & Theory of Change|Community Needs Assessment (CNA) Methodologies|Volunteer Shift Roster Coordination (Volgistics)|Donor Prospecting & Wealth Screening|Capital Campaign Feasibility Studies|Board Governance & Trustee Relations|Corporate CSR Sponsorship Procurement|In-Kind Supply Chain Solicitation|Peer-to-Peer Fundraising Platforms (Classy, Givebutter)|Event Ticketing Infrastructure (Eventbrite)|Memorandum of Understanding (MOU) Drafting|Direct Mail & Digital Donor Stewardship|Restricted Endowment Fund Allocation|Program Impact KPI & Outcome Metrics Tracking|Community Stakeholder Coalition Building|Field Relief Logistics & Staging Protocols|Fellowship Program Architecture & Mentorship|Youth Protection & Background Verification|Annual Governance Report Drafting|Community Partner Contract Negotiation".split(
+              "|",
+            ),
+          Data: "SPSS Multivariate Regression Analysis|Statistical Hypothesis Testing (ANOVA, Chi-Square)|Survey Instrument Architecture & Likert Scaling|Qualtrics Advanced Survey Logic & Branching|R Statistical Programming (tidyverse, ggplot2)|Python Data Wrangling (pandas, NumPy)|SQL Relational Database Querying|Advanced Microsoft Excel (Nested XLOOKUP, INDEX/MATCH)|Excel Power Pivot & Relational Data Modeling|Tableau Data Visualization & Dashboarding|Microsoft Power BI & DAX Expression Writing|Institutional Review Board (IRB) Protocol Design|Qualitative Coding & Thematic Analysis (NVivo)|Longitudinal Cohort Study Tracking|Exploratory & Confirmatory Factor Analysis|Predictive Regression Modeling & Forecasting|A/B Testing Statistical Experimentation|Missing Data Imputation & Cleaning Pipelines|Systematic Literature Review & Meta-Analysis|Cronbach’s Alpha Psychometric Reliability|Google Analytics 4 (GA4) Funnel Tracking|Demographic Cross-Tabulation Analysis|Executive Technical Reporting & Briefing Papers|Sampling Frame Construction & Weighting|Statistical Process Control (SPC) & Variance".split(
+            "|",
+          ),
+          Operations:
+            "Cross-Functional Project Management (Agile & Waterfall)|Sprint Planning & Work Breakdown Structures (Jira, Asana)|Standard Operating Procedure (SOP) Development|Vendor Contract Negotiation & SLA Enforcement|Request for Proposal (RFP) Architecture & Scoring|Inventory Par Level Optimization & Cycle Counting|First-In, First-Out (FIFO) Inventory Protocols|Municipal Venue Permitting & Capacity Compliance|Line-Item Variance Analysis & Cost Control|End-to-End Procurement Lifecycle Management|Operational Risk Assessment & Contingency Planning|Multi-Vendor Production Run-of-Show Staging|Fleet & Route Logistics Dispatch Coordination|Asset Tagging & Capital Equipment Tracking|Root Cause Analysis (Fishbone / 5 Whys)|Continuous Process Improvement (Lean Six Sigma)|Quality Assurance & Quality Control (QA/QC)|Third-Party Logistics (3PL) Workflow Coordination|Supply Chain Buffer Stock Modeling|Waste Stream Reduction & Resource Optimization|Audiovisual (A/V) Technical Staging & Load-In|Crowd Ingress/Egress & Emergency Protocols|Reorder Point (ROP) Supply Forecasting|Vendor Indemnification & Liability Auditing|Operational Turnaround Time (TAT) Compression".split(
+              "|",
+            ),
+          Finance:
+            "General Ledger (GL) Chart of Accounts Reconciliation|Accounts Payable (AP) & Accounts Receivable (AR)|GAAP Accounting Standards Compliance|QuickBooks Online / Desktop Accounting|Cash Flow Forecasting & Burn Rate Modeling|Zero-Based Budgeting (ZBB) Implementation|Operating Expense (OpEx) Line-Item Allocation|Capital Expenditure (CapEx) Depreciation Schedules|Financial Variance Analysis (Budget vs. Actuals)|Merchant Account Reconciliation (Stripe, Square)|1099 Contractor Tax Classification & W-9 Auditing|Cost of Goods Sold (COGS) Auditing|Membership Dues Invoicing & Billing Automation|Financial Statement Synthesis (Balance Sheet, P&L)|Fiduciary Compliance & Segregation of Duties|Petty Cash Custodial Auditing & Governance|Fixed Asset Capitalization Tracking|Grant Drawdown Requests & Fiscal Reporting|Break-Even Analysis & Margin Modeling|Financial Risk Ratio Analysis|Three-Way Invoice Match Verification|T&E Expense Policy Administration (Concur)|Escrow & Restricted Account Management|External Audit Workpaper Preparation|Payroll Verification & Processing (ADP, Gusto)".split(
+              "|",
+            ),
+          Creative:
+            "Brand Identity Architecture & Style Guides|Adobe Photoshop (Retouching & Masking)|Adobe Illustrator (Vector Design & Typography)|Adobe InDesign (Multi-Page Grid Systems)|Canva Pro Multi-Platform Design Systems|Non-Linear Video Editing (Premiere Pro, DaVinci)|Generative AI Video Workflows (Runway, Luma)|Vector Logo & Scalable SVG Icon Design|Social Media Growth Strategy (IG, LinkedIn, TikTok)|Keynote & Pitch Deck Visual Architecture|Conversion Copywriting & Landing Page Messaging|Email Campaign Lifecycle Automation (Mailchimp)|UI/UX Wireframing & Prototyping (Figma)|Editorial Content Scheduling (Sprout Social)|Search Engine Optimization (SEO) Architecture|Press Release Writing (AP Stylebook)|Crisis PR & Brand Reputation Management|Portrait Photography Color Grading (Lightroom)|Digital Audio Mastering & Podcast Production|Infographic Data Storytelling & Visual Hierarchy|Print Preflighting & 300-DPI CMYK Production|Creative Treatment Formulation & Storyboarding|Influencer Ambassador Contracting|Media Kit Architecture & Sponsorship Valuation|Digital Asset Management (DAM) Cloud Archiving".split(
+              "|",
+            ),
+          Software:
+            "Front-End Web Architecture (Semantic HTML5, CSS3)|JavaScript ES6+ DOM Manipulation & Logic|Utility-First CSS Frameworks (Tailwind CSS)|Git Distributed Version Control & GitHub Pipelines|Relational Schema Architecture & Normalization|RESTful API Endpoints & JSON Payload Parsing|Cloud Identity & Storage (Firebase, Cloud Firestore)|Structured Prompt Engineering (JSON Schemas, Few-Shot)|LLM API Orchestration (Gemini, OpenAI SDKs)|No-Code Application Development (Airtable, Zapier)|CRM Architecture & Custom Pipelines (Salesforce)|Helpdesk Portal Administration (Zendesk)|Enterprise Workspace Admin (Slack, Microsoft Teams)|Multi-Factor Authentication (MFA) Configuration|Web Content Accessibility Guidelines (WCAG 2.1 AA)|Responsive Breakpoint Layout Engineering|DNS Records Management & SSL Certification|Google Workspace Enterprise Tenant Admin|Notion Relational Database Architecture|Chrome DevTools Network Profiling & Debugging|Data Encryption Standards & Cyber Hygiene|Google Tag Manager (GTM) Pixel Tracking|Markdown Technical Documentation & READMEs|Static Site Deployment Platforms (Vercel, Netlify)|Application Error Logging & Monitoring".split(
+              "|",
+            ),
+          "Clinical/Health":
+            "Structured Behavioral Interviewing & Rubric Scoring|Employee Onboarding Curriculum Development|DEIB Strategic Alignment Frameworks|Title VII, EEO & ADA Statutory Compliance|Key Performance Appraisal Architecture|Workplace Conflict Mediation & De-escalation|Executive Presentation & C-Suite Stakeholder Buy-In|Collegiate Chapter Chartering & Training|Executive Succession Planning & Governance|Compensation Salary Banding & Market Benchmarking|Employee Retention Analytics & Attrition Modeling|Adult & Pediatric CPR/AED (American Red Cross / AHA)|HIPAA Patient Privacy & Health Data Compliance|Bloodborne Pathogens & OSHA Clinical Safety|Mandated Reporter Child Welfare Protocols|Community Health Intervention Design & Triage|Basic Life Support (BLS) Protocol Execution|Patient / Client Intake Screening Protocols|Social Determinants of Health (SDOH) Analysis|Clinical Observation Documentation & Reporting|Health Literacy Scaffolding & Translation|Psychological First Aid & Trauma-Informed Care|Occupational Safety and Health (OSHA 10/30)|Ethics Board Compliance & Codes of Conduct|Organizational Change Management (ADKAR / Kotter)".split(
+              "|",
+            ),
+        };
+        const skillOptions = Object.entries(skillGroups).flatMap(
+          ([category, names]) => names.map((name) => ({ category, name })),
+        );
+        const artifactCatalog = {
+          research: {
+            type: "RESEARCH THESIS",
+            title: "Research Thesis or Capstone",
+            hint: "Methods, analysis, findings, and final deliverable.",
+            evidence:
+              "Prepare a title page, methodology excerpt, findings summary, and presentation or repository link.",
+          },
+          stewardship: {
+            type: "STEWARDSHIP LEDGER",
+            title: "Service or Program Impact Ledger",
+            hint: "Hours, beneficiaries, logistics, and verified outcomes.",
+            evidence:
+              "Prepare a dated service log, de-identified outcome totals, partner confirmation, and approved photos or reports.",
+          },
+          finance: {
+            type: "FIDUCIARY EVIDENCE",
+            title: "Budget or Balance-Sheet Artifact",
+            hint: "Budget ownership, reconciliation, savings, or controls.",
+            evidence:
+              "Prepare a de-identified budget, reconciliation summary, approval trail, and explanation of the controls you owned.",
+          },
+          curriculum: {
+            type: "INSTRUCTIONAL DESIGN",
+            title: "Curriculum or Training Kit",
+            hint: "Learning objective, materials, delivery, and measured result.",
+            evidence:
+              "Prepare the lesson or training plan, participant-facing materials, rubric, and de-identified outcome evidence.",
+          },
+        };
+        const state = {
+          profile: "undergraduate",
+          lens: "corporate",
+          roles: [],
+          degrees: [],
+          skills: [],
+          artifacts: [],
+          skillCategory: "All",
+          skillQuery: "",
+          activeDocument: "resume",
+          started: null,
+          timer: null,
+          lastDraft: null,
+          defenseItems: [],
+        };
+        const archetypes = {
+          paid: "Operational Performance Specialist",
+          campus: "Student Organization Strategist",
+          service: "0-to-1 Community Program Builder",
+          research: "Applied Research Analyst",
+          peer: "Instructional Systems Specialist",
+          creative: "Digital Product Builder",
+        };
+        const $ = (id) => document.getElementById(id),
+          clean = (v) =>
+            (v || "")
+              .replace(/\s+/g, " ")
+              .trim()
+              .replace(/[.;,\s]+$/, ""),
+          esc = (v) =>
+            clean(v).replace(
+              /[&<>"']/g,
+              (ch) =>
+                ({
+                  "&": "&amp;",
+                  "<": "&lt;",
+                  ">": "&gt;",
+                  '"': "&quot;",
+                  "'": "&#039;",
+                })[ch],
+            ),
+          sentence = (v) => {
+            const s = clean(v);
+            return s ? `${s[0].toUpperCase()}${s.slice(1)}.` : "";
+          };
+        function startTimer() {
+          if (state.started !== null) return;
+          state.started = Date.now();
+          $("timer").classList.add("running");
+          state.timer = setInterval(() => {
+            const sec = Math.floor((Date.now() - state.started) / 1000);
+            $("clock").textContent =
+              `${String(Math.floor(sec / 60)).padStart(2, "0")}:${String(sec % 60).padStart(2, "0")}`;
+            $("pace").textContent =
+              sec <= 30 ? "30-second pace" : "Accuracy comes first";
+          }, 250);
+        }
+        function stopTimer() {
+          clearInterval(state.timer);
+          state.timer = null;
+          $("timer").classList.remove("running");
+        }
+        function makeRole(category = "campus") {
+          const c = catalog[category];
+          return {
+            category,
+            role: c.roles[0],
+            win: c.wins[0],
+            scope: scopes[1],
+            method: c.methods[0],
+            period: periods[0],
+          };
+        }
+        function makeDegree(
+          school = "",
+          degree = "",
+          graduation = "",
+          details = {},
+        ) {
+          return {
+            school,
+            degree,
+            graduation,
+            gpa: details.gpa || "",
+            honors: details.honors || "",
+            thesis: details.thesis || "",
+            fellowship: details.fellowship || "",
+            coursework: details.coursework || "",
+          };
+        }
+        function pills(values, selected, action, attr = "") {
+          return `<div class="pills">${values.map((v) => `<button type="button" class="pill ${v === selected ? "selected" : ""}" data-action="${action}" ${attr} data-value="${esc(v)}" aria-pressed="${v === selected}">${esc(v)}</button>`).join("")}</div>`;
+        }
+        function renderFixed() {
+          $("profile-pills").innerHTML = pills(
+            ["undergraduate", "graduate", "early-career"],
+            state.profile,
+            "profile",
+          );
+          $("lens-pills").innerHTML = pills(
+            ["corporate", "civic"],
+            state.lens,
+            "lens",
+          );
+        }
+        function renderRoles() {
+          $("roles").innerHTML = state.roles
+            .map((r, i) => {
+              const c = catalog[r.category],
+                cats = Object.keys(catalog);
+              return `<article class="role-card"><header><div><small>ROLE ${i + 1}</small><b>${esc(c.label)}</b></div>${state.roles.length > 1 ? `<button type="button" data-action="remove" data-index="${i}">Remove</button>` : ""}</header><div class="choice"><div class="choice-title">Experience type</div>${pills(
+                cats.map((k) => catalog[k].label),
+                c.label,
+                "category",
+                `data-index="${i}"`,
+              )}</div><div class="choice"><div class="choice-title">Closest official title</div>${pills(c.roles, r.role, "role", `data-index="${i}"`)}</div><div class="choice"><div class="choice-title">Primary accomplishment</div>${pills(c.wins, r.win, "win", `data-index="${i}"`)}</div><div class="choice"><div class="choice-title">Verified scope bracket</div>${pills(scopes, r.scope, "scope", `data-index="${i}"`)}</div><div class="choice"><div class="choice-title">How you did it</div>${pills(c.methods, r.method, "method", `data-index="${i}"`)}</div><div class="choice"><div class="choice-title">Time period</div>${pills(periods, r.period, "period", `data-index="${i}"`)}</div></article>`;
+            })
+            .join("");
+          $("add-role").style.display =
+            state.roles.length < 3 ? "inline-block" : "none";
+        }
+        function renderSkills() {
+          const categories = ["All", ...Object.keys(skillGroups)];
+          $("skill-categories").innerHTML = categories
+            .map(
+              (category) =>
+                `<button type="button" class="${state.skillCategory === category ? "active" : ""}" data-skill-category="${esc(category)}" aria-pressed="${state.skillCategory === category}">${esc(category)}</button>`,
+            )
+            .join("");
+          const query = state.skillQuery.toLowerCase(),
+            visible = skillOptions.filter(
+              (skill) =>
+                (state.skillCategory === "All" ||
+                  skill.category === state.skillCategory) &&
+                skill.name.toLowerCase().includes(query),
+            );
+          $("skills").innerHTML = visible.length
+            ? visible
+                .map(
+                  (skill) =>
+                    `<button type="button" class="skill ${state.skills.includes(skill.name) ? "selected" : ""}" data-skill="${esc(skill.name)}" aria-pressed="${state.skills.includes(skill.name)}"><b>${state.skills.includes(skill.name) ? "✓" : "+"}</b> ${esc(skill.name)}</button>`,
+                )
+                .join("")
+            : `<div class="skill-empty">No skills match this search. Try a shorter term or another industry.</div>`;
+          $("skill-count").textContent = `${state.skills.length}/12 selected`;
+        }
+        function renderArtifacts() {
+          $("artifacts").innerHTML = Object.entries(artifactCatalog)
+            .map(
+              ([key, item]) =>
+                `<button type="button" class="artifact-choice ${state.artifacts.includes(key) ? "selected" : ""}" data-artifact="${key}" aria-pressed="${state.artifacts.includes(key)}"><small>${esc(item.type)}</small><b>${esc(item.title)}</b><span>${esc(item.hint)}</span></button>`,
+            )
+            .join("");
+        }
+        function renderDegrees() {
+          $("degrees").innerHTML = state.degrees
+            .map(
+              (d, i) =>
+                `<article class="degree-card"><header><small>${i === 0 ? "PRIMARY OR MOST RECENT DEGREE" : `ADDITIONAL DEGREE ${i}`}</small>${state.degrees.length > 1 ? `<button type="button" data-degree-action="remove" data-degree-index="${i}">Remove</button>` : ""}</header><div class="degree-fields"><label class="field"><span>Institution</span><input data-degree-index="${i}" data-degree-field="school" value="${esc(d.school)}" placeholder="Florida A&amp;M University"></label><label class="field"><span>Degree + field</span><input data-degree-index="${i}" data-degree-field="degree" value="${esc(d.degree)}" placeholder="M.S. in Data Science"></label><label class="field"><span>Graduation</span><input data-degree-index="${i}" data-degree-field="graduation" value="${esc(d.graduation)}" placeholder="May 2027"></label><label class="field"><span>Verified GPA</span><input data-degree-index="${i}" data-degree-field="gpa" value="${esc(d.gpa)}" placeholder="3.92/4.00"></label><label class="field wide"><span>Latin honors or distinctions</span><input data-degree-index="${i}" data-degree-field="honors" value="${esc(d.honors)}" placeholder="Summa Cum Laude · Honors College"></label><label class="field wide"><span>Thesis or capstone title</span><input data-degree-index="${i}" data-degree-field="thesis" value="${esc(d.thesis)}" placeholder="Predictive Modeling of Student Retention"></label><label class="field wide"><span>Departmental fellowship or academic award</span><input data-degree-index="${i}" data-degree-field="fellowship" value="${esc(d.fellowship)}" placeholder="Graduate Research Fellowship"></label><label class="field wide"><span>High-value coursework cluster</span><input data-degree-index="${i}" data-degree-field="coursework" value="${esc(d.coursework)}" placeholder="Regression Analysis · Machine Learning · Database Systems"></label></div></article>`,
+            )
+            .join("");
+          $("add-degree").style.display =
+            state.degrees.length < 3 ? "inline-block" : "none";
+        }
+        function budget(total, index) {
+          return total === 1 ? 4 : total === 2 ? 2 : index === 0 ? 2 : 1;
+        }
+        function escapeHtml(v) {
+          return String(v || "").replace(
+            /[&<>"']/g,
+            (ch) =>
+              ({
+                "&": "&amp;",
+                "<": "&lt;",
+                ">": "&gt;",
+                '"': "&quot;",
+                "'": "&#039;",
+              })[ch],
+          );
+        }
+        function strategicBold(v) {
+          const safe = escapeHtml(v);
+          return safe.replace(
+            /(\$[\d,.]+\+?|\b\d\.\d{1,2}\/4\.00\b|\b\d+(?:\.\d+)?(?:\s*[–-]\s*\d+(?:\.\d+)?)?%\s*(?:improvement|gain)?|\b\d+(?:\s*[–-]\s*\d+)?\+?\s+(?:people|hours)|\b(?:SPSS|Excel|Python|Figma|Qualtrics|Canva|PowerPoint|Google Workspace)\b)/gi,
+            "<strong>$1</strong>",
+          );
+        }
+        function impactLead(scope, win, i) {
+          const n = i % 4;
+          if (scope.includes("$"))
+            return `${["Stewarded", "Generated", "Managed", "Secured"][n]} ${scope} through ${win}`;
+          if (scope.includes("hour"))
+            return `${["Invested", "Completed", "Delivered", "Sustained"][n]} ${scope} in ${win}`;
+          if (scope.includes("%"))
+            return `${["Improved", "Increased", "Accelerated", "Elevated"][n]} ${win} by ${scope}`;
+          return `${["Reached", "Engaged", "Served", "Mobilized"][n]} ${scope} through ${win}`;
+        }
+        function compileBullet(r, i) {
+          const emphasis =
+              state.lens === "corporate"
+                ? [
+                    "operational delivery",
+                    "stakeholder execution",
+                    "workflow accountability",
+                    "service consistency",
+                  ]
+                : [
+                    "community stewardship",
+                    "institutional reach",
+                    "equitable access",
+                    "collective impact",
+                  ],
+            text = sentence(
+              `${impactLead(r.scope, r.win, i)} by ${r.method}, strengthening ${emphasis[i % 4]}`,
+            );
+          return {
+            text,
+            html: strategicBold(text),
+            defense: {
+              intent: `The recruiter is testing whether you can explain your ownership of ${r.win} with a concrete, credible scope.`,
+              script: `In my ${r.role} role, I focused on ${r.win}. I reached ${r.scope} by ${r.method}, and I can explain the exact steps I owned.`,
+              defusal:
+                "If asked for a more exact number, do not guess. Say the selected range is your honest estimate, describe the source, and offer a verified figure later.",
+            },
+          };
+        }
+        function buildHook(roles, keywords) {
+          const target = val("target-role")
+              .replace(/^(looking for|seeking|applying for)\s+/i, "")
+              .trim(),
+            labels = [...new Set(roles.map((r) => archetypes[r.category]))],
+            title = [
+              target || labels[0] || "Early-Career Professional",
+              labels.find((label) => label !== (target || labels[0])),
+            ]
+              .filter(Boolean)
+              .join(" | "),
+            competencies = [...new Set([...keywords, ...state.skills])].slice(
+              0,
+              6,
+            ),
+            scopes = [...new Set(roles.map((r) => r.scope))].slice(0, 2),
+            wins = [...new Set(roles.map((r) => r.win))].slice(0, 2),
+            profile =
+              state.profile === "graduate"
+                ? "Graduate-level"
+                : state.profile === "undergraduate"
+                  ? "Undergraduate"
+                  : "Early-career";
+          return {
+            title,
+            competencies,
+            value: `${profile} candidate translating ${wins.join(" and ") || "academic and professional experience"} into defensible impact across ${scopes.join(" and ") || "student-selected scope"}. Applies ${competencies.slice(0, 4).join(", ") || "cross-functional execution"} to ${target || "high-accountability work"} with every claim tied to evidence the candidate can explain.`,
+          };
+        }
+        function compile() {
+          const selected = state.roles.slice(0, 3),
+            keywords = [
+              ...new Set(selected.flatMap((r) => catalog[r.category].keywords)),
+            ].slice(0, 10);
+          return {
+            roles: selected.map((r, i) => ({
+              category: r.category,
+              heading: `${r.role} | ${archetypes[r.category]}`,
+              subheading: r.period,
+              bullets: Array.from(
+                { length: budget(selected.length, i) },
+                (_, j) => compileBullet(r, j),
+              ),
+            })),
+            keywords,
+            hook: buildHook(selected, keywords),
+          };
+        }
+        function val(id) {
+          return clean($(id).value);
+        }
+        function academicProof(d) {
+          return [
+            ["GPA", d.gpa],
+            ["Honors", d.honors],
+            ["Thesis / Capstone", d.thesis],
+            ["Fellowship / Award", d.fellowship],
+            ["Coursework", d.coursework],
+          ]
+            .filter(([, v]) => clean(v))
+            .map(
+              ([label, v]) =>
+                `<p class="academic-proof" contenteditable="true"><b>${label}:</b> ${strategicBold(v)}</p>`,
+            )
+            .join("");
+        }
+        function autoScalePaper() {
+          const paper = $("resume-paper");
+          paper.classList.remove("compact", "ultra", "micro");
+          requestAnimationFrame(() => {
+            if (paper.scrollHeight > paper.clientHeight)
+              paper.classList.add("compact");
+            if (paper.scrollHeight > paper.clientHeight)
+              paper.classList.add("ultra");
+            if (paper.scrollHeight > paper.clientHeight)
+              paper.classList.add("micro");
+            const mode = paper.classList.contains("micro")
+              ? "maximum compression"
+              : paper.classList.contains("ultra")
+                ? "high compression"
+                : paper.classList.contains("compact")
+                  ? "light compression"
+                  : "standard spacing";
+            $("status").textContent =
+              `One-page layout check: ${mode}. Review every line before exporting.`;
+          });
+        }
+        function renderResume(d) {
+          const contact = [
+              val("location"),
+              val("phone"),
+              val("email"),
+              val("linkedin"),
+            ]
+              .filter(Boolean)
+              .join(" | "),
+            education = state.degrees
+              .map(
+                (degree) =>
+                  `<div class="paper-entry education-entry"><div class="paper-row"><b contenteditable="true">${esc(degree.school || "College or university")}</b><span contenteditable="true">${esc(degree.graduation)}</span></div><p class="education-degree" contenteditable="true">${esc(degree.degree || "Degree or program")}</p>${academicProof(degree)}</div>`,
+              )
+              .join("");
+          state.defenseItems = d.roles.flatMap((r) => r.bullets);
+          let defenseIndex = 0;
+          $("resume-paper").innerHTML =
+            `<header><h2 contenteditable="true">${esc((val("full-name") || "YOUR NAME").toUpperCase())}</h2><p contenteditable="true">${esc(contact)}</p></header><section class="resume-hook"><p class="positioning-title" contenteditable="true">${esc(d.hook.title)}</p><p class="competency-row" contenteditable="true">${strategicBold(d.hook.competencies.join(" · "))}</p><p class="value-pitch" contenteditable="true">${strategicBold(d.hook.value)}</p></section><section><h3>EDUCATION</h3>${education}</section><section><h3>EXPERIENCE &amp; LEADERSHIP</h3>${d.roles
+              .map(
+                (r) =>
+                  `<div class="paper-entry"><div class="paper-row"><b contenteditable="true">${esc(r.heading)}</b><span contenteditable="true">${esc(r.subheading)}</span></div><ul>${r.bullets
+                    .map((b) => {
+                      const index = defenseIndex++;
+                      return `<li class="bullet-line"><span contenteditable="true">${b.html}</span><button class="coach-button" type="button" data-defense="${index}" aria-label="Open interview coaching for this bullet">Coach me</button></li>`;
+                    })
+                    .join("")}</ul></div>`,
+              )
+              .join(
+                "",
+              )}</section>${state.skills.length ? `<section><h3>SKILLS &amp; CERTIFICATIONS</h3><p contenteditable="true">${strategicBold(state.skills.join(" · "))}</p></section>` : ""}`;
+        }
+        function renderCoverLetter(d) {
+          const name = val("full-name") || "Your Name",
+            contact = [val("location"), val("phone"), val("email")]
+              .filter(Boolean)
+              .join(" | "),
+            recipient = val("target-recipient") || "Hiring Committee",
+            organization = val("target-org") || "Target Organization",
+            target = val("target-role") || "the advertised opportunity",
+            degree = state.degrees.find((item) => item.degree) || {},
+            topBullets = d.roles.flatMap((role) => role.bullets).slice(0, 2),
+            skills = state.skills.slice(0, 5),
+            date = new Intl.DateTimeFormat("en-US", {
+              month: "long",
+              day: "numeric",
+              year: "numeric",
+            }).format(new Date()),
+            academic = [degree.degree, degree.school]
+              .filter(Boolean)
+              .join(" at ");
+          $("cover-paper").innerHTML =
+            `<header><h2 contenteditable="true">${esc(name.toUpperCase())}</h2><p contenteditable="true">${esc(contact)}</p></header><div class="cover-meta"><p contenteditable="true">${esc(date)}</p><p contenteditable="true"><b>${esc(recipient)}</b><br>${esc(organization)}</p></div><div class="cover-body"><p contenteditable="true">Dear ${esc(recipient)},</p><p contenteditable="true">I am applying for ${esc(target)} with ${esc(organization)}. ${academic ? `My academic preparation in ${esc(academic)} complements` : "My academic preparation complements"} a record of measurable leadership, practical execution, and evidence-backed results.</p><p contenteditable="true">${topBullets.length ? topBullets.map((item) => escapeHtml(item.text)).join(" ") : "My experience demonstrates accountable execution and results I can explain in detail."}</p><p contenteditable="true">${degree.thesis ? `My work on “${esc(degree.thesis)}” strengthened my ability to translate research into practical recommendations. ` : ""}${skills.length ? `I would also bring demonstrated capability in ${esc(skills.join(", "))}.` : "I would bring a disciplined, evidence-centered approach to the work."}</p><p contenteditable="true">Thank you for considering my application. I welcome the opportunity to discuss how my experience can support your team’s priorities.</p><div class="signature"><p contenteditable="true">Sincerely,</p><p contenteditable="true"><b>${esc(name)}</b></p></div></div>`;
+        }
+        function buildPortfolioItems(d) {
+          const firstRole = state.roles[0] || makeRole(),
+            firstBullet =
+              d.roles[0]?.bullets[0]?.text || "Evidence-backed accomplishment",
+            degree = state.degrees.find((item) => item.degree) || {};
+          return state.artifacts.map((key) => {
+            const item = artifactCatalog[key];
+            let title = item.title,
+              summary = `This candidate-selected artifact supports ${firstRole.win} at a verified scope of ${firstRole.scope}.`,
+              echo = firstBullet;
+            if (key === "research") {
+              title = degree.thesis || item.title;
+              summary = `This research artifact supports the candidate’s academic preparation${degree.coursework ? ` in ${degree.coursework}` : ""}.`;
+            }
+            if (key === "finance") {
+              const moneyRole =
+                state.roles.find((role) => role.scope.includes("$")) ||
+                firstRole;
+              summary = `This artifact documents ${moneyRole.win} within the selected scope of ${moneyRole.scope}, using ${moneyRole.method}.`;
+            }
+            if (key === "curriculum") {
+              const learningRole =
+                state.roles.find(
+                  (role) =>
+                    role.category === "peer" || role.category === "research",
+                ) || firstRole;
+              summary = `This artifact demonstrates ${learningRole.win} through ${learningRole.method} at a verified scope of ${learningRole.scope}.`;
+            }
+            return {
+              key,
+              type: item.type,
+              title,
+              summary,
+              evidence: item.evidence,
+              echo,
+            };
+          });
+        }
+        function renderPortfolio(d) {
+          state.portfolioItems = buildPortfolioItems(d);
+          $("portfolio-grid").innerHTML =
+            `<div class="portfolio-intro"><p class="kicker">EXECUTIVE EVIDENCE PORTFOLIO</p><h3>${esc(val("full-name") || "Your verified work")}</h3><p>Each card connects a resume claim to evidence the candidate selected and can produce. Remove anything you cannot verify before sharing.</p></div><div class="portfolio-cards">${state.portfolioItems.length ? state.portfolioItems.map((item, index) => `<button class="portfolio-card" type="button" data-portfolio="${index}"><small>${esc(item.type)}</small><h4>${esc(item.title)}</h4><p>${esc(item.summary)}</p><b>Open evidence deep-dive →</b></button>`).join("") : `<div class="portfolio-empty"><b>No portfolio artifacts selected yet.</b><p>Return to Step 5 and choose only evidence you actually created or can show.</p></div>`}</div>`;
+        }
+        function renderDefenseRail(d) {
+          $("defense").innerHTML =
+            `<p class="kicker">ANTI-IMPOSTER INTERVIEW DEFENSE</p><h3>Know how to defend every line.</h3><p>Each generated bullet now includes a “Coach me” button. Open it for the recruiter’s intent, a 20-second verbal script, and a trap-question defusal.</p><div class="keyword-box"><b>ATS LANGUAGE INCLUDED</b><p>${esc(d.keywords.join(" · "))}</p></div><div class="keyword-box"><b>VERIFIED SKILLS SELECTED</b><p>${esc(state.skills.slice(0, 8).join(" · ") || "Choose skills in Step 4")}</p></div>`;
+        }
+        function renderOutput(d) {
+          renderResume(d);
+          renderCoverLetter(d);
+          renderPortfolio(d);
+          renderDefenseRail(d);
+          $("output").classList.add("visible");
+          setDocument(state.activeDocument);
+          autoScalePaper();
+        }
+        function setDocument(documentName) {
+          state.activeDocument = documentName;
+          ["resume", "cover", "portfolio"].forEach((name) => {
+            const pane = $(
+                name === "resume"
+                  ? "resume-paper"
+                  : name === "cover"
+                    ? "cover-paper"
+                    : "portfolio-grid",
+              ),
+              tab = document.querySelector(`[data-document-tab="${name}"]`),
+              active = name === documentName;
+            pane.hidden = !active;
+            tab.classList.toggle("active", active);
+            tab.setAttribute("aria-selected", String(active));
+          });
+          if (documentName === "resume") autoScalePaper();
+        }
+        function openDefense(index) {
+          const item = state.defenseItems[index];
+          if (!item) return;
+          $("modal-bullet").textContent = item.text;
+          $("modal-intent").textContent = item.defense.intent;
+          $("modal-script").textContent = item.defense.script;
+          $("modal-defusal").textContent = item.defense.defusal;
+          $("defense-modal").hidden = false;
+        }
+        function openPortfolio(index) {
+          const item = state.portfolioItems?.[index];
+          if (!item) return;
+          $("portfolio-modal-type").textContent = item.type;
+          $("portfolio-modal-title").textContent = item.title;
+          $("portfolio-modal-summary").textContent = item.summary;
+          $("portfolio-modal-evidence").textContent = item.evidence;
+          $("portfolio-modal-echo").textContent = item.echo;
+          $("portfolio-modal").hidden = false;
+        }
+        function build() {
+          startTimer();
+          const missing = [];
+          if (!val("full-name")) missing.push("your name");
+          if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val("email")))
+            missing.push("a valid email");
+          if (!state.degrees[0]?.school) missing.push("your primary school");
+          if (!state.degrees[0]?.degree)
+            missing.push("your primary degree or program");
+          if (
+            state.degrees.some(
+              (d) => (d.school && !d.degree) || (!d.school && d.degree),
+            )
+          )
+            missing.push(
+              "both the institution and degree for every academic entry",
+            );
+          if (missing.length) {
+            $("status").textContent =
+              `Add ${missing.join(", ")} before building your career suite.`;
+            return;
+          }
+          const started = performance.now();
+          state.lastDraft = compile();
+          renderOutput(state.lastDraft);
+          const ms = (performance.now() - started).toFixed(1);
+          stopTimer();
+          const seconds = state.started
+            ? Math.max(1, Math.floor((Date.now() - state.started) / 1000))
+            : 1;
+          $("status").textContent =
+            `Career suite built in ${ms} ms. Guided input time: ${seconds} second${seconds === 1 ? "" : "s"}. Edit exact names and verify every claim before exporting.`;
+          $("output").scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+        function refreshSuite() {
+          if (!state.lastDraft) return;
+          state.lastDraft = compile();
+          renderOutput(state.lastDraft);
+        }
+        const presets = {
+          campus: {
+            profile: "undergraduate",
+            lens: "civic",
+            values: [
+              "Jordan Taylor",
+              "jordan@university.edu",
+              "(555) 123-4567",
+              "Atlanta, GA",
+              "",
+              "Georgia State University",
+              "B.S. in Psychology",
+              "May 2027",
+              "Student affairs internship",
+            ],
+            roles: [
+              {
+                category: "campus",
+                role: "Vice President",
+                win: "member engagement",
+                scope: "51-150 people",
+                method: "coordinating a cross-functional student team",
+                period: "Current",
+              },
+              {
+                category: "service",
+                role: "Volunteer Lead",
+                win: "resource distribution",
+                scope: "51-100 hours",
+                method: "organizing field logistics",
+                period: "One academic year",
+              },
+            ],
+            skills: ["Google Workspace", "Public speaking", "Event planning"],
+          },
+          working: {
+            profile: "early-career",
+            lens: "corporate",
+            values: [
+              "Morgan Lee",
+              "morgan@university.edu",
+              "(555) 222-0189",
+              "Charlotte, NC",
+              "",
+              "UNC Charlotte",
+              "B.S. in Business Administration",
+              "December 2026",
+              "Operations analyst role",
+            ],
+            roles: [
+              {
+                category: "paid",
+                role: "Shift Lead",
+                win: "daily operations",
+                scope: "11-50 people",
+                method: "coordinating shift priorities",
+                period: "Two or more years",
+              },
+              {
+                category: "campus",
+                role: "Treasurer",
+                win: "budget stewardship",
+                scope: "$1,000-$4,999",
+                method: "tracking milestones and ownership",
+                period: "One academic year",
+              },
+            ],
+            skills: ["Microsoft Excel", "Customer service", "Budget tracking"],
+          },
+          graduate: {
+            profile: "graduate",
+            lens: "corporate",
+            values: [
+              "Alexis Brooks",
+              "alexis@university.edu",
+              "(555) 442-9910",
+              "Tallahassee, FL",
+              "",
+              "Florida State University",
+              "M.S. in Public Policy",
+              "May 2027",
+              "Policy research fellowship",
+            ],
+            roles: [
+              {
+                category: "research",
+                role: "Graduate Researcher",
+                win: "data analysis",
+                scope: "151-500 people",
+                method: "analyzing data in Excel or statistical software",
+                period: "Current",
+              },
+              {
+                category: "peer",
+                role: "Teaching Assistant",
+                win: "academic engagement",
+                scope: "51-150 people",
+                method: "facilitating small-group learning",
+                period: "One academic year",
+              },
+            ],
+            skills: [
+              "Data analysis",
+              "Research",
+              "Microsoft Excel",
+              "Public speaking",
+            ],
+          },
+          service: {
+            profile: "undergraduate",
+            lens: "civic",
+            values: [
+              "Taylor Reed",
+              "taylor@university.edu",
+              "(555) 901-2234",
+              "Norfolk, VA",
+              "",
+              "Norfolk State University",
+              "B.A. in Sociology",
+              "May 2028",
+              "Community leadership fellowship",
+            ],
+            roles: [
+              {
+                category: "service",
+                role: "Community Outreach Coordinator",
+                win: "program access",
+                scope: "151-500 people",
+                method: "partnering with local organizations",
+                period: "One academic year",
+              },
+              {
+                category: "campus",
+                role: "Campus Ambassador",
+                win: "campus partnerships",
+                scope: "51-150 people",
+                method: "partnering with campus departments",
+                period: "Current",
+              },
+            ],
+            skills: [
+              "Public speaking",
+              "Event planning",
+              "Social media",
+              "Canva",
+            ],
+          },
+        };
+        const presetSkills = {
+          campus: [
+            "Community Stakeholder Coalition Building",
+            "Event Ticketing Infrastructure (Eventbrite)",
+            "Canva Pro Multi-Platform Design Systems",
+          ],
+          working: [
+            "Advanced Microsoft Excel (Nested XLOOKUP, INDEX/MATCH)",
+            "Inventory Par Level Optimization & Cycle Counting",
+            "Operational Turnaround Time (TAT) Compression",
+          ],
+          graduate: [
+            "SPSS Multivariate Regression Analysis",
+            "Qualtrics Advanced Survey Logic & Branching",
+            "Executive Technical Reporting & Briefing Papers",
+          ],
+          service: [
+            "Community Stakeholder Coalition Building",
+            "Corporate CSR Sponsorship Procurement",
+            "Canva Pro Multi-Platform Design Systems",
+          ],
+        };
+        function loadPreset(key) {
+          const p = presets[key],
+            started = performance.now(),
+            contactIds = [
+              "full-name",
+              "email",
+              "phone",
+              "location",
+              "linkedin",
+            ];
+          state.profile = p.profile;
+          state.lens = p.lens;
+          state.roles = p.roles.map((r) => ({ ...r }));
+          state.skills = [...presetSkills[key]];
+          state.artifacts =
+            key === "graduate"
+              ? ["research"]
+              : key === "working"
+                ? ["finance"]
+                : key === "service"
+                  ? ["stewardship", "curriculum"]
+                  : ["stewardship"];
+          contactIds.forEach((id, i) => ($(id).value = p.values[i]));
+          $("target-role").value = p.values[8];
+          $("target-org").value = "";
+          $("target-recipient").value = "Hiring Committee";
+          state.degrees = [
+            makeDegree(
+              p.values[5],
+              p.values[6],
+              p.values[7],
+              key === "graduate"
+                ? {
+                    gpa: "3.92/4.00",
+                    fellowship: "Graduate Dean’s Fellowship",
+                    thesis: "Predictive Modeling of Student Retention",
+                    coursework:
+                      "Program Evaluation · Applied Statistics · Policy Analytics",
+                  }
+                : {},
+            ),
+          ];
+          if (key === "graduate")
+            state.degrees.push(
+              makeDegree(
+                "Florida A&M University",
+                "B.S. in Political Science",
+                "May 2025",
+                {
+                  honors: "Summa Cum Laude",
+                  coursework:
+                    "Research Methods · Econometrics · Public Administration",
+                },
+              ),
+            );
+          renderFixed();
+          renderDegrees();
+          renderRoles();
+          renderSkills();
+          renderArtifacts();
+          state.lastDraft = compile();
+          renderOutput(state.lastDraft);
+          $("preset-status").textContent =
+            `Preset compiled in ${(performance.now() - started).toFixed(1)} ms. Replace every sample fact before exporting.`;
+          $("output").scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+        document.addEventListener("click", (e) => {
+          const t = e.target.closest("button");
+          if (!t) return;
+          if (t.dataset.preset) {
+            loadPreset(t.dataset.preset);
+            return;
+          }
+          if (t.dataset.documentTab) {
+            setDocument(t.dataset.documentTab);
+            return;
+          }
+          if (t.dataset.defense !== undefined) {
+            openDefense(Number(t.dataset.defense));
+            return;
+          }
+          if (t.dataset.portfolio !== undefined) {
+            openPortfolio(Number(t.dataset.portfolio));
+            return;
+          }
+          if (t.dataset.closeModal) {
+            $(t.dataset.closeModal).hidden = true;
+            return;
+          }
+          if (t.dataset.skillCategory) {
+            state.skillCategory = t.dataset.skillCategory;
+            renderSkills();
+            return;
+          }
+          if (t.dataset.artifact) {
+            startTimer();
+            state.artifacts = state.artifacts.includes(t.dataset.artifact)
+              ? state.artifacts.filter((key) => key !== t.dataset.artifact)
+              : [...state.artifacts, t.dataset.artifact];
+            renderArtifacts();
+            refreshSuite();
+            return;
+          }
+          if (t.dataset.degreeAction === "remove") {
+            startTimer();
+            state.degrees.splice(Number(t.dataset.degreeIndex), 1);
+            renderDegrees();
+            refreshSuite();
+            return;
+          }
+          if (t.dataset.skill) {
+            startTimer();
+            if (state.skills.includes(t.dataset.skill)) {
+              state.skills = state.skills.filter(
+                (skill) => skill !== t.dataset.skill,
+              );
+            } else if (state.skills.length < 12) {
+              state.skills = [...state.skills, t.dataset.skill];
+            } else {
+              $("status").textContent =
+                "Choose up to 12 strongest, interview-ready skills so the resume stays on one page.";
+            }
+            renderSkills();
+            refreshSuite();
+            return;
+          }
+          const a = t.dataset.action;
+          if (!a) return;
+          startTimer();
+          if (a === "profile") {
+            state.profile = t.dataset.value;
+            renderFixed();
+          } else if (a === "lens") {
+            state.lens = t.dataset.value;
+            renderFixed();
+          } else if (a === "remove") {
+            state.roles.splice(Number(t.dataset.index), 1);
+            renderRoles();
+          } else {
+            const i = Number(t.dataset.index),
+              v = t.dataset.value;
+            if (a === "category") {
+              const key =
+                Object.keys(catalog).find((k) => catalog[k].label === v) ||
+                "campus";
+              state.roles[i] = makeRole(key);
+            } else state.roles[i][a] = v;
+            renderRoles();
+          }
+          refreshSuite();
+        });
+        document.addEventListener("input", (e) => {
+          const t = e.target;
+          if (!(t instanceof HTMLInputElement)) return;
+          startTimer();
+          if (t.id === "skill-search") {
+            state.skillQuery = t.value;
+            renderSkills();
+            return;
+          }
+          if (t.dataset.degreeField !== undefined) {
+            state.degrees[Number(t.dataset.degreeIndex)][
+              t.dataset.degreeField
+            ] = clean(t.value);
+          }
+          refreshSuite();
+        });
+        document.addEventListener("keydown", (e) => {
+          if (e.key !== "Escape") return;
+          $("defense-modal").hidden = true;
+          $("portfolio-modal").hidden = true;
+        });
+        document
+          .querySelectorAll("input")
+          .forEach((i) =>
+            i.addEventListener("focus", startTimer, { once: true }),
+          );
+        $("add-degree").addEventListener("click", () => {
+          startTimer();
+          if (state.degrees.length < 3) {
+            state.degrees.push(makeDegree());
+            renderDegrees();
+            refreshSuite();
+          }
+        });
+        $("add-role").addEventListener("click", () => {
+          startTimer();
+          if (state.roles.length < 3) {
+            state.roles.push(makeRole());
+            renderRoles();
+            refreshSuite();
+          }
+        });
+        $("build").addEventListener("click", build);
+        $("resume-paper").addEventListener("input", autoScalePaper);
+        $("copy").addEventListener("click", async () => {
+          const pane = $(
+            state.activeDocument === "resume"
+              ? "resume-paper"
+              : state.activeDocument === "cover"
+                ? "cover-paper"
+                : "portfolio-grid",
+          );
+          await navigator.clipboard.writeText(
+            pane.innerText.replace(/\n{3,}/g, "\n\n"),
+          );
+          $("status").textContent =
+            `${state.activeDocument === "resume" ? "ATS resume" : state.activeDocument === "cover" ? "Cover letter" : "Portfolio summary"} copied as plain text.`;
+        });
+        $("print").addEventListener("click", () => {
+          if (state.activeDocument === "resume") autoScalePaper();
+          document.body.classList.add(
+            "printing",
+            `${state.activeDocument}-print`,
+          );
+          window.print();
+          setTimeout(
+            () =>
+              document.body.classList.remove(
+                "printing",
+                "resume-print",
+                "cover-print",
+                "portfolio-print",
+              ),
+            500,
+          );
+        });
+        state.degrees = [makeDegree()];
+        state.roles = [makeRole()];
+        renderFixed();
+        renderDegrees();
+        renderRoles();
+        renderSkills();
+        renderArtifacts();
+      })();
+    </script>
+  </body>
 </html>
