@@ -304,7 +304,7 @@ export default function Home() {
         </div>
         <div className="action-grid">
           <Link href="/reach-yourself"><span>01</span><h3>Request or support a REACH Box</h3><p>Care packages with essentials, resources, and encouragement for students facing hardship.</p></Link>
-          <a href="https://portal.estherfundsfoundation.org/partners"><span>02</span><h3>Partner with EFF</h3><p>Help expand college-retention resources, emergency response, and campus support.</p></a>
+          <a href="https://portal.estherfundsfoundation.org/partners/join"><span>02</span><h3>Partner with EFF</h3><p>Help expand college-retention resources, emergency response, and campus support.</p></a>
           <a href="https://givebutter.com/estherfundsfoundation"><span>03</span><h3>Fund a student’s next step</h3><p>Support scholarships, emergency aid, educational tools, and student care.</p></a>
         </div>
       </section>
