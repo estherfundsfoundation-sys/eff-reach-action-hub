@@ -333,7 +333,8 @@
         letter-spacing: 0.07em;
         text-transform: uppercase;
       }
-      .field input {
+      .field input,
+      .field textarea {
         width: 100%;
         min-height: 48px;
         padding: 11px 13px;
@@ -343,10 +344,23 @@
         color: var(--ink);
         font-weight: 600;
       }
-      .field input:focus {
+      .field textarea {
+        min-height: 132px;
+        resize: vertical;
+        font:
+          500 12px/1.55 Arial,
+          Helvetica,
+          sans-serif;
+      }
+      .field input:focus,
+      .field textarea:focus {
         outline: 3px solid #d9c8ff;
         outline-offset: 1px;
         border-color: var(--purple);
+      }
+      .field.full-width {
+        grid-column: 1 / -1;
+        margin-top: 13px;
       }
       .choice {
         margin-bottom: 18px;
@@ -421,7 +435,7 @@
       }
       .role-facts {
         display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-columns: repeat(3, minmax(0, 1fr));
         gap: 13px;
         margin-bottom: 20px;
         padding: 16px;
@@ -500,6 +514,34 @@
         color: var(--muted);
         font-size: 10px;
         line-height: 1.45;
+      }
+      .match-audit {
+        margin-bottom: 18px;
+        padding: 18px;
+        border: 1px solid rgba(217, 119, 6, 0.3);
+        border-radius: 18px;
+        background: linear-gradient(145deg, #fffdf8, #fff5df);
+        color: #2d2234;
+      }
+      .match-audit header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+      }
+      .match-audit header strong {
+        color: #8a4b00;
+        font: 700 24px var(--serif);
+      }
+      .match-audit p,
+      .match-audit small {
+        margin: 9px 0 0;
+        font-size: 10px;
+        line-height: 1.5;
+      }
+      .match-audit small {
+        display: block;
+        color: var(--muted);
       }
       .skill-grid {
         display: flex;
@@ -585,6 +627,12 @@
         background: var(--purple);
         color: white;
       }
+      .export-filename {
+        flex-basis: 100%;
+        color: var(--muted);
+        font-size: 10px;
+        text-align: right;
+      }
       .output-grid {
         display: grid;
         grid-template-columns: minmax(0, 1fr) minmax(300px, 0.42fr);
@@ -637,6 +685,11 @@
         justify-content: space-between;
         gap: 16px;
         font-size: 11.5px;
+      }
+      .paper-subrow {
+        margin-top: 2px;
+        color: #333;
+        font-size: 10.7px;
       }
       .paper-entry {
         margin-bottom: 11px;
@@ -972,7 +1025,7 @@
         line-height: 1.3;
       }
       .paper strong {
-        font-weight: 800;
+        font-weight: 700;
       }
       .education-entry .education-degree {
         font-weight: 700;
@@ -1018,8 +1071,8 @@
       .paper.ultra .paper-entry li,
       .paper.ultra > header p,
       .paper.ultra p {
-        font-size: 9.2px;
-        line-height: 1.16;
+        font-size: 9.8px;
+        line-height: 1.18;
       }
       .paper.micro {
         padding: 0.28in 0.36in;
@@ -1044,8 +1097,53 @@
       .paper.micro > header p,
       .paper.micro p {
         margin: 1px 0;
-        font-size: 8.2px;
-        line-height: 1.08;
+        font-size: 9.5px;
+        line-height: 1.12;
+      }
+      .paper.balanced section {
+        margin-top: 19px;
+      }
+      .paper.balanced .paper-entry {
+        margin-bottom: 13px;
+      }
+      .paper.balanced .paper-entry li {
+        margin: 5px 0;
+        line-height: 1.45;
+      }
+      .paper.roomy section {
+        margin-top: 23px;
+      }
+      .paper.roomy {
+        display: flex;
+        flex-direction: column;
+      }
+      .paper.roomy > section:nth-of-type(3) {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+      }
+      .paper.roomy .paper-entry {
+        margin-bottom: 16px;
+      }
+      .paper.roomy > section:nth-of-type(3) .paper-entry {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        justify-content: center;
+      }
+      .paper.roomy > section:nth-of-type(3) .paper-entry ul {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        justify-content: space-evenly;
+      }
+      .paper.roomy .paper-entry li {
+        margin: 7px 0;
+        line-height: 1.52;
+      }
+      .paper.roomy .resume-hook .value-pitch {
+        margin-top: 8px;
+        line-height: 1.4;
       }
       @media (max-width: 700px) {
         .degree-builder {
@@ -1588,6 +1686,18 @@
                     placeholder="Example: Hiring Committee"
                 /></label>
               </div>
+              <label class="field full-width"
+                ><span
+                  >Paste the job or internship description (recommended)</span
+                ><textarea
+                  id="job-description"
+                  placeholder="Paste the real posting here. EFF will compare its language with your resume, show matched and missing terms, and never hide keywords or stuff the page."
+                ></textarea
+                ><small class="choice-note"
+                  >This stays in your browser. Use it to tailor one truthful
+                  resume to one opportunity.</small
+                ></label
+              >
             </div>
           </section>
           <section class="step">
@@ -1725,7 +1835,8 @@
             <h2>One story. Three application assets.</h2>
             <span
               >Review every line and replace sample preset details before
-              applying.</span
+              applying. “Coach me” buttons are editor-only and never appear in
+              the PDF or copied text.</span
             >
             <div
               class="document-tabs"
@@ -1764,6 +1875,9 @@
             ><button id="print" class="primary" type="button">
               Print / Save PDF
             </button>
+            <span class="export-filename" id="export-filename"
+              >PDF filename: First Last Resume.pdf</span
+            >
           </div>
         </header>
         <div class="output-grid">
@@ -2360,6 +2474,9 @@
             role: c.roles[0],
             organization: "",
             exactTitle: "",
+            location: "",
+            startDate: "",
+            endDate: "",
             win: c.wins[0],
             scope: scopes[1],
             exactMetric: "",
@@ -2411,7 +2528,7 @@
                 c.label,
                 "category",
                 `data-index="${i}"`,
-              )}</div><div class="role-facts"><label class="field"><span>${esc(c.organizationLabel)}</span><input data-role-index="${i}" data-role-field="organization" value="${esc(r.organization)}" placeholder="${esc(c.organizationPlaceholder)}"></label><label class="field"><span>${esc(c.titleLabel)}</span><input data-role-index="${i}" data-role-field="exactTitle" value="${esc(r.exactTitle)}" placeholder="${esc(c.titlePlaceholder)}"></label><label class="field wide"><span>Verified exact result (optional)</span><input data-role-index="${i}" data-role-field="exactMetric" value="${esc(r.exactMetric)}" placeholder="Example: Served 120 customers per shift or raised $4,200"><small class="choice-note">Start with a result verb and use a number you can explain. If you do not know the exact figure, choose an honest range below.</small></label></div><div class="choice"><div class="choice-title">Closest standard title</div><small class="choice-note">Choose the closest option. Your exact title above will appear on the resume.</small>${pills(c.roles, r.role, "role", `data-index="${i}"`)}</div><div class="choice"><div class="choice-title">What did you actually do? Choose up to four.</div><small class="choice-note">Tap every responsibility that is true for this specific experience. Each selection gives EFF better material for a distinct bullet.</small><div class="pills">${c.tasks.map((task) => `<button type="button" class="pill ${r.tasks.includes(task) ? "selected" : ""}" data-action="task" data-index="${i}" data-value="${esc(task)}" aria-pressed="${r.tasks.includes(task)}">${esc(task)}</button>`).join("")}</div></div><div class="choice"><div class="choice-title">What was your strongest result?</div>${pills(c.wins, r.win, "win", `data-index="${i}"`)}</div><div class="choice"><div class="choice-title">Who or what did your work reach?</div>${pills(scopes, r.scope, "scope", `data-index="${i}"`)}</div><div class="choice"><div class="choice-title">How did you make it happen?</div>${pills(c.methods, r.method, "method", `data-index="${i}"`)}</div><div class="choice"><div class="choice-title">How long did you do this?</div>${pills(periods, r.period, "period", `data-index="${i}"`)}</div></article>`;
+              )}</div><div class="role-facts"><label class="field"><span>${esc(c.organizationLabel)}</span><input data-role-index="${i}" data-role-field="organization" value="${esc(r.organization)}" placeholder="${esc(c.organizationPlaceholder)}"></label><label class="field"><span>Your real role or title</span><input data-role-index="${i}" data-role-field="exactTitle" value="${esc(r.exactTitle)}" placeholder="${esc(c.titlePlaceholder)}"><small class="choice-note">Do not see your role below? Type its real title here. This exact wording appears on your resume.</small></label><label class="field"><span>City, state, or remote</span><input data-role-index="${i}" data-role-field="location" value="${esc(r.location)}" placeholder="Example: Atlanta, GA or Remote"></label><label class="field"><span>Start month + year</span><input data-role-index="${i}" data-role-field="startDate" value="${esc(r.startDate)}" placeholder="Example: August 2025"></label><label class="field"><span>End month + year</span><input data-role-index="${i}" data-role-field="endDate" value="${esc(r.endDate)}" placeholder="Example: Present"></label><label class="field wide"><span>Verified exact result (optional)</span><input data-role-index="${i}" data-role-field="exactMetric" value="${esc(r.exactMetric)}" placeholder="Example: Served 120 customers per shift or raised $4,200"><small class="choice-note">Start with a result verb and use a number you can explain. If you do not know the exact figure, choose an honest range below.</small></label></div><div class="choice"><div class="choice-title">Closest standard title</div><small class="choice-note">Choose the closest option, or select “My role is not listed.” Your typed title above is always used first.</small>${pills([...c.roles, "My role is not listed"], r.role, "role", `data-index="${i}"`)}</div><div class="choice"><div class="choice-title">What did you actually do? Choose up to four.</div><small class="choice-note">Tap every responsibility that is true for this specific experience. Each selection gives EFF better material for a distinct bullet.</small><div class="pills">${c.tasks.map((task) => `<button type="button" class="pill ${r.tasks.includes(task) ? "selected" : ""}" data-action="task" data-index="${i}" data-value="${esc(task)}" aria-pressed="${r.tasks.includes(task)}">${esc(task)}</button>`).join("")}</div></div><div class="choice"><div class="choice-title">What was your strongest result?</div>${pills(c.wins, r.win, "win", `data-index="${i}"`)}</div><div class="choice"><div class="choice-title">Who or what did your work reach?</div>${pills(scopes, r.scope, "scope", `data-index="${i}"`)}</div><div class="choice"><div class="choice-title">How did you make it happen?</div>${pills(c.methods, r.method, "method", `data-index="${i}"`)}</div><div class="choice"><div class="choice-title">How long did you do this?</div>${pills(periods, r.period, "period", `data-index="${i}"`)}</div></article>`;
             })
             .join("");
           $("add-role").style.display =
@@ -2440,7 +2557,7 @@
                 )
                 .join("")
             : `<div class="skill-empty">No skills match this search. Try a shorter term or another industry.</div>`;
-          $("skill-count").textContent = `${state.skills.length}/12 selected`;
+          $("skill-count").textContent = `${state.skills.length}/8 selected`;
         }
         function renderArtifacts() {
           $("artifacts").innerHTML = Object.entries(artifactCatalog)
@@ -2468,7 +2585,7 @@
               : "none";
         }
         function budget(total, index) {
-          return total === 1 ? 4 : total === 2 ? 2 : index === 0 ? 2 : 1;
+          return total === 1 ? 4 : total === 2 ? 3 : 2;
         }
         function escapeHtml(v) {
           return String(v || "").replace(
@@ -2492,8 +2609,13 @@
         }
         function impactLead(scope, win, i) {
           const n = i % 4;
-          if (scope.includes("$"))
-            return `${["Stewarded", "Generated", "Managed", "Secured"][n]} ${scope} through ${win}`;
+          if (scope.includes("$")) {
+            const revenueResult = /fundrais|sponsor|donor|sales/i.test(win);
+            const verbs = revenueResult
+              ? ["Raised", "Secured", "Generated", "Mobilized"]
+              : ["Managed", "Oversaw", "Reconciled", "Administered"];
+            return `${verbs[n]} ${scope} in ${win}`;
+          }
           if (scope.includes("hour"))
             return `${["Invested", "Completed", "Delivered", "Sustained"][n]} ${scope} in ${win}`;
           if (scope.includes("%"))
@@ -2519,18 +2641,30 @@
               ? r.tasks
               : [catalog[r.category].tasks[0]],
             responsibility = selectedTasks[i % selectedTasks.length],
-            lead =
+            directLead =
               r.exactMetric && i === 0
                 ? /^[A-Za-z]/.test(r.exactMetric)
                   ? r.exactMetric
                   : impactLead(r.exactMetric, r.win, i)
                 : impactLead(r.scope, r.win, i),
+            actionVerbs = {
+              paid: ["Directed", "Streamlined", "Standardized", "Coordinated"],
+              campus: ["Led", "Administered", "Organized", "Strengthened"],
+              service: ["Mobilized", "Coordinated", "Delivered", "Expanded"],
+              research: ["Evaluated", "Synthesized", "Documented", "Presented"],
+              peer: ["Facilitated", "Advised", "Guided", "Coordinated"],
+              creative: ["Designed", "Built", "Tested", "Delivered"],
+            },
+            verb = actionVerbs[r.category][i % 4],
+            secondaryLead = r.scope.includes("$")
+              ? `${verb} ${r.scope} by ${responsibility}, using ${r.method}`
+              : `${verb} ${r.win} for ${r.scope} by ${responsibility} and ${r.method}`,
             text = sentence(
-              `${lead} by ${responsibility} and ${r.method}, strengthening ${emphasis[i % 4]}`,
+              `${i === 0 ? `${directLead} by ${responsibility} and ${r.method}` : secondaryLead}, strengthening ${emphasis[i % 4]}`,
             );
           return {
             text,
-            html: strategicBold(text),
+            html: escapeHtml(text),
             defense: {
               intent: `The recruiter is testing whether you can explain your ownership of ${r.win} with a concrete, credible scope.`,
               script: `In my ${r.exactTitle || r.role} role${r.organization ? ` with ${r.organization}` : ""}, I focused on ${r.win}. ${r.exactMetric ? `My verified result was ${r.exactMetric}.` : `My honest scope estimate is ${r.scope}.`} I did that by ${responsibility} and ${r.method}, and I can explain the exact steps I owned.`,
@@ -2538,6 +2672,16 @@
                 "If asked for a more exact number, do not guess. Say the selected range is your honest estimate, describe the source, and offer a verified figure later.",
             },
           };
+        }
+        function summaryScope(role) {
+          const raw = clean(role.exactMetric || role.scope);
+          return raw
+            .replace(
+              /^(served|reached|engaged|mobilized|raised|secured|generated|managed|oversaw|reconciled|administered|improved|increased|accelerated|elevated|completed|delivered|sustained|invested)\s+/i,
+              "",
+            )
+            .replace(/^over\s+/i, "")
+            .trim();
         }
         function buildHook(roles, keywords) {
           const target = val("target-role")
@@ -2554,9 +2698,7 @@
               0,
               6,
             ),
-            scopes = [
-              ...new Set(roles.map((r) => r.exactMetric || r.scope)),
-            ].slice(0, 2),
+            scopes = [...new Set(roles.map(summaryScope))].slice(0, 2),
             wins = [...new Set(roles.map((r) => r.win))].slice(0, 2),
             profile =
               state.profile === "graduate"
@@ -2569,7 +2711,72 @@
           return {
             title,
             competencies,
-            value: `${profile} candidate translating ${wins.join(" and ") || "academic and professional experience"} into defensible impact across ${scopes.join(" and ") || "student-selected scope"}. Applies ${competencies.slice(0, 4).join(", ") || "cross-functional execution"} to ${target || "high-accountability work"} with every claim tied to evidence the candidate can explain.`,
+            value: `${profile} candidate with hands-on experience in ${wins.join(" and ") || "academic and professional work"}. Applies ${competencies.slice(0, 4).join(", ") || "cross-functional execution"} to ${target || "high-accountability work"}, with documented scope including ${scopes.join(" and ") || "verified student-selected results"}.`,
+          };
+        }
+        const JOB_STOP_WORDS = new Set(
+          "and the with for from that this are you your our their will have has into about across able must preferred required role position candidate work working team teams job jobs company organization including using through who what when where how all any can may not but its they them then than also more most other such per years year experience skills skill ability responsibilities responsibility qualifications qualification duties duty opportunity equal employer apply application applications".split(
+            " ",
+          ),
+        );
+        function extractJobKeywords(description) {
+          const source = clean(description).toLowerCase();
+          if (source.length < 40) return [];
+          const known = [
+            ...skillOptions.map((item) => item.name),
+            ...Object.values(catalog).flatMap((item) => item.keywords),
+          ].filter((term) => source.includes(term.toLowerCase()));
+          const counts = {};
+          source
+            .replace(/[^a-z0-9+#.-]+/g, " ")
+            .split(/\s+/)
+            .filter(
+              (word) =>
+                word.length >= 4 &&
+                !JOB_STOP_WORDS.has(word) &&
+                !/^\d+$/.test(word),
+            )
+            .forEach((word) => (counts[word] = (counts[word] || 0) + 1));
+          const frequent = Object.entries(counts)
+            .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+            .map(([word]) => word);
+          return [...new Set([...known, ...frequent])].slice(0, 18);
+        }
+        function buildJobMatch(draft) {
+          const description = val("job-description"),
+            keywords = extractJobKeywords(description);
+          if (!keywords.length) return null;
+          const corpus = clean(
+            [
+              draft.hook.title,
+              draft.hook.value,
+              ...draft.hook.competencies,
+              ...draft.roles.flatMap((role) => [
+                role.title,
+                role.organization,
+                ...role.bullets.map((bullet) => bullet.text),
+              ]),
+              ...state.skills,
+              ...state.degrees.flatMap((degree) => [
+                degree.degree,
+                degree.coursework,
+                degree.thesis,
+              ]),
+            ].join(" "),
+          ).toLowerCase();
+          const matches = keywords.filter((term) =>
+              term
+                .toLowerCase()
+                .split(/[^a-z0-9+#]+/)
+                .filter(Boolean)
+                .every((token) => corpus.includes(token)),
+            ),
+            missing = keywords.filter((term) => !matches.includes(term));
+          return {
+            score: Math.round((matches.length / keywords.length) * 100),
+            matches,
+            missing,
+            total: keywords.length,
           };
         }
         function compile() {
@@ -2577,11 +2784,18 @@
             keywords = [
               ...new Set(selected.flatMap((r) => catalog[r.category].keywords)),
             ].slice(0, 10);
-          return {
+          const draft = {
             roles: selected.map((r, i) => ({
               category: r.category,
-              heading: `${r.exactTitle || r.role}${r.organization ? ` | ${r.organization}` : ""}`,
-              subheading: `${archetypes[r.category]} · ${r.period}`,
+              title: r.exactTitle || r.role,
+              organization: r.organization,
+              location: r.location,
+              dates:
+                r.startDate || r.endDate
+                  ? [r.startDate, r.endDate || "Present"]
+                      .filter(Boolean)
+                      .join(" – ")
+                  : r.period,
               bullets: Array.from(
                 { length: budget(selected.length, i) },
                 (_, j) => compileBullet(r, j),
@@ -2590,31 +2804,54 @@
             keywords,
             hook: buildHook(selected, keywords),
           };
+          draft.jobMatch = buildJobMatch(draft);
+          return draft;
         }
         function val(id) {
           return clean($(id).value);
         }
         function academicProof(d) {
-          return [
-            ["GPA", d.gpa],
-            ["Honors", d.honors],
-            ["Thesis / Capstone", d.thesis],
-            ["Fellowship / Award", d.fellowship],
-            ["Coursework", d.coursework],
-          ]
-            .filter(([, v]) => clean(v))
-            .map(
-              ([label, v]) =>
-                `<p class="academic-proof" contenteditable="true"><b>${label}:</b> ${strategicBold(v)}</p>`,
-            )
-            .join("");
+          const compact = [
+              ["GPA", d.gpa],
+              ["Honors", d.honors],
+              ["Fellowship / Award", d.fellowship],
+              ["Coursework", d.coursework],
+            ]
+              .filter(([, value]) => clean(value))
+              .map(([label, value]) => `<b>${label}:</b> ${escapeHtml(value)}`)
+              .join(" | "),
+            thesis = clean(d.thesis)
+              ? `<p class="academic-proof" contenteditable="true"><b>Thesis / Capstone:</b> ${escapeHtml(d.thesis)}</p>`
+              : "";
+          return `${compact ? `<p class="academic-proof" contenteditable="true">${compact}</p>` : ""}${thesis}`;
         }
         function autoScalePaper() {
           const paper = $("resume-paper");
-          paper.classList.remove("compact", "ultra", "micro");
+          paper.classList.remove(
+            "roomy",
+            "balanced",
+            "compact",
+            "ultra",
+            "micro",
+          );
           requestAnimationFrame(() => {
-            if (paper.scrollHeight > paper.clientHeight)
+            const style = getComputedStyle(paper),
+              paddingTop = parseFloat(style.paddingTop) || 0,
+              paddingBottom = parseFloat(style.paddingBottom) || 0,
+              last = paper.lastElementChild,
+              paperRect = paper.getBoundingClientRect(),
+              lastRect = last?.getBoundingClientRect(),
+              used = lastRect
+                ? lastRect.bottom - paperRect.top - paddingTop
+                : 0,
+              available = paper.clientHeight - paddingTop - paddingBottom,
+              initialFill = available ? used / available : 1;
+            if (initialFill < 0.66) paper.classList.add("roomy");
+            else if (initialFill < 0.82) paper.classList.add("balanced");
+            if (paper.scrollHeight > paper.clientHeight) {
+              paper.classList.remove("roomy", "balanced");
               paper.classList.add("compact");
+            }
             if (paper.scrollHeight > paper.clientHeight)
               paper.classList.add("ultra");
             if (paper.scrollHeight > paper.clientHeight)
@@ -2625,9 +2862,13 @@
                 ? "high compression"
                 : paper.classList.contains("compact")
                   ? "light compression"
-                  : "standard spacing";
+                  : paper.classList.contains("roomy")
+                    ? "expanded one-page spacing"
+                    : paper.classList.contains("balanced")
+                      ? "balanced one-page spacing"
+                      : "standard one-page spacing";
             $("status").textContent =
-              `One-page layout check: ${mode}. Review every line before exporting.`;
+              `One-page layout verified: ${mode}. Review every line before exporting.`;
           });
         }
         function renderResume(d) {
@@ -2648,10 +2889,10 @@
           state.defenseItems = d.roles.flatMap((r) => r.bullets);
           let defenseIndex = 0;
           $("resume-paper").innerHTML =
-            `<header><h2 contenteditable="true">${esc((val("full-name") || "YOUR NAME").toUpperCase())}</h2><p contenteditable="true">${esc(contact)}</p></header><section class="resume-hook"><p class="positioning-title" contenteditable="true">${esc(d.hook.title)}</p><p class="competency-row" contenteditable="true">${strategicBold(d.hook.competencies.join(" · "))}</p><p class="value-pitch" contenteditable="true">${strategicBold(d.hook.value)}</p></section><section><h3>EDUCATION</h3>${education}</section><section><h3>EXPERIENCE</h3>${d.roles
+            `<header><h2 contenteditable="true">${esc((val("full-name") || "YOUR NAME").toUpperCase())}</h2><p contenteditable="true">${esc(contact)}</p></header><section class="resume-hook"><p class="positioning-title" contenteditable="true">${esc(d.hook.title)}</p><p class="competency-row" contenteditable="true">${escapeHtml(d.hook.competencies.join(" · "))}</p><p class="value-pitch" contenteditable="true">${escapeHtml(d.hook.value)}</p></section><section><h3>EDUCATION</h3>${education}</section><section><h3>EXPERIENCE</h3>${d.roles
               .map(
                 (r) =>
-                  `<div class="paper-entry"><div class="paper-row"><b contenteditable="true">${esc(r.heading)}</b><span contenteditable="true">${esc(r.subheading)}</span></div><ul>${r.bullets
+                  `<div class="paper-entry"><div class="paper-row"><b contenteditable="true">${esc(r.title)}</b><span contenteditable="true">${esc(r.dates)}</span></div><div class="paper-row paper-subrow"><span contenteditable="true">${esc(r.organization)}</span><span contenteditable="true">${esc(r.location)}</span></div><ul>${r.bullets
                     .map((b) => {
                       const index = defenseIndex++;
                       return `<li class="bullet-line"><span contenteditable="true">${b.html}</span><button class="coach-button" type="button" data-defense="${index}" aria-label="Open interview coaching for this bullet">Coach me</button></li>`;
@@ -2660,7 +2901,7 @@
               )
               .join(
                 "",
-              )}</section>${state.skills.length ? `<section><h3>SKILLS &amp; CERTIFICATIONS</h3><p contenteditable="true">${strategicBold(state.skills.join(" · "))}</p></section>` : ""}`;
+              )}</section>${state.skills.length ? `<section><h3>SKILLS &amp; CERTIFICATIONS</h3><p contenteditable="true">${escapeHtml(state.skills.join(" · "))}</p></section>` : ""}`;
         }
         function renderCoverLetter(d) {
           const name = val("full-name") || "Your Name",
@@ -2668,7 +2909,7 @@
               .filter(Boolean)
               .join(" | "),
             recipient = val("target-recipient") || "Hiring Committee",
-            organization = val("target-org") || "Target Organization",
+            organization = val("target-org"),
             target = val("target-role") || "the advertised opportunity",
             degree = state.degrees.find((item) => item.degree) || {},
             topBullets = d.roles.flatMap((role) => role.bullets).slice(0, 2),
@@ -2682,7 +2923,7 @@
               .filter(Boolean)
               .join(" at ");
           $("cover-paper").innerHTML =
-            `<header><h2 contenteditable="true">${esc(name.toUpperCase())}</h2><p contenteditable="true">${esc(contact)}</p></header><div class="cover-meta"><p contenteditable="true">${esc(date)}</p><p contenteditable="true"><b>${esc(recipient)}</b><br>${esc(organization)}</p></div><div class="cover-body"><p contenteditable="true">Dear ${esc(recipient)},</p><p contenteditable="true">I am applying for ${esc(target)} with ${esc(organization)}. ${academic ? `My academic preparation in ${esc(academic)} complements` : "My academic preparation complements"} a record of measurable leadership, practical execution, and evidence-backed results.</p><p contenteditable="true">${topBullets.length ? topBullets.map((item) => escapeHtml(item.text)).join(" ") : "My experience demonstrates accountable execution and results I can explain in detail."}</p><p contenteditable="true">${degree.thesis ? `My work on “${esc(degree.thesis)}” strengthened my ability to translate research into practical recommendations. ` : ""}${skills.length ? `I would also bring demonstrated capability in ${esc(skills.join(", "))}.` : "I would bring a disciplined, evidence-centered approach to the work."}</p><p contenteditable="true">Thank you for considering my application. I welcome the opportunity to discuss how my experience can support your team’s priorities.</p><div class="signature"><p contenteditable="true">Sincerely,</p><p contenteditable="true"><b>${esc(name)}</b></p></div></div>`;
+            `<header><h2 contenteditable="true">${esc(name.toUpperCase())}</h2><p contenteditable="true">${esc(contact)}</p></header><div class="cover-meta"><p contenteditable="true">${esc(date)}</p><p contenteditable="true"><b>${esc(recipient)}</b>${organization ? `<br>${esc(organization)}` : ""}</p></div><div class="cover-body"><p contenteditable="true">Dear ${esc(recipient)},</p><p contenteditable="true">I am applying for ${esc(target)}${organization ? ` with ${esc(organization)}` : ""}. ${academic ? `My academic preparation in ${esc(academic)} complements` : "My academic preparation complements"} a record of measurable leadership, practical execution, and evidence-backed results.</p><p contenteditable="true">${topBullets.length ? topBullets.map((item) => escapeHtml(item.text)).join(" ") : "My experience demonstrates accountable execution and results I can explain in detail."}</p><p contenteditable="true">${degree.thesis ? `My work on “${esc(degree.thesis)}” strengthened my ability to translate research into practical recommendations. ` : ""}${skills.length ? `I would also bring demonstrated capability in ${esc(skills.join(", "))}.` : "I would bring a disciplined, evidence-centered approach to the work."}</p><p contenteditable="true">Thank you for considering my application. I welcome the opportunity to discuss how my experience can support your team’s priorities.</p><div class="signature"><p contenteditable="true">Sincerely,</p><p contenteditable="true"><b>${esc(name)}</b></p></div></div>`;
         }
         function buildPortfolioItems(d) {
           const firstRole = state.roles[0] || makeRole(),
@@ -2752,6 +2993,15 @@
               passed: state.roles.every((role) => clean(role.organization)),
             },
             {
+              label: "Every experience includes location and clear dates",
+              passed: state.roles.every(
+                (role) =>
+                  clean(role.location) &&
+                  clean(role.startDate) &&
+                  clean(role.endDate),
+              ),
+            },
+            {
               label: "Each experience includes truthful responsibility details",
               passed: state.roles.every(
                 (role) => role.tasks && role.tasks.length >= 2,
@@ -2776,13 +3026,17 @@
           return {
             checks,
             score: Math.round((passed / checks.length) * 100),
-            ready: passed >= 7,
+            ready: passed >= 8,
           };
         }
         function renderDefenseRail(d) {
           const audit = getAtsAudit();
+          const match = d.jobMatch,
+            matchPanel = match
+              ? `<section class="match-audit"><header><div><p class="kicker">JOB DESCRIPTION MATCH</p><strong>${match.score}%</strong></div><span>${match.matches.length}/${match.total} priority terms</span></header><p><b>Matched:</b> ${esc(match.matches.slice(0, 8).join(" · ") || "No direct terms yet")}</p><p><b>Review, if truthful:</b> ${esc(match.missing.slice(0, 8).join(" · ") || "No major gaps found")}</p><small>Use missing terms only when they accurately describe your experience. EFF does not hide keywords or recommend keyword stuffing.</small></section>`
+              : `<section class="match-audit"><header><div><p class="kicker">JOB DESCRIPTION MATCH</p><strong>—</strong></div><span>OPTIONAL</span></header><p>Paste a real job or internship description in Step 1 to compare its language with this resume.</p><small>Your posting stays in this browser and is not uploaded by this tool.</small></section>`;
           $("defense").innerHTML =
-            `<section class="ats-audit"><div class="ats-audit-head"><div><p class="kicker">EFF ATS READINESS CHECK</p><strong>${audit.score}/100</strong></div><span class="ats-audit-status ${audit.ready ? "" : "review"}">${audit.ready ? "ATS-READY" : "NEEDS REVIEW"}</span></div><div class="ats-checks">${audit.checks.map((check) => `<span>${check.passed ? "✓" : "○"} ${esc(check.label)}</span>`).join("")}</div><small>This verifies common parsing and formatting practices; it is not certification by a specific employer or ATS vendor.</small></section><p class="kicker">ANTI-IMPOSTER INTERVIEW DEFENSE</p><h3>Know how to defend every line.</h3><p>Each generated bullet now includes a “Coach me” button. Open it for the recruiter’s intent, a 20-second verbal script, and a trap-question defusal.</p><div class="keyword-box"><b>ATS LANGUAGE INCLUDED</b><p>${esc(d.keywords.join(" · "))}</p></div><div class="keyword-box"><b>VERIFIED SKILLS SELECTED</b><p>${esc(state.skills.slice(0, 8).join(" · ") || "Choose skills in Step 4")}</p></div>`;
+            `${matchPanel}<section class="ats-audit"><div class="ats-audit-head"><div><p class="kicker">EFF ATS READINESS CHECK</p><strong>${audit.score}/100</strong></div><span class="ats-audit-status ${audit.ready ? "" : "review"}">${audit.ready ? "ATS-READY" : "NEEDS REVIEW"}</span></div><div class="ats-checks">${audit.checks.map((check) => `<span>${check.passed ? "✓" : "○"} ${esc(check.label)}</span>`).join("")}</div><small>This verifies common parsing and formatting practices; it is not certification by a specific employer or ATS vendor.</small></section><p class="kicker">ANTI-IMPOSTER INTERVIEW DEFENSE</p><h3>Know how to defend every line.</h3><p>Each generated bullet now includes a “Coach me” button. Open it for the recruiter’s intent, a 20-second verbal script, and a trap-question defusal.</p><div class="keyword-box"><b>ATS LANGUAGE INCLUDED</b><p>${esc(d.keywords.join(" · "))}</p></div><div class="keyword-box"><b>VERIFIED SKILLS SELECTED</b><p>${esc(state.skills.slice(0, 8).join(" · ") || "Choose skills in Step 4")}</p></div>`;
         }
         function renderOutput(d) {
           renderResume(d);
@@ -2792,6 +3046,19 @@
           $("output").classList.add("visible");
           setDocument(state.activeDocument);
           autoScalePaper();
+        }
+        function exportBaseName(documentName = state.activeDocument) {
+          const person = (val("full-name") || "First Last")
+              .replace(/[\\/:*?"<>|]+/g, "")
+              .replace(/\s+/g, " ")
+              .trim(),
+            suffix =
+              documentName === "resume"
+                ? "Resume"
+                : documentName === "cover"
+                  ? "Cover Letter"
+                  : "Portfolio";
+          return `${person} ${suffix}`;
         }
         function setDocument(documentName) {
           state.activeDocument = documentName;
@@ -2809,6 +3076,8 @@
             tab.classList.toggle("active", active);
             tab.setAttribute("aria-selected", String(active));
           });
+          $("export-filename").textContent =
+            `PDF filename: ${exportBaseName(documentName)}.pdf`;
           if (documentName === "resume") autoScalePaper();
         }
         function openDefense(index) {
@@ -2854,6 +3123,14 @@
             missing.push(
               `the employer or organization for experience ${unnamedExperience + 1}`,
             );
+          const customRoleWithoutTitle = state.roles.findIndex(
+            (role) =>
+              role.role === "My role is not listed" && !clean(role.exactTitle),
+          );
+          if (customRoleWithoutTitle >= 0)
+            missing.push(
+              `your real title for experience ${customRoleWithoutTitle + 1}`,
+            );
           if (missing.length) {
             $("status").textContent =
               `Add ${missing.join(", ")} before building your career suite.`;
@@ -2891,12 +3168,17 @@
               "May 2027",
               "Student affairs internship",
             ],
+            jobDescription:
+              "Support student engagement programs, coordinate campus events, manage outreach communications, track participation data, and collaborate with university departments. Strong public speaking, event planning, Google Workspace, and stakeholder engagement skills preferred.",
             roles: [
               {
                 category: "campus",
                 role: "Vice President",
                 organization: "Psychology Student Association",
                 exactTitle: "Vice President",
+                location: "Atlanta, GA",
+                startDate: "August 2025",
+                endDate: "Present",
                 win: "member engagement",
                 scope: "51-150 people",
                 method: "coordinating a cross-functional student team",
@@ -2907,6 +3189,9 @@
                 role: "Volunteer Lead",
                 organization: "Atlanta Community Food Collaborative",
                 exactTitle: "Volunteer Team Lead",
+                location: "Atlanta, GA",
+                startDate: "August 2025",
+                endDate: "May 2026",
                 win: "resource distribution",
                 scope: "51-100 hours",
                 method: "organizing field logistics",
@@ -2929,12 +3214,17 @@
               "December 2026",
               "Operations analyst role",
             ],
+            jobDescription:
+              "The Operations Analyst will analyze operational performance, maintain Excel reports, improve workflows, coordinate cross-functional priorities, monitor inventory and service metrics, and communicate recommendations to stakeholders.",
             roles: [
               {
                 category: "paid",
                 role: "Shift Lead",
                 organization: "Campus Coffee Company",
                 exactTitle: "Shift Lead",
+                location: "Charlotte, NC",
+                startDate: "August 2024",
+                endDate: "Present",
                 win: "daily operations",
                 scope: "11-50 people",
                 exactMetric: "Served 120+ customers per shift",
@@ -2952,8 +3242,16 @@
                 role: "Treasurer",
                 organization: "Future Business Leaders Association",
                 exactTitle: "Treasurer",
+                location: "Charlotte, NC",
+                startDate: "August 2025",
+                endDate: "May 2026",
                 win: "budget stewardship",
                 scope: "$1,000-$4,999",
+                tasks: [
+                  "managing a budget, dues, or reimbursements",
+                  "tracking attendance, deadlines, or compliance",
+                  "presenting updates to members or administrators",
+                ],
                 method: "tracking milestones and ownership",
                 period: "One academic year",
               },
@@ -2974,12 +3272,17 @@
               "May 2027",
               "Policy research fellowship",
             ],
+            jobDescription:
+              "Conduct policy research, analyze survey data with SPSS and Excel, synthesize literature, produce briefing papers, present findings, and collaborate with faculty and community stakeholders.",
             roles: [
               {
                 category: "research",
                 role: "Graduate Researcher",
                 organization: "FSU Policy Research Lab",
                 exactTitle: "Graduate Researcher",
+                location: "Tallahassee, FL",
+                startDate: "August 2025",
+                endDate: "Present",
                 win: "data analysis",
                 scope: "151-500 people",
                 method: "analyzing data in Excel or statistical software",
@@ -2990,6 +3293,9 @@
                 role: "Teaching Assistant",
                 organization: "Florida State University",
                 exactTitle: "Graduate Teaching Assistant",
+                location: "Tallahassee, FL",
+                startDate: "August 2025",
+                endDate: "May 2026",
                 win: "academic engagement",
                 scope: "51-150 people",
                 method: "facilitating small-group learning",
@@ -3017,12 +3323,17 @@
               "May 2028",
               "Community leadership fellowship",
             ],
+            jobDescription:
+              "Lead community outreach, coordinate volunteers, build nonprofit partnerships, plan service programs, track impact metrics, create social media communications, and present updates to community stakeholders.",
             roles: [
               {
                 category: "service",
                 role: "Community Outreach Coordinator",
                 organization: "Norfolk Student Resource Coalition",
                 exactTitle: "Community Outreach Coordinator",
+                location: "Norfolk, VA",
+                startDate: "August 2025",
+                endDate: "May 2026",
                 win: "program access",
                 scope: "151-500 people",
                 method: "partnering with local organizations",
@@ -3033,6 +3344,9 @@
                 role: "Campus Ambassador",
                 organization: "Student Success Office",
                 exactTitle: "Campus Ambassador",
+                location: "Norfolk, VA",
+                startDate: "January 2026",
+                endDate: "Present",
                 win: "campus partnerships",
                 scope: "51-150 people",
                 method: "partnering with campus departments",
@@ -3099,6 +3413,7 @@
           $("target-role").value = p.values[8];
           $("target-org").value = "";
           $("target-recipient").value = "Hiring Committee";
+          $("job-description").value = p.jobDescription || "";
           state.degrees = [
             makeDegree(
               p.values[5],
@@ -3199,11 +3514,11 @@
               state.skills = state.skills.filter(
                 (skill) => skill !== t.dataset.skill,
               );
-            } else if (state.skills.length < 12) {
+            } else if (state.skills.length < 8) {
               state.skills = [...state.skills, t.dataset.skill];
             } else {
               $("status").textContent =
-                "Choose up to 12 strongest, interview-ready skills so the resume stays on one page.";
+                "Choose up to 8 strongest, interview-ready skills so the resume stays readable and on one page.";
             }
             renderSkills();
             refreshSuite();
@@ -3257,7 +3572,11 @@
         });
         document.addEventListener("input", (e) => {
           const t = e.target;
-          if (!(t instanceof HTMLInputElement)) return;
+          if (
+            !(t instanceof HTMLInputElement) &&
+            !(t instanceof HTMLTextAreaElement)
+          )
+            return;
           startTimer();
           if (t.id === "skill-search") {
             state.skillQuery = t.value;
@@ -3281,7 +3600,7 @@
           $("portfolio-modal").hidden = true;
         });
         document
-          .querySelectorAll("input")
+          .querySelectorAll("input, textarea")
           .forEach((i) =>
             i.addEventListener("focus", startTimer, { once: true }),
           );
@@ -3322,35 +3641,40 @@
         $("resume-paper").addEventListener("input", autoScalePaper);
         $("copy").addEventListener("click", async () => {
           const pane = $(
-            state.activeDocument === "resume"
-              ? "resume-paper"
-              : state.activeDocument === "cover"
-                ? "cover-paper"
-                : "portfolio-grid",
-          );
+              state.activeDocument === "resume"
+                ? "resume-paper"
+                : state.activeDocument === "cover"
+                  ? "cover-paper"
+                  : "portfolio-grid",
+            ),
+            copy = pane.cloneNode(true);
+          copy
+            .querySelectorAll(".coach-button")
+            .forEach((button) => button.remove());
           await navigator.clipboard.writeText(
-            pane.innerText.replace(/\n{3,}/g, "\n\n"),
+            copy.innerText.replace(/\n{3,}/g, "\n\n"),
           );
           $("status").textContent =
             `${state.activeDocument === "resume" ? "ATS resume" : state.activeDocument === "cover" ? "Cover letter" : "Portfolio summary"} copied as plain text.`;
         });
         $("print").addEventListener("click", () => {
           if (state.activeDocument === "resume") autoScalePaper();
+          const previousTitle = document.title;
+          document.title = exportBaseName();
           document.body.classList.add(
             "printing",
             `${state.activeDocument}-print`,
           );
           window.print();
-          setTimeout(
-            () =>
-              document.body.classList.remove(
-                "printing",
-                "resume-print",
-                "cover-print",
-                "portfolio-print",
-              ),
-            500,
-          );
+          setTimeout(() => {
+            document.title = previousTitle;
+            document.body.classList.remove(
+              "printing",
+              "resume-print",
+              "cover-print",
+              "portfolio-print",
+            );
+          }, 1000);
         });
         state.degrees = [makeDegree()];
         state.roles = [makeRole()];

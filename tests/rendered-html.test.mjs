@@ -179,7 +179,13 @@ test("career engine synchronizes resume, cover letter, portfolio, and verified s
     assert.match(source, new RegExp(`"?${category}"?:`));
   }
   assert.match(source, /0\.4in/);
-  assert.match(source, /Choose up to 12 strongest/);
+  assert.match(source, /Choose up to 8 strongest/);
+  assert.match(source, /Paste the job or internship description/);
+  assert.match(source, /function buildJobMatch/);
+  assert.match(source, /JOB DESCRIPTION MATCH/);
+  assert.match(source, /function exportBaseName/);
+  assert.match(source, /PDF filename:/);
+  assert.match(source, /\.coach-button\s*\{\s*display: none !important/);
   assert.match(source, /Your information stays in this browser/);
   assert.doesNotMatch(source, /cdn\.tailwindcss|unpkg\.com|fonts\.googleapis/);
 });
@@ -191,8 +197,13 @@ test("career intake captures named experience details and supports high school a
   );
   assert.match(source, /Employer or internship organization/);
   assert.match(source, /Your exact job or internship title/);
+  assert.match(source, /Your real role or title/);
+  assert.match(source, /My role is not listed/);
   assert.match(source, /What did you actually do\? Choose up to four/);
   assert.match(source, /data-role-field="organization"/);
+  assert.match(source, /data-role-field="location"/);
+  assert.match(source, /data-role-field="startDate"/);
+  assert.match(source, /data-role-field="endDate"/);
   assert.match(source, /data-action="task"/);
   assert.match(source, /High school \/ GED/);
   assert.match(source, /\+ Add high school/);
@@ -205,6 +216,8 @@ test("career intake captures named experience details and supports high school a
     source,
     /not certification by a specific employer or ATS vendor/,
   );
+  assert.match(source, /font-weight: 700/);
+  assert.match(source, /expanded one-page spacing/);
 });
 
 test("recommendation tool issues an attributed EFF letter with consent and disclosure", async () => {
