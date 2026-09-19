@@ -33,7 +33,7 @@ const downloads = [
   { type: "UPLOAD + DECODE", title: "Award Letter & Balance Decoder", text: "Upload an aid letter, add your bill, wages, work hours, savings, and support, then see what is still uncovered.", href: "/tools?tool=award", color: "purple", pages: "featured calculator" },
   { type: "COMPARE + REQUEST", title: "Financial Aid Counter-Offer Engine", text: "Compare competing offers, check a federal net-price benchmark, and draft a respectful institutional-aid reconsideration request.", href: "/tools?tool=counteroffer", color: "pink", pages: "new interactive engine" },
   { type: "60-SECOND TOOL", title: "Official EFF Recommendation Letter", text: "Submit truthful facts and save a personalized Esther Funds Foundation letter with EFF branding and Shayna Vincent’s authorized signature.", href: "/tools?tool=recommendation", color: "purple", pages: "official letter workflow" },
-  { type: "BUILD + DOWNLOAD", title: "EFF One-Sheet Résumé Engine", text: "Turn work, service, coursework, and projects into an editable, one-page résumé PDF without invented claims or a paywall.", href: "/tools?tool=resume", color: "purple", pages: "new career resource" },
+  { type: "BUILD + DOWNLOAD", title: "EFF Builds Your Résumé", text: "Tap through your real experience and generate an editable, ATS-ready one-page résumé with interview-defense coaching.", href: "/resume", color: "purple", pages: "30-second career engine" },
   { type: "BUILD YOUR PROFILE", title: "Career Launchpad Profile", text: "Organize your story, projects, skills, and reference details into a private, editable professional profile.", href: "/tools?tool=career-profile", color: "lavender", pages: "new career resource" },
   { type: "WRITE YOUR STORY", title: "Scholarship Essay Builder", text: "Answer five quick prompts and instantly get a scholarship-ready STORY outline.", href: "/tools?tool=essay", color: "yellow", pages: "interactive" },
   { type: "STAY ORGANIZED", title: "Scholarship Action Center", text: "Turn one deadline and its requirements into a complete application checklist.", href: "/tools?tool=scholarship", color: "pink", pages: "interactive" },
@@ -109,6 +109,7 @@ export default function Home() {
         </a>
         <nav aria-label="Main navigation">
           <a href="#find-help">Find help</a>
+          <Link href="/resume">Résumé + letters</Link>
           <a href="#action-paths">7 pathways</a>
           <Link href="/ambassadors">Ambassadors</Link>
           <Link href="/workshop-request">Workshop request</Link>
@@ -142,6 +143,28 @@ export default function Home() {
             <span>C</span><b>Care for your mental health</b>
             <span>H</span><b>Hold on</b>
           </div>
+        </div>
+      </section>
+
+      <section className="career-studio-feature" aria-labelledby="career-studio-title">
+        <div className="career-studio-intro">
+          <p className="kicker">THE EFF CAREER STUDIO</p>
+          <h2 id="career-studio-title">Two application barriers.<br />Two free EFF tools.</h2>
+          <p>Build the résumé, secure the letter, and move forward with documents that sound polished while staying completely truthful.</p>
+        </div>
+        <div className="career-studio-cards">
+          <Link href="/resume" className="career-studio-card resume-card">
+            <span>01 · BUILD + DOWNLOAD</span>
+            <h3>EFF Builds Your Résumé</h3>
+            <p>A tap-first, ATS-ready one-page résumé with corporate or civic language and an interview-defense guide for every bullet.</p>
+            <b>Start the 30-second builder →</b>
+          </Link>
+          <Link href="/tools?tool=recommendation" className="career-studio-card letter-card">
+            <span>02 · OFFICIAL EFF LETTER</span>
+            <h3>60-Second Recommendation Letter</h3>
+            <p>Generate a scholarship-purpose EFF recommendation letter using truthful details, authorized branding, and a downloadable PDF.</p>
+            <b>Build my recommendation letter →</b>
+          </Link>
         </div>
       </section>
 
