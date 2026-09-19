@@ -2,11 +2,13 @@
 /* eslint-disable @next/next/no-html-link-for-pages */
 
 import { useEffect, useMemo, useState } from "react";
+import RetentionTerminal, { type RetentionCategory } from "./RetentionTerminal";
 
-type ModuleId = "triage" | "sap" | "grade" | "fees" | "employer" | "transcript" | "syllabus" | "degree" | "reverse" | "housing" | "grievance" | "hold" | "receipt";
+type ModuleId = "triage" | "tuition" | "sap" | "grade" | "fees" | "employer" | "transcript" | "syllabus" | "degree" | "reverse" | "housing" | "grievance" | "hold" | "receipt";
 
 const modules: { id: ModuleId; code: string; title: string; desc: string; tone: string }[] = [
   { id:"triage", code:"START HERE", title:"What Do I Do First?", desc:"Choose the crisis in front of you and get the safest next door.", tone:"purple" },
+  { id:"tuition", code:"ALL RETENTION BARRIERS", title:"College Retention Emergency Terminal", desc:"Tuition, aid, housing, transportation, essentials, courseware, and whole-student support.", tone:"yellow" },
   { id:"sap", code:"KEEP YOUR AID", title:"SAP Appeal Builder", desc:"Organize circumstances, evidence, and a realistic academic recovery plan.", tone:"yellow" },
   { id:"grade", code:"DO THE MATH", title:"Grade Rescue Calculator", desc:"See the average you need on remaining work—without panic math.", tone:"blue" },
   { id:"fees", code:"AUDIT THE BILL", title:"Bursar Fee Review", desc:"Scan a text-based bill for charges worth questioning or verifying.", tone:"pink" },
@@ -23,15 +25,17 @@ const modules: { id: ModuleId; code: string; title: string; desc: string; tone: 
 
 export default function DefenseSuite() {
   const [active, setActive] = useState<ModuleId>("triage");
+  const [retentionCategory, setRetentionCategory] = useState<RetentionCategory>("tuition");
   useEffect(() => {
     const requested = new URLSearchParams(window.location.search).get("tool") as ModuleId | null;
     if (requested && modules.some((module) => module.id === requested)) queueMicrotask(() => setActive(requested));
   }, []);
   const choose = (id: ModuleId) => { setActive(id); window.history.replaceState({}, "", `/defense?tool=${id}`); window.scrollTo({ top: 700, behavior:"smooth" }); };
+  const openRetention = (category: RetentionCategory) => { setRetentionCategory(category); setActive("tuition"); window.history.replaceState({}, "", `/defense?tool=tuition&category=${category}`); window.scrollTo({ top: 700, behavior:"smooth" }); };
 
   return <>
     <section className="defense-hero">
-      <div><p className="defense-kicker">THE SYSTEM BETWEEN “I’M STUCK” AND “I KNOW MY NEXT MOVE”</p><h1>Protect your aid.<br/><em>Protect your path.</em></h1><p>Thirteen focused tools for the financial, academic, administrative, and basic-needs barriers that push students out of college.</p><div><button onClick={() => choose("triage")}>Tell us what is happening →</button><a href="https://portal.estherfundsfoundation.org/resources/student-help">I need a real person</a></div></div>
+      <div><p className="defense-kicker">THE SYSTEM BETWEEN “I’M STUCK” AND “I KNOW MY NEXT MOVE”</p><h1>Protect your aid.<br/><em>Protect your path.</em></h1><p>Focused tools for the financial, academic, administrative, and basic-needs barriers that push students out of college.</p><div><button onClick={() => choose("triage")}>Tell us what is happening →</button><a href="https://portal.estherfundsfoundation.org/resources/student-help">I need a real person</a></div></div>
       <aside><span>PRIVATE BY DEFAULT</span><strong>No account needed.</strong><p>Drafts and calculations stay in your browser unless you choose to open a secure EFF help case.</p><small>Never upload an SSN, password, full bank number, or unredacted ID.</small></aside>
     </section>
     <section className="defense-principles"><span><b>01</b> Find the exact barrier</span><span><b>02</b> Separate facts from fear</span><span><b>03</b> Build the document</span><span><b>04</b> Escalate to the right office</span></section>
@@ -39,7 +43,8 @@ export default function DefenseSuite() {
       <header><p className="defense-kicker">CHOOSE YOUR ENGINE</p><h2>One problem. One clear workflow.</h2><p>These tools prepare decisions and requests. Schools, employers, courts, funders, and EFF staff make their own final determinations.</p></header>
       <div className="defense-module-grid">{modules.map((module) => <button key={module.id} className={`${module.tone} ${active === module.id ? "active" : ""}`} onClick={() => choose(module.id)}><small>{module.code}</small><strong>{module.title}</strong><span>{module.desc}</span></button>)}</div>
       <section className="defense-workspace">
-        {active === "triage" && <Triage choose={choose}/>}
+        {active === "triage" && <Triage choose={choose} openRetention={openRetention}/>}
+        {active === "tuition" && <RetentionTerminal initialCategory={retentionCategory}/>}
         {active === "sap" && <SapAppeal/>}
         {active === "grade" && <GradeRescue/>}
         {active === "fees" && <FeeReview/>}
@@ -75,16 +80,24 @@ function Draft({ title, text, note="Review every fact, follow the recipient’s 
   return <section className="defense-draft"><div><small>READY TO REVIEW</small><h3>{title}</h3><button onClick={copy}>{copied?"Copied ✓":"Copy draft"}</button></div><pre>{text}</pre><p>{note}</p></section>;
 }
 
-function Triage({ choose }: { choose:(id:ModuleId)=>void }) {
+function Triage({ choose, openRetention }: { choose:(id:ModuleId)=>void; openRetention:(category:RetentionCategory)=>void }) {
   const paths:[string,string,string,ModuleId | "external",string][]=[
-    ["Tuition, bill, or hold","A balance, unexpected charge, aid gap, or registration block.","money","hold","Open money defense"],
-    ["Financial aid eligibility","SAP warning, suspension, changed income, or aid appeal.","aid","sap","Open SAP support"],
+    ["Tuition, bill, or hold","A balance, unexpected charge, aid gap, course-drop warning, or registration block.","money","tuition","Open enrollment defense"],
+    ["Financial aid eligibility","Unposted aid, PLUS denial, income change, verification, or office delays.","aid","tuition","Open regulatory aid defense"],
     ["Failing or falling behind","A grade feels impossible or several deadlines hit at once.","academic","grade","Calculate the next move"],
-    ["Food, housing, or transportation","An essential need is making enrollment unstable.","needs","external","Open the National Help Desk"],
+    ["Food, housing, or transportation","An essential need is making enrollment unstable.","needs","tuition","Open immediate-needs defense"],
     ["It’s late and I’m overwhelmed","I need to slow the panic down before I decide anything.","spirit","external","Enter Selah"],
   ];
   const go=(kind:string,id:ModuleId|"external")=>{
-    if(id!=="external") return choose(id);
+    if(id!=="external") {
+      if (id === "tuition") {
+        const category: RetentionCategory = kind === "aid" ? "financial_aid" : kind === "needs" ? "essentials" : "tuition";
+        openRetention(category);
+        return;
+      }
+      choose(id);
+      return;
+    }
     window.location.assign(kind==="spirit"?"https://portal.estherfundsfoundation.org/resources/selah":"https://portal.estherfundsfoundation.org/resources/student-help");
   };
   return <Panel eyebrow="INTAKE · 30 SECONDS" title="What is putting school at risk right now?" intro="Choose the most urgent barrier. If your immediate safety is at risk, call 911. If you are in emotional crisis or thinking about suicide, call or text 988."><div className="triage-grid">{paths.map(([title,desc,kind,id,cta])=><button key={title} onClick={()=>go(kind,id)}><span>{kind.toUpperCase()}</span><strong>{title}</strong><p>{desc}</p><b>{cta} →</b></button>)}</div><div className="defense-links"><a href="tel:988">Call or text 988</a><a href="https://www.211.org/">Find local help through 211</a><a href="https://mentor.estherfundsfoundation.org/">Find an EFF mentor</a></div></Panel>;

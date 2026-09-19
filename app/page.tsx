@@ -4,7 +4,7 @@ import Link from "next/link";
 const urgentHelp = [
   { title: "Food & essentials", text: "Find local food, SNAP, campus pantry, and basic-needs support.", href: "https://portal.estherfundsfoundation.org/resources#basic-needs", tone: "yellow" },
   { title: "Housing & utilities", text: "Start with local assistance, campus housing support, and 211.", href: "https://portal.estherfundsfoundation.org/resources", tone: "pink" },
-  { title: "Tuition balance", text: "Build an action plan for a balance, hold, appeal, or emergency grant.", href: "https://portal.estherfundsfoundation.org/resources", tone: "blue" },
+  { title: "College retention emergency terminal", text: "Defend tuition, aid, housing, transportation, essentials, courseware, and the whole student.", href: "/defense?tool=tuition", tone: "blue" },
   { title: "Mental health", text: "Call or text 988 in a crisis. Find ongoing support and campus care.", href: "https://988lifeline.org/", tone: "lavender" },
 ];
 
@@ -28,6 +28,7 @@ const actionJourneys = [
 ];
 
 const downloads = [
+  { type: "STOP THE DROP", title: "College Retention Emergency Terminal", text: "Diagnose urgent barriers, build formal petitions, prepare evidence, and escalate to the right campus or public authority.", href: "/defense?tool=tuition", color: "yellow", pages: "7 guided defense areas" },
   { type: "13 STUDENT DEFENSE ENGINES", title: "EFF Student Defense Suite", text: "Protect your aid, grades, transcript, housing, degree path, and registration with one focused next-step system.", href: "/defense?tool=triage", color: "purple", pages: "complete defense suite" },
   { type: "UPLOAD + DECODE", title: "Award Letter & Balance Decoder", text: "Upload an aid letter, add your bill, wages, work hours, savings, and support, then see what is still uncovered.", href: "/tools?tool=award", color: "purple", pages: "featured calculator" },
   { type: "COMPARE + REQUEST", title: "Financial Aid Counter-Offer Engine", text: "Compare competing offers, check a federal net-price benchmark, and draft a respectful institutional-aid reconsideration request.", href: "/tools?tool=counteroffer", color: "pink", pages: "new interactive engine" },
