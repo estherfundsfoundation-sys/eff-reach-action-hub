@@ -100,7 +100,8 @@
         display: grid;
         grid-template-columns: minmax(0, 1.12fr) minmax(340px, 0.88fr);
         min-height: 700px;
-        background: radial-gradient(
+        background:
+          radial-gradient(
             circle at 84% 12%,
             rgba(165, 113, 255, 0.38),
             transparent 25%
@@ -418,6 +419,26 @@
         text-decoration: underline;
         cursor: pointer;
       }
+      .role-facts {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 13px;
+        margin-bottom: 20px;
+        padding: 16px;
+        border: 1px solid rgba(91, 33, 182, 0.13);
+        border-radius: 16px;
+        background: white;
+      }
+      .role-facts .wide {
+        grid-column: 1 / -1;
+      }
+      .choice-note {
+        display: block;
+        margin-top: 5px;
+        color: var(--muted);
+        font-size: 12px;
+        line-height: 1.45;
+      }
       .add-role {
         padding: 11px 16px;
         border: 1px dashed var(--purple);
@@ -427,6 +448,58 @@
         font-size: 11px;
         font-weight: 900;
         cursor: pointer;
+      }
+      .education-actions {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+        gap: 8px;
+      }
+      .ats-audit {
+        margin-bottom: 18px;
+        padding: 18px;
+        border: 1px solid rgba(91, 33, 182, 0.18);
+        border-radius: 18px;
+        background: linear-gradient(145deg, #fff, #f7f1ff);
+      }
+      .ats-audit-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+      }
+      .ats-audit-head strong {
+        color: var(--purple);
+        font: 700 24px var(--serif);
+      }
+      .ats-audit-status {
+        padding: 6px 9px;
+        border-radius: 999px;
+        background: #e8f8ef;
+        color: #166534;
+        font-size: 9px;
+        font-weight: 900;
+        letter-spacing: 0.08em;
+      }
+      .ats-audit-status.review {
+        background: #fff1d6;
+        color: #854d0e;
+      }
+      .ats-checks {
+        display: grid;
+        gap: 7px;
+        margin: 13px 0;
+      }
+      .ats-checks span {
+        color: #41364a;
+        font-size: 11px;
+        line-height: 1.4;
+      }
+      .ats-audit small {
+        display: block;
+        color: var(--muted);
+        font-size: 10px;
+        line-height: 1.45;
       }
       .skill-grid {
         display: flex;
@@ -644,7 +717,8 @@
         gap: 34px;
         align-items: end;
         padding: clamp(70px, 9vw, 122px) clamp(24px, 6vw, 94px);
-        background: radial-gradient(
+        background:
+          radial-gradient(
             circle at 90% 10%,
             rgba(255, 255, 255, 0.16),
             transparent 24%
@@ -738,6 +812,12 @@
         }
         .text-grid {
           grid-template-columns: 1fr;
+        }
+        .role-facts {
+          grid-template-columns: 1fr;
+        }
+        .role-facts .wide {
+          grid-column: auto;
         }
         .attestation {
           grid-template-columns: 1fr;
@@ -1515,9 +1595,9 @@
             <div class="step-copy">
               <h3>Build your academic record</h3>
               <p>
-                Add undergraduate and graduate degrees separately. Use only
-                verified GPA, honors, thesis, fellowship, and coursework
-                details.
+                Add high school, undergraduate, graduate, or certificate
+                education separately. This works for current high school
+                students, college freshmen, and early-career applicants.
               </p>
             </div>
             <div class="step-content">
@@ -1552,9 +1632,14 @@
                       field blank if it does not apply.
                     </p>
                   </div>
-                  <button class="add-role" id="add-degree" type="button">
-                    + Add another degree
-                  </button>
+                  <div class="education-actions">
+                    <button class="add-role" id="add-high-school" type="button">
+                      + Add high school
+                    </button>
+                    <button class="add-role" id="add-degree" type="button">
+                      + Add college degree
+                    </button>
+                  </div>
                 </header>
                 <div id="degrees" class="degree-stack"></div>
               </section>
@@ -1563,10 +1648,11 @@
           <section class="step">
             <div class="step-number">03</div>
             <div class="step-copy">
-              <h3>Tap what you actually did</h3>
+              <h3>Name it. Then tap what you actually did.</h3>
               <p>
-                No experience essay. Choose the closest truthful match, then
-                refine the generated resume.
+                Tell us where you worked or served, your real title, and every
+                responsibility you truly performed. No experience essay—we turn
+                your selections into separate, defensible resume bullets.
               </p>
             </div>
             <div class="step-content">
@@ -1808,6 +1894,10 @@
         const catalog = {
           paid: {
             label: "Job or internship",
+            organizationLabel: "Employer or internship organization",
+            organizationPlaceholder: "Example: Target, Deloitte, or City Hall",
+            titleLabel: "Your exact job or internship title",
+            titlePlaceholder: "Example: Marketing Intern or Shift Lead",
             roles: [
               "Team Member",
               "Shift Lead",
@@ -1823,6 +1913,20 @@
               "inventory accuracy",
               "sales support",
               "process improvement",
+            ],
+            tasks: [
+              "processing customer orders or payments",
+              "opening or closing the workplace",
+              "resolving customer questions or complaints",
+              "training or onboarding team members",
+              "tracking inventory and restocking supplies",
+              "coordinating schedules, shifts, or handoffs",
+              "entering data or maintaining records",
+              "preparing reports, presentations, or correspondence",
+              "supporting a defined internship project",
+              "communicating with clients, vendors, or departments",
+              "maintaining safety, quality, or compliance standards",
+              "improving a workflow or standard procedure",
             ],
             methods: [
               "coordinating shift priorities",
@@ -1840,6 +1944,10 @@
           },
           campus: {
             label: "Campus leadership",
+            organizationLabel: "Chapter, club, or campus organization",
+            organizationPlaceholder: "Example: Student Government Association",
+            titleLabel: "Your exact leadership title",
+            titlePlaceholder: "Example: Treasurer or Campus Ambassador",
             roles: [
               "President",
               "Vice President",
@@ -1855,6 +1963,20 @@
               "budget stewardship",
               "recruitment",
               "campus partnerships",
+            ],
+            tasks: [
+              "planning meetings, programs, or campus events",
+              "recruiting and onboarding members",
+              "managing a budget, dues, or reimbursements",
+              "leading an executive board or committee",
+              "building partnerships with campus departments",
+              "creating social media or recruitment campaigns",
+              "tracking attendance, deadlines, or compliance",
+              "presenting updates to members or administrators",
+              "writing agendas, minutes, bylaws, or reports",
+              "fundraising or securing sponsorships",
+              "resolving member concerns or team conflict",
+              "transitioning records to the next leadership team",
             ],
             methods: [
               "coordinating a cross-functional student team",
@@ -1872,6 +1994,10 @@
           },
           service: {
             label: "Volunteer service",
+            organizationLabel: "Nonprofit, ministry, or community partner",
+            organizationPlaceholder: "Example: Local food bank or EFF chapter",
+            titleLabel: "Your exact volunteer title",
+            titlePlaceholder: "Example: Volunteer Lead",
             roles: [
               "Volunteer",
               "Volunteer Lead",
@@ -1887,6 +2013,20 @@
               "service delivery",
               "donor engagement",
               "program access",
+            ],
+            tasks: [
+              "distributing food, supplies, or emergency resources",
+              "coordinating volunteer assignments and schedules",
+              "conducting community or donor outreach",
+              "registering participants and documenting service",
+              "planning service days or fundraising events",
+              "connecting community members to resources",
+              "tracking service hours, inventory, or outcomes",
+              "training new volunteers on procedures",
+              "building partnerships with local organizations",
+              "collecting donations or in-kind contributions",
+              "supporting youth, families, or college students",
+              "maintaining safe and respectful service operations",
             ],
             methods: [
               "organizing field logistics",
@@ -1904,6 +2044,10 @@
           },
           research: {
             label: "Research or capstone",
+            organizationLabel: "Lab, course, department, or project sponsor",
+            organizationPlaceholder: "Example: University Policy Research Lab",
+            titleLabel: "Your exact research or project title",
+            titlePlaceholder: "Example: Graduate Researcher",
             roles: [
               "Student Researcher",
               "Graduate Researcher",
@@ -1919,6 +2063,20 @@
               "survey collection",
               "policy evaluation",
               "technical documentation",
+            ],
+            tasks: [
+              "reviewing and synthesizing scholarly literature",
+              "designing surveys, interviews, or research protocols",
+              "collecting and cleaning qualitative or quantitative data",
+              "analyzing data with Excel, SPSS, R, or Python",
+              "building charts, dashboards, or data visualizations",
+              "documenting methods, limitations, and findings",
+              "coordinating tasks across a research team",
+              "presenting findings to faculty or community partners",
+              "writing a capstone, thesis, report, or policy brief",
+              "maintaining participant privacy or research compliance",
+              "testing a prototype, intervention, or recommendation",
+              "translating evidence into practical recommendations",
             ],
             methods: [
               "applying a structured research methodology",
@@ -1936,6 +2094,10 @@
           },
           peer: {
             label: "Teaching or peer support",
+            organizationLabel: "School, program, residence hall, or department",
+            organizationPlaceholder: "Example: First-Year Success Center",
+            titleLabel: "Your exact teaching or support title",
+            titlePlaceholder: "Example: Peer Mentor or Tutor",
             roles: [
               "Peer Mentor",
               "Tutor",
@@ -1951,6 +2113,20 @@
               "resource referrals",
               "learning progress",
               "community belonging",
+            ],
+            tasks: [
+              "tutoring students individually or in small groups",
+              "leading workshops, lessons, or study sessions",
+              "onboarding new students or program participants",
+              "connecting students to academic or basic-needs resources",
+              "tracking attendance, follow-ups, or learning progress",
+              "responding to student questions and concerns",
+              "creating lesson materials, guides, or presentations",
+              "supporting residence hall or classroom operations",
+              "de-escalating conflicts and documenting concerns",
+              "coordinating orientation or community-building events",
+              "adapting explanations to different learning needs",
+              "communicating updates to faculty or program staff",
             ],
             methods: [
               "providing individualized guidance",
@@ -1968,6 +2144,10 @@
           },
           creative: {
             label: "Technical or creative project",
+            organizationLabel: "Client, course, team, or project owner",
+            organizationPlaceholder: "Example: Campus Tech Club",
+            titleLabel: "Your exact project role",
+            titlePlaceholder: "Example: Front-End Developer or Designer",
             roles: [
               "Project Lead",
               "Designer",
@@ -1983,6 +2163,20 @@
               "content production",
               "workflow automation",
               "data visualization",
+            ],
+            tasks: [
+              "designing graphics, interfaces, or branded materials",
+              "building or updating a website or digital product",
+              "writing and scheduling digital content",
+              "collecting user, client, or stakeholder requirements",
+              "testing accessibility, usability, or quality",
+              "editing video, photography, audio, or presentations",
+              "analyzing campaign, website, or audience performance",
+              "automating a repetitive process or workflow",
+              "presenting concepts and incorporating feedback",
+              "documenting technical or creative production steps",
+              "coordinating deadlines across a project team",
+              "delivering final files, reports, or prototypes",
             ],
             methods: [
               "using iterative design and testing",
@@ -2023,6 +2217,13 @@
           "One academic year",
           "Two or more years",
           "Summer experience",
+        ];
+        const educationLevels = [
+          "High school / GED",
+          "Certificate",
+          "Associate",
+          "Bachelor",
+          "Graduate",
         ];
         const skillGroups = {
           Education:
@@ -2157,8 +2358,12 @@
           return {
             category,
             role: c.roles[0],
+            organization: "",
+            exactTitle: "",
             win: c.wins[0],
             scope: scopes[1],
+            exactMetric: "",
+            tasks: c.tasks.slice(0, 2),
             method: c.methods[0],
             period: periods[0],
           };
@@ -2170,6 +2375,7 @@
           details = {},
         ) {
           return {
+            level: details.level || "Bachelor",
             school,
             degree,
             graduation,
@@ -2185,7 +2391,7 @@
         }
         function renderFixed() {
           $("profile-pills").innerHTML = pills(
-            ["undergraduate", "graduate", "early-career"],
+            ["high-school", "undergraduate", "graduate", "early-career"],
             state.profile,
             "profile",
           );
@@ -2200,12 +2406,12 @@
             .map((r, i) => {
               const c = catalog[r.category],
                 cats = Object.keys(catalog);
-              return `<article class="role-card"><header><div><small>ROLE ${i + 1}</small><b>${esc(c.label)}</b></div>${state.roles.length > 1 ? `<button type="button" data-action="remove" data-index="${i}">Remove</button>` : ""}</header><div class="choice"><div class="choice-title">Experience type</div>${pills(
+              return `<article class="role-card"><header><div><small>EXPERIENCE ${i + 1}</small><b>${esc(c.label)}</b></div>${state.roles.length > 1 ? `<button type="button" data-action="remove" data-index="${i}">Remove</button>` : ""}</header><div class="choice"><div class="choice-title">Experience type</div>${pills(
                 cats.map((k) => catalog[k].label),
                 c.label,
                 "category",
                 `data-index="${i}"`,
-              )}</div><div class="choice"><div class="choice-title">Closest official title</div>${pills(c.roles, r.role, "role", `data-index="${i}"`)}</div><div class="choice"><div class="choice-title">Primary accomplishment</div>${pills(c.wins, r.win, "win", `data-index="${i}"`)}</div><div class="choice"><div class="choice-title">Verified scope bracket</div>${pills(scopes, r.scope, "scope", `data-index="${i}"`)}</div><div class="choice"><div class="choice-title">How you did it</div>${pills(c.methods, r.method, "method", `data-index="${i}"`)}</div><div class="choice"><div class="choice-title">Time period</div>${pills(periods, r.period, "period", `data-index="${i}"`)}</div></article>`;
+              )}</div><div class="role-facts"><label class="field"><span>${esc(c.organizationLabel)}</span><input data-role-index="${i}" data-role-field="organization" value="${esc(r.organization)}" placeholder="${esc(c.organizationPlaceholder)}"></label><label class="field"><span>${esc(c.titleLabel)}</span><input data-role-index="${i}" data-role-field="exactTitle" value="${esc(r.exactTitle)}" placeholder="${esc(c.titlePlaceholder)}"></label><label class="field wide"><span>Verified exact result (optional)</span><input data-role-index="${i}" data-role-field="exactMetric" value="${esc(r.exactMetric)}" placeholder="Example: Served 120 customers per shift or raised $4,200"><small class="choice-note">Start with a result verb and use a number you can explain. If you do not know the exact figure, choose an honest range below.</small></label></div><div class="choice"><div class="choice-title">Closest standard title</div><small class="choice-note">Choose the closest option. Your exact title above will appear on the resume.</small>${pills(c.roles, r.role, "role", `data-index="${i}"`)}</div><div class="choice"><div class="choice-title">What did you actually do? Choose up to four.</div><small class="choice-note">Tap every responsibility that is true for this specific experience. Each selection gives EFF better material for a distinct bullet.</small><div class="pills">${c.tasks.map((task) => `<button type="button" class="pill ${r.tasks.includes(task) ? "selected" : ""}" data-action="task" data-index="${i}" data-value="${esc(task)}" aria-pressed="${r.tasks.includes(task)}">${esc(task)}</button>`).join("")}</div></div><div class="choice"><div class="choice-title">What was your strongest result?</div>${pills(c.wins, r.win, "win", `data-index="${i}"`)}</div><div class="choice"><div class="choice-title">Who or what did your work reach?</div>${pills(scopes, r.scope, "scope", `data-index="${i}"`)}</div><div class="choice"><div class="choice-title">How did you make it happen?</div>${pills(c.methods, r.method, "method", `data-index="${i}"`)}</div><div class="choice"><div class="choice-title">How long did you do this?</div>${pills(periods, r.period, "period", `data-index="${i}"`)}</div></article>`;
             })
             .join("");
           $("add-role").style.display =
@@ -2246,13 +2452,20 @@
         }
         function renderDegrees() {
           $("degrees").innerHTML = state.degrees
-            .map(
-              (d, i) =>
-                `<article class="degree-card"><header><small>${i === 0 ? "PRIMARY OR MOST RECENT DEGREE" : `ADDITIONAL DEGREE ${i}`}</small>${state.degrees.length > 1 ? `<button type="button" data-degree-action="remove" data-degree-index="${i}">Remove</button>` : ""}</header><div class="degree-fields"><label class="field"><span>Institution</span><input data-degree-index="${i}" data-degree-field="school" value="${esc(d.school)}" placeholder="Florida A&amp;M University"></label><label class="field"><span>Degree + field</span><input data-degree-index="${i}" data-degree-field="degree" value="${esc(d.degree)}" placeholder="M.S. in Data Science"></label><label class="field"><span>Graduation</span><input data-degree-index="${i}" data-degree-field="graduation" value="${esc(d.graduation)}" placeholder="May 2027"></label><label class="field"><span>Verified GPA</span><input data-degree-index="${i}" data-degree-field="gpa" value="${esc(d.gpa)}" placeholder="3.92/4.00"></label><label class="field wide"><span>Latin honors or distinctions</span><input data-degree-index="${i}" data-degree-field="honors" value="${esc(d.honors)}" placeholder="Summa Cum Laude · Honors College"></label><label class="field wide"><span>Thesis or capstone title</span><input data-degree-index="${i}" data-degree-field="thesis" value="${esc(d.thesis)}" placeholder="Predictive Modeling of Student Retention"></label><label class="field wide"><span>Departmental fellowship or academic award</span><input data-degree-index="${i}" data-degree-field="fellowship" value="${esc(d.fellowship)}" placeholder="Graduate Research Fellowship"></label><label class="field wide"><span>High-value coursework cluster</span><input data-degree-index="${i}" data-degree-field="coursework" value="${esc(d.coursework)}" placeholder="Regression Analysis · Machine Learning · Database Systems"></label></div></article>`,
-            )
+            .map((d, i) => {
+              const highSchool = d.level === "High school / GED";
+              return `<article class="degree-card"><header><small>${i === 0 ? "PRIMARY OR MOST RECENT EDUCATION" : `ADDITIONAL EDUCATION ${i}`}</small>${state.degrees.length > 1 ? `<button type="button" data-degree-action="remove" data-degree-index="${i}">Remove</button>` : ""}</header><div class="choice"><div class="choice-title">Education level</div>${pills(educationLevels, d.level, "degree-level", `data-degree-index="${i}"`)}</div><div class="degree-fields"><label class="field"><span>${highSchool ? "High school or GED program" : "Institution"}</span><input data-degree-index="${i}" data-degree-field="school" value="${esc(d.school)}" placeholder="${highSchool ? "Booker T. Washington High School" : "Florida A&amp;M University"}"></label><label class="field"><span>${highSchool ? "Diploma or pathway" : "Degree + field"}</span><input data-degree-index="${i}" data-degree-field="degree" value="${esc(d.degree)}" placeholder="${highSchool ? "High School Diploma · Health Sciences Pathway" : "M.S. in Data Science"}"></label><label class="field"><span>Expected or completed graduation</span><input data-degree-index="${i}" data-degree-field="graduation" value="${esc(d.graduation)}" placeholder="May 2027"></label><label class="field"><span>Verified GPA (optional)</span><input data-degree-index="${i}" data-degree-field="gpa" value="${esc(d.gpa)}" placeholder="3.92/4.00"></label><label class="field wide"><span>Honors or distinctions</span><input data-degree-index="${i}" data-degree-field="honors" value="${esc(d.honors)}" placeholder="${highSchool ? "Honor Roll · National Honor Society" : "Summa Cum Laude · Honors College"}"></label><label class="field wide"><span>${highSchool ? "Senior project, CTE pathway, or major project" : "Thesis or capstone title"}</span><input data-degree-index="${i}" data-degree-field="thesis" value="${esc(d.thesis)}" placeholder="${highSchool ? "Community Health Senior Project" : "Predictive Modeling of Student Retention"}"></label><label class="field wide"><span>Scholarship, fellowship, or academic award</span><input data-degree-index="${i}" data-degree-field="fellowship" value="${esc(d.fellowship)}" placeholder="${highSchool ? "Future Leaders Scholarship" : "Graduate Research Fellowship"}"></label><label class="field wide"><span>${highSchool ? "Relevant classes, AP, IB, dual enrollment, or CTE" : "High-value coursework cluster"}</span><input data-degree-index="${i}" data-degree-field="coursework" value="${esc(d.coursework)}" placeholder="${highSchool ? "AP English · Dual Enrollment Biology · Digital Design" : "Regression Analysis · Machine Learning · Database Systems"}"></label></div></article>`;
+            })
             .join("");
           $("add-degree").style.display =
             state.degrees.length < 3 ? "inline-block" : "none";
+          $("add-high-school").style.display =
+            state.degrees.length < 3 &&
+            !state.degrees.some(
+              (degree) => degree.level === "High school / GED",
+            )
+              ? "inline-block"
+              : "none";
         }
         function budget(total, index) {
           return total === 1 ? 4 : total === 2 ? 2 : index === 0 ? 2 : 1;
@@ -2273,7 +2486,7 @@
         function strategicBold(v) {
           const safe = escapeHtml(v);
           return safe.replace(
-            /(\$[\d,.]+\+?|\b\d\.\d{1,2}\/4\.00\b|\b\d+(?:\.\d+)?(?:\s*[–-]\s*\d+(?:\.\d+)?)?%\s*(?:improvement|gain)?|\b\d+(?:\s*[–-]\s*\d+)?\+?\s+(?:people|hours)|\b(?:SPSS|Excel|Python|Figma|Qualtrics|Canva|PowerPoint|Google Workspace)\b)/gi,
+            /(\$[\d,.]+\+?|\b\d\.\d{1,2}\/4\.00\b|\b\d+(?:\.\d+)?(?:\s*[–-]\s*\d+(?:\.\d+)?)?%\s*(?:improvement|gain)?|\b\d+(?:\s*[–-]\s*\d+)?\+?\s+(?:people|hours|customers|students|members|attendees|records|items|clients|families|volunteers)|\b(?:SPSS|Excel|Python|Figma|Qualtrics|Canva|PowerPoint|Google Workspace)\b)/gi,
             "<strong>$1</strong>",
           );
         }
@@ -2302,15 +2515,25 @@
                     "equitable access",
                     "collective impact",
                   ],
+            selectedTasks = r.tasks?.length
+              ? r.tasks
+              : [catalog[r.category].tasks[0]],
+            responsibility = selectedTasks[i % selectedTasks.length],
+            lead =
+              r.exactMetric && i === 0
+                ? /^[A-Za-z]/.test(r.exactMetric)
+                  ? r.exactMetric
+                  : impactLead(r.exactMetric, r.win, i)
+                : impactLead(r.scope, r.win, i),
             text = sentence(
-              `${impactLead(r.scope, r.win, i)} by ${r.method}, strengthening ${emphasis[i % 4]}`,
+              `${lead} by ${responsibility} and ${r.method}, strengthening ${emphasis[i % 4]}`,
             );
           return {
             text,
             html: strategicBold(text),
             defense: {
               intent: `The recruiter is testing whether you can explain your ownership of ${r.win} with a concrete, credible scope.`,
-              script: `In my ${r.role} role, I focused on ${r.win}. I reached ${r.scope} by ${r.method}, and I can explain the exact steps I owned.`,
+              script: `In my ${r.exactTitle || r.role} role${r.organization ? ` with ${r.organization}` : ""}, I focused on ${r.win}. ${r.exactMetric ? `My verified result was ${r.exactMetric}.` : `My honest scope estimate is ${r.scope}.`} I did that by ${responsibility} and ${r.method}, and I can explain the exact steps I owned.`,
               defusal:
                 "If asked for a more exact number, do not guess. Say the selected range is your honest estimate, describe the source, and offer a verified figure later.",
             },
@@ -2331,14 +2554,18 @@
               0,
               6,
             ),
-            scopes = [...new Set(roles.map((r) => r.scope))].slice(0, 2),
+            scopes = [
+              ...new Set(roles.map((r) => r.exactMetric || r.scope)),
+            ].slice(0, 2),
             wins = [...new Set(roles.map((r) => r.win))].slice(0, 2),
             profile =
               state.profile === "graduate"
                 ? "Graduate-level"
-                : state.profile === "undergraduate"
-                  ? "Undergraduate"
-                  : "Early-career";
+                : state.profile === "high-school"
+                  ? "High-school"
+                  : state.profile === "undergraduate"
+                    ? "Undergraduate"
+                    : "Early-career";
           return {
             title,
             competencies,
@@ -2353,8 +2580,8 @@
           return {
             roles: selected.map((r, i) => ({
               category: r.category,
-              heading: `${r.role} | ${archetypes[r.category]}`,
-              subheading: r.period,
+              heading: `${r.exactTitle || r.role}${r.organization ? ` | ${r.organization}` : ""}`,
+              subheading: `${archetypes[r.category]} · ${r.period}`,
               bullets: Array.from(
                 { length: budget(selected.length, i) },
                 (_, j) => compileBullet(r, j),
@@ -2421,7 +2648,7 @@
           state.defenseItems = d.roles.flatMap((r) => r.bullets);
           let defenseIndex = 0;
           $("resume-paper").innerHTML =
-            `<header><h2 contenteditable="true">${esc((val("full-name") || "YOUR NAME").toUpperCase())}</h2><p contenteditable="true">${esc(contact)}</p></header><section class="resume-hook"><p class="positioning-title" contenteditable="true">${esc(d.hook.title)}</p><p class="competency-row" contenteditable="true">${strategicBold(d.hook.competencies.join(" · "))}</p><p class="value-pitch" contenteditable="true">${strategicBold(d.hook.value)}</p></section><section><h3>EDUCATION</h3>${education}</section><section><h3>EXPERIENCE &amp; LEADERSHIP</h3>${d.roles
+            `<header><h2 contenteditable="true">${esc((val("full-name") || "YOUR NAME").toUpperCase())}</h2><p contenteditable="true">${esc(contact)}</p></header><section class="resume-hook"><p class="positioning-title" contenteditable="true">${esc(d.hook.title)}</p><p class="competency-row" contenteditable="true">${strategicBold(d.hook.competencies.join(" · "))}</p><p class="value-pitch" contenteditable="true">${strategicBold(d.hook.value)}</p></section><section><h3>EDUCATION</h3>${education}</section><section><h3>EXPERIENCE</h3>${d.roles
               .map(
                 (r) =>
                   `<div class="paper-entry"><div class="paper-row"><b contenteditable="true">${esc(r.heading)}</b><span contenteditable="true">${esc(r.subheading)}</span></div><ul>${r.bullets
@@ -2500,9 +2727,62 @@
           $("portfolio-grid").innerHTML =
             `<div class="portfolio-intro"><p class="kicker">EXECUTIVE EVIDENCE PORTFOLIO</p><h3>${esc(val("full-name") || "Your verified work")}</h3><p>Each card connects a resume claim to evidence the candidate selected and can produce. Remove anything you cannot verify before sharing.</p></div><div class="portfolio-cards">${state.portfolioItems.length ? state.portfolioItems.map((item, index) => `<button class="portfolio-card" type="button" data-portfolio="${index}"><small>${esc(item.type)}</small><h4>${esc(item.title)}</h4><p>${esc(item.summary)}</p><b>Open evidence deep-dive →</b></button>`).join("") : `<div class="portfolio-empty"><b>No portfolio artifacts selected yet.</b><p>Return to Step 5 and choose only evidence you actually created or can show.</p></div>`}</div>`;
         }
+        function getAtsAudit() {
+          const checks = [
+            {
+              label: "Complete name, email, phone, and location",
+              passed:
+                !!val("full-name") &&
+                /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val("email")) &&
+                !!val("phone") &&
+                !!val("location"),
+            },
+            {
+              label: "Target role or career field is named",
+              passed: !!val("target-role"),
+            },
+            {
+              label: "Education entries include institution and credential",
+              passed: state.degrees.every(
+                (degree) => clean(degree.school) && clean(degree.degree),
+              ),
+            },
+            {
+              label: "Every experience names the employer or organization",
+              passed: state.roles.every((role) => clean(role.organization)),
+            },
+            {
+              label: "Each experience includes truthful responsibility details",
+              passed: state.roles.every(
+                (role) => role.tasks && role.tasks.length >= 2,
+              ),
+            },
+            {
+              label: "Every bullet includes a measurable result or scope",
+              passed: state.roles.every(
+                (role) => clean(role.exactMetric) || clean(role.scope),
+              ),
+            },
+            {
+              label: "At least three interview-ready hard skills selected",
+              passed: state.skills.length >= 3,
+            },
+            {
+              label: "Single-column layout with standard ATS section headings",
+              passed: true,
+            },
+          ];
+          const passed = checks.filter((check) => check.passed).length;
+          return {
+            checks,
+            score: Math.round((passed / checks.length) * 100),
+            ready: passed >= 7,
+          };
+        }
         function renderDefenseRail(d) {
+          const audit = getAtsAudit();
           $("defense").innerHTML =
-            `<p class="kicker">ANTI-IMPOSTER INTERVIEW DEFENSE</p><h3>Know how to defend every line.</h3><p>Each generated bullet now includes a “Coach me” button. Open it for the recruiter’s intent, a 20-second verbal script, and a trap-question defusal.</p><div class="keyword-box"><b>ATS LANGUAGE INCLUDED</b><p>${esc(d.keywords.join(" · "))}</p></div><div class="keyword-box"><b>VERIFIED SKILLS SELECTED</b><p>${esc(state.skills.slice(0, 8).join(" · ") || "Choose skills in Step 4")}</p></div>`;
+            `<section class="ats-audit"><div class="ats-audit-head"><div><p class="kicker">EFF ATS READINESS CHECK</p><strong>${audit.score}/100</strong></div><span class="ats-audit-status ${audit.ready ? "" : "review"}">${audit.ready ? "ATS-READY" : "NEEDS REVIEW"}</span></div><div class="ats-checks">${audit.checks.map((check) => `<span>${check.passed ? "✓" : "○"} ${esc(check.label)}</span>`).join("")}</div><small>This verifies common parsing and formatting practices; it is not certification by a specific employer or ATS vendor.</small></section><p class="kicker">ANTI-IMPOSTER INTERVIEW DEFENSE</p><h3>Know how to defend every line.</h3><p>Each generated bullet now includes a “Coach me” button. Open it for the recruiter’s intent, a 20-second verbal script, and a trap-question defusal.</p><div class="keyword-box"><b>ATS LANGUAGE INCLUDED</b><p>${esc(d.keywords.join(" · "))}</p></div><div class="keyword-box"><b>VERIFIED SKILLS SELECTED</b><p>${esc(state.skills.slice(0, 8).join(" · ") || "Choose skills in Step 4")}</p></div>`;
         }
         function renderOutput(d) {
           renderResume(d);
@@ -2567,6 +2847,13 @@
             missing.push(
               "both the institution and degree for every academic entry",
             );
+          const unnamedExperience = state.roles.findIndex(
+            (role) => !clean(role.organization),
+          );
+          if (unnamedExperience >= 0)
+            missing.push(
+              `the employer or organization for experience ${unnamedExperience + 1}`,
+            );
           if (missing.length) {
             $("status").textContent =
               `Add ${missing.join(", ")} before building your career suite.`;
@@ -2608,6 +2895,8 @@
               {
                 category: "campus",
                 role: "Vice President",
+                organization: "Psychology Student Association",
+                exactTitle: "Vice President",
                 win: "member engagement",
                 scope: "51-150 people",
                 method: "coordinating a cross-functional student team",
@@ -2616,6 +2905,8 @@
               {
                 category: "service",
                 role: "Volunteer Lead",
+                organization: "Atlanta Community Food Collaborative",
+                exactTitle: "Volunteer Team Lead",
                 win: "resource distribution",
                 scope: "51-100 hours",
                 method: "organizing field logistics",
@@ -2642,14 +2933,25 @@
               {
                 category: "paid",
                 role: "Shift Lead",
+                organization: "Campus Coffee Company",
+                exactTitle: "Shift Lead",
                 win: "daily operations",
                 scope: "11-50 people",
+                exactMetric: "Served 120+ customers per shift",
+                tasks: [
+                  "processing customer orders or payments",
+                  "opening or closing the workplace",
+                  "training or onboarding team members",
+                  "coordinating schedules, shifts, or handoffs",
+                ],
                 method: "coordinating shift priorities",
                 period: "Two or more years",
               },
               {
                 category: "campus",
                 role: "Treasurer",
+                organization: "Future Business Leaders Association",
+                exactTitle: "Treasurer",
                 win: "budget stewardship",
                 scope: "$1,000-$4,999",
                 method: "tracking milestones and ownership",
@@ -2676,6 +2978,8 @@
               {
                 category: "research",
                 role: "Graduate Researcher",
+                organization: "FSU Policy Research Lab",
+                exactTitle: "Graduate Researcher",
                 win: "data analysis",
                 scope: "151-500 people",
                 method: "analyzing data in Excel or statistical software",
@@ -2684,6 +2988,8 @@
               {
                 category: "peer",
                 role: "Teaching Assistant",
+                organization: "Florida State University",
+                exactTitle: "Graduate Teaching Assistant",
                 win: "academic engagement",
                 scope: "51-150 people",
                 method: "facilitating small-group learning",
@@ -2715,6 +3021,8 @@
               {
                 category: "service",
                 role: "Community Outreach Coordinator",
+                organization: "Norfolk Student Resource Coalition",
+                exactTitle: "Community Outreach Coordinator",
                 win: "program access",
                 scope: "151-500 people",
                 method: "partnering with local organizations",
@@ -2723,6 +3031,8 @@
               {
                 category: "campus",
                 role: "Campus Ambassador",
+                organization: "Student Success Office",
+                exactTitle: "Campus Ambassador",
                 win: "campus partnerships",
                 scope: "51-150 people",
                 method: "partnering with campus departments",
@@ -2771,7 +3081,11 @@
             ];
           state.profile = p.profile;
           state.lens = p.lens;
-          state.roles = p.roles.map((r) => ({ ...r }));
+          state.roles = p.roles.map((r) => ({
+            ...makeRole(r.category),
+            ...r,
+            tasks: r.tasks || makeRole(r.category).tasks,
+          }));
           state.skills = [...presetSkills[key]];
           state.artifacts =
             key === "graduate"
@@ -2869,6 +3183,16 @@
             refreshSuite();
             return;
           }
+          if (t.dataset.action === "degree-level") {
+            startTimer();
+            const degree = state.degrees[Number(t.dataset.degreeIndex)];
+            degree.level = t.dataset.value;
+            if (degree.level === "High school / GED" && !clean(degree.degree))
+              degree.degree = "High School Diploma";
+            renderDegrees();
+            refreshSuite();
+            return;
+          }
           if (t.dataset.skill) {
             startTimer();
             if (state.skills.includes(t.dataset.skill)) {
@@ -2890,12 +3214,33 @@
           startTimer();
           if (a === "profile") {
             state.profile = t.dataset.value;
+            if (
+              state.profile === "high-school" &&
+              state.degrees.length === 1 &&
+              !clean(state.degrees[0].school)
+            ) {
+              state.degrees[0].level = "High school / GED";
+              state.degrees[0].degree = "High School Diploma";
+              renderDegrees();
+            }
             renderFixed();
           } else if (a === "lens") {
             state.lens = t.dataset.value;
             renderFixed();
           } else if (a === "remove") {
             state.roles.splice(Number(t.dataset.index), 1);
+            renderRoles();
+          } else if (a === "task") {
+            const role = state.roles[Number(t.dataset.index)],
+              task = t.dataset.value;
+            if (role.tasks.includes(task)) {
+              role.tasks = role.tasks.filter((item) => item !== task);
+            } else if (role.tasks.length < 4) {
+              role.tasks = [...role.tasks, task];
+            } else {
+              $("status").textContent =
+                "Choose up to four responsibilities for each experience. Add another experience if the work was a separate role.";
+            }
             renderRoles();
           } else {
             const i = Number(t.dataset.index),
@@ -2919,6 +3264,10 @@
             renderSkills();
             return;
           }
+          if (t.dataset.roleField !== undefined) {
+            state.roles[Number(t.dataset.roleIndex)][t.dataset.roleField] =
+              clean(t.value);
+          }
           if (t.dataset.degreeField !== undefined) {
             state.degrees[Number(t.dataset.degreeIndex)][
               t.dataset.degreeField
@@ -2940,6 +3289,23 @@
           startTimer();
           if (state.degrees.length < 3) {
             state.degrees.push(makeDegree());
+            renderDegrees();
+            refreshSuite();
+          }
+        });
+        $("add-high-school").addEventListener("click", () => {
+          startTimer();
+          if (
+            state.degrees.length < 3 &&
+            !state.degrees.some(
+              (degree) => degree.level === "High school / GED",
+            )
+          ) {
+            state.degrees.push(
+              makeDegree("", "High School Diploma", "", {
+                level: "High school / GED",
+              }),
+            );
             renderDegrees();
             refreshSuite();
           }

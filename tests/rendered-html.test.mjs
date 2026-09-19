@@ -184,6 +184,29 @@ test("career engine synchronizes resume, cover letter, portfolio, and verified s
   assert.doesNotMatch(source, /cdn\.tailwindcss|unpkg\.com|fonts\.googleapis/);
 });
 
+test("career intake captures named experience details and supports high school applicants", async () => {
+  const source = await readFile(
+    new URL("../public/eff-builds-your-resume/index.html", import.meta.url),
+    "utf8",
+  );
+  assert.match(source, /Employer or internship organization/);
+  assert.match(source, /Your exact job or internship title/);
+  assert.match(source, /What did you actually do\? Choose up to four/);
+  assert.match(source, /data-role-field="organization"/);
+  assert.match(source, /data-action="task"/);
+  assert.match(source, /High school \/ GED/);
+  assert.match(source, /\+ Add high school/);
+  assert.match(source, /EFF ATS READINESS CHECK/);
+  assert.match(
+    source,
+    /Single-column layout with standard ATS section headings/,
+  );
+  assert.match(
+    source,
+    /not certification by a specific employer or ATS vendor/,
+  );
+});
+
 test("recommendation tool issues an attributed EFF letter with consent and disclosure", async () => {
   const source = await readFile(
     new URL("../app/tools/RecommendationLetterTool.tsx", import.meta.url),
@@ -262,9 +285,8 @@ test("recommendation issuance is recorded, reviewable, verifiable, and revocable
 });
 
 test("recommendation content policy blocks prohibited and non-scholarship submissions", async () => {
-  const { sanitizeScholarName, screenRecommendationDetails } = await import(
-    "../app/tools/recommendation-content-policy.ts"
-  );
+  const { sanitizeScholarName, screenRecommendationDetails } =
+    await import("../app/tools/recommendation-content-policy.ts");
   assert.deepEqual(
     screenRecommendationDetails({
       opportunity: "Future Scholars Award",
