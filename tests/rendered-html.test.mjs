@@ -117,6 +117,12 @@ test("resume engine supports evidence-rich multi-tier education on one page", as
   assert.match(source, /paper\.compact/);
   assert.match(source, /paper\.ultra/);
   assert.match(source, /paper\.micro/);
+  assert.match(source, /function buildHook/);
+  assert.match(source, /function strategicBold/);
+  assert.match(source, /function impactLead/);
+  assert.match(source, /0-to-1 Community Program Builder/);
+  assert.match(source, /positioning title, competency row, and two-sentence value pitch/);
+  assert.match(source, /3\.92\/4\.00/);
 });
 
 test("recommendation tool issues an attributed EFF letter with consent and disclosure", async () => {
