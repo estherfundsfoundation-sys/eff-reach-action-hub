@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#42127F" />
+  <meta name="description" content="Practice profession-specific interviews, record answers privately, and improve with the EFF Interview Coach rubric." />
+  <title>EFF Interview Coach | Career Studio</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2342127F'/%3E%3Cpath d='M18 18h28v7H26v7h17v7H26v7h20v7H18z' fill='%23F5F0E6'/%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="/" aria-label="Return to the EFF Reach Action Hub">
+        <img src="/eff-logo.png" alt="" />
+        <span><strong>EFF Interview Coach</strong><span>Career Studio</span></span>
+      </a>
+      <div class="top-actions">
+        <button class="text-button" id="restartTop" type="button">New session</button>
+        <a class="text-button" href="/eff-builds-your-resume/">Build résumé</a>
+      </div>
+    </header>
+
+    <div class="session-banner" id="sessionBanner" role="status">
+      <p><strong>Recent practice found.</strong> Continue where you left off or begin again.</p>
+      <div class="button-row" style="margin:0">
+        <button class="button" id="resumeSession" type="button">Resume session</button>
+        <button class="button ghost" id="clearSession" type="button">Clear</button>
+      </div>
+    </div>
+
+    <main>
+      <section class="screen" id="landingScreen" data-screen="landing" aria-hidden="false">
+        <div class="hero">
+          <div class="hero-copy">
+            <p class="eyebrow">A free Esther Funds Foundation career tool</p>
+            <h1>Your interview <em>starts now.</em></h1>
+            <p class="lead">Practice the interview before the interview matters. Choose a profession, record realistic answers, receive immediate rule-based coaching, and retry until your response is interview ready.</p>
+            <div class="hero-actions">
+              <button class="button" id="startCoach" type="button">Start mock interview</button>
+              <a class="button secondary" href="#howItWorks">See how it works</a>
+            </div>
+            <p class="privacy-line">No account required. No paid AI. Recordings stay in this browser session unless you choose to save them on your device.</p>
+          </div>
+          <div class="hero-stage" aria-label="Preview of a realistic interview coaching session">
+            <div class="interview-card">
+              <div class="stage-top"><span><i class="stage-dot"></i>Practice in progress</span><span>03 / 08</span></div>
+              <blockquote>“Tell me about a time you solved a difficult problem.”</blockquote>
+              <div class="score-strip"><strong>86</strong><span>Interview Ready<br />Clear action. Add a stronger result.</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="steps-band" id="howItWorks">
+          <div class="step"><span>01</span><strong>Choose your profession</strong></div>
+          <div class="step"><span>02</span><strong>Complete a realistic interview</strong></div>
+          <div class="step"><span>03</span><strong>Receive immediate feedback</strong></div>
+          <div class="step"><span>04</span><strong>Retry until mastered</strong></div>
+        </div>
+      </section>
+
+      <section class="screen" id="careerScreen" data-screen="career" aria-hidden="true">
+        <div class="selection">
+          <div class="section-intro">
+            <div><p class="eyebrow">Step 1 · Choose your path</p><h2>Practice for the role you actually want.</h2></div>
+            <p>Select a career field, then choose the closest profession. Every interview blends universal hiring questions with questions written for that work.</p>
+          </div>
+          <div class="category-tabs" id="categoryTabs" role="tablist" aria-label="Career fields"></div>
+          <div class="career-grid" id="careerGrid" role="tabpanel" aria-live="polite"></div>
+        </div>
+      </section>
+
+      <section class="screen" id="overviewScreen" data-screen="overview" aria-hidden="true">
+        <div class="overview">
+          <button class="text-button" id="backToCareers" type="button">← All professions</button>
+          <div class="overview-grid">
+            <article class="panel title-panel">
+              <p class="eyebrow" id="overviewCategory">Career field</p>
+              <h2 id="overviewTitle">Profession</h2>
+              <p id="overviewDescription"></p>
+              <ul class="competency-list" id="overviewCompetencies"></ul>
+              <button class="button light" id="beginSetup" type="button">Begin interview setup</button>
+            </article>
+            <aside class="panel">
+              <p class="eyebrow">Your practice format</p>
+              <div class="format-stats">
+                <div class="format-stat"><strong>8</strong><span>balanced questions</span></div>
+                <div class="format-stat"><strong>20–30</strong><span>estimated minutes</span></div>
+              </div>
+              <h3 style="margin-top:28px">Employers typically listen for</h3>
+              <ul class="tip-list" id="overviewSignals"></ul>
+              <p class="disclaimer">Questions are randomized within a balanced format, so repeat sessions will not be identical.</p>
+            </aside>
+          </div>
+        </div>
+      </section>
+
+      <section class="screen" id="setupScreen" data-screen="setup" aria-hidden="true">
+        <div class="setup">
+          <div class="section-intro">
+            <div><p class="eyebrow">Step 2 · Check your space</p><h2>Look ready. Sound ready. Feel ready.</h2></div>
+            <p>Place your camera at eye level, face a light source, silence notifications, and keep your résumé nearby. Camera use is optional.</p>
+          </div>
+          <div class="setup-grid">
+            <div class="media-preview">
+              <video id="setupVideo" autoplay muted playsinline aria-label="Camera preview"></video>
+              <div class="media-placeholder" id="setupPlaceholder"><div><strong>Camera preview</strong><br />Enable your camera to check framing, or continue without video.</div></div>
+            </div>
+            <aside class="panel">
+              <p class="eyebrow">Device check</p>
+              <div class="status-list">
+                <div class="status-row"><span>Camera</span><span class="status-pill" id="cameraStatus">Not enabled</span></div>
+                <div class="status-row"><span>Microphone</span><span class="status-pill" id="micStatus">Not enabled</span></div>
+                <div class="status-row"><span>Speech transcript</span><span class="status-pill" id="speechSupport">Checking</span></div>
+              </div>
+              <div class="button-row">
+                <button class="button" id="enableMedia" type="button">Enable camera + microphone</button>
+                <button class="button secondary" id="continueNoCamera" type="button">Continue without camera</button>
+              </div>
+              <div class="privacy-box"><strong>Private by design.</strong><br />Your recordings stay in your browser session and are not automatically uploaded. Avoid sharing confidential client, patient, or student details.</div>
+              <button class="button" id="startInterview" type="button" disabled style="margin-top:20px;width:100%">Start interview</button>
+            </aside>
+          </div>
+        </div>
+      </section>
+
+      <section class="screen interview-screen" id="interviewScreen" data-screen="interview" aria-hidden="true">
+        <div class="interview-layout">
+          <div class="interview-column question-panel">
+            <div class="progress-meta"><span id="progressLabel">Question 1 of 8</span><span id="professionLabel"></span></div>
+            <div class="progress-track" aria-hidden="true"><div class="progress-bar" id="progressBar"></div></div>
+            <h2 id="questionText"></h2>
+            <p class="question-category" id="questionCategory"></p>
+            <p class="question-tip">Use one truthful example. Explain the context, what you personally did, and what happened because of it.</p>
+          </div>
+
+          <div class="interview-column camera-panel">
+            <video id="interviewVideo" autoplay muted playsinline aria-label="Live interview camera preview"></video>
+            <div class="camera-fallback" id="cameraFallback"><div><strong>Camera is off.</strong><br />You can still record audio when microphone permission is available and type your transcript.</div></div>
+            <div class="recording-badge" id="recordingBadge"><i></i><span id="recordingTime">Recording 00:00</span></div>
+            <div class="camera-controls">
+              <button class="button record-button" id="recordAnswer" type="button">Start answer</button>
+              <button class="button record-button stop hidden" id="finishAnswer" type="button">Finish answer</button>
+            </div>
+          </div>
+
+          <div class="interview-column transcript-panel">
+            <h3>Your transcript</h3>
+            <p>Review and correct the transcript before scoring. Only submit words you actually said.</p>
+            <textarea id="transcript" aria-label="Editable answer transcript" placeholder="Your live transcript will appear here. If browser speech recognition is unavailable, type or paste your answer after recording."></textarea>
+            <div class="speech-status" id="speechStatus" role="status"></div>
+            <div class="transcript-actions">
+              <button class="button" id="scoreAnswer" type="button" disabled>Score this answer</button>
+              <button class="button ghost" id="skipQuestion" type="button">Skip for now</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="coaching-overlay hidden" id="welcomeOverlay" role="dialog" aria-modal="true" aria-labelledby="welcomeTitle">
+        <article class="coaching-sheet" style="max-width:760px">
+          <p class="eyebrow">Your interview is beginning</p>
+          <h2 id="welcomeTitle">Welcome.</h2>
+          <p id="welcomeMessage" style="font-size:1.12rem"></p>
+          <div class="button-row"><button class="button" id="beginFirstQuestion" type="button">Begin question 1</button></div>
+        </article>
+      </div>
+
+      <div class="coaching-overlay hidden" id="coachingOverlay" role="dialog" aria-modal="true" aria-labelledby="coachingTitle">
+        <article class="coaching-sheet">
+          <div class="score-head">
+            <div class="score-orb"><span id="answerScore">0</span><small>/ 100</small></div>
+            <div><p class="eyebrow">EFF practice rubric</p><h2 id="coachingTitle">Your coaching</h2><p id="masteryLabel"></p></div>
+          </div>
+          <div class="rubric-grid" id="rubricGrid"></div>
+          <div class="feedback-grid">
+            <section class="feedback-card"><h3>What you did well</h3><ul id="strengthList"></ul></section>
+            <section class="feedback-card"><h3>What to improve</h3><ul id="improvementList"></ul></section>
+            <section class="feedback-card full"><h3>Your next goal</h3><p id="nextGoal"></p></section>
+          </div>
+          <p class="comparison-note" id="comparisonNote"></p>
+          <section class="attempts"><h3>Attempts on this question</h3><div class="attempt-list" id="attemptList"></div></section>
+          <div class="button-row">
+            <button class="button" id="retryQuestion" type="button">Try this question again</button>
+            <button class="button secondary" id="nextQuestion" type="button">Continue to next question</button>
+          </div>
+          <p class="disclaimer">EFF Interview Coach is a practice and educational tool. Scores reflect performance against the coaching rubric and do not predict employment decisions.</p>
+        </article>
+      </div>
+
+      <section class="screen" id="reportScreen" data-screen="report" aria-hidden="true">
+        <div class="report">
+          <section class="report-hero">
+            <div><p class="eyebrow">EFF Interview Coach · Interview complete</p><h2 id="reportProfession">Your practice report</h2><p id="reportSummary">You demonstrated performance against the EFF Interview Coach rubric.</p></div>
+            <div class="overall-score"><strong id="overallScore">0</strong><span>rubric score</span></div>
+          </section>
+          <div class="report-stats">
+            <div class="report-stat"><strong id="masteredCount">0</strong><span>questions mastered</span></div>
+            <div class="report-stat"><strong id="attemptCount">0</strong><span>total attempts</span></div>
+            <div class="report-stat"><strong id="improvementAverage">0</strong><span>average point growth</span></div>
+            <div class="report-stat"><strong id="fillerChange">0</strong><span>filler-word change</span></div>
+          </div>
+          <div class="report-grid">
+            <article class="report-card"><h3>Strongest areas</h3><p id="strongestAreas"></p></article>
+            <article class="report-card"><h3>Continue practicing</h3><p id="practiceAreas"></p></article>
+            <article class="report-card"><h3>STAR response performance</h3><p id="starPerformance"></p></article>
+            <article class="report-card"><h3>Career alignment</h3><p id="careerAlignment"></p></article>
+            <article class="report-card"><h3>Strongest answer</h3><p id="strongestAnswer"></p></article>
+            <article class="report-card"><h3>Answer needing the most practice</h3><p id="weakestAnswer"></p></article>
+            <article class="report-card wide"><h3>Coaching recommendations</h3><p id="reportRecommendations"></p></article>
+          </div>
+          <div class="button-row">
+            <button class="button" id="practiceAgain" type="button">Practice again</button>
+            <button class="button secondary" id="newProfession" type="button">Try a new profession</button>
+            <button class="button ghost" id="reviewAnswers" type="button">Review my answers</button>
+            <button class="button ghost" id="printReport" type="button">Save report as PDF</button>
+          </div>
+          <p class="disclaimer">Recordings are session-only. Local progress contains transcripts and scores, not saved video files. Clear the session from this device at any time.</p>
+        </div>
+      </section>
+    </main>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  </div>
+  <script type="module" src="./interview-coach.js"></script>
+</body>
+</html>

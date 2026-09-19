@@ -34,6 +34,7 @@ const downloads = [
   { type: "COMPARE + REQUEST", title: "Financial Aid Counter-Offer Engine", text: "Compare competing offers, check a federal net-price benchmark, and draft a respectful institutional-aid reconsideration request.", href: "/tools/counteroffer", color: "pink", pages: "new interactive engine" },
   { type: "60-SECOND TOOL", title: "Official EFF Recommendation Letter", text: "Submit truthful facts and save a personalized Esther Funds Foundation letter with EFF branding and Shayna Vincent’s authorized signature.", href: "/tools/recommendation", color: "purple", pages: "official letter workflow" },
   { type: "BUILD + DOWNLOAD", title: "EFF Builds Your Résumé", text: "Tap through your real experience and generate an editable, ATS-ready one-page résumé with interview-defense coaching.", href: "/resume", color: "purple", pages: "30-second career engine" },
+  { type: "PRACTICE + IMPROVE", title: "EFF Interview Coach", text: "Practice a profession-specific interview, record locally, receive transparent rubric feedback, and retry until mastered.", href: "/eff-interview-coach/", color: "lavender", pages: "private mock interview" },
   { type: "BUILD YOUR PROFILE", title: "Career Launchpad Profile", text: "Organize your story, projects, skills, and reference details into a private, editable professional profile.", href: "/tools/career-profile", color: "lavender", pages: "new career resource" },
   { type: "WRITE YOUR STORY", title: "Scholarship Essay Builder", text: "Answer five quick prompts and instantly get a scholarship-ready STORY outline.", href: "/tools/essay", color: "yellow", pages: "interactive" },
   { type: "STAY ORGANIZED", title: "Scholarship Action Center", text: "Turn one deadline and its requirements into a complete application checklist.", href: "/tools/scholarship", color: "pink", pages: "interactive" },
@@ -149,8 +150,8 @@ export default function Home() {
       <section className="career-studio-feature" aria-labelledby="career-studio-title">
         <div className="career-studio-intro">
           <p className="kicker">THE EFF CAREER STUDIO</p>
-          <h2 id="career-studio-title">Two application barriers.<br />Two free EFF tools.</h2>
-          <p>Build the résumé, secure the letter, and move forward with documents that sound polished while staying completely truthful.</p>
+          <h2 id="career-studio-title">Build it. Practice it.<br />Walk in prepared.</h2>
+          <p>Create the résumé, secure the letter, and rehearse the interview with free tools that keep every claim truthful and every recording private.</p>
         </div>
         <div className="career-studio-cards">
           <Link href="/resume" className="career-studio-card resume-card">
@@ -165,6 +166,12 @@ export default function Home() {
             <p>Generate a scholarship-purpose EFF recommendation letter using truthful details, authorized branding, and a downloadable PDF.</p>
             <b>Build my recommendation letter →</b>
           </Link>
+          <a href="/eff-interview-coach/" className="career-studio-card interview-card-home">
+            <span>03 · PRACTICE + IMPROVE</span>
+            <h3>EFF Interview Coach</h3>
+            <p>Complete realistic profession-specific interviews, record locally, receive immediate rubric feedback, and retry until mastered.</p>
+            <b>Start my mock interview →</b>
+          </a>
         </div>
       </section>
 
