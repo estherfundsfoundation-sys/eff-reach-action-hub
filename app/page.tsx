@@ -44,7 +44,7 @@ const downloads = [
   { type: "URGENT BALANCE", title: "Tuition Rescue Plan", text: "Get a personalized 48-hour plan and email opener based on your deadline.", href: "/tools/balance", color: "yellow", pages: "interactive" },
   { type: "DON'T MISS IT", title: "Deadline Reminder Builder", text: "Download private calendar alerts for two weeks, three days, and one day before.", href: "/tools/reminders", color: "pink", pages: "calendar tool" },
   { type: "FOR FAMILIES", title: "Family Funding Check", text: "Pressure-test the college gap and a parent or private-loan decision.", href: "/tools/family", color: "pink", pages: "calculator" },
-  { type: "HELP SOMEONE", title: "Help-a-Friend Script", text: "Choose the situation and tone to get words you can actually say or text.", href: "/tools/friend", color: "blue", pages: "script maker" },
+  { type: "INTERACTIVE STORY", title: "Help Them Stay", text: "Practice a branching conversation, see how each response lands, and leave with words and resources you can use.", href: "/reach-a-friend/walkthrough", color: "blue", pages: "6 guided pathways" },
   { type: "LEAD ON CAMPUS", title: "Campus Event Builder", text: "Create a useful 60-minute REACH event in under three minutes.", href: "/tools/campus", color: "lavender", pages: "interactive" },
   { type: "KEEP GOING", title: "Stay-Enrolled Planner", text: "Name the barrier and build a support-team plan before changing enrollment.", href: "/tools/persist", color: "yellow", pages: "interactive" },
 ];
@@ -126,7 +126,7 @@ export default function Home() {
           <p className="hero-lead">Free, practical tools that help students solve the problems pushing them out of college—from balances and basic needs to academic pressure, mental health, and career uncertainty.</p>
           <div className="hero-actions">
             <a className="button primary" href="#decision-guide-title">Find my next step</a>
-            <Link className="button secondary" href="/tools/friend">Help a friend stay enrolled</Link>
+            <Link className="button secondary" href="/reach-a-friend/walkthrough">Help a friend stay enrolled</Link>
           </div>
           <p className="microcopy">No account required to explore resources. Never email passwords, Social Security numbers, or verification codes.</p>
         </div>

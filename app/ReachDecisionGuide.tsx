@@ -19,8 +19,8 @@ const situations = [
     title: "You do not have to fix it. Help them feel less alone.",
     text: "Start with a calm conversation, listen for the real barrier, and connect your friend to one practical next step without taking over their decision.",
     steps: ["Ask what is making it hardest to stay enrolled.", "Listen without judgment or rushing to solve it.", "Offer to sit with them while they contact support."],
-    href: "/tools/friend",
-    action: "Create a message I can send",
+    href: "/reach-a-friend/walkthrough",
+    action: "Practice the conversation",
   },
   {
     id: "money",
