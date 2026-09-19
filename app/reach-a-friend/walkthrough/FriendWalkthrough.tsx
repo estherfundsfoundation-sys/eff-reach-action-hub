@@ -201,13 +201,28 @@ export default function FriendWalkthrough() {
     setSpeaking(null);
   }, [step, selected]);
 
-  function preferredVoice() {
+  function preferredVoice(tone: "jordan" | "nia" | "coach") {
     const voices = window.speechSynthesis.getVoices();
-    const preferredNames = ["Samantha", "Ava", "Emma", "Jenny", "Aria", "Zira", "Susan", "Female"];
-    return voices.find(voice => voice.lang.startsWith("en") && preferredNames.some(name => voice.name.includes(name)))
-      || voices.find(voice => voice.lang === "en-US")
-      || voices.find(voice => voice.lang.startsWith("en"))
-      || voices[0];
+    const namePreference = tone === "nia"
+      ? ["jenny", "aria", "emma", "michelle", "susan", "libby", "samantha", "ava", "sonia", "zira"]
+      : tone === "jordan"
+        ? ["ava", "sonia", "samantha", "jenny", "aria", "emma", "michelle", "libby", "zira", "susan"]
+        : ["aria", "samantha", "ava", "jenny", "sonia", "emma", "michelle", "libby", "zira", "susan"];
+    const masculineNames = ["david", "mark", "george", "guy", "james", "richard", "daniel", "ryan", "christopher"];
+    return [...voices]
+      .filter(voice => voice.lang.toLowerCase().startsWith("en"))
+      .sort((a, b) => {
+        const score = (voice: SpeechSynthesisVoice) => {
+          const name = voice.name.toLowerCase();
+          const preferredIndex = namePreference.findIndex(candidate => name.includes(candidate));
+          let value = preferredIndex >= 0 ? 150 - preferredIndex * 8 : 0;
+          if (name.includes("natural") || name.includes("neural") || name.includes("online")) value += 90;
+          if (voice.lang.toLowerCase() === "en-us") value += 20;
+          if (masculineNames.some(candidate => name.includes(candidate))) value -= 200;
+          return value;
+        };
+        return score(b) - score(a);
+      })[0] || voices[0];
   }
 
   function speak(label: string, text: string, tone: "jordan" | "nia" | "coach" = "jordan") {
@@ -219,9 +234,9 @@ export default function FriendWalkthrough() {
     }
     window.speechSynthesis.cancel();
     const utterance = new SpeechSynthesisUtterance(text);
-    utterance.voice = preferredVoice();
-    utterance.rate = tone === "coach" ? 0.96 : tone === "nia" ? 1 : 0.92;
-    utterance.pitch = tone === "coach" ? 1 : tone === "nia" ? 1.08 : 1.04;
+    utterance.voice = preferredVoice(tone);
+    utterance.rate = tone === "coach" ? 0.9 : tone === "nia" ? 0.94 : 0.88;
+    utterance.pitch = tone === "coach" ? 1.08 : tone === "nia" ? 1.2 : 1.14;
     utterance.onend = () => setSpeaking(null);
     utterance.onerror = () => setSpeaking(null);
     setSpeaking(label);
