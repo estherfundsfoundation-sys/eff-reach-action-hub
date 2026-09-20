@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
 import ReachDecisionGuide from "./ReachDecisionGuide";
+import ReachBridgeStory from "./ReachBridgeStory";
 
 const urgentHelp = [
   { title: "Food & essentials", text: "Find local food, SNAP, campus pantry, and basic-needs support.", href: "https://portal.estherfundsfoundation.org/resources#basic-needs", tone: "yellow" },
@@ -119,30 +120,7 @@ export default function Home() {
         <a className="header-cta" href="https://portal.estherfundsfoundation.org/">Scholarship Portal ↗</a>
       </header>
 
-      <section className="hero" id="top">
-        <div className="hero-copy">
-          <p className="kicker">EFF’S RESPONSE TO COLLEGE DROPOUT PREVENTION</p>
-          <h1><span>Before you</span><em>drop out, <i>reach.</i></em></h1>
-          <p className="hero-lead">Free, practical tools that help students solve the problems pushing them out of college—from balances and basic needs to academic pressure, mental health, and career uncertainty.</p>
-          <div className="hero-actions">
-            <a className="button primary" href="#decision-guide-title">Find my next step</a>
-            <Link className="button secondary" href="/reach-a-friend/walkthrough">Help a friend stay enrolled</Link>
-          </div>
-          <p className="microcopy">No account required to explore resources. Never email passwords, Social Security numbers, or verification codes.</p>
-        </div>
-        <div className="hero-art" aria-label="Reach out. Engage. Access resources. Care for your mental health. Hold on.">
-          <div className="sunburst" />
-          <div className="note note-one">YOU ARE NOT<br />BEHIND.</div>
-          <div className="note note-two">YOU ARE<br />BUILDING.</div>
-          <div className="reach-card">
-            <span>R</span><b>Reach out</b>
-            <span>E</span><b>Engage your community</b>
-            <span>A</span><b>Access resources</b>
-            <span>C</span><b>Care for your mental health</b>
-            <span>H</span><b>Hold on</b>
-          </div>
-        </div>
-      </section>
+      <ReachBridgeStory />
 
       <ReachDecisionGuide />
 
