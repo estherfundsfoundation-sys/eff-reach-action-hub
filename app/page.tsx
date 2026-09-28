@@ -2,6 +2,7 @@
 import Link from "next/link";
 import ReachDecisionGuide from "./ReachDecisionGuide";
 import ReachBridgeStory from "./ReachBridgeStory";
+import { ReachBox, ReachLetters, ReachStill, ReachStory, ReachWalkers } from "./ReachFilm";
 
 const urgentHelp = [
   { title: "Food & essentials", text: "Find local food, SNAP, campus pantry, and basic-needs support.", href: "https://portal.estherfundsfoundation.org/resources#basic-needs", tone: "yellow" },
@@ -122,7 +123,11 @@ export default function Home() {
 
       <ReachBridgeStory />
 
+      <ReachLetters />
+
       <ReachDecisionGuide />
+
+      <ReachWalkers />
 
       <section className="career-studio-feature" aria-labelledby="career-studio-title">
         <div className="career-studio-intro">
@@ -189,6 +194,8 @@ export default function Home() {
         </div>
       </section>
 
+      <ReachBox />
+
       <section className="ambassador-callout">
         <div className="ambassador-callout-art" aria-hidden="true"><span>R</span><span>E</span><span>A</span><span>C</span><span>H</span></div>
         <div>
@@ -203,6 +210,8 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      <ReachStory />
 
       <section className="download-library" id="downloads">
         <div className="download-intro">
@@ -286,6 +295,8 @@ export default function Home() {
           <a href="https://givebutter.com/estherfundsfoundation"><span>03</span><h3>Fund a student’s next step</h3><p>Support scholarships, emergency aid, educational tools, and student care.</p></a>
         </div>
       </section>
+
+      <ReachStill />
 
       <footer>
         <div className="footer-brand"><img src="/eff-logo.png" alt="" /><div><strong>Esther Funds Foundation</strong><span>We are working to prevent college dropouts around the world.</span></div></div>
