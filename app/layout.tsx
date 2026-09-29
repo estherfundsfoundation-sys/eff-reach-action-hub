@@ -26,5 +26,7 @@ export const viewport: Viewport = {
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="en"><body>{children}</body></html>;
+  /* The EFF family bar (www.estherfundsfoundation.org/ecosystem.js): one script,
+     drawn in its own shadow root so it never touches this site's styles. */
+  return <html lang="en"><head><script src="https://www.estherfundsfoundation.org/ecosystem.js" defer /></head><body>{children}</body></html>;
 }
