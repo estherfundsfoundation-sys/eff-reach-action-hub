@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
+import MovedNotice from "./MovedNotice";
 
 export const metadata: Metadata = {
   title: "EFF Reach Action Hub | Student & Family Support",
@@ -28,5 +29,5 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   /* The EFF family bar (www.estherfundsfoundation.org/ecosystem.js): one script,
      drawn in its own shadow root so it never touches this site's styles. */
-  return <html lang="en"><head><script src="https://www.estherfundsfoundation.org/ecosystem.js" defer /></head><body>{children}</body></html>;
+  return <html lang="en"><head><script src="https://www.estherfundsfoundation.org/ecosystem.js" defer /></head><body>{children}<MovedNotice /></body></html>;
 }
