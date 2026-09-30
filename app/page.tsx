@@ -112,13 +112,14 @@ export default function Home() {
           <span><strong>REACH</strong><small>by Esther Funds Foundation</small></span>
         </a>
         <nav aria-label="Main navigation">
-          <a href="#find-help">Get support</a>
+          <Link href="/get-help">Get Help</Link>
+          <a href="https://portal.estherfundsfoundation.org/scholarships">Scholarships</a>
+          <a href="https://portal.estherfundsfoundation.org/scholarship-recipients">Past Recipients</a>
           <a href="#downloads">Tools</a>
-          <a href="#stay-enrolled">Resources</a>
           <Link href="/ambassadors">Ambassadors</Link>
           <Link href="/workshop-request">For campuses</Link>
         </nav>
-        <a className="header-cta" href="https://portal.estherfundsfoundation.org/">Scholarship Portal ↗</a>
+        <a className="header-cta" href="https://portal.estherfundsfoundation.org/dashboard">My Portal ↗</a>
       </header>
 
       <ReachBridgeStory />

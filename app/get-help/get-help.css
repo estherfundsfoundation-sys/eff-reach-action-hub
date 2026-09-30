@@ -1,0 +1,64 @@
+/* REACH Get Help. Everything scoped to .gh so the rest of the Action Hub is untouched.
+   Friendly, big tap targets, readable on a cheap phone, light and dark. */
+.gh { --ghp:#42127f; --ghv:#6d3a87; --ghl:#efe7fb; --ghs:#fff; --ghi:#1b1227; --ghi2:#5d5470; --ghb:#e3d8f4; --ghc:#ff6f61; --ghy:#ffd35a;
+  min-height:100vh; background:#faf7ff; color:var(--ghi); font-family:"Poppins","Avenir Next","Segoe UI",system-ui,sans-serif; padding:0 16px 48px; overflow-x:clip; }
+@media (prefers-color-scheme: dark) {
+  .gh { --ghp:#cdb4f5; --ghv:#b793e8; --ghl:#2a1a40; --ghs:#1c1229; --ghi:#f4eefc; --ghi2:#c3b6d8; --ghb:#3b2a57; background:#120a1d; }
+}
+.gh a { color:var(--ghp); }
+.gh :focus-visible { outline:3px solid var(--ghy); outline-offset:2px; }
+.gh-crisis { position:sticky; top:0; z-index:5; margin:0 -16px; padding:10px 16px; text-align:center; font-size:14px; font-weight:600; background:#2a0a55; color:#fff; }
+.gh-crisis a { color:#ffd35a; }
+.gh-hero { max-width:860px; margin:0 auto; padding:34px 0 18px; }
+.gh-back { display:inline-block; font-weight:800; letter-spacing:.14em; font-size:13px; text-decoration:none; margin-bottom:14px; }
+.gh-hero h1 { margin:0 0 10px; font:800 clamp(40px,9vw,76px)/1 "Georama","Archivo","Arial Black",sans-serif; letter-spacing:-.03em; color:var(--ghp); }
+.gh-hero p { margin:0; font-size:18px; line-height:1.5; color:var(--ghi2); max-width:620px; }
+.gh-needs { max-width:860px; margin:10px auto 18px; display:grid; grid-template-columns:repeat(auto-fill,minmax(min(100%,240px),1fr)); gap:10px; }
+.gh-need { min-height:64px; text-align:left; padding:14px 16px; border-radius:18px; border:2px solid var(--ghb); background:var(--ghs); color:var(--ghi); font:600 16px/1.3 inherit; font-family:inherit; cursor:pointer; transition:transform .15s, border-color .15s; }
+.gh-need:hover { transform:translateY(-2px); border-color:var(--ghv); }
+.gh-need.on { background:var(--ghp); border-color:var(--ghp); color:#fff; }
+@media (prefers-color-scheme: dark) { .gh-need.on { color:#1b1227; } }
+.gh-need-crisis { border-color:#f3b4ad; }
+.gh-need-crisis.on { background:#b3123a; border-color:#b3123a; color:#fff; }
+.gh-card { max-width:860px; margin:0 auto 16px; background:var(--ghs); border:1px solid var(--ghb); border-radius:22px; padding:20px 18px; box-sizing:border-box; }
+.gh-card h2, .gh-h2 { margin:0 0 8px; font:800 24px/1.2 "Georama","Archivo","Arial Black",sans-serif; color:var(--ghp); }
+.gh-h2 { max-width:860px; margin:26px auto 10px; }
+.gh-card p { margin:0 0 10px; line-height:1.55; }
+.gh-now { border-color:#f3b4ad; }
+.gh-now-row { display:flex; flex-wrap:wrap; gap:10px; margin:10px 0; }
+.gh-btn { display:inline-flex; align-items:center; justify-content:center; min-height:48px; padding:0 20px; border-radius:999px; border:0; background:var(--ghp); color:#fff; font:700 16px inherit; font-family:inherit; text-decoration:none; cursor:pointer; }
+@media (prefers-color-scheme: dark) { .gh-btn { color:#1b1227; } }
+.gh a.gh-btn { color:#fff; }
+@media (prefers-color-scheme: dark) { .gh a.gh-btn { color:#1b1227; } }
+.gh-btn.big { min-height:56px; font-size:18px; }
+.gh-btn.sm { min-height:44px; padding:0 16px; font-size:15px; }
+.gh-btn.ghost, .gh a.gh-btn.ghost { background:transparent; color:var(--ghp); box-shadow:inset 0 0 0 2px var(--ghp); }
+.gh-btn:disabled { opacity:.6; cursor:progress; }
+.gh-field { display:grid; gap:6px; font-weight:600; font-size:14px; margin:0 0 12px; flex:1 1 200px; min-width:0; }
+.gh-field input, .gh-field select, .gh-field textarea { box-sizing:border-box; width:100%; min-height:48px; padding:10px 14px; border-radius:14px; border:2px solid var(--ghb); background:var(--ghs); color:var(--ghi); font:400 17px inherit; font-family:inherit; }
+.gh-row { display:flex; flex-wrap:wrap; gap:10px; }
+.gh-or { margin:4px 0 8px; font-size:13px; color:var(--ghi2); text-transform:uppercase; letter-spacing:.12em; }
+.gh-schools { list-style:none; margin:-6px 0 12px; padding:6px; border:2px solid var(--ghb); border-radius:14px; background:var(--ghs); }
+.gh-schools button { width:100%; min-height:44px; text-align:left; border:0; background:none; color:var(--ghi); font:600 15px inherit; font-family:inherit; padding:8px 10px; border-radius:10px; cursor:pointer; }
+.gh-schools button:hover { background:var(--ghl); }
+.gh-schools span { font-weight:400; color:var(--ghi2); }
+.gh-err { color:#b3123a; font-weight:600; }
+.gh-results { scroll-margin-top:60px; }
+.gh-say { background:var(--ghl); border-color:transparent; }
+.gh-script { font-size:18px; font-style:italic; }
+.gh-list { max-width:860px; margin:0 auto; display:grid; grid-template-columns:repeat(auto-fill,minmax(min(100%,260px),1fr)); gap:12px; }
+.gh-res { background:var(--ghs); border:1px solid var(--ghb); border-radius:18px; padding:16px; display:grid; gap:6px; align-content:start; }
+.gh-res h3 { margin:0; font-size:18px; line-height:1.3; }
+.gh-res p { margin:0; line-height:1.5; font-size:15px; }
+.gh-tag { font-size:12px !important; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--ghv); }
+.gh-acts { display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin-top:6px; }
+.gh-link { background:none; border:0; padding:8px 0; min-height:44px; color:var(--ghi2); text-decoration:underline; font:500 14px inherit; font-family:inherit; cursor:pointer; }
+.gh-small { font-size:14px; color:var(--ghi2); }
+.gh-empty { max-width:860px; margin:0 auto; padding:16px 18px; border-radius:18px; background:var(--ghl); line-height:1.55; box-sizing:border-box; }
+.gh-211, .gh-person, .gh-suggest { margin-top:16px; }
+.gh-checks { border:0; padding:0; margin:0 0 12px; display:flex; flex-wrap:wrap; gap:8px 14px; }
+.gh-checks legend { font-weight:600; font-size:14px; margin-bottom:6px; }
+.gh-checks label { display:inline-flex; align-items:center; gap:6px; min-height:36px; font-size:15px; }
+.gh-hp { position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden; }
+.gh-foot { max-width:860px; margin:32px auto 0; text-align:center; color:var(--ghi2); font-size:15px; }
+@media (prefers-reduced-motion: reduce) { .gh-need { transition:none; } }
