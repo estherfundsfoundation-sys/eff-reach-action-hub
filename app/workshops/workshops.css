@@ -1,0 +1,27 @@
+/* /workshops: REACH's door to the workshops in MyEFF. Scoped to .wk. */
+.wk-hero { position: relative; overflow: hidden; padding: clamp(70px, 14vh, 140px) 0 clamp(50px, 10vh, 100px); background: radial-gradient(90% 90% at 50% 0%, #5b1fb0, #2a0a55 55%, #140720); color: #fff; perspective: 1000px; }
+.wk-hero h1 { margin: 0 0 14px; font: 900 clamp(46px, 10vw, 118px)/.92 "Georama", "Archivo", "Arial Black", sans-serif; letter-spacing: -.045em; color: #fff; animation: wk-up 1s .2s both cubic-bezier(.2,.7,.2,1); }
+.wk-hero .rh-kick { color: #ffd35a; }
+.wk-hero .rh-lede { color: #efe6ff; }
+.wk-hero-in { position: relative; z-index: 1; }
+.wk-stage { position: absolute; inset: 0; display: flex; justify-content: flex-end; align-items: center; gap: 1vw; padding-right: 4vw; transform-style: preserve-3d; pointer-events: none; }
+.wk-stage span { font: 900 clamp(80px, 16vw, 240px)/1 "Georama", "Archivo", sans-serif; color: rgba(255,211,90,.12); transform: translateZ(calc(var(--i) * -60px)) rotateY(-24deg); animation: wk-bob 6s calc(var(--i) * .4s) ease-in-out infinite; }
+@keyframes wk-bob { 50% { transform: translateZ(calc(var(--i) * -60px)) rotateY(-24deg) translateY(-18px); } }
+@keyframes wk-up { from { opacity: 0; transform: translateY(40px) rotateX(30deg); } }
+.wk-join { margin-top: 28px; display: grid; gap: 8px; max-width: 460px; }
+.wk-join label { font-weight: 700; color: #fff; }
+.wk-join div { display: flex; gap: 8px; }
+.wk-join input { flex: 1; min-width: 0; font: 800 22px/1 "Georama", sans-serif; letter-spacing: .14em; text-transform: uppercase; padding: 14px 16px; border-radius: 16px; border: 2px solid rgba(255,255,255,.35); background: rgba(255,255,255,.1); color: #fff; }
+.wk-join input::placeholder { color: rgba(255,255,255,.4); }
+.wk-how { padding: 34px 0 0; }
+.wk-steps li { background: #2a0a55; color: #fff; border: 0; }
+.wk-shelf { padding: clamp(40px, 8vh, 80px) 0 10px; }
+.wk-shelf h2 { font-size: clamp(26px, 4.4vw, 46px) !important; }
+.wk-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr)); gap: 14px; margin-top: 18px; }
+.wk-card { position: relative; overflow: hidden; padding: 22px 20px; border-radius: 22px; background: var(--s); border: 1px solid var(--b); animation: rh-rise .8s var(--d) both cubic-bezier(.2,.7,.2,1); }
+.wk-card::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 6px; background: var(--hue); }
+.wk-card h3 { margin: 4px 0 6px; font: 900 22px/1.1 "Georama", "Archivo", sans-serif; letter-spacing: -.02em; color: var(--i); }
+.wk-card p { margin: 0; color: var(--i2); line-height: 1.5; font-size: 15px; }
+.wk-host { margin-top: 50px; }
+@media (prefers-reduced-motion: reduce) { .wk-stage span, .wk-hero h1, .wk-card { animation: none; } }
+.wk-steps { grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); }

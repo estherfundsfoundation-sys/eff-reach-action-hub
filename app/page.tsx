@@ -64,7 +64,7 @@ export default function Home() {
             <p>REACH Ambassadors bring care, resources and connection to campus. Host a REACH workshop, lead a drive, or give to a student&rsquo;s next step.</p>
             <div className="sc-acts">
               <Link className="sc-btn" href="/ambassadors">Meet the ambassadors</Link>
-              <Link className="sc-btn ghost" href="/workshop-request">Bring REACH to campus</Link>
+              <Link className="sc-btn ghost" href="/workshops">REACH Workshops</Link>
               <Link className="sc-btn ghost" href="/resources#lead">All the ways to lead</Link>
             </div>
           </div>
