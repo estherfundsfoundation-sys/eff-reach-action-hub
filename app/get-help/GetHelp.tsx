@@ -231,7 +231,7 @@ export default function GetHelp() {
       ) : null}
 
       <footer className="gh-foot">
-        <p>REACH is EFF&rsquo;s student support: <a href="/">REACH home</a> · <a href="https://portal.estherfundsfoundation.org/scholarships">Scholarships</a> · <a href="https://my.estherfundsfoundation.org/kit">Survival Kit</a></p>
+        <p>REACH is EFF&rsquo;s student support: <a href="/">REACH home</a> · <a href="/scholarships">Scholarships</a> · <a href="https://my.estherfundsfoundation.org/kit">Survival Kit</a></p>
         <p className="gh-small">Before you drop out, REACH.</p>
       </footer>
     </main>

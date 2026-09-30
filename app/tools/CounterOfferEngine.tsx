@@ -236,7 +236,7 @@ export default function CounterOfferEngine() {
       <div className="petition-checklist"><b>Before sending, attach:</b><span>Preferred-school offer</span><span>Competing offer</span><span>School’s appeal form, if required</span><span>Only relevant supporting documents</span></div>
       <article className="petition-draft"><div className="draft-actions"><b>READY-TO-EDIT DRAFT</b><div><button type="button" onClick={copyDraft}>{copied ? "Copied ✓" : "Copy email"}</button><button type="button" onClick={() => window.print()}>Save / print</button></div></div><pre>{draft}</pre></article>
       <div className="petition-guardrail"><b>This is a request—not a promise or entitlement.</b><p>Schools use their own policies and make the final decision. Never invent an offer, hardship, deadline, or amount. A special-circumstances review concerns documented changes affecting FAFSA information; a competing-offer reconsideration may be handled under a different school policy.</p></div>
-      <div className="resource-actions"><a href="https://studentaid.gov/articles/financial-aid-not-enough/" target="_blank" rel="noreferrer">Official “not enough aid” guidance ↗</a><a href="https://portal.estherfundsfoundation.org/resources" target="_blank" rel="noreferrer">Open the EFF Resource Portal ↗</a></div>
+      <div className="resource-actions"><a href="https://studentaid.gov/articles/financial-aid-not-enough/" target="_blank" rel="noreferrer">Official “not enough aid” guidance ↗</a><a href="/get-help" target="_blank" rel="noreferrer">Open the EFF Resource Portal ↗</a></div>
     </section>
   </div>;
 }

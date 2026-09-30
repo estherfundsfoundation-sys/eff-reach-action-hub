@@ -37,7 +37,7 @@ export default async function AmbassadorProfilePage({params}:{params:Promise<{sl
     <header className="site-header">
       <Link className="brand" href="/" aria-label="EFF Reach Action Hub home"><img src="/eff-logo.png" alt="Esther Funds Foundation"/><span><strong>REACH</strong> Action Hub</span></Link>
       <nav aria-label="Profile navigation"><Link href="/">Action Hub</Link><Link href="/ambassadors">Ambassadors</Link></nav>
-      <a className="header-cta" href="https://portal.estherfundsfoundation.org/">Scholarship Portal ↗</a>
+      <a className="header-cta" href="/scholarships">Scholarships</a>
     </header>
     <section className="ambassador-profile-hero"><div className="profile-hero-inner">
       <Link className="profile-back" href="/ambassadors">← Ambassador Directory</Link>

@@ -152,7 +152,7 @@ export default function InteractiveTools({initialTool="award",dedicated=false}:{
   };
 
   return <main className={`tool-page ${dedicated?"dedicated-tool-page":"tool-directory-page"}`}>
-    <header className="tool-header"><Link href="/">← REACH Action Hub</Link><span>EFF INTERACTIVE TOOLKITS</span><a href="https://portal.estherfundsfoundation.org/">Scholarship Portal ↗</a></header>
+    <header className="tool-header"><Link href="/">← REACH Action Hub</Link><span>EFF INTERACTIVE TOOLKITS</span><a href="/scholarships">Scholarships</a></header>
     <section className={`tool-hero ${dedicated?"tool-hero-focused":""}`}><p className="kicker">{dedicated?activeTool.tag:"ONE TOOL. ONE CLEAR NEXT STEP."}</p><h1>{dedicated?<>{activeTool.title}</>:<>Choose one tool.<br/><em>Finish one task.</em></>}</h1><p>{dedicated?activeTool.desc:"Open a focused page for the exact problem you are solving. Nothing else opens underneath it, and you can return here whenever you need a different tool."}</p></section>
     <section className={`tool-shell ${dedicated?"tool-shell-focused":""}`}>
       {!dedicated ? <div id="tool-picker" className="tool-picker" aria-label="Choose an interactive toolkit">{tools.map(t=><Link key={t.id} className={t.color} href={t.id==="resume"?"/resume":`/tools/${t.id}`}><small>{t.tag}</small><strong>{t.title}</strong><span>{t.desc}</span><b className="tool-card-action">Open its page →</b></Link>)}</div> : <>
@@ -180,7 +180,7 @@ export default function InteractiveTools({initialTool="award",dedicated=false}:{
             <p className="decoder-note"><b>Work-study check:</b> {fmt(money(award.workStudy))} was kept out of the upfront bill calculation. Work-study is generally earned through paychecks after a student finds and works a qualifying job.</p>
             <GapResources gap={awardNeed} school={award.school} deadline={award.deadline}/>
             <div className="result-prompt"><b>Message to the school:</b><br/>“I am working to remain enrolled at {award.school||"[school]"}. After reviewing my award and current resources, I estimate that I still need {fmt(awardNeed)} before {award.deadline||"[deadline]"}. Please review my account for missing or pending aid, institutional emergency or completion grants, special-circumstances appeal options, and the safest payment-plan choices. Please also confirm the amount due and each deadline in writing.”</div>
-            <div className="resource-actions"><a href="https://studentaid.gov/articles/evaluating-financial-aid-offers/">Official aid-offer guide ↗</a><a href="https://studentaid.gov/articles/financial-aid-not-enough/">When aid is not enough ↗</a><button type="button" onClick={()=>chooseTool("balance")}>Open the 48-hour rescue plan →</button><a href="https://portal.estherfundsfoundation.org/resources">Open EFF resources ↗</a></div>
+            <div className="resource-actions"><a href="https://studentaid.gov/articles/evaluating-financial-aid-offers/">Official aid-offer guide ↗</a><a href="https://studentaid.gov/articles/financial-aid-not-enough/">When aid is not enough ↗</a><button type="button" onClick={()=>chooseTool("balance")}>Open the 48-hour rescue plan →</button><a href="/get-help">Open EFF resources ↗</a></div>
           </Result>
         </Tool>}
 
@@ -205,7 +205,7 @@ export default function InteractiveTools({initialTool="award",dedicated=false}:{
           <Result title={`${scholarship.name||"Your scholarship"} action list`} print={print}>
             <p className="result-lead"><b>Deadline:</b> {scholarship.deadline||"Confirm the exact date, time, and time zone before starting."}</p>
             <ol><li>Open the official application and copy every eligibility rule into one checklist.</li><li>{scholarship.essay==="yes"?"Draft the essay early, then revise it for the exact prompt and word limit.":scholarship.essay==="unsure"?"Check whether an essay or short-answer response is required.":"No essay selected—focus on the application fields and required documents."}</li><li>{scholarship.recommendation==="yes"?"Ask your recommender now and send the deadline, prompt, résumé, and submission directions.":scholarship.recommendation==="unsure"?"Confirm whether a recommendation is required and who qualifies to write it.":"No recommendation selected."}</li><li>{scholarship.transcript==="yes"?"Request the correct official or unofficial transcript now.":scholarship.transcript==="unsure"?"Confirm which transcript format is accepted.":"No transcript selected."}</li><li>Submit before the final day, save the confirmation, and check for follow-up requests.</li></ol>
-            <div className="resource-actions"><button type="button" onClick={()=>chooseTool("reminders")}>Build deadline reminders →</button><a href="https://portal.estherfundsfoundation.org/">Open the EFF Scholarship Portal ↗</a></div>
+            <div className="resource-actions"><button type="button" onClick={()=>chooseTool("reminders")}>Build deadline reminders →</button><a href="/scholarships">Find scholarships</a></div>
           </Result>
         </Tool>}
 
@@ -268,7 +268,7 @@ export default function InteractiveTools({initialTool="award",dedicated=false}:{
             <PersistSteps barrier={persist.barrier}/>
             <div className="result-prompt">“I am trying to remain enrolled, but {barrierLabel(persist.barrier).toLowerCase()} is creating an urgent barrier{persist.deadline?` before ${persist.deadline}`:""}. I am requesting a coordinated review of the support and options available before I change my enrollment. Please tell me the next step and any deadline in writing.”</div>
             <p><b>Loop in:</b> {persist.contact||"a trusted advisor or dean of students"}. Keep copies of your messages, forms, decisions, and confirmation numbers.</p>
-            <div className="resource-actions"><a href="https://portal.estherfundsfoundation.org/resources">Open EFF resources ↗</a><a href="https://www.211.org/">Find local help through 211 ↗</a></div>
+            <div className="resource-actions"><a href="/get-help">Open EFF resources ↗</a><a href="https://www.211.org/">Find local help through 211 ↗</a></div>
           </Result>
         </Tool>}
       </div></>}

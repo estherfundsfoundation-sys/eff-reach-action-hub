@@ -5,8 +5,8 @@ import ReachBridgeStory from "./ReachBridgeStory";
 import { ReachBox, ReachLetters, ReachStill, ReachStory, ReachWalkers } from "./ReachFilm";
 
 const urgentHelp = [
-  { title: "Food & essentials", text: "Find local food, SNAP, campus pantry, and basic-needs support.", href: "https://portal.estherfundsfoundation.org/resources#basic-needs", tone: "yellow" },
-  { title: "Housing & utilities", text: "Start with local assistance, campus housing support, and 211.", href: "https://portal.estherfundsfoundation.org/resources", tone: "pink" },
+  { title: "Food & essentials", text: "Find local food, SNAP, campus pantry, and basic-needs support.", href: "/get-help", tone: "yellow" },
+  { title: "Housing & utilities", text: "Start with local assistance, campus housing support, and 211.", href: "/get-help", tone: "pink" },
   { title: "College retention emergency terminal", text: "Defend tuition, aid, housing, transportation, essentials, courseware, and the whole student.", href: "/defense?tool=tuition", tone: "blue" },
   { title: "Mental health", text: "Call or text 988 in a crisis. Find ongoing support and campus care.", href: "https://988lifeline.org/", tone: "lavender" },
 ];
@@ -17,7 +17,7 @@ const pathways = [
   { number: "03", title: "Stay enrolled", text: "Food, housing, transportation, childcare, books, technology, and school-balance resources.", href: "#stay-enrolled" },
   { number: "04", title: "Career & income", text: "Jobs that work around college, internships, apprenticeships, career planning, resumes, and training.", href: "#career" },
   { number: "05", title: "Wellness & rights", text: "Mental health, accommodations, student-parent support, legal aid, and advocacy resources.", href: "#wellness" },
-  { number: "06", title: "Scholarship portal", text: "Apply to EFF programs, claim an application, manage documents, and view your secure dashboard.", href: "https://portal.estherfundsfoundation.org/" },
+  { number: "06", title: "Scholarships", text: "Thousands of open scholarships, checked every morning. Get matched in two minutes and save your list.", href: "/scholarships" },
 ];
 
 const actionJourneys = [
@@ -58,7 +58,7 @@ const resourceGroups = [
     title: "College money, without the confusion",
     intro: "Make a plan before a financial gap becomes a reason to leave school.",
     links: [
-      ["EFF Scholarship Portal", "Search scholarships and apply to current EFF programs.", "https://portal.estherfundsfoundation.org/"],
+      ["REACH Scholarships", "Search thousands of open scholarships, checked every morning, and get matched in two minutes.", "/scholarships"],
       ["FAFSA Decoder", "Understand your status, SAI, verification request, and exact next move.", "/tools/fafsa"],
       ["College Cost Decision Lab", "Compare real costs, debt, graduation outcomes, and likely monthly payments.", "https://www.consumerfinance.gov/paying-for-college/your-financial-path-to-graduation/"],
       ["College Scorecard", "Compare institutions by costs, completion, fields of study, and earnings.", "https://collegescorecard.ed.gov/"],
@@ -70,7 +70,7 @@ const resourceGroups = [
     title: "A calmer college plan for parents",
     intro: "Know what to sign, what to ask, what belongs to the student, and what different types of aid really mean.",
     links: [
-      ["Parent & Family Toolkit", "Download EFF's college funding guide and family conversation worksheets.", "https://portal.estherfundsfoundation.org/resources#toolkits"],
+      ["Parent & Family Toolkit", "Download EFF's college funding guide and family conversation worksheets.", "/scholarships/toolkits"],
       ["FAFSA for Parents", "Understand contributor invitations, consent, tax information, and common mistakes.", "https://studentaid.gov/articles/fafsa-for-parents/"],
       ["Childcare & Family Assistance", "Find state childcare subsidies, campus childcare, WIC, SNAP, and family supports.", "https://www.childcare.gov/consumer-education/get-help-paying-for-child-care/child-care-financial-assistance-options"],
       ["Financial Aid Offer Decoder", "See your net price, estimated bill gap, full cost gap, and accepted debt.", "/tools/aid"],
@@ -113,13 +113,13 @@ export default function Home() {
         </a>
         <nav aria-label="Main navigation">
           <Link href="/get-help">Get Help</Link>
-          <a href="https://portal.estherfundsfoundation.org/scholarships">Scholarships</a>
-          <a href="https://portal.estherfundsfoundation.org/scholarship-recipients">Past Recipients</a>
+          <Link href="/scholarships">Scholarships</Link>
+          <Link href="/scholarships/recipients">Past Recipients</Link>
           <a href="#downloads">Tools</a>
           <Link href="/ambassadors">Ambassadors</Link>
           <Link href="/workshop-request">For campuses</Link>
         </nav>
-        <a className="header-cta" href="https://portal.estherfundsfoundation.org/dashboard">My Portal ↗</a>
+        <Link className="header-cta" href="/scholarships/match">Match me to scholarships</Link>
       </header>
 
       <ReachBridgeStory />
@@ -175,7 +175,7 @@ export default function Home() {
         </div>
         <div className="not-sure">
           <div><strong>Not sure where to begin?</strong><span>Use the complete EFF resource center or ask for guidance.</span></div>
-          <div><a href="https://portal.estherfundsfoundation.org/resources">Explore all resources</a><a href="mailto:nationals@estherfundsinc.org?subject=Student%20support%20request">Email EFF support</a></div>
+          <div><Link href="/get-help">Get Help near you</Link><a href="mailto:nationals@estherfundsinc.org?subject=Student%20support%20request">Email EFF support</a></div>
         </div>
       </section>
 
@@ -279,10 +279,10 @@ export default function Home() {
       <section className="portal-callout">
         <div>
           <p className="kicker">READY TO APPLY?</p>
-          <h2>The Reach Action Hub helps you prepare. The EFF Scholarship Portal is where you apply.</h2>
-          <p>Create or access your secure account, explore EFF scholarship programs, upload documents, and follow your application status.</p>
+          <h2>Thousands of scholarships. Checked every morning. Matched to you.</h2>
+          <p>Search by level and deadline, answer a few questions to see what fits, save your list on your phone and put every deadline in your calendar. Never pay to apply.</p>
         </div>
-        <a className="button light" href="https://portal.estherfundsfoundation.org/">Go to the Scholarship Portal ↗</a>
+        <Link className="button light" href="/scholarships">Find my scholarships</Link>
       </section>
 
       <section className="take-action" id="take-action">
@@ -301,7 +301,7 @@ export default function Home() {
 
       <footer>
         <div className="footer-brand"><img src="/eff-logo.png" alt="" /><div><strong>Esther Funds Foundation</strong><span>We are working to prevent college dropouts around the world.</span></div></div>
-        <div className="footer-links"><a href="https://estherfundsfoundation.org/">EFF Home</a><Link href="/ambassadors">Ambassador Directory</Link><a href="https://portal.estherfundsfoundation.org/">Scholarship Portal</a><a href="https://portal.estherfundsfoundation.org/programs">Programs</a><a href="mailto:nationals@estherfundsinc.org">Contact</a></div>
+        <div className="footer-links"><a href="https://estherfundsfoundation.org/">EFF Home</a><Link href="/ambassadors">Ambassador Directory</Link><Link href="/scholarships">Scholarships</Link><Link href="/scholarships/eff">EFF scholarships</Link><Link href="/get-help">Get Help</Link><a href="mailto:nationals@estherfundsinc.org">Contact</a></div>
         <p className="disclaimer">EFF provides educational information and resource navigation. External services set their own eligibility rules and availability. EFF cannot guarantee funding or assistance from outside organizations.</p>
         <div className="footer-bottom"><span>© 2026 Esther Funds Foundation</span><span>Every Future Fulfilled.</span></div>
       </footer>
