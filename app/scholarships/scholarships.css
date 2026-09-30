@@ -136,3 +136,5 @@
   .sc * { animation:none !important; transition:none !important; }
   .sc-card:hover, .sc-door:hover, .sc-btn:hover { transform:none; }
 }
+.sc footer.sc-foot { background:transparent; color:var(--i2); display:block; padding:30px 0 50px; }
+.sc footer.sc-foot::before, .sc footer.sc-foot::after { display:none; }

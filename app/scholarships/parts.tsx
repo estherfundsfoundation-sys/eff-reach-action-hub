@@ -10,7 +10,7 @@ export const SCH_TABS = [
   { href: "/scholarships", label: "All scholarships" },
   { href: "/scholarships/match", label: "Match me" },
   { href: "/scholarships/saved", label: "Saved" },
-  { href: "/scholarships/eff", label: "EFF scholarships" },
+  { href: "/apply", label: "Apply to EFF" },
   { href: "/scholarships/recipients", label: "Past recipients" },
   { href: "/scholarships/toolkits", label: "Toolkits" },
 ];

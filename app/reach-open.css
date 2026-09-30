@@ -1,0 +1,91 @@
+/* The REACH opening (ReachOpening.tsx). Scoped to .ro. --p (0 → 1) is the scroll
+   progress through the 520vh track, set on the stage every frame. */
+.ro { position:relative; height:520vh; background:#07030d; color:#fff; }
+.ro-stage { --p:0; position:sticky; top:0; height:100vh; height:100svh; overflow:hidden; perspective:900px; perspective-origin:50% 45%;
+  font-family:"Georama","Archivo","Poppins","Arial Black",sans-serif; }
+.ro-stage > * { position:absolute; }
+
+/* light */
+.ro-glow { inset:-20%; opacity:calc(.25 + var(--p) * .55);
+  background:
+    radial-gradient(ellipse 60% 45% at 50% 55%, rgba(109,58,135,calc(.15 + var(--p) * .7)), transparent 70%),
+    radial-gradient(circle at 18% 80%, rgba(255,111,97,calc(var(--p) * .35)), transparent 45%),
+    radial-gradient(circle at 85% 18%, rgba(255,211,90,calc(var(--p) * .28)), transparent 40%);
+  transform:scale(calc(1 + var(--p) * .2)); }
+.ro-spot { left:50%; top:-10%; width:70vmax; height:120vh; transform:translateX(-50%); opacity:0; transition:opacity 2.4s ease;
+  background:conic-gradient(from 180deg at 50% 0%, transparent 162deg, rgba(255,240,220,.11) 176deg, rgba(255,240,220,.16) 180deg, rgba(255,240,220,.11) 184deg, transparent 198deg);
+  filter:blur(6px); }
+.ro-lit .ro-spot { opacity:calc(1 - var(--p) * 1.6); }
+.ro-dust { inset:0; opacity:.55;
+  background-image:
+    radial-gradient(1.5px 1.5px at 12% 22%, rgba(255,255,255,.7), transparent 60%), radial-gradient(1px 1px at 72% 12%, rgba(255,255,255,.6), transparent 60%),
+    radial-gradient(1.2px 1.2px at 38% 78%, rgba(255,255,255,.5), transparent 60%), radial-gradient(1px 1px at 88% 64%, rgba(255,255,255,.6), transparent 60%),
+    radial-gradient(1.6px 1.6px at 55% 40%, rgba(255,211,90,.6), transparent 60%), radial-gradient(1px 1px at 22% 58%, rgba(255,255,255,.5), transparent 60%),
+    radial-gradient(1.3px 1.3px at 64% 88%, rgba(255,255,255,.5), transparent 60%), radial-gradient(1px 1px at 8% 90%, rgba(255,255,255,.4), transparent 60%);
+  background-size:520px 520px; animation:ro-drift 60s linear infinite; transform:translateY(calc(var(--p) * -18vh)) scale(calc(1 + var(--p) * .5)); }
+@keyframes ro-drift { to { background-position:520px -520px; } }
+.ro-grain { inset:-50%; opacity:.06; pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation:ro-grain 1s steps(4) infinite; }
+@keyframes ro-grain { 25% { transform:translate(-3%,2%); } 50% { transform:translate(2%,-3%); } 75% { transform:translate(-1%,-2%); } }
+
+/* lines */
+.ro-first, .ro-second, .ro-before { left:50%; top:50%; width:min(92vw,980px); margin:0; text-align:center; transform:translate(-50%,-50%); font-weight:800; letter-spacing:-.02em; line-height:1.05; }
+.ro-first { font-size:clamp(26px,5vw,58px); color:#efe6ff; opacity:0; transition:opacity .35s ease; }
+.ro-lit .ro-first { animation:ro-in 1.6s ease .4s both; }
+@keyframes ro-in { from { filter:blur(8px); letter-spacing:.08em; } }
+.ro-lit .ro-first { opacity:clamp(0, calc((.055 - var(--p)) * 30), 1); }
+.ro-second { font-size:clamp(26px,5vw,58px); color:#ffd35a; opacity:clamp(0, min(calc((var(--p) - .035) * 30), calc((.11 - var(--p)) * 30)), 1); }
+.ro-before { font-size:clamp(44px,10vw,132px); color:#fff; letter-spacing:-.04em;
+  opacity:clamp(0, min(calc((var(--p) - .47) * 18), calc((.64 - var(--p)) * 14)), 1);
+  transform:translate(-50%,-50%) translateY(calc(var(--p) * -12vh)) scale(calc(.9 + var(--p) * .2)); text-shadow:0 0 60px rgba(183,153,227,.5); }
+
+/* the weights */
+.ro-space { inset:0; transform-style:preserve-3d; }
+.ro-weight { position:absolute; left:50%; top:50%; white-space:nowrap; font-size:clamp(22px,4.4vw,56px); font-weight:800; letter-spacing:-.02em;
+  color:#fff; opacity:0; will-change:transform, opacity; text-shadow:0 0 30px rgba(255,111,97,.35); }
+.ro-weight::before { content:""; display:inline-block; width:.42em; height:.42em; margin-right:.35em; border-radius:50%; background:#ff6f61; vertical-align:.12em; box-shadow:0 0 18px #ff6f61; }
+
+/* the word */
+.ro-word { left:50%; top:47%; transform:translate(-50%,-50%); display:flex; gap:clamp(4px,1.6vw,26px); transform-style:preserve-3d; }
+.ro-letter { display:grid; justify-items:center; opacity:0; will-change:transform, opacity; transform-style:preserve-3d; }
+.ro-letter b { font-size:clamp(70px,17vw,236px); font-weight:900; line-height:.9; letter-spacing:-.04em;
+  background:linear-gradient(180deg,#fff 20%,#e9d9ff 60%,#b799e3); -webkit-background-clip:text; background-clip:text; color:transparent;
+  filter:drop-shadow(0 0 calc(var(--p) * 40px) rgba(183,153,227,.55)); }
+.ro-letter:nth-child(1) b, .ro-letter:nth-child(4) b { background:linear-gradient(180deg,#fff 20%,#ffe9a6 60%,#ffd35a); -webkit-background-clip:text; background-clip:text; }
+.ro-letter span { margin-top:8px; max-width:9em; text-align:center; font:700 clamp(10px,1.25vw,15px)/1.25 "Poppins","Segoe UI",sans-serif; letter-spacing:.06em; text-transform:uppercase;
+  color:#e9deff; opacity:clamp(0, calc((var(--p) - .78) * 14), 1); }
+@media (max-width:640px) { .ro-letter span { display:none; } }
+
+/* the lights come up */
+.ro-end { left:50%; bottom:clamp(40px,11vh,120px); width:min(92vw,820px); transform:translateX(-50%) translateY(calc((1 - clamp(0, calc((var(--p) - .86) * 9), 1)) * 30px));
+  text-align:center; opacity:clamp(0, calc((var(--p) - .86) * 9), 1); pointer-events:none; }
+.ro-stage[data-end="1"] .ro-end, .ro-still .ro-end { pointer-events:auto; }
+.ro-by { margin:0; font:700 clamp(13px,1.6vw,17px)/1 "Poppins",sans-serif; letter-spacing:.32em; text-transform:uppercase; color:#ffd35a; }
+.ro-line { margin:12px auto 18px; max-width:32em; font:500 clamp(16px,2vw,20px)/1.45 "Poppins","Segoe UI",sans-serif; color:#efe6ff; }
+.ro-acts { display:flex; flex-wrap:wrap; gap:10px; justify-content:center; }
+.ro-btn { display:inline-flex; align-items:center; min-height:52px; padding:0 22px; border-radius:999px; background:#fff; color:#2a0a55 !important; text-decoration:none;
+  font:800 16px/1 "Poppins","Segoe UI",sans-serif; transition:transform .2s; }
+.ro-btn:hover { transform:translateY(-2px); }
+.ro-btn.hot { background:#ff6f61; color:#fff !important; box-shadow:0 10px 40px -10px rgba(255,111,97,.8); }
+.ro-btn.ghost { background:transparent; color:#fff !important; box-shadow:inset 0 0 0 2px rgba(255,255,255,.7); }
+.ro :focus-visible { outline:3px solid #ffd35a; outline-offset:3px; }
+
+.ro-skip { right:16px; top:16px; z-index:3; min-height:44px; padding:0 16px; border-radius:999px; border:1px solid rgba(255,255,255,.3); background:rgba(0,0,0,.35);
+  color:#fff; font:600 14px "Poppins",sans-serif; cursor:pointer; opacity:clamp(0, calc((.93 - var(--p)) * 12), 1); }
+.ro-cue { left:50%; bottom:22px; transform:translateX(-50%); display:grid; justify-items:center; gap:8px; font:700 11px "Poppins",sans-serif; letter-spacing:.3em; text-transform:uppercase;
+  color:rgba(255,255,255,.7); opacity:clamp(0, calc((.04 - var(--p)) * 25), 1); }
+.ro-cue span { width:2px; height:36px; background:linear-gradient(#fff, transparent); animation:ro-cue 1.6s ease-in-out infinite; }
+@keyframes ro-cue { 0% { transform:scaleY(0); transform-origin:top; } 50% { transform:scaleY(1); transform-origin:top; } 51% { transform-origin:bottom; } 100% { transform:scaleY(0); transform-origin:bottom; } }
+
+/* reduced motion: the finished frame, nothing moves */
+.ro-still { height:auto; }
+.ro-still .ro-stage { --p:1; position:relative; height:auto; min-height:100svh; display:grid; align-content:center; justify-items:center; gap:24px; padding:90px 16px 60px; }
+.ro-still .ro-stage > * { position:relative; left:auto; top:auto; bottom:auto; transform:none; }
+.ro-still .ro-glow, .ro-still .ro-dust, .ro-still .ro-grain, .ro-still .ro-spot { position:absolute; animation:none; }
+.ro-still .ro-first, .ro-still .ro-second, .ro-still .ro-cue, .ro-still .ro-space { display:none; }
+.ro-still .ro-before { opacity:1; font-size:clamp(36px,8vw,90px); }
+.ro-still .ro-letter { opacity:1; transform:none !important; }
+.ro-still .ro-letter span { opacity:1; }
+.ro-still .ro-end { opacity:1; width:100%; }
+.ro-still .ro-skip { display:none; }
