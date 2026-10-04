@@ -36,12 +36,12 @@ export default async function Page() {
           <span className="sc-kick"><span className="dot" aria-hidden="true" />From Esther Funds Foundation</span>
           <h1>Apply to <em>EFF.</em></h1>
           <p>EFF&rsquo;s own scholarships and emergency funding. Make a free My REACH account with just your email, apply in one place, upload what&rsquo;s asked, and watch your application move. Never pay to apply.</p>
-          <div className="sc-acts"><Link className="sc-btn coral" href="/account">Sign in or make an account</Link><Link className="sc-btn ghost" href="/scholarships/recipients">Meet past recipients</Link></div>
+          <div className="sc-acts"><Link className="sc-btn coral" href="/notify">Notify me when it opens</Link><Link className="sc-btn ghost" href="/account">Sign in</Link><Link className="sc-btn ghost" href="/scholarships/recipients">Meet past recipients</Link></div>
         </div>
       </section>
       <div className="sc-wrap sc-section">
         {open.length ? <><h2 className="sc-h2" style={{ marginTop: 0 }}>Open now</h2><div className="sc-grid">{open.map(card)}</div></> : (
-          <div className="sc-empty"><h2>Nothing is open this minute.</h2><p>When EFF opens a scholarship or emergency funding, it appears here first, and on <a href="https://www.instagram.com/estherfundsfoundation/">EFF&rsquo;s Instagram</a>. Make your account now so you&rsquo;re ready. Need money this week? <Link href="/get-help">Get Help</Link> finds emergency aid near you.</p></div>
+          <div className="sc-empty"><h2>Nothing is open this minute.</h2><p>When EFF opens a scholarship or emergency funding, it appears here first. <Link href="/notify"><b>Get an email the day it opens</b></Link>: the EFF Emergency Grant and EFF&rsquo;s 2027 scholarships. Need money this week? <Link href="/get-help">Get Help</Link> finds emergency aid near you.</p></div>
         )}
         {closed.length ? <><h2 className="sc-h2">Opening again</h2><div className="sc-grid">{closed.map(card)}</div></> : null}
       </div>
