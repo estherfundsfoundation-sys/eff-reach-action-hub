@@ -22,6 +22,7 @@ export const CATEGORIES: Category[] = [
     key: "pay", title: "Pay for school", line: "Scholarships checked every morning, EFF's own awards, and aid made plain.", hue: "#ffd35a", glyph: "$",
     items: [
       { title: "REACH Scholarships", text: "Thousands of open scholarships, checked every morning. Search by level, deadline and state.", href: "/scholarships", tag: "EFF" },
+      { title: "REACH Freebies", text: "Free money you're owed, free software, free trials and student prices, checked by EFF. A new Free Friday every week.", href: "/freebies", tag: "EFF" },
       { title: "Match me in 2 minutes", text: "Answer a few questions and see the open scholarships that fit you, with the reasons why.", href: "/scholarships/match", tag: "Tool" },
       { title: "Apply to EFF", text: "Esther Funds Foundation's own scholarships and funding, in one account.", href: "/apply", tag: "EFF" },
       { title: "The Scholarship Walk", text: "167 hand-picked scholarships in the order they close. Save a list and add deadlines to your calendar.", href: "/scholarshipwalk", tag: "EFF" },

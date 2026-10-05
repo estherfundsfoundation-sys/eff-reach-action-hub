@@ -1,0 +1,54 @@
+/* REACH Freebies (/freebies), inside .sc (scholarships.css). */
+.fb h2 { font:900 clamp(28px,5vw,44px)/1 "Georama","Archivo","Arial Black",sans-serif; letter-spacing:-.02em; color:var(--p); margin:0 0 8px; }
+.fb-sub { color:var(--i2); font-size:16px; margin:0 0 14px; }
+.fb-tally { position:relative; margin-top:16px; font-size:17px; color:var(--i); }
+
+.fb-ff { margin:6px auto 36px; }
+.fb-ff-label { display:flex; align-items:baseline; gap:10px; flex-wrap:wrap; margin-bottom:10px; }
+.fb-ff-label span { font:900 22px/1 "Georama","Archivo",sans-serif; color:var(--c); letter-spacing:.02em; }
+.fb-ff-label small { color:var(--i2); font-size:14px; }
+
+.fb-card { position:relative; display:flex; flex-direction:column; gap:6px; padding:18px; border-radius:22px; background:var(--s); border:1px solid var(--b); transition:transform .15s, border-color .15s, box-shadow .15s; }
+.fb-card:hover { transform:translateY(-3px); border-color:var(--pv); box-shadow:0 14px 34px rgba(66,18,127,.10); }
+.fb-card.got { border-color:var(--g); }
+.fb-card.big { padding:26px; border:2px solid var(--c); background:linear-gradient(135deg, var(--s), var(--pl)); }
+.fb-card.big h3 { font-size:clamp(24px,4vw,34px); }
+.fb-card h3 { margin:0; font:800 20px/1.2 "Georama","Archivo",sans-serif; color:var(--i); }
+.fb-brand { margin:0; font-weight:800; font-size:13px; letter-spacing:.12em; text-transform:uppercase; color:var(--pv); }
+.fb-what { margin:0; font-size:15px; line-height:1.5; color:var(--i); }
+.fb-how, .fb-needs { margin:0; font-size:14px; line-height:1.45; color:var(--i2); }
+.fb-tags { display:flex; gap:6px; flex-wrap:wrap; }
+.fb-kind, .fb-soon { display:inline-flex; align-items:center; min-height:26px; padding:0 10px; border-radius:999px; font-weight:800; font-size:12px; letter-spacing:.06em; }
+.fb-kind { background:var(--pl); color:var(--p); }
+.fb-kind.k-free, .fb-kind.k-money { background:var(--y); color:#3a2600; }
+.fb-soon { background:var(--c); color:#fff; }
+.fb-acts { display:flex; gap:8px; flex-wrap:wrap; margin-top:auto; padding-top:8px; }
+.fb-acts .ghost.on { background:var(--g); color:#fff !important; box-shadow:none; }
+
+.fb-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(260px, 1fr)); gap:14px; }
+
+.fb-missing { margin:0 auto 40px; padding:22px 16px; border-radius:26px; background:var(--pl); }
+.fb-qs { display:grid; gap:10px; margin-bottom:14px; }
+.fb-q { display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; padding:12px 14px; border-radius:16px; background:var(--s); border:1px solid var(--b); font-size:16px; }
+.fb-q > span { flex:1 1 240px; }
+.fb-q div { display:flex; gap:6px; }
+.fb-q button { min-height:44px; min-width:64px; border-radius:999px; border:2px solid var(--b); background:var(--s); color:var(--i); font:700 15px/1 inherit; font-family:inherit; cursor:pointer; }
+.fb-q button.on { background:var(--p); border-color:var(--p); color:#fff; }
+.fb-found p { margin:0 0 10px; font-size:17px; }
+
+.fb-all { margin-bottom:40px; }
+.fb-chips { display:flex; gap:8px; overflow-x:auto; padding-bottom:6px; margin-bottom:12px; scrollbar-width:thin; }
+.fb-chips button { flex:0 0 auto; min-height:44px; padding:0 14px; border-radius:999px; border:1px solid var(--b); background:var(--s); color:var(--i); font:600 14px/1 inherit; font-family:inherit; cursor:pointer; }
+.fb-chips button.on { background:var(--p); border-color:var(--p); color:#fff; }
+.fb-search { max-width:420px; margin-bottom:14px; }
+
+.fb-more { display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:12px; margin-bottom:24px; }
+.fb-door { display:flex; flex-direction:column; gap:6px; align-items:flex-start; padding:18px; border-radius:20px; background:var(--s); border:1px solid var(--b); }
+.fb-door b { font:800 18px/1.2 "Georama","Archivo",sans-serif; color:var(--p); }
+.fb-door span { color:var(--i2); font-size:14px; margin-bottom:6px; }
+.fb-note { font-size:13px; line-height:1.5; color:var(--i2); margin-bottom:28px; }
+
+@media (prefers-color-scheme: dark) {
+  .fb-acts .ghost.on, .fb-q button.on, .fb-chips button.on { color:#1b1227; }
+}
+@media (prefers-reduced-motion: reduce) { .fb-card, .fb-card:hover { transition:none; transform:none; } }
