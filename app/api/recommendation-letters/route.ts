@@ -1,3 +1,4 @@
+import { KEY, SUPABASE } from "@/app/scholarships/lib";
 import { sanitizeScholarName, screenRecommendationDetails } from "@/app/tools/recommendation-content-policy";
 
 type Submission = Record<string, unknown>;
@@ -7,44 +8,6 @@ const validEmail = (value: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
 const validPhone = (value: string) => value.replace(/\D/g, "").length >= 7 && value.replace(/\D/g, "").length <= 15;
 const allowedActions = new Set(["copy", "download", "print"]);
 const allowedPronouns = new Set(["she", "he", "they"]);
-
-function referenceFromId(id: string) {
-  return `EFF-REC-${id.replaceAll("-", "").slice(0, 10).toUpperCase()}`;
-}
-
-async function ensureTable(database: D1Database) {
-  await database.prepare(`CREATE TABLE IF NOT EXISTS recommendation_letter_issuances (
-    id TEXT PRIMARY KEY,
-    reference TEXT NOT NULL UNIQUE,
-    client_nonce TEXT NOT NULL UNIQUE,
-    student_name TEXT NOT NULL,
-    student_email TEXT NOT NULL,
-    student_phone TEXT NOT NULL,
-    school TEXT NOT NULL,
-    major TEXT NOT NULL,
-    gpa TEXT,
-    scholarship_name TEXT NOT NULL,
-    scholarship_organization TEXT NOT NULL,
-    eff_connection TEXT NOT NULL,
-    strengths TEXT NOT NULL,
-    achievement TEXT NOT NULL,
-    challenge TEXT,
-    future_goal TEXT NOT NULL,
-    pronouns TEXT NOT NULL,
-    first_action TEXT NOT NULL,
-    request_fingerprint TEXT NOT NULL,
-    status TEXT NOT NULL DEFAULT 'issued',
-    notification_status TEXT NOT NULL DEFAULT 'pending',
-    consent_at TEXT NOT NULL,
-    created_at TEXT NOT NULL,
-    revoked_at TEXT,
-    revocation_reason TEXT
-  )`).run();
-  await database.prepare(`CREATE INDEX IF NOT EXISTS idx_recommendation_issuances_created ON recommendation_letter_issuances(created_at DESC)`).run();
-  await database.prepare(`CREATE INDEX IF NOT EXISTS idx_recommendation_issuances_status ON recommendation_letter_issuances(status, created_at DESC)`).run();
-  await database.prepare(`CREATE INDEX IF NOT EXISTS idx_recommendation_issuances_email_limit ON recommendation_letter_issuances(student_email, created_at DESC)`).run();
-  await database.prepare(`CREATE INDEX IF NOT EXISTS idx_recommendation_issuances_network_limit ON recommendation_letter_issuances(request_fingerprint, created_at DESC)`).run();
-}
 
 async function notifyNationalOffice(record: Record<string, string>) {
   const apiKey = String(process.env.RESEND_API_KEY || "").trim();
@@ -68,7 +31,7 @@ async function notifyNationalOffice(record: Record<string, string>) {
     `Future goal submitted: ${record.futureGoal}`,
     `First action: ${record.action}`,
     "",
-    `Review or revoke: https://reach.estherfundsfoundation.org/admin/recommendation-letters`,
+    `Review or revoke: https://my.estherfundsfoundation.org/national#letters`,
     `Public verification: https://reach.estherfundsfoundation.org/recommendation/${record.reference}`,
   ].join("\n");
   const payload = JSON.stringify({
@@ -133,49 +96,35 @@ export async function POST(request: Request) {
   const issues = screenRecommendationDetails(record);
   if (issues.length) return Response.json({ error: "Prohibited content must be removed before EFF can issue this letter." }, { status: 400 });
 
-  const { env } = await import("cloudflare:workers");
-  if (!env.DB) return Response.json({ error: "EFF letter oversight is temporarily unavailable. No letter was issued." }, { status: 503 });
-  await ensureTable(env.DB);
-
-  const existing = await env.DB.prepare(`SELECT reference FROM recommendation_letter_issuances WHERE client_nonce = ?`).bind(record.clientNonce).first<{ reference: string }>();
-  if (existing?.reference) return Response.json({ ok: true, reference: existing.reference });
-
-  const networkHint = request.headers.get("cf-connecting-ip") || request.headers.get("x-forwarded-for")?.split(",")[0] || "unknown";
+  // Letters are recorded in MyEFF's database (eff_reach_rec_letters) through the anon
+  // function eff_reach_rec_issue, which also re-checks the fields, rate-limits by email
+  // and network, is idempotent by clientNonce, and notifies National. National reviews
+  // and revokes them in MyEFF → National → Letters. (REACH runs on Vercel: there is no
+  // Cloudflare D1 binding, which is why issuing used to fail every time.)
+  const networkHint = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || request.headers.get("cf-connecting-ip") || "unknown";
   const fingerprintBytes = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(`${networkHint}|${request.headers.get("user-agent") || "unknown"}`));
-  const requestFingerprint = [...new Uint8Array(fingerprintBytes)].map((byte) => byte.toString(16).padStart(2, "0")).join("");
-  const dayAgo = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
-  const hourAgo = new Date(Date.now() - 60 * 60 * 1000).toISOString();
-  const emailCount = await env.DB.prepare(`SELECT COUNT(*) AS total FROM recommendation_letter_issuances WHERE student_email=? AND created_at>=?`).bind(record.studentEmail, dayAgo).first<{ total: number }>();
-  const networkCount = await env.DB.prepare(`SELECT COUNT(*) AS total FROM recommendation_letter_issuances WHERE request_fingerprint=? AND created_at>=?`).bind(requestFingerprint, hourAgo).first<{ total: number }>();
-  // Allow a real student to prepare several scholarship applications and avoid
-  // penalizing a campus lab or residence hall whose devices share an address.
-  if (Number(emailCount?.total || 0) >= 15 || Number(networkCount?.total || 0) >= 60) {
-    return Response.json({ error: "For security, this contact has reached the letter limit. Email nationals@estherfundsinc.org for help." }, { status: 429 });
-  }
-
-  const id = crypto.randomUUID();
-  const reference = referenceFromId(id);
-  const now = new Date().toISOString();
+  const fingerprint = [...new Uint8Array(fingerprintBytes)].map((byte) => byte.toString(16).padStart(2, "0")).join("");
+  let reference = "";
   try {
-    await env.DB.prepare(`INSERT INTO recommendation_letter_issuances (
-      id,reference,client_nonce,student_name,student_email,student_phone,school,major,gpa,
-      scholarship_name,scholarship_organization,eff_connection,strengths,achievement,challenge,
-      future_goal,pronouns,first_action,request_fingerprint,status,notification_status,consent_at,created_at
-    ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?, 'issued','pending',?,?)`).bind(
-      id, reference, record.clientNonce, record.studentName, record.studentEmail, record.studentPhone,
-      record.school, record.major, record.gpa || null, record.opportunity, record.organization,
-      record.effConnection, record.strengths, record.achievement, record.challenge || null,
-      record.futureGoal, record.pronouns, record.action, requestFingerprint, now, now,
-    ).run();
+    const r = await fetch(`${SUPABASE}/rest/v1/rpc/eff_reach_rec_issue`, {
+      method: "POST",
+      headers: { apikey: KEY, Authorization: `Bearer ${KEY}`, "Content-Type": "application/json" },
+      body: JSON.stringify({ p: { ...record, consent: true, fingerprint } }),
+      cache: "no-store",
+      signal: AbortSignal.timeout(12000),
+    });
+    const d = await r.json().catch(() => ({})) as { reference?: string; message?: string };
+    if (!r.ok || !d.reference) {
+      const status = /letter limit/i.test(d.message || "") ? 429 : r.ok ? 503 : 400;
+      return Response.json({ error: d.message || "EFF could not securely record this letter. No letter was issued; please try again." }, { status });
+    }
+    reference = d.reference;
   } catch {
-    const duplicate = await env.DB.prepare(`SELECT reference FROM recommendation_letter_issuances WHERE client_nonce = ?`).bind(record.clientNonce).first<{ reference: string }>();
-    if (duplicate?.reference) return Response.json({ ok: true, reference: duplicate.reference });
-    return Response.json({ error: "EFF could not securely record this letter. No letter was issued; please try again." }, { status: 503 });
+    return Response.json({ error: "EFF could not reach its records just now. No letter was issued; please try again in a minute." }, { status: 503 });
   }
 
   let notificationStatus = "failed";
   try { notificationStatus = await notifyNationalOffice({ ...record, reference }); }
   catch { notificationStatus = "failed"; }
-  await env.DB.prepare(`UPDATE recommendation_letter_issuances SET notification_status = ? WHERE id = ?`).bind(notificationStatus, id).run();
   return Response.json({ ok: true, reference, notificationSent: notificationStatus === "sent" });
 }
