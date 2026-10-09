@@ -5,6 +5,7 @@ import Link from "next/link";
 import { SiteFoot, SiteTop } from "../myreach/ui";
 import { MYEFF } from "../myreach/pass";
 import { rpc } from "../scholarships/lib";
+import { Icon } from "./icons";
 
 /* REACH Emergency: a private, step-by-step emergency plan. The student answers five short
    questions; MyEFF's /api/reach/emergency builds the plan from EFF's directory (checked every
@@ -14,23 +15,23 @@ import { rpc } from "../scholarships/lib";
    counts by need and state only. The ZIP code never leaves this page. National runs the
    directory from MyEFF → National → Scholarships → REACH Emergency. */
 
-type Need = { key: string; label: string; icon: string };
+type Need = { key: string; label: string };
 const NEEDS: Need[] = [
-  { key: "money", label: "A sudden bill or expense", icon: "💸" },
-  { key: "housing", label: "Rent, eviction or nowhere to stay", icon: "🏠" },
-  { key: "food", label: "Food", icon: "🍲" },
-  { key: "hygiene", label: "Hygiene or period supplies", icon: "🧼" },
-  { key: "bills", label: "Lights, water, gas or phone", icon: "💡" },
-  { key: "school", label: "A hold, balance or aid problem", icon: "🎓" },
-  { key: "health", label: "Medical, dental or prescriptions", icon: "🩺" },
-  { key: "mind", label: "My mental health", icon: "💜" },
-  { key: "safety", label: "Abuse, assault or I don't feel safe", icon: "🛡️" },
-  { key: "tech", label: "Laptop or internet", icon: "💻" },
-  { key: "ride", label: "Car, gas or getting around", icon: "🚌" },
-  { key: "child", label: "My child (care, diapers, food)", icon: "🍼" },
-  { key: "legal", label: "Legal or immigration", icon: "⚖️" },
-  { key: "disaster", label: "A storm, fire or flood", icon: "🌀" },
-  { key: "loss", label: "Someone I love died", icon: "🕊️" },
+  { key: "money", label: "A sudden bill or expense" },
+  { key: "housing", label: "Rent, eviction or nowhere to stay" },
+  { key: "food", label: "Food" },
+  { key: "hygiene", label: "Hygiene or period supplies" },
+  { key: "bills", label: "Lights, water, gas or phone" },
+  { key: "school", label: "A hold, balance or aid problem" },
+  { key: "health", label: "Medical, dental or prescriptions" },
+  { key: "mind", label: "My mental health" },
+  { key: "safety", label: "Abuse, assault or I don't feel safe" },
+  { key: "tech", label: "Laptop or internet" },
+  { key: "ride", label: "Car, gas or getting around" },
+  { key: "child", label: "My child (care, diapers, food)" },
+  { key: "legal", label: "Legal or immigration" },
+  { key: "disaster", label: "A storm, fire or flood" },
+  { key: "loss", label: "Someone I love died" },
 ];
 const FLAGS: Array<[string, string]> = [
   ["foster", "I was in foster care"], ["parent", "I'm a parent or pregnant"], ["undocumented", "I'm undocumented or have DACA"],
@@ -67,11 +68,11 @@ function ResCard({ r }: { r: Res }) {
       {r.provider ? <p className="em-prov">{r.provider}</p> : null}
       <p>{r.what}</p>
       {r.how ? <p className="em-how"><b>How:</b> {r.how}</p> : null}
-      {r.warning ? <p className="em-warn">⚠️ {r.warning}</p> : null}
+      {r.warning ? <p className="em-warn"><Icon name="alert" size={16} /><span><b>Heads up.</b> {r.warning}</span></p> : null}
       <div className="em-acts">
-        {r.phone ? <a className="sc-btn sm" href={tel(r.phone)}>📞 {r.phone}</a> : null}
-        {r.sms ? <span className="em-sms">💬 {r.sms}</span> : null}
-        {r.url ? <a className="sc-btn sm ghost" href={r.url} target="_blank" rel="noopener noreferrer">Open their page ↗</a> : null}
+        {r.phone ? <a className="sc-btn sm" href={tel(r.phone)}><Icon name="phone" size={17} />{r.phone}</a> : null}
+        {r.sms ? <span className="em-sms"><Icon name="text" size={17} />{r.sms}</span> : null}
+        {r.url ? <a className="sc-btn sm ghost" href={r.url} target="_blank" rel="noopener noreferrer">Open their page <Icon name="out" size={15} /></a> : null}
       </div>
     </article>
   );
@@ -95,8 +96,8 @@ function WebCard({ w }: { w: Web }) {
       <p>{w.what}</p>
       {w.how ? <p className="em-how"><b>How:</b> {w.how}</p> : null}
       <div className="em-acts">
-        {w.phone ? <a className="sc-btn sm" href={tel(w.phone)}>📞 {w.phone}</a> : null}
-        <a className="sc-btn sm ghost" href={w.url} target="_blank" rel="noopener noreferrer">Open their page ↗</a>
+        {w.phone ? <a className="sc-btn sm" href={tel(w.phone)}><Icon name="phone" size={17} />{w.phone}</a> : null}
+        <a className="sc-btn sm ghost" href={w.url} target="_blank" rel="noopener noreferrer">Open their page <Icon name="out" size={15} /></a>
       </div>
     </article>
   );
@@ -206,13 +207,13 @@ export default function Emergency() {
             <div className="em-q em-crisis" key="crisis">
               <h2>You matter. Reach someone now.</h2>
               <div className="em-lines">
-                <a className="em-line red" href="tel:911"><b>911</b><span>If you&rsquo;re in danger right now</span></a>
-                <a className="em-line" href="tel:988"><b>Call 988</b><span>Suicide & Crisis Lifeline, 24/7</span></a>
-                <a className="em-line" href="sms:988"><b>Text 988</b><span>If talking out loud is too much</span></a>
-                <a className="em-line" href="sms:741741&body=HOME"><b>Text HOME to 741741</b><span>Crisis Text Line</span></a>
-                <a className="em-line" href="tel:18006564673"><b>800-656-4673</b><span>RAINN, sexual assault, 24/7</span></a>
-                <a className="em-line" href="tel:18007997233"><b>1-800-799-7233</b><span>Domestic violence, 24/7. Text START to 88788</span></a>
-                <a className="em-line" href="tel:18664887386"><b>1-866-488-7386</b><span>The Trevor Project, LGBTQ+ under 25</span></a>
+                <a className="em-line red" href="tel:911"><Icon name="phone" /><b>911</b><span>If you&rsquo;re in danger right now</span></a>
+                <a className="em-line" href="tel:988"><Icon name="phone" /><b>Call 988</b><span>Suicide & Crisis Lifeline, 24/7</span></a>
+                <a className="em-line" href="sms:988"><Icon name="text" /><b>Text 988</b><span>If talking out loud is too much</span></a>
+                <a className="em-line" href="sms:741741&body=HOME"><Icon name="text" /><b>Text HOME to 741741</b><span>Crisis Text Line</span></a>
+                <a className="em-line" href="tel:18006564673"><Icon name="phone" /><b>800-656-4673</b><span>RAINN, sexual assault, 24/7</span></a>
+                <a className="em-line" href="tel:18007997233"><Icon name="phone" /><b>1-800-799-7233</b><span>Domestic violence, 24/7. Text START to 88788</span></a>
+                <a className="em-line" href="tel:18664887386"><Icon name="phone" /><b>1-866-488-7386</b><span>The Trevor Project, LGBTQ+ under 25</span></a>
               </div>
               <p className="em-sub">When you&rsquo;re safe, come back. We&rsquo;ll make the rest of the plan together.</p>
               <button type="button" className="sc-btn ghost" onClick={() => { setCrisis(false); setStep(1); }}>I&rsquo;m safe now, keep going</button>
@@ -226,7 +227,7 @@ export default function Emergency() {
               <div className="em-chips">
                 {NEEDS.map((x) => (
                   <button key={x.key} type="button" aria-pressed={needs.includes(x.key)} className={needs.includes(x.key) ? "on" : ""} onClick={() => setNeeds(toggle(needs, x.key))}>
-                    <span aria-hidden="true">{x.icon}</span>{x.label}
+                    <span className="em-ico"><Icon name={x.key} /></span><span className="em-lbl">{x.label}</span><span className="em-tick"><Icon name="check" size={14} /></span>
                   </button>
                 ))}
               </div>
@@ -301,9 +302,9 @@ export default function Emergency() {
 
                   {plan.fema.length ? (
                     <div className="em-fema" role="alert">
-                      <b>🌀 FEMA disaster help is open in {plan.state}.</b>
-                      {plan.fema.map((f) => <p key={f.number}>{f.title} (declared {new Date(`${f.declared}T12:00:00`).toLocaleDateString("en-US", { month: "short", day: "numeric" })}){f.areas.length ? `: ${f.areas.slice(0, 6).join(", ")}${f.areas.length > 6 ? "…" : ""}` : ""}. <a href={f.url} target="_blank" rel="noopener noreferrer">Details ↗</a></p>)}
-                      <a className="sc-btn sm" href="https://www.disasterassistance.gov/" target="_blank" rel="noopener noreferrer">Apply at DisasterAssistance.gov ↗</a>
+                      <b className="em-fema-h"><Icon name="storm" />FEMA disaster help is open in {plan.state}.</b>
+                      {plan.fema.map((f) => <p key={f.number}>{f.title} (declared {new Date(`${f.declared}T12:00:00`).toLocaleDateString("en-US", { month: "short", day: "numeric" })}){f.areas.length ? `: ${f.areas.slice(0, 6).join(", ")}${f.areas.length > 6 ? "…" : ""}` : ""}. <a href={f.url} target="_blank" rel="noopener noreferrer">Details <Icon name="out" size={15} /></a></p>)}
+                      <a className="sc-btn sm" href="https://www.disasterassistance.gov/" target="_blank" rel="noopener noreferrer">Apply at DisasterAssistance.gov <Icon name="out" size={15} /></a>
                     </div>
                   ) : null}
 
@@ -317,18 +318,18 @@ export default function Emergency() {
                     <div className="em-script">
                       <p><b>Ask the Dean of Students, financial aid or the basic needs office. Say:</b></p>
                       <blockquote>&ldquo;{script}&rdquo;</blockquote>
-                      <button type="button" className="sc-btn sm" onClick={() => copy(script)}>{copied ? "Copied ✓" : "Copy what to say"}</button>
+                      <button type="button" className="sc-btn sm" onClick={() => copy(script)}><Icon name={copied ? "check" : "copy"} size={17} />{copied ? "Copied" : "Copy what to say"}</button>
                       <p className="em-sub" style={{ marginTop: 10 }}><b>Have ready:</b> your student ID or class schedule, the bill or estimate, your lease if it&rsquo;s housing, and two sentences about what happened.</p>
                     </div>
                     {plan.campus?.links?.length ? (
-                      <div className="em-grid">{plan.campus.links.map((l) => <article key={l.url} className="em-card"><div className="em-tags"><span className="em-tag">Checked by EFF</span></div><h4>{l.label}</h4><div className="em-acts"><a className="sc-btn sm ghost" href={l.url} target="_blank" rel="noopener noreferrer">Open ↗</a></div></article>)}</div>
+                      <div className="em-grid">{plan.campus.links.map((l) => <article key={l.url} className="em-card"><div className="em-tags"><span className="em-tag">Checked by EFF</span></div><h4>{l.label}</h4><div className="em-acts"><a className="sc-btn sm ghost" href={l.url} target="_blank" rel="noopener noreferrer">Open <Icon name="out" size={15} /></a></div></article>)}</div>
                     ) : null}
                     {webCampus.length ? <div className="em-grid">{webCampus.map((w) => <WebCard key={w.url} w={w} />)}</div> : null}
                     {web.state === "loading" ? <p className="em-searching"><span className="em-spin" aria-hidden="true" />Searching {campusName ? `${campusName}'s website` : "the web"} for its emergency fund…</p> : null}
                     {campusName && !webCampus.length && web.state !== "loading" ? (
-                      <p className="em-sub"><a href={q(`${campusName} student emergency grant fund`)} target="_blank" rel="noopener noreferrer">Search for {campusName}&rsquo;s emergency fund ↗</a> · <a href={q(`${campusName} food pantry basic needs`)} target="_blank" rel="noopener noreferrer">its food pantry ↗</a></p>
+                      <p className="em-sub"><a href={q(`${campusName} student emergency grant fund`)} target="_blank" rel="noopener noreferrer">Search for {campusName}&rsquo;s emergency fund <Icon name="out" size={15} /></a> · <a href={q(`${campusName} food pantry basic needs`)} target="_blank" rel="noopener noreferrer">its food pantry <Icon name="out" size={15} /></a></p>
                     ) : null}
-                    {plan.campus?.chapter ? <p className="em-sub">💜 There&rsquo;s an EFF chapter on your campus: <Link href={`https://my.estherfundsfoundation.org/chapters/${plan.campus.chapter.slug}`}>{plan.campus.chapter.name}</Link>. They can walk with you.</p> : null}
+                    {plan.campus?.chapter ? <p className="em-sub em-chap">There&rsquo;s an EFF chapter on your campus: <Link href={`https://my.estherfundsfoundation.org/chapters/${plan.campus.chapter.slug}`}>{plan.campus.chapter.name}</Link>. They can walk with you.</p> : null}
                   </Step>
 
                   {groups.aid.length && needs.some((x) => AID_NEEDS.includes(x)) ? (
@@ -341,13 +342,13 @@ export default function Emergency() {
                     <Step title="Help near you" sub="Call first to make sure you qualify and they serve your area.">
                       {plan.nearby.length ? <div className="em-grid">{plan.nearby.map((l) => (
                         <article key={l.id} className="em-card"><div className="em-tags"><span className="em-tag">{l.source === "hud" ? "HUD counselor" : "Local"}</span></div><h4>{l.name}</h4>{l.summary ? <p>{l.summary}</p> : null}{l.address ? <p className="em-prov">{l.address}</p> : null}
-                          <div className="em-acts">{l.phone ? <a className="sc-btn sm" href={tel(l.phone)}>📞 {l.phone}</a> : null}{l.url ? <a className="sc-btn sm ghost" href={l.url} target="_blank" rel="noopener noreferrer">Open ↗</a> : null}</div></article>
+                          <div className="em-acts">{l.phone ? <a className="sc-btn sm" href={tel(l.phone)}><Icon name="phone" size={17} />{l.phone}</a> : null}{l.url ? <a className="sc-btn sm ghost" href={l.url} target="_blank" rel="noopener noreferrer">Open <Icon name="out" size={15} /></a> : null}</div></article>
                       ))}</div> : null}
                       {webNear.length ? <div className="em-grid">{webNear.map((w) => <WebCard key={w.url} w={w} />)}</div> : null}
                       <div className="em-acts" style={{ marginTop: 10 }}>
-                        <a className="sc-btn sm" href="tel:211">📞 Call 211</a>
-                        <a className="sc-btn sm ghost" href={zip ? `https://www.findhelp.org/search_results/${zip}` : "https://www.findhelp.org/"} target="_blank" rel="noopener noreferrer">findhelp.org{zip ? ` for ${zip}` : ""} ↗</a>
-                        {needs.includes("food") ? <a className="sc-btn sm ghost" href="https://www.feedingamerica.org/find-your-local-foodbank" target="_blank" rel="noopener noreferrer">Food banks ↗</a> : null}
+                        <a className="sc-btn sm" href="tel:211"><Icon name="phone" size={17} />Call 211</a>
+                        <a className="sc-btn sm ghost" href={zip ? `https://www.findhelp.org/search_results/${zip}` : "https://www.findhelp.org/"} target="_blank" rel="noopener noreferrer">findhelp.org{zip ? ` for ${zip}` : ""} <Icon name="out" size={15} /></a>
+                        {needs.includes("food") ? <a className="sc-btn sm ghost" href="https://www.feedingamerica.org/find-your-local-foodbank" target="_blank" rel="noopener noreferrer">Food banks <Icon name="out" size={15} /></a> : null}
                         <Link className="sc-btn sm ghost" href="/get-help">More on Get Help</Link>
                       </div>
                     </Step>
@@ -356,7 +357,7 @@ export default function Emergency() {
                   {groups.byNeed.length ? (
                     <Step title="Help for exactly what you're facing" sub="Government and national programs. EFF opens every one of these links each morning.">
                       {groups.byNeed.map(([need, list]) => (
-                        <div key={need.key} className="em-need"><h4 className="em-needh"><span aria-hidden="true">{need.icon}</span> {need.label}</h4><div className="em-grid">{list.map((r) => <ResCard key={r.slug} r={r} />)}</div></div>
+                        <div key={need.key} className="em-need"><h4 className="em-needh"><span className="em-ico sm"><Icon name={need.key} size={18} /></span>{need.label}</h4><div className="em-grid">{list.map((r) => <ResCard key={r.slug} r={r} />)}</div></div>
                       ))}
                     </Step>
                   ) : null}
@@ -371,7 +372,7 @@ export default function Emergency() {
                     <div className="em-grid">
                       <article className="em-card eff"><h4>Talk to a real person at EFF</h4><p>Tell us what&rsquo;s going on. A person reads it, and you get a code to follow it.</p><div className="em-acts"><a className="sc-btn sm" href={`${MYEFF}/lighthouse`}>Ask EFF for help</a></div></article>
                       <article className="em-card eff"><h4>EFF Emergency Grant</h4>{plan.grant?.open ? <><p>It&rsquo;s open right now. Apply with your My REACH account.</p><div className="em-acts"><Link className="sc-btn sm coral" href={`/apply/${plan.grant.key}`}>Apply now</Link></div></> : <><p>Not open right now. Get one email the moment it opens.</p><div className="em-acts"><Link className="sc-btn sm" href="/notify">Tell me when it opens</Link></div></>}</article>
-                      {needs.includes("food") ? <article className="em-card eff"><h4>REACH Emergency Food Request</h4><p>For enrolled college students facing an urgent food emergency.</p><div className="em-acts"><a className="sc-btn sm" href="https://form.jotform.com/262448222885060" target="_blank" rel="noopener noreferrer">Request food help ↗</a></div></article> : null}
+                      {needs.includes("food") ? <article className="em-card eff"><h4>REACH Emergency Food Request</h4><p>For enrolled college students facing an urgent food emergency.</p><div className="em-acts"><a className="sc-btn sm" href="https://form.jotform.com/262448222885060" target="_blank" rel="noopener noreferrer">Request food help <Icon name="out" size={15} /></a></div></article> : null}
                       {needs.includes("school") || needs.includes("money") ? <article className="em-card eff"><h4>The Survival Kit</h4><p>Can I still register? Write my appeal letter. Help near my campus.</p><div className="em-acts"><a className="sc-btn sm" href={`${MYEFF}/kit`}>Open the kit</a> <a className="sc-btn sm ghost" href={`${MYEFF}/kit/pell`}>Check my Pell</a></div></article> : null}
                       {needs.includes("money") || needs.includes("bills") ? <article className="em-card eff"><h4>Free money you&rsquo;re owed</h4><p>Tax credits, free software and student prices EFF checks every morning.</p><div className="em-acts"><Link className="sc-btn sm" href="/freebies">See freebies</Link> <Link className="sc-btn sm ghost" href="/scholarships">Scholarships</Link></div></article> : null}
                       {needs.includes("safety") ? <article className="em-card eff"><h4>Journey</h4><p>For college survivors of sexual assault: letters to professors that don&rsquo;t say what happened, your rights, and calm when it&rsquo;s loud.</p><div className="em-acts"><a className="sc-btn sm" href={`${MYEFF}/journey`}>Open Journey</a></div></article> : null}
@@ -384,7 +385,7 @@ export default function Emergency() {
                       <ul>{plan.ended.map((e) => <li key={e.slug}><b>{e.title}.</b> {e.warning || e.what}</li>)}</ul></section>
                   ) : null}
 
-                  <section className="em-scam"><h3>🚩 Real help never charges you</h3>
+                  <section className="em-scam"><h3><Icon name="flag" />Real help never charges you</h3>
                     <p>If anyone asks for a fee, your bank or card number &ldquo;to confirm eligibility,&rdquo; your StudentAid.gov login, or &ldquo;guarantees&rdquo; you a grant, it&rsquo;s a scam. A job that sends you a check and asks you to send some back is a scam. Report it at <a href="https://reportfraud.ftc.gov/" target="_blank" rel="noopener noreferrer">ReportFraud.ftc.gov</a> and tell your financial aid office.</p></section>
 
                   <p className="em-foot">{web.state === "off" ? "This plan comes from EFF's checked directory and live local listings." : "This plan comes from EFF's checked directory, live local listings, FEMA's disaster data and a live web search. Web results are found automatically: check their page before you share personal information."} Nothing you answered was saved.</p>

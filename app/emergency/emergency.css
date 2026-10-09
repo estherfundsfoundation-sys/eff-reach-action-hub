@@ -131,3 +131,66 @@
   .em-step, .em-q, .em-card { animation:none !important; break-inside:avoid; }
   .sc { background:#fff !important; }
 }
+
+/* ---- EFF brand pass (9 Oct 2026): no emoji, line icons, purple and a little gold ---- */
+.em { --eg:#C9A227; --eg-lit:#E8C65A; --deep:#2A0A55; }
+.em .sc-kick { color:var(--p); }
+.em-hero h1 em, .em-plan-head h1 em { background:none; color:var(--p); font-style:italic; font-family:"Fraunces","Georgia",serif; font-weight:700; box-shadow:inset 0 -.08em 0 var(--eg); }
+@media (prefers-color-scheme: dark) { .em-hero h1 em, .em-plan-head h1 em { background:none; } }
+.em-lantern i { background:radial-gradient(circle, rgba(201,162,39,.30), rgba(66,18,127,.14) 45%, transparent 70%); }
+.em-lantern i:nth-child(2) { background:radial-gradient(circle, rgba(232,198,90,.35), transparent 65%); }
+.em-lantern i:nth-child(3) { background:radial-gradient(circle, rgba(255,247,214,.8), rgba(201,162,39,.25) 60%, transparent 75%); }
+.em-dots li.on { background:var(--eg); }
+
+/* options: cards, not bubbles */
+.em-chips { display:grid; grid-template-columns:repeat(auto-fill, minmax(230px, 1fr)); gap:10px; }
+.em-chips button { position:relative; display:flex; align-items:center; gap:12px; min-height:60px; padding:10px 40px 10px 12px; border-radius:14px; border:1.5px solid var(--b); font:600 15px/1.3 inherit; font-family:inherit; }
+.em-chips button:hover { transform:none; border-color:var(--pv); background:var(--pl); }
+.em-chips button.on { background:var(--s); border-color:var(--p); color:var(--i); box-shadow:0 0 0 1px var(--p) inset; }
+.em-chips.small button { min-height:48px; padding:8px 40px 8px 14px; }
+.em-ico { flex:0 0 auto; display:grid; place-items:center; width:38px; height:38px; border-radius:10px; background:var(--pl); color:var(--p); }
+.em-ico.sm { width:30px; height:30px; border-radius:8px; }
+.em-chips button.on .em-ico { background:var(--p); color:#fff; }
+@media (prefers-color-scheme: dark) { .em-chips button.on { color:var(--i); } .em-chips button.on .em-ico { color:#1b1227; } }
+.em-tick { position:absolute; right:12px; top:50%; translate:0 -50%; display:grid; place-items:center; width:22px; height:22px; border-radius:50%; border:1.5px solid var(--b); color:transparent; }
+.em-chips button.on .em-tick { background:var(--p); border-color:var(--p); color:#fff; }
+@media (prefers-color-scheme: dark) { .em-chips button.on .em-tick { color:#1b1227; } }
+
+/* steps */
+.em-num { background:var(--deep); color:var(--eg-lit); box-shadow:0 0 0 1px var(--eg) inset, 0 0 0 6px var(--pl); font-family:"Fraunces","Georgia",serif; font-weight:700; }
+@media (prefers-color-scheme: dark) { .em-num { color:var(--eg-lit); background:#1a0938; } }
+.em-needh { display:flex; align-items:center; gap:10px; color:var(--i); }
+
+/* cards and labels */
+.em-card { border-radius:16px; }
+.em-card.hot { border:1.5px solid var(--p); }
+.em-tag { border-radius:6px; background:transparent; border:1px solid var(--b); color:var(--i2); letter-spacing:.1em; }
+.em-tag.hot { background:var(--p); border-color:var(--p); color:#fff; }
+@media (prefers-color-scheme: dark) { .em-tag.hot { color:#1b1227; } }
+.em-tag.web { background:transparent; border-color:var(--eg); color:#8a6d10; }
+@media (prefers-color-scheme: dark) { .em-tag.web { color:var(--eg-lit); } }
+.em-card.web { border-style:solid; border-color:var(--b); border-left:3px solid var(--eg); }
+.em-warn { display:flex; gap:8px; align-items:flex-start; background:transparent !important; border-left:3px solid var(--eg); border-radius:0 !important; padding:4px 0 4px 10px !important; color:var(--i) !important; }
+.em-warn svg { flex:0 0 auto; margin-top:2px; color:#8a6d10; }
+@media (prefers-color-scheme: dark) { .em-warn svg { color:var(--eg-lit); } }
+.em .sc-btn svg, .em-sms svg { flex:0 0 auto; }
+.em-sms { display:inline-flex; align-items:center; gap:6px; }
+.em .sc-btn { gap:8px; }
+.em-fema { background:var(--s); border:1.5px solid var(--eg); color:var(--i); }
+.em-fema-h { display:flex; align-items:center; gap:8px; }
+.em-fema p a { color:var(--p) !important; }
+@media (prefers-color-scheme: dark) { .em-fema { background:var(--s); color:var(--i); } .em-fema p a { color:var(--p) !important; } }
+.em-scam { border:1.5px solid var(--b); border-left:3px solid #b3261e; }
+.em-scam h3, .em-ended h3 { display:flex; align-items:center; gap:8px; }
+.em-scam h3 svg { color:#b3261e; }
+.em-script { background:var(--pl); border:1px solid var(--b); }
+.em-script blockquote { border-left-color:var(--eg); font-family:"Fraunces","Georgia",serif; }
+.em-chap { padding:12px 14px; border-radius:12px; background:var(--pl); }
+.em-card.eff { background:var(--s); border-top:3px solid var(--p); }
+.sc-btn.coral { background:var(--p); }
+
+/* crisis lines */
+.em-line { display:grid; grid-template-columns:auto 1fr; column-gap:12px; align-items:center; }
+.em-line svg { grid-row:span 2; color:var(--p); }
+.em-line.red svg { color:#fff; }
+.em-fema p a, .em-sub a { white-space:nowrap; } .em-fema p a svg, .em-sub a svg { vertical-align:-2px; }
