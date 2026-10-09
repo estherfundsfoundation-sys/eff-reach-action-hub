@@ -9,6 +9,7 @@ export const CATEGORIES: Category[] = [
   {
     key: "now", title: "Help right now", line: "Food, rent, a bill, a hold, a hard night. Start here.", hue: "#ff6f61", glyph: "✦",
     items: [
+      { title: "REACH Emergency: make a plan", text: "Five private questions, then a step-by-step plan: your campus emergency fund, help near you and what's open right now.", href: "/emergency", tag: "Now" },
       { title: "Get Help near you", text: "Say what's going on in your own words and get local help, nearest first, plus exactly what to say when you call.", href: "/get-help", tag: "Now" },
       { title: "988 Suicide & Crisis Lifeline", text: "Call, text, or chat 988 for immediate mental-health crisis support.", href: "https://988lifeline.org/", tag: "Official" },
       { title: "Ask a real person at EFF", text: "Tell EFF what's going on, privately. You get a code to follow your request.", href: "https://my.estherfundsfoundation.org/lighthouse", tag: "EFF" },

@@ -6,6 +6,7 @@ import { readPass } from "./pass";
 
 /* The REACH site bar: one menu for every page. */
 export const NAV = [
+  { href: "/emergency", label: "Emergency" },
   { href: "/get-help", label: "Get Help" },
   { href: "/scholarships", label: "Scholarships" },
   { href: "/freebies", label: "Freebies" },
@@ -41,7 +42,7 @@ export function SiteFoot() {
       <div className="sc-wrap">
         <p><b>REACH</b> is Esther Funds Foundation&rsquo;s student support: Reach out, Engage your community, Access resources, Care for your mental health, Hold on. Before you drop out, REACH.</p>
         <p>In immediate danger, call 911. In crisis, call or text <a href="tel:988">988</a>.</p>
-        <p><Link href="/">REACH home</Link> · <Link href="/get-help">Get Help</Link> · <Link href="/scholarships">Scholarships</Link> · <Link href="/freebies">Freebies</Link> · <Link href="/apply">Apply to EFF</Link> · <Link href="/workshops">Workshops</Link> · <Link href="/account">My REACH</Link> · <a href="https://www.estherfundsfoundation.org">Esther Funds Foundation</a></p>
+        <p><Link href="/">REACH home</Link> · <Link href="/emergency">Emergency plan</Link> · <Link href="/get-help">Get Help</Link> · <Link href="/scholarships">Scholarships</Link> · <Link href="/freebies">Freebies</Link> · <Link href="/apply">Apply to EFF</Link> · <Link href="/workshops">Workshops</Link> · <Link href="/account">My REACH</Link> · <a href="https://www.estherfundsfoundation.org">Esther Funds Foundation</a></p>
       </div>
     </footer>
   );
