@@ -22,7 +22,26 @@
 .sc-menu a:hover { background:var(--pl); }
 .sc-menu a.on { background:var(--p); color:#fff !important; }
 @media (prefers-color-scheme: dark) { .sc-menu a.on { color:#1b1227 !important; } }
-@media (max-width:760px) { .sc-top .sc-wrap { flex-wrap:wrap; gap:6px; padding-top:8px; padding-bottom:6px; } .sc-menu { margin-left:0; width:100%; } }
+.sc-menu { overflow:visible; align-items:center; }
+.sc-menu .sc-emerg { color:#8c1d2f !important; box-shadow:inset 0 0 0 1.5px #c9a0a8; }
+.sc-menu .sc-emerg::before { content:""; width:7px; height:7px; border-radius:50%; background:#b3261e; margin-right:8px; }
+.sc-menu .sc-emerg.on { background:#8c1d2f; color:#fff !important; box-shadow:none; }
+.sc-menu .sc-emerg.on::before { background:#fff; }
+@media (prefers-color-scheme: dark) { .sc-menu .sc-emerg { color:#ffb4bd !important; box-shadow:inset 0 0 0 1.5px #6b2a36; } .sc-menu .sc-emerg.on { background:#ffb4bd; color:#1b1227 !important; } .sc-menu .sc-emerg.on::before { background:#1b1227; } }
+.sc-more { position:relative; }
+.sc-morebtn { display:inline-flex; align-items:center; gap:6px; min-height:44px; padding:10px 14px; border-radius:999px; border:1px solid var(--b); background:var(--s); color:var(--i); font:600 15px/1 inherit; font-family:inherit; cursor:pointer; }
+.sc-morebtn:hover, .sc-morebtn.open { background:var(--pl); }
+.sc-morebtn svg { transition:transform .2s; } .sc-morebtn.open svg { transform:rotate(180deg); }
+.sc-drop { position:absolute; right:0; top:calc(100% + 8px); z-index:40; min-width:220px; padding:8px; border-radius:16px; background:var(--s); border:1px solid var(--b); box-shadow:0 18px 40px rgba(42,10,85,.18); display:grid; gap:2px; }
+.sc-menu .sc-drop a { border-radius:10px; width:100%; }
+.sc-drop .sc-dmain { display:none !important; }
+.sc-menu .sc-acct { font-weight:800; }
+@media (max-width:900px) {
+  .sc-menu .sc-main, .sc-menu .sc-acct { display:none; }
+  .sc-drop .sc-dmain { display:inline-flex !important; }
+}
+@media (max-width:760px) { .sc-top .sc-wrap { gap:8px; } .sc-brand small { display:none; } .sc-menu { margin-left:auto; } }
+@media (max-width:380px) { .sc-brand { font-size:18px; } .sc-menu a, .sc-morebtn { padding:10px 11px; } }
 
 /* hero */
 .sc-hero { position:relative; padding:44px 0 26px; overflow:hidden; }
@@ -138,3 +157,13 @@
 }
 .sc footer.sc-foot { background:transparent; color:var(--i2); display:block; padding:30px 0 50px; }
 .sc footer.sc-foot::before, .sc footer.sc-foot::after { display:none; }
+
+/* scholarships' own tabs, a slim row under the site bar */
+.sc-sub { border-bottom:1px solid var(--b); background:var(--s); }
+.sc-sub .sc-wrap { display:flex; gap:4px; overflow-x:auto; scrollbar-width:none; padding-top:6px; padding-bottom:6px; }
+.sc-sub .sc-wrap::-webkit-scrollbar { display:none; }
+.sc-sub a { white-space:nowrap; padding:8px 12px; border-radius:8px; font-weight:600; font-size:14px; text-decoration:none; color:var(--i2) !important; }
+.sc-sub a:hover { background:var(--pl); }
+.sc-sub a.on { color:var(--p) !important; box-shadow:inset 0 -2px 0 var(--p); border-radius:0; }
+/* the site bar on pages that are not inside .sc */
+.sc.sc-bar { min-height:0; background:none; position:sticky; top:0; z-index:30; }

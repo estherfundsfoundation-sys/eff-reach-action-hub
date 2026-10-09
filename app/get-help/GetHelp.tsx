@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import { SiteTop } from "../myreach/ui";
 import { byKey, fullHref, type ReachResource } from "./resources";
 import "./get-help.css";
 
@@ -105,8 +106,8 @@ export default function GetHelp() {
     <main className="gh">
       <div className="gh-crisis" role="note">In crisis or worried about a friend? <a href="tel:988">Call or text 988</a> · In danger now? <a href="tel:911">911</a></div>
 
+      <div className="sc sc-bar"><SiteTop on="/get-help" /></div>
       <header className="gh-hero">
-        <a className="gh-back" href="/">REACH</a>
         <h1>What&rsquo;s going on?</h1>
         <p>Pick what&rsquo;s closest. We&rsquo;ll show you who can help, near you first, in plain words. Nothing you pick is saved.</p>
       </header>

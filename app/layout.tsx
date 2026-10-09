@@ -27,7 +27,6 @@ export const viewport: Viewport = {
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  /* The EFF family bar (www.estherfundsfoundation.org/ecosystem.js): one script,
-     drawn in its own shadow root so it never touches this site's styles. */
-  return <html lang="en"><head><script src="https://www.estherfundsfoundation.org/ecosystem.js" defer /></head><body>{children}<MovedNotice /></body></html>;
+  /* No EFF family bar on REACH (Shayna, 9 Oct 2026: remove it here as well). */
+  return <html lang="en"><body>{children}<MovedNotice /></body></html>;
 }

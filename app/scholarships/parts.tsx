@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { readSaved, writeSaved } from "./lib";
+import { SiteTop } from "../myreach/ui";
 
 /* Shared pieces for REACH Scholarships: the top bar and the save heart. */
 
@@ -10,7 +11,6 @@ export const SCH_TABS = [
   { href: "/scholarships", label: "All scholarships" },
   { href: "/scholarships/match", label: "Match me" },
   { href: "/scholarships/saved", label: "Saved" },
-  { href: "/apply", label: "Apply to EFF" },
   { href: "/scholarships/recipients", label: "Past recipients" },
   { href: "/scholarships/toolkits", label: "Toolkits" },
 ];
@@ -23,19 +23,18 @@ export function Top({ on }: { on: string }) {
     return () => { window.removeEventListener("reach-saved", up); window.removeEventListener("storage", up); };
   }, []);
   return (
-    <header className="sc-top">
-      <div className="sc-wrap">
-        <Link className="sc-brand" href="/">REACH<small>SCHOLARSHIPS</small></Link>
-        <nav className="sc-menu" aria-label="Scholarships">
+    <>
+      <SiteTop on="/scholarships" />
+      <nav className="sc-sub" aria-label="Scholarships">
+        <div className="sc-wrap">
           {SCH_TABS.map((t) => (
             <Link key={t.href} href={t.href} className={on === t.href ? "on" : ""} aria-current={on === t.href ? "page" : undefined}>
               {t.label}{t.href === "/scholarships/saved" && count ? ` (${count})` : ""}
             </Link>
           ))}
-          <Link href="/get-help">Get Help</Link>
-        </nav>
-      </div>
-    </header>
+        </div>
+      </nav>
+    </>
   );
 }
 

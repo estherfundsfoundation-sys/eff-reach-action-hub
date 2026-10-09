@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import GetHelp from "./GetHelp";
+import "../scholarships/scholarships.css";
 
 export const metadata: Metadata = {
   title: "Get Help | REACH by Esther Funds Foundation",
