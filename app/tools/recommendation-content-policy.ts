@@ -95,6 +95,9 @@ const RULES: Array<{ category: RecommendationSafetyIssue["category"]; pattern: R
   },
 ];
 
+// Letters EFF approved with a code (jobs, internships, graduate school, programs, housing) may
+// name those uses; legal, immigration, credit and identity uses are never issued automatically.
+const NEVER_AUTOMATED = /\b(?:court|lawsuit|litigation|immigration|visa\s+application|loan\s+application|credit\s+application|identity\s+verification|background\s+check|custody|parole|probation|disciplinary\s+hearing)\b/i;
 const NON_SCHOLARSHIP_USE = /\b(?:employment\s+(?:reference|verification)|job\s+application|court|lawsuit|litigation|immigration|visa\s+application|housing\s+application|loan\s+application|credit\s+application|identity\s+verification|background\s+check|custody|parole|probation|disciplinary\s+hearing)\b/i;
 
 function normalizeForScreening(value: string) {
@@ -115,7 +118,7 @@ function normalizeForScreening(value: string) {
     .trim();
 }
 
-export function screenRecommendationDetails(details: Record<string, string>) {
+export function screenRecommendationDetails(details: Record<string, string>, opts: { general?: boolean } = {}) {
   const issues: RecommendationSafetyIssue[] = [];
   for (const [field, rawValue] of Object.entries(details)) {
     if (!FIELD_LABELS[field] || !rawValue.trim()) continue;
@@ -131,7 +134,7 @@ export function screenRecommendationDetails(details: Record<string, string>) {
   }
 
   const requestedUse = normalizeForScreening(details.opportunity || "");
-  if (NON_SCHOLARSHIP_USE.test(requestedUse)) {
+  if ((opts.general ? NEVER_AUTOMATED : NON_SCHOLARSHIP_USE).test(requestedUse)) {
     issues.push({ field: FIELD_LABELS.opportunity, category: "non-scholarship use" });
   }
 

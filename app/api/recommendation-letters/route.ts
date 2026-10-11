@@ -13,7 +13,7 @@ async function notifyNationalOffice(record: Record<string, string>) {
   const apiKey = String(process.env.RESEND_API_KEY || "").trim();
   if (!apiKey) return "not_configured";
   const text = [
-    "A new EFF scholarship recommendation letter was issued.",
+    record.kind === "general" ? `A recommendation letter approved with code ${record.code} was issued.` : "A new EFF scholarship recommendation letter was issued.",
     "",
     `Reference: ${record.reference}`,
     `Student: ${record.studentName}`,
@@ -22,7 +22,7 @@ async function notifyNationalOffice(record: Record<string, string>) {
     `School: ${record.school}`,
     `Major: ${record.major}`,
     `GPA: ${record.gpa || "Not supplied"}`,
-    `Scholarship: ${record.opportunity}`,
+    `${record.kind === "general" ? "Opportunity" : "Scholarship"}: ${record.opportunity}`,
     `Organization: ${record.organization}`,
     `EFF connection: ${record.effConnection}`,
     `Strengths submitted: ${record.strengths}`,
@@ -38,7 +38,7 @@ async function notifyNationalOffice(record: Record<string, string>) {
     from: "EFF Recommendation Oversight <nationals@estherfundsinc.org>",
     to: ["nationals@estherfundsinc.org"],
     reply_to: record.studentEmail,
-    subject: `New EFF scholarship letter · ${record.reference} · ${record.studentName}`,
+    subject: `New EFF ${record.kind === "general" ? "coded" : "scholarship"} letter · ${record.reference} · ${record.studentName}`,
     text,
   });
   for (let attempt = 0; attempt < 3; attempt += 1) {
@@ -66,6 +66,27 @@ async function notifyNationalOffice(record: Record<string, string>) {
   return "failed_after_retry";
 }
 
+// A student with a code from EFF National checks it before typing everything (eff_reach_rec_code_check, anon).
+export async function GET(request: Request) {
+  const url = new URL(request.url);
+  const code = clean(url.searchParams.get("code"), 20).toUpperCase();
+  const email = clean(url.searchParams.get("email"), 180).toLowerCase();
+  if (!/^[A-Z0-9]{6,12}$/.test(code) || !validEmail(email)) return Response.json({ ok: false, error: "Enter the code EFF sent you and the email it was sent to." }, { status: 400 });
+  try {
+    const r = await fetch(`${SUPABASE}/rest/v1/rpc/eff_reach_rec_code_check`, {
+      method: "POST",
+      headers: { apikey: KEY, Authorization: `Bearer ${KEY}`, "Content-Type": "application/json" },
+      body: JSON.stringify({ p_code: code, p_email: email }),
+      cache: "no-store",
+      signal: AbortSignal.timeout(10000),
+    });
+    const d = await r.json().catch(() => ({}));
+    return Response.json(d, { status: r.ok ? 200 : 400 });
+  } catch {
+    return Response.json({ ok: false, error: "EFF could not check that code just now. Please try again in a minute." }, { status: 503 });
+  }
+}
+
 export async function POST(request: Request) {
   let body: Submission;
   try { body = await request.json() as Submission; }
@@ -88,12 +109,19 @@ export async function POST(request: Request) {
     pronouns: clean(body.pronouns, 10),
     action: clean(body.action, 20),
     clientNonce: clean(body.clientNonce, 80),
+    kind: body.kind === "general" ? "general" : "scholarship",
+    code: clean(body.code, 20).toUpperCase(),
+    addressee: clean(body.addressee, 180),
   };
+  const general = record.kind === "general";
+  if (general && !/^[A-Z0-9]{6,12}$/.test(record.code)) {
+    return Response.json({ error: "Non-scholarship letters need a code from EFF. Ask for one at my.estherfundsfoundation.org/letters." }, { status: 400 });
+  }
   const required = [record.studentName, record.studentEmail, record.studentPhone, record.school, record.major, record.opportunity, record.organization, record.effConnection, record.strengths, record.achievement, record.futureGoal];
   if (required.some((value) => !value) || !validEmail(record.studentEmail) || !validPhone(record.studentPhone) || !allowedPronouns.has(record.pronouns) || !allowedActions.has(record.action) || body.consent !== true || !/^[a-zA-Z0-9-]{16,80}$/.test(record.clientNonce)) {
     return Response.json({ error: "Complete the required contact, scholarship, consent, and letter fields." }, { status: 400 });
   }
-  const issues = screenRecommendationDetails(record);
+  const issues = screenRecommendationDetails(record, { general });
   if (issues.length) return Response.json({ error: "Prohibited content must be removed before EFF can issue this letter." }, { status: 400 });
 
   // Letters are recorded in MyEFF's database (eff_reach_rec_letters) through the anon
