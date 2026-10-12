@@ -4,7 +4,6 @@
    tools. Every date and number links to the EFF post it came from. Each scene
    reads fully with reduced motion: nothing pins, everything is shown. */
 
-import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import "./reach-film.css";
 
@@ -173,7 +172,7 @@ export function ReachStory() {
       <p className="rf-src">As EFF posted on 15 June 2026. <a href="https://www.instagram.com/p/DZll1FiCQ-t/">See the post ↗</a></p>
       <ol className="rf-time">{TIMELINE.map(([d, t, x, code]) => <TimeItem key={t} d={d} t={t} x={x} code={code} />)}</ol>
       <div className="rf-story-go">
-        <Link className="bridge-button" href="/ambassadors">Meet the ambassadors</Link>
+        <a className="bridge-button" href="https://represent.estherfundsfoundation.org/ambassador">Become an ambassador</a>
         <a className="bridge-button ghost" href="https://www.instagram.com/effcampusreachbox/">Follow @effcampusreachbox ↗</a>
       </div>
     </section>

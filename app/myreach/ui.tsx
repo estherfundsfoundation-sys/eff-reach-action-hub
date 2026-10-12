@@ -15,7 +15,6 @@ export const NAV = [
   { href: "/apply", label: "Apply to EFF" },
   { href: "/workshops", label: "Workshops" },
   { href: "/resources", label: "All resources" },
-  { href: "/ambassadors", label: "Ambassadors" },
 ];
 const MAIN = NAV.slice(1, 4);
 
