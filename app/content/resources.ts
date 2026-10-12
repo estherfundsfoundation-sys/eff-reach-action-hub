@@ -87,7 +87,7 @@ export const CATEGORIES: Category[] = [
   {
     key: "lead", title: "Lead & give", line: "Be the reason someone else stays.", hue: "#c9a0ff", glyph: "✺",
     items: [
-      { title: "EFF Campus Ambassadors", text: "Represent EFF on your campus: apply, train in the Ambassador Academy, and get your ID.", href: "https://represent.estherfundsfoundation.org/ambassador", tag: "EFF" },
+      { title: "REACH Ambassadors", text: "Meet the student leaders bringing care, resources, and connection to campus.", href: "/ambassadors", tag: "EFF" },
       { title: "REACH Workshops", text: "Live workshops where the whole room plays along on their phones. Join with a code, or host one from MyEFF.", href: "/workshops", tag: "EFF" },
       { title: "Request a REACH workshop", text: "Bring a REACH workshop or support to your campus.", href: "/workshop-request", tag: "EFF" },
       { title: "Campus Event Builder", text: "Create a useful 60-minute REACH event in under three minutes.", href: "/tools/campus", tag: "Tool" },
