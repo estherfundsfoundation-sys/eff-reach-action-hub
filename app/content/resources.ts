@@ -9,6 +9,7 @@ export const CATEGORIES: Category[] = [
   {
     key: "now", title: "Help right now", line: "Food, rent, a bill, a hold, a hard night. Start here.", hue: "#ff6f61", glyph: "✦",
     items: [
+      { title: "Benefits Check", text: "A private check of SNAP's student rules, health coverage, internet discounts and more you may qualify for, with where to apply.", href: "https://my.estherfundsfoundation.org/kit/benefits", tag: "Tool" },
       { title: "REACH Emergency: make a plan", text: "Five private questions, then a step-by-step plan: your campus emergency fund, help near you and what's open right now.", href: "/emergency", tag: "Now" },
       { title: "Get Help near you", text: "Say what's going on in your own words and get local help, nearest first, plus exactly what to say when you call.", href: "/get-help", tag: "Now" },
       { title: "988 Suicide & Crisis Lifeline", text: "Call, text, or chat 988 for immediate mental-health crisis support.", href: "https://988lifeline.org/", tag: "Official" },
@@ -22,6 +23,11 @@ export const CATEGORIES: Category[] = [
   {
     key: "pay", title: "Pay for school", line: "Scholarships checked every morning, EFF's own awards, and aid made plain.", hue: "#ffd35a", glyph: "$",
     items: [
+      { title: "Loan Navigator", text: "What changed for student and parent loans from July 1, 2026, plus a Parent PLUS gap calculator.", href: "https://my.estherfundsfoundation.org/kit/loans", tag: "Tool" },
+      { title: "Free Tax Money", text: "The American Opportunity Tax Credit and EITC, which one to look into, and where to file for free.", href: "https://my.estherfundsfoundation.org/kit/taxes", tag: "Tool" },
+      { title: "Foster Youth & Independent Students", text: "Independent status, Chafee education vouchers and dependency overrides when you don't have a parent's help.", href: "https://my.estherfundsfoundation.org/kit/foster", tag: "Tool" },
+      { title: "Opt Out of Access-Code Charges", text: "Stop paying for automatically billed course materials you don't need, with the letter to send.", href: "https://my.estherfundsfoundation.org/kit/optout", tag: "Tool" },
+      { title: "Is This a Scam?", text: "A private checklist for scholarships, jobs, checks and loan offers that seem off.", href: "https://my.estherfundsfoundation.org/kit/scam", tag: "Tool" },
       { title: "REACH Scholarships", text: "Thousands of open scholarships, checked every morning. Search by level, deadline and state.", href: "/scholarships", tag: "EFF" },
       { title: "REACH Freebies", text: "Free money you're owed, free software, free trials and student prices, checked by EFF. A new Free Friday every week.", href: "/freebies", tag: "EFF" },
       { title: "Match me in 2 minutes", text: "Answer a few questions and see the open scholarships that fit you, with the reasons why.", href: "/scholarships/match", tag: "Tool" },
@@ -37,12 +43,21 @@ export const CATEGORIES: Category[] = [
       { title: "Official EFF Recommendation Letter", text: "Submit truthful facts and save a personalized Esther Funds Foundation letter.", href: "/tools/recommendation", tag: "EFF" },
       { title: "Essay & planner toolkits", text: "Free PDFs: essay toolkit, application planner, senior roadmap, aid appeal toolkit and more.", href: "/scholarships/toolkits", tag: "Guide" },
       { title: "College Scorecard", text: "Compare institutions by costs, completion, fields of study, and earnings.", href: "https://collegescorecard.ed.gov/", tag: "Official" },
-      { title: "Loan Simulator", text: "Estimate repayment options and understand how future borrowing changes your payment.", href: "https://studentaid.gov/loan-simulator/", tag: "Official" },
+      { title: "Loan Simulator", text: "Estimate repayment options and understand how future borrowing changes your payment. Loans made from July 1, 2026 follow new federal rules, so check which plans apply to yours.", href: "https://studentaid.gov/loan-simulator/", tag: "Official" },
     ],
   },
   {
     key: "stay", title: "Stay enrolled", line: "Holds, appeals, grades, transcripts: fight for your seat before you give it up.", hue: "#b799e3", glyph: "↻",
     items: [
+      { title: "Hold Buster", text: "Clear the hold that's stopping you from registering, and write the payment-plan email.", href: "https://my.estherfundsfoundation.org/kit/holds", tag: "Tool" },
+      { title: "Deadline Reminders", text: "Put your college deadlines on your phone's calendar, with reminders before each one.", href: "https://my.estherfundsfoundation.org/kit/remind", tag: "Tool" },
+      { title: "Come Back Plan", text: "Stopped out? A step-by-step way back to school.", href: "https://my.estherfundsfoundation.org/kit/comeback", tag: "Tool" },
+      { title: "Accommodations Request Builder", text: "Ask disability services for the accommodations you're entitled to, and tell your professor without sharing your diagnosis.", href: "https://my.estherfundsfoundation.org/kit/access", tag: "Tool" },
+      { title: "Get Into Your Accounts", text: "Help with your FSA ID, parent contributors and IRS tax transcripts.", href: "https://my.estherfundsfoundation.org/kit/logins", tag: "Tool" },
+      { title: "Get Connected", text: "Low-cost internet, Lifeline and laptops now that the Affordable Connectivity Program has ended.", href: "https://my.estherfundsfoundation.org/kit/connected", tag: "Tool" },
+      { title: "Find a Free Legal Copy", text: "Paste an article's DOI or title and find a free, legal copy.", href: "https://my.estherfundsfoundation.org/kit/papers", tag: "Tool" },
+      { title: "Learn Free", text: "Free, legal courses, tutoring, writing help and CLEP test prep for college credit.", href: "https://my.estherfundsfoundation.org/kit/learn", tag: "Tool" },
+      { title: "College Words, Plain", text: "College and financial aid words in plain English and Spanish.", href: "https://my.estherfundsfoundation.org/kit/glossary", tag: "Tool" },
       { title: "The Survival Kit", text: "Can I still register? Write my appeal. Help near my campus. Everything in one place.", href: "https://my.estherfundsfoundation.org/kit", tag: "EFF" },
       { title: "EFF Student Defense Suite", text: "Protect your aid, grades, transcript, housing, degree path, and registration with one focused next-step system.", href: "/defense?tool=triage", tag: "Tool" },
       { title: "Stay-Enrolled Planner", text: "Name the barrier and build a support-team plan before changing enrollment.", href: "/tools/persist", tag: "Tool" },
@@ -76,6 +91,7 @@ export const CATEGORIES: Category[] = [
   {
     key: "family", title: "Family & friends", line: "For the people in your corner, and for being someone's.", hue: "#ff9ec4", glyph: "∞",
     items: [
+      { title: "Student Parent Hub", text: "Childcare, aid and rights for students raising children.", href: "https://my.estherfundsfoundation.org/kit/parents", tag: "Tool" },
       { title: "Reach for a Friend", text: "Learn how to listen, encourage, connect, follow up, set boundaries, and respond when safety is at risk.", href: "/reach-a-friend", tag: "Guide" },
       { title: "Parent & Family College Funding Guide", text: "Practical ways to support without taking over, FAFSA and aid-office questions, and an urgent-money plan.", href: "/downloads/eff-parent-family-college-funding-guide.pdf", tag: "Guide" },
       { title: "Family Funding Check", text: "Pressure-test the college gap and a parent or private-loan decision.", href: "/tools/family", tag: "Tool" },
