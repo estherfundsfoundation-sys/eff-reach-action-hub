@@ -59,8 +59,112 @@ let pitchStart = 0;
 let pitchSeconds = 0;
 let lastOpener = null;
 
+/* ---------- Studio visuals (purely decorative, nothing leaves the page) ---------- */
+
+const reducedMotion = () => window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+const finePointer = () => window.matchMedia?.("(hover: hover) and (pointer: fine)").matches;
+const CATEGORY_TONES = ["#FF6F61", "#FFD35A", "#7FD3C7", "#6FB3FF", "#B799E3", "#FF9A8F", "#9BE3B5", "#FFB86B", "#8FC7FF", "#D7B8FF", "#FF7FA8", "#7FD3C7", "#FFD35A", "#6FB3FF"];
+let onAirTimer = null;
+let onAirStart = 0;
+
+function setOnAir(on) {
+  document.body.classList.toggle("on-air", Boolean(on));
+  window.clearInterval(onAirTimer);
+  onAirTimer = null;
+  const tc = $("#vfTimecode");
+  if (!on) {
+    if (tc) tc.textContent = "00:00:00:00";
+    return;
+  }
+  onAirStart = Date.now();
+  const tick = () => {
+    if (!tc) return;
+    const ms = Date.now() - onAirStart;
+    const total = Math.floor(ms / 1000);
+    const frames = Math.floor((ms % 1000) / (1000 / 24));
+    const pad = (value) => String(value).padStart(2, "0");
+    tc.textContent = `${pad(Math.floor(total / 3600))}:${pad(Math.floor(total / 60) % 60)}:${pad(total % 60)}:${pad(frames)}`;
+  };
+  tick();
+  onAirTimer = window.setInterval(tick, reducedMotion() ? 1000 : 125);
+}
+
+function setSpeaking(on) {
+  document.body.classList.toggle("is-speaking", Boolean(on));
+}
+
+function countUp(node, value, suffix = "") {
+  if (!node) return;
+  const target = Number(value) || 0;
+  window.cancelAnimationFrame(node._countFrame);
+  if (reducedMotion() || target <= 0) {
+    node.textContent = `${target}${suffix}`;
+    return;
+  }
+  const started = performance.now();
+  const duration = 900;
+  const step = (now) => {
+    const t = Math.min(1, (now - started) / duration);
+    const eased = 1 - Math.pow(1 - t, 3);
+    node.textContent = `${Math.round(target * eased)}${suffix}`;
+    if (t < 1) node._countFrame = window.requestAnimationFrame(step);
+  };
+  node._countFrame = window.requestAnimationFrame(step);
+}
+
+function updateInterviewer() {
+  const card = $("#interviewerCard");
+  if (!card) return;
+  let name = "Your interviewer";
+  let title = CAREER_DATA[state.professionName]?.academic ? "Selection committee · Friendly round" : "Hiring team · Friendly round";
+  let slot = 0;
+  if (state.style === "panel") {
+    const person = panelistFor(state.currentIndex);
+    name = person.name;
+    title = `${person.title} · Panel`;
+    slot = person.slot;
+  } else if (state.style === "rapid") {
+    name = "Rapid-fire round";
+    title = "Aim for about 60 seconds an answer";
+    slot = 2;
+  }
+  $("#interviewerName").textContent = name;
+  $("#interviewerTitle").textContent = title;
+  card.dataset.slot = String(slot);
+  card.dataset.style = state.style;
+}
+
+function replayPrompt() {
+  const node = $("#questionText");
+  if (!node) return;
+  node.classList.remove("prompt-in");
+  void node.offsetWidth;
+  node.classList.add("prompt-in");
+}
+
+function bindTilt(container, selector, max) {
+  if (!container) return;
+  const reset = (target) => { if (target) { target.style.setProperty("--rx", "0deg"); target.style.setProperty("--ry", "0deg"); } };
+  container.addEventListener("pointermove", (event) => {
+    if (reducedMotion() || !finePointer()) return;
+    const target = selector ? event.target.closest(selector) : container.querySelector(".monitor");
+    if (!target) return;
+    const box = (selector ? target : container).getBoundingClientRect();
+    const x = (event.clientX - box.left) / box.width - 0.5;
+    const y = (event.clientY - box.top) / box.height - 0.5;
+    target.style.setProperty("--ry", `${(x * max * 2).toFixed(2)}deg`);
+    target.style.setProperty("--rx", `${(-y * max * 2).toFixed(2)}deg`);
+  });
+  container.addEventListener("pointerout", (event) => {
+    const target = selector ? event.target.closest(selector) : container.querySelector(".monitor");
+    if (target && !target.contains(event.relatedTarget)) reset(target);
+  });
+  container.addEventListener("pointerleave", () => { if (!selector) reset(container.querySelector(".monitor")); });
+}
+
 function showScreen(name) {
   stopSpeaking();
+  setOnAir(false);
   Object.entries(screens).forEach(([key, node]) => {
     const active = key === name;
     node.setAttribute("aria-hidden", String(!active));
@@ -146,9 +250,11 @@ function renderCategories() {
 
 function renderCareers() {
   const category = CAREER_CATEGORIES.find((item) => item.name === state.category) || CAREER_CATEGORIES[0];
-  $("#careerGrid").innerHTML = category.professions.map((name) => {
+  const tone = CATEGORY_TONES[CAREER_CATEGORIES.indexOf(category) % CATEGORY_TONES.length];
+  $("#careerGrid").style.setProperty("--tone", tone);
+  $("#careerGrid").innerHTML = category.professions.map((name, index) => {
     const profession = CAREER_DATA[name];
-    return `<button class="career-card" type="button" data-profession="${escapeHtml(name)}"><small>${escapeHtml(category.name)}</small><h3>${escapeHtml(name)}</h3><p>${escapeHtml(profession.description)}</p></button>`;
+    return `<button class="career-card" type="button" style="--i:${index}" data-profession="${escapeHtml(name)}"><span class="card-take" aria-hidden="true">Audition ${String(index + 1).padStart(2, "0")}</span><small>${escapeHtml(category.name)}</small><h3>${escapeHtml(name)}</h3><p>${escapeHtml(profession.description)}</p></button>`;
   }).join("");
   $("#careerGrid").querySelectorAll("button").forEach((button) => button.addEventListener("click", () => selectProfession(button.dataset.profession)));
 }
@@ -287,6 +393,9 @@ function speak(text, { voiceIndex = 0, pitch = 1 } = {}) {
     utterance.lang = utterance.voice?.lang || "en-US";
     utterance.rate = 0.97;
     utterance.pitch = pitch;
+    utterance.onstart = () => setSpeaking(true);
+    utterance.onend = () => setSpeaking(false);
+    utterance.onerror = () => setSpeaking(false);
     synth.speak(utterance);
   } catch (error) {
     console.warn("Speech synthesis unavailable", error);
@@ -295,6 +404,7 @@ function speak(text, { voiceIndex = 0, pitch = 1 } = {}) {
 
 function stopSpeaking() {
   try { synth?.cancel(); } catch {}
+  setSpeaking(false);
 }
 
 function panelistFor(index) {
@@ -352,6 +462,9 @@ function renderQuestion({ preserveTranscript = false, speakIt = true } = {}) {
   $("#progressLabel").textContent = `Question ${state.currentIndex + 1} of ${state.questions.length}`;
   $("#progressBar").style.width = `${((state.currentIndex + 1) / state.questions.length) * 100}%`;
   $("#questionText").textContent = question.prompt;
+  replayPrompt();
+  updateInterviewer();
+  setOnAir(false);
   const panelLine = $("#panelistLine");
   if (state.style === "panel") {
     const person = panelistFor(state.currentIndex);
@@ -459,6 +572,7 @@ function startAnswer() {
   $("#targetClock").classList.remove("hidden");
   updateRecordingClock();
   $("#recordingBadge").classList.add("active");
+  setOnAir(true);
   $("#recordAnswer").classList.add("hidden");
   $("#finishAnswer").classList.remove("hidden");
   $("#speechStatus").textContent = recognition ? "Listening. Speak naturally and pause when you need to think." : "Recording started. Type or paste your answer into the transcript box when finished.";
@@ -536,6 +650,7 @@ function finishAnswer() {
   stopRecognition();
   window.clearInterval(timerId);
   $("#recordingBadge").classList.remove("active");
+  setOnAir(false);
   $("#recordAnswer").classList.remove("hidden");
   $("#recordAnswer").textContent = "Record again";
   $("#finishAnswer").classList.add("hidden");
@@ -568,9 +683,11 @@ function renderCoaching(attempt, attempts) {
   const { result, comparison } = attempt;
   const question = state.questions[state.currentIndex];
   lastOpener = document.activeElement;
-  $("#answerScore").textContent = result.score;
+  countUp($("#answerScore"), result.score);
+  const sheet = $("#coachingOverlay").querySelector(".coaching-sheet");
+  sheet.dataset.band = result.score >= 95 ? "mastered" : result.score >= 85 ? "ready" : result.score >= 70 ? "developing" : "building";
   $("#masteryLabel").textContent = result.score >= 95 ? "QUESTION MASTERED ✓" : `${result.label} · You may retry or continue.`;
-  $("#rubricGrid").innerHTML = Object.entries(SCORING_CONFIG.weights).map(([key, max]) => `<div class="rubric-item"><span>${escapeHtml(key)}</span><strong>${result.categoryScores[key]} / ${max}</strong></div>`).join("");
+  $("#rubricGrid").innerHTML = Object.entries(SCORING_CONFIG.weights).map(([key, max]) => `<div class="rubric-item"><span>${escapeHtml(key)}</span><strong>${result.categoryScores[key]} / ${max}</strong><i class="rubric-bar" aria-hidden="true"><b style="--w:${Math.round((result.categoryScores[key] / max) * 100)}%"></b></i></div>`).join("");
   $("#strengthList").innerHTML = result.feedback.strengths.map((item) => `<li>${escapeHtml(item)}</li>`).join("");
   $("#improvementList").innerHTML = result.feedback.improvements.map((item) => `<li>${escapeHtml(item)}</li>`).join("");
   $("#nextGoal").textContent = result.feedback.nextGoal;
@@ -588,7 +705,7 @@ function renderCoaching(attempt, attempts) {
   $("#nextQuestion").textContent = state.currentIndex === state.questions.length - 1 ? "View final report" : "Continue to next question";
   $("#coachingOverlay").classList.remove("hidden");
   $("#coachingOverlay").querySelector(".coaching-sheet").scrollTop = 0;
-  $("#retryQuestion").focus();
+  $("#retryQuestion").focus({ preventScroll: true });
 }
 
 function retryQuestion() {
@@ -629,6 +746,7 @@ function stopActiveRecording() {
   stopRecognition();
   window.clearInterval(timerId);
   $("#recordingBadge").classList.remove("active");
+  setOnAir(false);
   $("#targetClock").classList.add("hidden");
 }
 
@@ -833,7 +951,7 @@ function renderReport() {
   const alignmentAverage = finals.length ? finals.reduce((sum, item) => sum + item.result.analysis.career.count, 0) / finals.length : 0;
 
   $("#reportProfession").textContent = `${state.professionName} practice report`;
-  $("#overallScore").textContent = average;
+  countUp($("#overallScore"), average);
   $("#reportSummary").textContent = `You demonstrated ${average >= 85 ? "strong" : average >= 70 ? "developing" : "foundational"} performance against the EFF Interview Coach rubric. This is a practice score, not a prediction of an employment decision.`;
   $("#masteredCount").textContent = `${mastered}/${state.questions.length}`;
   $("#attemptCount").textContent = every.length;
@@ -1026,6 +1144,7 @@ function startPitch() {
   $("#pitchStatus").textContent = recognition ? "Listening. Say your pitch like you are meeting someone new." : "The clock is running. Say your pitch out loud, then type what you said below.";
   $("#pitchRecord").classList.add("hidden");
   $("#pitchStop").classList.remove("hidden");
+  setOnAir(true);
   $("#pitchStop").focus();
   const tick = () => {
     const elapsed = (Date.now() - pitchStart) / 1000;
@@ -1045,6 +1164,7 @@ function stopPitch() {
   stopRecognition();
   window.clearInterval(pitchTimer);
   pitchTimer = null;
+  setOnAir(false);
   $("#pitchRecord").classList.remove("hidden");
   $("#pitchRecord").textContent = "Practice again";
   $("#pitchStop").classList.add("hidden");
@@ -1124,6 +1244,8 @@ function bindEvents() {
 
 bindOptions();
 bindEvents();
+bindTilt($("#heroStage"), null, 10);
+bindTilt($("#careerGrid"), ".career-card", 7);
 renderOptions();
 renderCategories();
 renderCareers();

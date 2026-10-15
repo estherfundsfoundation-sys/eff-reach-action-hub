@@ -5,8 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#42127F" />
   <meta name="description" content="Practice profession-specific interviews, record answers privately, and improve with the EFF Interview Coach rubric." />
-  <title>EFF Interview Coach | Career Studio</title>
+  <title>EFF Interview Studio | REACH Career Studio</title>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2342127F'/%3E%3Cpath d='M18 18h28v7H26v7h17v7H26v7h20v7H18z' fill='%23F5F0E6'/%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Georama:wght@700;800;900&family=Poppins:wght@400;500;600;700&display=swap" />
   <link rel="stylesheet" href="./styles.css" />
 </head>
 <body>
@@ -14,8 +17,9 @@
     <header class="topbar">
       <a class="brand" href="/" aria-label="Return to the EFF Reach Action Hub">
         <img src="/eff-logo.png" alt="" />
-        <span><strong>EFF Interview Coach</strong><span>Career Studio</span></span>
+        <span><strong>EFF Interview Studio</strong><span>by REACH · Career Studio</span></span>
       </a>
+      <div class="on-air-pill" id="onAirPill" aria-hidden="true"><i></i>On air</div>
       <div class="top-actions">
         <button class="text-button" id="restartTop" type="button">New session</button>
         <button class="text-button" id="openStories" type="button">My story bank</button>
@@ -35,8 +39,8 @@
       <section class="screen" id="landingScreen" data-screen="landing" aria-hidden="false">
         <div class="hero">
           <div class="hero-copy">
-            <p class="eyebrow">A free Esther Funds Foundation career tool</p>
-            <h1>Your interview <em>starts now.</em></h1>
+            <p class="eyebrow"><span class="eyebrow-dot" aria-hidden="true"></span>A free Esther Funds Foundation career tool</p>
+            <h1>Lights. Camera. <em>Your interview.</em></h1>
             <p class="lead">Practice the interview before the interview matters. Choose a profession, record realistic answers, receive immediate rule-based coaching, and retry until your response is interview ready.</p>
             <div class="hero-actions">
               <button class="button" id="startCoach" type="button">Start mock interview</button>
@@ -45,29 +49,67 @@
             </div>
             <p class="privacy-line">No account required. No paid AI. Nothing you say or type is sent anywhere. Recordings stay in this browser session, and your saved stories and progress stay on this device.</p>
           </div>
-          <div class="hero-stage" aria-label="Preview of a realistic interview coaching session">
-            <div class="interview-card">
-              <div class="stage-top"><span><i class="stage-dot"></i>Practice in progress</span><span>03 / 08</span></div>
+          <div class="hero-stage" id="heroStage" aria-label="Preview of a realistic interview coaching session">
+            <div class="studio" aria-hidden="true">
+              <div class="studio-wall"></div>
+              <div class="spot spot-a"></div>
+              <div class="spot spot-b"></div>
+              <div class="on-air-sign"><span>On air</span></div>
+              <div class="studio-floor"></div>
+              <svg class="studio-set" viewBox="0 0 600 260" preserveAspectRatio="xMidYMax meet">
+                <defs>
+                  <linearGradient id="glassTop" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#EFE7FB" stop-opacity=".55"/><stop offset="1" stop-color="#B799E3" stop-opacity=".12"/></linearGradient>
+                  <linearGradient id="glassFront" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#B799E3" stop-opacity=".28"/><stop offset="1" stop-color="#42127F" stop-opacity=".04"/></linearGradient>
+                  <linearGradient id="chairBody" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5B1FB0"/><stop offset="1" stop-color="#2A0A55"/></linearGradient>
+                  <radialGradient id="floorGlow" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#FFD35A" stop-opacity=".35"/><stop offset="1" stop-color="#FFD35A" stop-opacity="0"/></radialGradient>
+                </defs>
+                <ellipse cx="300" cy="232" rx="270" ry="26" fill="url(#floorGlow)"/>
+                <g class="chair chair-left">
+                  <path d="M70 92 q0 -26 26 -26 h44 q26 0 26 26 v66 h-96z" fill="url(#chairBody)"/>
+                  <path d="M60 150 h116 q10 0 10 10 v14 h-136 v-14 q0 -10 10 -10z" fill="#3A1072"/>
+                  <rect x="112" y="174" width="12" height="40" fill="#1D0A38"/>
+                  <path d="M80 222 l38 -10 l38 10" stroke="#B799E3" stroke-opacity=".5" stroke-width="5" fill="none" stroke-linecap="round"/>
+                </g>
+                <g class="chair chair-right">
+                  <path d="M434 92 q0 -26 26 -26 h44 q26 0 26 26 v66 h-96z" fill="url(#chairBody)"/>
+                  <path d="M424 150 h116 q10 0 10 10 v14 h-136 v-14 q0 -10 10 -10z" fill="#3A1072"/>
+                  <rect x="476" y="174" width="12" height="40" fill="#1D0A38"/>
+                  <path d="M444 222 l38 -10 l38 10" stroke="#B799E3" stroke-opacity=".5" stroke-width="5" fill="none" stroke-linecap="round"/>
+                </g>
+                <g class="desk">
+                  <path d="M170 138 L430 138 L470 160 L130 160 Z" fill="url(#glassTop)" stroke="#EFE7FB" stroke-opacity=".7" stroke-width="1.5"/>
+                  <path d="M130 160 L470 160 L462 222 L138 222 Z" fill="url(#glassFront)" stroke="#B799E3" stroke-opacity=".45" stroke-width="1.2"/>
+                  <path d="M150 166 L450 166" stroke="#FFF7EB" stroke-opacity=".35" stroke-width="2"/>
+                  <rect x="276" y="128" width="48" height="10" rx="3" fill="#FF6F61" opacity=".85"/>
+                  <circle cx="232" cy="134" r="5" fill="#FFD35A" opacity=".8"/>
+                </g>
+              </svg>
+            </div>
+            <div class="interview-card monitor" id="heroMonitor">
+              <div class="stage-top"><span><i class="stage-dot"></i>Teleprompter · Live practice</span><span>03 / 08</span></div>
               <blockquote>“Tell me about a time you solved a difficult problem.”</blockquote>
               <div class="score-strip"><strong>86</strong><span>Interview Ready<br />Clear action. Add a stronger result.</span></div>
             </div>
           </div>
         </div>
         <div class="steps-band" id="howItWorks">
-          <div class="step"><span>01</span><strong>Choose your profession</strong></div>
-          <div class="step"><span>02</span><strong>Complete a realistic interview</strong></div>
-          <div class="step"><span>03</span><strong>Receive immediate feedback</strong></div>
-          <div class="step"><span>04</span><strong>Retry until mastered</strong></div>
+          <div class="callsheet-head"><span class="callsheet-title">Call sheet</span><span>Today's shoot: your interview</span><span class="callsheet-crew">Talent: you · Crew: REACH</span></div>
+          <div class="callsheet-rows">
+            <div class="step"><span>Scene 01</span><strong>Choose your profession</strong><small>56 roles across 14 fields</small></div>
+            <div class="step"><span>Scene 02</span><strong>Complete a realistic interview</strong><small>Friendly, panel or rapid-fire</small></div>
+            <div class="step"><span>Scene 03</span><strong>Receive immediate feedback</strong><small>A clear score and what to fix</small></div>
+            <div class="step"><span>Scene 04</span><strong>Retry until mastered</strong><small>Take two, take three, wrap</small></div>
+          </div>
         </div>
       </section>
 
       <section class="screen" id="careerScreen" data-screen="career" aria-hidden="true">
         <div class="selection">
           <div class="section-intro">
-            <div><p class="eyebrow">Step 1 · Choose your path</p><h2>Practice for the role you actually want.</h2></div>
+            <div><p class="eyebrow">Step 1 · Auditions</p><h2>Practice for the role you actually want.</h2></div>
             <p>Select a career field, then choose the closest profession. Every interview blends universal hiring questions with questions written for that work.</p>
           </div>
-          <div class="category-tabs" id="categoryTabs" role="tablist" aria-label="Career fields"></div>
+          <div class="marquee-rail"><div class="category-tabs" id="categoryTabs" role="tablist" aria-label="Career fields"></div></div>
           <div class="career-grid" id="careerGrid" role="tabpanel" aria-live="polite"></div>
         </div>
       </section>
@@ -119,6 +161,7 @@
           </div>
           <div class="setup-grid">
             <div class="media-preview">
+              <div class="viewfinder" aria-hidden="true"><i class="vf vf-tl"></i><i class="vf vf-tr"></i><i class="vf vf-bl"></i><i class="vf vf-br"></i><span class="vf-cross"></span><span class="vf-cam">Camera check</span></div>
               <video id="setupVideo" autoplay muted playsinline aria-label="Camera preview"></video>
               <div class="media-placeholder" id="setupPlaceholder"><div><strong>Camera preview</strong><br />Enable your camera to check framing, or continue without video.</div></div>
             </div>
@@ -143,10 +186,18 @@
       <section class="screen interview-screen" id="interviewScreen" data-screen="interview" aria-hidden="true">
         <div class="interview-layout">
           <div class="interview-column question-panel">
+            <div class="interviewer-card" id="interviewerCard" data-slot="0">
+              <div class="iv-avatar" aria-hidden="true">
+                <svg viewBox="0 0 80 80"><circle cx="40" cy="40" r="40" class="iv-bg"/><path class="iv-body" d="M12 80 q2 -24 28 -24 q26 0 28 24z"/><circle class="iv-head" cx="40" cy="31" r="15"/><rect class="iv-mouth" x="34" y="36" width="12" height="3" rx="1.5"/></svg>
+                <span class="iv-wave"><i></i><i></i><i></i><i></i></span>
+              </div>
+              <div class="iv-plate"><strong id="interviewerName">Your interviewer</strong><span id="interviewerTitle">Friendly round</span></div>
+              <span class="iv-status" aria-hidden="true">Speaking</span>
+            </div>
             <div class="progress-meta"><span id="progressLabel">Question 1 of 8</span><span id="professionLabel"></span></div>
             <div class="progress-track" aria-hidden="true"><div class="progress-bar" id="progressBar"></div></div>
             <p class="panelist-line hidden" id="panelistLine"></p>
-            <h2 id="questionText"></h2>
+            <div class="prompter"><span class="prompter-label" aria-hidden="true">Question on the monitor</span><h2 id="questionText"></h2></div>
             <div class="question-tools">
               <button class="text-button" id="speakAgain" type="button">Hear it again</button>
               <button class="text-button hidden" id="approachToggle" type="button" aria-expanded="false" aria-controls="approachTip">How to approach this</button>
@@ -158,6 +209,7 @@
 
           <div class="interview-column camera-panel">
             <video id="interviewVideo" autoplay muted playsinline aria-label="Live interview camera preview"></video>
+            <div class="viewfinder" aria-hidden="true"><i class="vf vf-tl"></i><i class="vf vf-tr"></i><i class="vf vf-bl"></i><i class="vf vf-br"></i><span class="vf-cross"></span><span class="vf-cam">Cam 1 · You</span><span class="vf-tc" id="vfTimecode">00:00:00:00</span></div>
             <div class="camera-fallback" id="cameraFallback"><div><strong>Camera is off.</strong><br />You can still record audio when microphone permission is available and type your transcript.</div></div>
             <div class="recording-badge" id="recordingBadge"><i></i><span id="recordingTime">Recording 00:00</span></div>
             <div class="target-clock hidden" id="targetClock" role="status"><span id="targetLabel">Aim for 1 to 2 minutes</span><div class="target-track" aria-hidden="true"><div class="target-fill" id="targetFill"></div></div></div>
@@ -174,7 +226,7 @@
           </div>
 
           <div class="interview-column transcript-panel">
-            <h3>Your transcript</h3>
+            <h3>Your script</h3>
             <p>Review and correct the transcript before scoring. Only submit words you actually said.</p>
             <textarea id="transcript" aria-label="Editable answer transcript" placeholder="Your live transcript will appear here. If browser speech recognition is unavailable, type or paste your answer after recording."></textarea>
             <div class="speech-status" id="speechStatus" role="status"></div>
@@ -187,7 +239,8 @@
       </section>
 
       <div class="coaching-overlay hidden" id="welcomeOverlay" role="dialog" aria-modal="true" aria-labelledby="welcomeTitle">
-        <article class="coaching-sheet" style="max-width:760px">
+        <article class="coaching-sheet slate-sheet" style="max-width:760px">
+          <div class="slate" aria-hidden="true"><div class="slate-stick"></div><div class="slate-board"><span>Scene: interview</span><span>Take 1</span></div></div>
           <p class="eyebrow">Your interview is beginning</p>
           <h2 id="welcomeTitle">Welcome.</h2>
           <p id="welcomeMessage" style="font-size:1.12rem"></p>
@@ -196,10 +249,10 @@
       </div>
 
       <div class="coaching-overlay hidden" id="coachingOverlay" role="dialog" aria-modal="true" aria-labelledby="coachingTitle">
-        <article class="coaching-sheet">
+        <article class="coaching-sheet judge-card">
           <div class="score-head">
             <div class="score-orb"><span id="answerScore">0</span><small>/ 100</small></div>
-            <div><p class="eyebrow">EFF practice rubric</p><h2 id="coachingTitle">Your coaching</h2><p id="masteryLabel"></p></div>
+            <div><p class="eyebrow">The judges' card · EFF practice rubric</p><h2 id="coachingTitle">Your coaching</h2><p class="lower-third" id="masteryLabel"></p></div>
           </div>
           <div class="rubric-grid" id="rubricGrid"></div>
           <div class="feedback-grid">
@@ -228,10 +281,10 @@
       </div>
 
       <section class="screen" id="pitchScreen" data-screen="pitch" aria-hidden="true">
-        <div class="setup">
+        <div class="setup pitch-stage">
           <button class="text-button" id="pitchBack" type="button">← Back to the start</button>
           <div class="section-intro">
-            <div><p class="eyebrow">Elevator pitch</p><h2>Your 30 seconds, ready anywhere.</h2></div>
+            <div><p class="eyebrow">The 30-second spotlight</p><h2>Your 30 seconds, ready anywhere.</h2></div>
             <p>Career fairs, networking events, the first minute of an interview, a professor's office hours. Build your pitch in four parts, then say it out loud against the clock until it feels like you.</p>
           </div>
           <div class="setup-grid pitch-grid">
@@ -269,7 +322,8 @@
       <section class="screen" id="reportScreen" data-screen="report" aria-hidden="true">
         <div class="report">
           <section class="report-hero">
-            <div><p class="eyebrow">EFF Interview Coach · Interview complete</p><h2 id="reportProfession">Your practice report</h2><p id="reportSummary">You demonstrated performance against the EFF Interview Coach rubric.</p></div>
+            <div class="report-spot" aria-hidden="true"></div>
+            <div><p class="eyebrow">That's a wrap · Interview complete</p><h2 id="reportProfession">Your practice report</h2><p id="reportSummary">You demonstrated performance against the EFF Interview Coach rubric.</p></div>
             <div class="overall-score"><strong id="overallScore">0</strong><span>rubric score</span></div>
           </section>
           <div class="report-stats">
