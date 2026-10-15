@@ -104,7 +104,7 @@ export default function Workshops() {
             <p>Chapter officers, Campus Ambassadors and National host from MyEFF: pick a workshop, add your facilitators, your logo and a partner, and your flyers and caption are made for you.</p>
             <div className="sc-acts">
               <a className="sc-btn coral" href={`${MYEFF}/workshop`}>Host in MyEFF</a>
-              <Link className="sc-btn ghost" href="/workshop-request">Ask EFF to bring one</Link>
+              <Link className="sc-btn ghost" href="/workshop-request">Request a REACH on Tour stop</Link>
             </div>
           </div>
           <ol className="rh-steps" aria-label="Who can host">
