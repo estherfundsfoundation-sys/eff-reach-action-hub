@@ -18,6 +18,7 @@
       </a>
       <div class="top-actions">
         <button class="text-button" id="restartTop" type="button">New session</button>
+        <button class="text-button" id="openStories" type="button">My story bank</button>
         <a class="text-button" href="/eff-builds-your-resume/">Build résumé</a>
       </div>
     </header>
@@ -39,9 +40,10 @@
             <p class="lead">Practice the interview before the interview matters. Choose a profession, record realistic answers, receive immediate rule-based coaching, and retry until your response is interview ready.</p>
             <div class="hero-actions">
               <button class="button" id="startCoach" type="button">Start mock interview</button>
-              <a class="button secondary" href="#howItWorks">See how it works</a>
+              <button class="button secondary" id="startPitch" type="button">Practice my 30-second pitch</button>
+              <a class="button ghost" href="#howItWorks">See how it works</a>
             </div>
-            <p class="privacy-line">No account required. No paid AI. Recordings stay in this browser session unless you choose to save them on your device.</p>
+            <p class="privacy-line">No account required. No paid AI. Nothing you say or type is sent anywhere. Recordings stay in this browser session, and your saved stories and progress stay on this device.</p>
           </div>
           <div class="hero-stage" aria-label="Preview of a realistic interview coaching session">
             <div class="interview-card">
@@ -84,7 +86,7 @@
             <aside class="panel">
               <p class="eyebrow">Your practice format</p>
               <div class="format-stats">
-                <div class="format-stat"><strong>8</strong><span>balanced questions</span></div>
+                <div class="format-stat"><strong id="formatCount">10</strong><span id="formatLabel">questions, including 2 tough ones</span></div>
                 <div class="format-stat"><strong>20–30</strong><span>estimated minutes</span></div>
               </div>
               <h3 style="margin-top:28px">Employers typically listen for</h3>
@@ -100,6 +102,20 @@
           <div class="section-intro">
             <div><p class="eyebrow">Step 2 · Check your space</p><h2>Look ready. Sound ready. Feel ready.</h2></div>
             <p>Place your camera at eye level, face a light source, silence notifications, and keep your résumé nearby. Camera use is optional.</p>
+          </div>
+          <div class="panel options-panel">
+            <p class="eyebrow">Your interview style</p>
+            <fieldset class="style-choice">
+              <legend class="sr-only">Interview style</legend>
+              <label class="style-card"><input type="radio" name="interviewStyle" value="friendly" checked /><span><strong>Friendly</strong><small>One warm interviewer, one question at a time. Best place to start.</small></span></label>
+              <label class="style-card"><input type="radio" name="interviewStyle" value="panel" /><span><strong>Panel</strong><small>Questions come from different people around the table, like a real committee.</small></span></label>
+              <label class="style-card"><input type="radio" name="interviewStyle" value="rapid" /><span><strong>Rapid-fire</strong><small>Aim for about 60 seconds an answer, with a countdown on screen.</small></span></label>
+            </fieldset>
+            <div class="toggle-list">
+              <label class="toggle"><input type="checkbox" id="optTough" checked /><span><strong>Add 2 tough questions</strong><small>Curveballs like your greatest weakness or time away from school, with coaching on how to approach them.</small></span></label>
+              <label class="toggle" id="optSpeakRow"><input type="checkbox" id="optSpeak" checked /><span><strong>Interviewer reads questions aloud</strong><small>Uses your device's own voice. Turn your volume up.</small></span></label>
+              <label class="toggle"><input type="checkbox" id="optThink" /><span><strong>Give me 20 seconds to think</strong><small>A short countdown before each answer starts recording. You can skip it any time.</small></span></label>
+            </div>
           </div>
           <div class="setup-grid">
             <div class="media-preview">
@@ -129,7 +145,13 @@
           <div class="interview-column question-panel">
             <div class="progress-meta"><span id="progressLabel">Question 1 of 8</span><span id="professionLabel"></span></div>
             <div class="progress-track" aria-hidden="true"><div class="progress-bar" id="progressBar"></div></div>
+            <p class="panelist-line hidden" id="panelistLine"></p>
             <h2 id="questionText"></h2>
+            <div class="question-tools">
+              <button class="text-button" id="speakAgain" type="button">Hear it again</button>
+              <button class="text-button hidden" id="approachToggle" type="button" aria-expanded="false" aria-controls="approachTip">How to approach this</button>
+            </div>
+            <div class="approach-tip hidden" id="approachTip"></div>
             <p class="question-category" id="questionCategory"></p>
             <p class="question-tip">Use one truthful example. Explain the context, what you personally did, and what happened because of it.</p>
           </div>
@@ -138,6 +160,13 @@
             <video id="interviewVideo" autoplay muted playsinline aria-label="Live interview camera preview"></video>
             <div class="camera-fallback" id="cameraFallback"><div><strong>Camera is off.</strong><br />You can still record audio when microphone permission is available and type your transcript.</div></div>
             <div class="recording-badge" id="recordingBadge"><i></i><span id="recordingTime">Recording 00:00</span></div>
+            <div class="target-clock hidden" id="targetClock" role="status"><span id="targetLabel">Aim for 1 to 2 minutes</span><div class="target-track" aria-hidden="true"><div class="target-fill" id="targetFill"></div></div></div>
+            <div class="think-layer hidden" id="thinkLayer" role="dialog" aria-modal="false" aria-labelledby="thinkTitle">
+              <div class="think-ring" aria-hidden="true"><svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="52" class="think-bg"></circle><circle cx="60" cy="60" r="52" class="think-arc" id="thinkArc"></circle></svg><strong id="thinkCount">20</strong></div>
+              <h3 id="thinkTitle">Take a breath.</h3>
+              <p>Pick one true example. Think: what was happening, what you did, and how it turned out.</p>
+              <button class="button light" id="skipThink" type="button">I'm ready, start now</button>
+            </div>
             <div class="camera-controls">
               <button class="button record-button" id="recordAnswer" type="button">Start answer</button>
               <button class="button record-button stop hidden" id="finishAnswer" type="button">Finish answer</button>
@@ -177,6 +206,16 @@
             <section class="feedback-card"><h3>What you did well</h3><ul id="strengthList"></ul></section>
             <section class="feedback-card"><h3>What to improve</h3><ul id="improvementList"></ul></section>
             <section class="feedback-card full"><h3>Your next goal</h3><p id="nextGoal"></p></section>
+            <section class="feedback-card full tough-card hidden" id="toughCard"><h3>How to approach this question</h3><p id="toughTip"></p></section>
+          </div>
+          <div class="story-save hidden" id="storySave">
+            <p><strong>This is a story worth keeping.</strong> Save it to your story bank. One strong story can answer many questions: a challenge, teamwork, leadership, even a time you failed.</p>
+            <button class="button secondary" id="saveStoryBtn" type="button">Save this story</button>
+            <form class="story-form hidden" id="storyForm">
+              <label>Story title<input id="storyTitle" type="text" maxlength="90" required /></label>
+              <label>Tags, separated by commas<input id="storyTags" type="text" maxlength="160" placeholder="leadership, teamwork, problem solving" /></label>
+              <div class="button-row"><button class="button" type="submit">Save to my story bank</button><button class="button ghost" id="cancelStory" type="button">Cancel</button></div>
+            </form>
           </div>
           <p class="comparison-note" id="comparisonNote"></p>
           <section class="attempts"><h3>Attempts on this question</h3><div class="attempt-list" id="attemptList"></div></section>
@@ -187,6 +226,45 @@
           <p class="disclaimer">EFF Interview Coach is a practice and educational tool. Scores reflect performance against the coaching rubric and do not predict employment decisions.</p>
         </article>
       </div>
+
+      <section class="screen" id="pitchScreen" data-screen="pitch" aria-hidden="true">
+        <div class="setup">
+          <button class="text-button" id="pitchBack" type="button">← Back to the start</button>
+          <div class="section-intro">
+            <div><p class="eyebrow">Elevator pitch</p><h2>Your 30 seconds, ready anywhere.</h2></div>
+            <p>Career fairs, networking events, the first minute of an interview, a professor's office hours. Build your pitch in four parts, then say it out loud against the clock until it feels like you.</p>
+          </div>
+          <div class="setup-grid pitch-grid">
+            <div class="panel pitch-builder">
+              <p class="eyebrow">Step 1 · Build it</p>
+              <label>Who I am<textarea id="pitchWho" rows="2" placeholder="My name is Jordan Lee, and I'm a junior at Fort Valley State University."></textarea></label>
+              <label>What I study or do<textarea id="pitchStudy" rows="2" placeholder="I study accounting and work part-time in our financial aid office."></textarea></label>
+              <label>What I'm great at, with one example<textarea id="pitchStrength" rows="3" placeholder="I'm great at keeping money and people organized. Last year I managed our student government budget and we finished under budget."></textarea></label>
+              <label>What I'm looking for<textarea id="pitchAsk" rows="2" placeholder="I'm looking for a summer internship in audit where I can learn from experienced accountants."></textarea></label>
+              <button class="button" id="buildPitch" type="button">Put my pitch together</button>
+              <p class="disclaimer">Your pitch is saved only on this device so you can come back to it.</p>
+            </div>
+            <div class="panel pitch-practice">
+              <p class="eyebrow">Step 2 · Say it out loud</p>
+              <label for="pitchScript">Your pitch</label>
+              <textarea id="pitchScript" rows="6" placeholder="Build your pitch in Step 1, or write it here yourself."></textarea>
+              <p class="pitch-count" id="pitchCount">0 words · about 0 seconds spoken</p>
+              <div class="pitch-timer">
+                <div class="pitch-time" id="pitchTime" role="timer" aria-live="off">0:30</div>
+                <div class="button-row" style="margin:0">
+                  <button class="button" id="pitchRecord" type="button">Start 30-second practice</button>
+                  <button class="button record-button stop hidden" id="pitchStop" type="button">Stop</button>
+                </div>
+              </div>
+              <label for="pitchTranscript">What you said</label>
+              <textarea id="pitchTranscript" rows="5" placeholder="Your words appear here as you speak. If live transcription is not available in this browser, type what you said."></textarea>
+              <div class="speech-status" id="pitchStatus" role="status"></div>
+              <button class="button secondary" id="pitchCheck" type="button">Check my pitch</button>
+              <div class="pitch-feedback" id="pitchFeedback" aria-live="polite"></div>
+            </div>
+          </div>
+        </div>
+      </section>
 
       <section class="screen" id="reportScreen" data-screen="report" aria-hidden="true">
         <div class="report">
@@ -214,8 +292,9 @@
             <button class="button secondary" id="newProfession" type="button">Try a new profession</button>
             <button class="button ghost" id="reviewAnswers" type="button">Review my answers</button>
             <button class="button ghost" id="printReport" type="button">Save report as PDF</button>
+            <button class="button ghost" id="downloadReport" type="button">Download my report</button>
           </div>
-          <p class="disclaimer">Recordings are session-only. Local progress contains transcripts and scores, not saved video files. Clear the session from this device at any time.</p>
+          <p class="disclaimer">Recordings are session-only. Local progress contains transcripts and scores, not saved video files. Nothing is sent anywhere. Clear the session from this device at any time.</p>
         </div>
       </section>
     </main>

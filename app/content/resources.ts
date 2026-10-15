@@ -98,6 +98,7 @@ export const CATEGORIES: Category[] = [
       { title: "Side Money Without Losing Aid", text: "Work-study, scams, taxes on side income and building credit.", href: "https://my.estherfundsfoundation.org/kit/hustle", tag: "Tool" },
       { title: "Learn Free", text: "Free, legal courses, tutoring and test prep.", href: "https://my.estherfundsfoundation.org/kit/learn", tag: "Tool" },
       { title: "EFF Builds Your Résumé", text: "Tap through your real experience and generate an editable, ATS-ready one-page résumé with interview-defense coaching.", href: "/resume", tag: "Tool" },
+      { title: "Practice the Conversation", text: "Rehearse the talks that keep you in school: financial aid, a professor, your boss, a recruiter, a salary ask. Pick a reply, get coached, leave with a script.", href: "/practice", tag: "Tool" },
       { title: "EFF Interview Coach", text: "Practice a profession-specific interview, record locally, receive transparent rubric feedback, and retry until mastered.", href: "/eff-interview-coach/", tag: "Tool" },
       { title: "Career Launchpad Profile", text: "Organize your story, projects, skills, and reference details into a private, editable professional profile.", href: "/tools/career-profile", tag: "Tool" },
       { title: "CareerOneStop", text: "Explore careers, assessments, training, scholarships, and local American Job Centers.", href: "https://www.careeronestop.org/", tag: "Official" },
