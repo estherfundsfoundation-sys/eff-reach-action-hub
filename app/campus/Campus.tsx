@@ -4,7 +4,9 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { rpc } from "../scholarships/lib";
 import { SiteTop, SiteFoot } from "../myreach/ui";
-import { KINDS, OFFERS, WAYS, KIT } from "./content";
+import { useRef } from "react";
+import { PHOTOS, CLIPS } from "../RealReach";
+import { KINDS, OFFERS, WAYS, KIT, FACTS, FOR_UNIVERSITY, FOR_YOU } from "./content";
 
 /* REACH for Campuses (20 Oct 2026, Shayna: "i want universities and colleges and professors to promote reach at
    their school ... a free partnership ... will your university join the mission of preventing college dropouts?").
@@ -46,8 +48,9 @@ export default function Campus() {
   return (
     <main className="sc aw cp">
       <SiteTop />
-      <section className="cp-hero">
-        <div className="sc-wrap">
+      <section className="cp-hero cp-film">
+        <BgVideo />
+        <div className="sc-wrap cp-over">
           <span className="cp-kick">REACH for Campuses · a free partnership with Esther Funds Foundation</span>
           <h1>Will your university join the mission of <em>preventing college dropouts?</em></h1>
           <p className="cp-statement">&ldquo;We are partnering with the Esther Funds Foundation on college dropout prevention by encouraging our students to REACH.&rdquo;</p>
@@ -55,6 +58,45 @@ export default function Campus() {
           <div className="sc-acts"><a className="sc-btn coral" href="#join">Join for free</a><a className="sc-btn ghost" href="#what">What students get</a></div>
           {pub && pub.count > 0 ? <p className="cp-count"><b>{pub.count}</b> {pub.count === 1 ? "campus has" : "campuses have"} joined.</p> : null}
         </div>
+      </section>
+
+      <section className="cp-facts" aria-labelledby="cp-facts-h">
+        <div className="sc-wrap">
+          <h2 id="cp-facts-h">Students are leaving. <em>Most of them didn&rsquo;t want to.</em></h2>
+          <div className="cp-factgrid">
+            {FACTS.map((f) => (
+              <figure key={f.big} className="cp-fact"><b>{f.big}</b><p>{f.line}</p><figcaption><a href={f.url} target="_blank" rel="noreferrer">{f.src}</a></figcaption></figure>
+            ))}
+          </div>
+          <p className="cp-factline">It&rsquo;s rarely grades. It&rsquo;s a bill, a hold, an empty fridge, a hard week, and nobody to call. <b>Partner with us on helping your students stay in school.</b></p>
+        </div>
+      </section>
+
+      <section className="sc-wrap cp-sec">
+        <h2>REACH in real life</h2>
+        <p className="cp-sub">Esther Funds Foundation&rsquo;s students, campuses and communities, showing up for each other.</p>
+        <div className="cp-gallery">
+          <Clip c={CLIPS.v1} label="REACH students together" />
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={PHOTOS.p6.src} alt="REACH students" loading="lazy" />
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={PHOTOS.p5.src} alt="REACH with Esther Funds Foundation" loading="lazy" />
+          <Clip c={CLIPS.v3} label="A REACH event" />
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={PHOTOS.p7.src} alt="REACH on campus" loading="lazy" />
+          <Clip c={CLIPS.v2} label="A moment from REACH" />
+        </div>
+      </section>
+
+      <section className="sc-wrap cp-sec">
+        <h2>What&rsquo;s in it for your university</h2>
+        <div className="cp-grid">{FOR_UNIVERSITY.map((o) => <article key={o.h} className="cp-card"><h3>{o.h}</h3><p>{o.p}</p></article>)}</div>
+      </section>
+
+      <section className="sc-wrap cp-sec">
+        <h2>What&rsquo;s in it for you</h2>
+        <p className="cp-sub">For the dean, the advisor, the counselor, the professor: the person a student tells first.</p>
+        <div className="cp-grid">{FOR_YOU.map((o) => <article key={o.h} className="cp-card you"><h3>{o.h}</h3><p>{o.p}</p></article>)}</div>
       </section>
 
       <section className="sc-wrap cp-sec" id="what">
@@ -142,4 +184,21 @@ export default function Campus() {
       <SiteFoot />
     </main>
   );
+}
+
+type ClipT = { src: string; poster: string; tall: boolean };
+/* Muted and looping, loaded only while on screen; reduced motion keeps the still frame. */
+function Clip({ c, label, className = "" }: { c: ClipT; label: string; className?: string }) {
+  const ref = useRef<HTMLVideoElement>(null);
+  useEffect(() => {
+    const v = ref.current;
+    if (!v || typeof IntersectionObserver === "undefined" || window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) return;
+    const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) { v.preload = "auto"; v.play().catch(() => {}); } else v.pause(); }, { threshold: 0.2 });
+    io.observe(v);
+    return () => io.disconnect();
+  }, []);
+  return <video ref={ref} className={className} src={c.src} poster={c.poster} muted loop playsInline preload="none" aria-label={label} />;
+}
+function BgVideo() {
+  return <div className="cp-bg" aria-hidden="true"><Clip c={CLIPS.v4} label="" /></div>;
 }

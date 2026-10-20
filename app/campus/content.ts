@@ -46,3 +46,26 @@ export const NEWSLETTER = `Before you drop out, REACH.
 export const SYLLABUS = `Basic needs and student support: If you are facing a hard time with food, housing, money, a registration hold or your mental health, you are not alone and it is not a sign you don't belong here. Please reach out to me, and to campus resources. You can also use REACH by Esther Funds Foundation, a free, private hub for college students with emergency help, scholarships and support: {link}. If you are in crisis, call or text 988.`;
 
 export const LMS = `Hi everyone. A free resource I want you to have before you ever need it: REACH by Esther Funds Foundation ({link}). It has emergency help and a plan in five private questions, scholarships checked every morning, free tools for aid appeals, food and housing, and real people to talk to. Save it. If a hard week hits, you have somewhere to start.`;
+
+// Facts, each from its source (checked 20 Oct 2026). Change a number only with its new source.
+export const FACTS = [
+  { big: "43.1 million", line: "people in the U.S. started college and stopped out without a credential.", src: "National Student Clearinghouse Research Center, Some College, No Credential (June 2025)", url: "https://nscresearchcenter.org/some-college-no-credential/" },
+  { big: "Nearly 1 in 4", line: "students who start college are not enrolled anywhere a year later.", src: "National Student Clearinghouse Research Center, Persistence and Retention", url: "https://nscresearchcenter.org/persistence-retention/" },
+  { big: "59%", line: "of college students face food or housing insecurity. 41% are food insecure.", src: "The Hope Center, 2023–2024 Student Basic Needs Survey (74,350 students, 91 colleges)", url: "https://hope.temple.edu/2023-2024-student-basic-needs-survey-report" },
+  { big: "Nearly 3 in 4", line: "Black and Indigenous students face food or housing insecurity.", src: "The Hope Center, 2023–2024 Student Basic Needs Survey", url: "https://hope.temple.edu/2023-2024-student-basic-needs-survey-report" },
+];
+
+export const FOR_UNIVERSITY = [
+  { h: "Students who stay", p: "Every student who gets help instead of walking away is a student still enrolled next term, and a step toward your retention and graduation goals." },
+  { h: "Your campus resources, found", p: "REACH sends students to their own campus first: the emergency fund, financial aid, the counseling center. Partnering puts your resources in front of the students who need them." },
+  { h: "Help after 5 p.m.", p: "Students hit the wall at midnight and on weekends. REACH is there when your offices are closed, with 988 on every page." },
+  { h: "Nothing to build or pay for", p: "No cost, no contract, no software, no student data. A ready-made kit your team can post today." },
+  { h: "Named as a partner", p: "Listed on REACH as a campus standing with its students, if you choose, and the first to hear about new REACH tools and workshops." },
+];
+
+export const FOR_YOU = [
+  { h: "Something to hand a student", p: "When a student tells you they might not come back next semester, you have one link that covers money, food, housing, holds and mental health." },
+  { h: "Done for you", p: "Posts, a story, a flyer, captions, a newsletter paragraph, a syllabus statement and an LMS message, already written." },
+  { h: "See it working", p: "Your own campus link. We tell you how many times it was opened, never who opened it." },
+  { h: "A real person behind it", p: "Questions, ideas or a student who needs more? Reply to any email and EFF National answers." },
+];

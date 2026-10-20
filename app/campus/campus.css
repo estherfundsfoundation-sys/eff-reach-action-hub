@@ -53,3 +53,37 @@
 .cp-pre { white-space:pre-wrap; }
 .cp .aw-ans { margin:10px 0; }
 .cp-statement { margin:0 0 14px; max-width:760px; padding:14px 18px; border-left:4px solid #ffd35a; background:rgba(255,255,255,.08); border-radius:0 14px 14px 0; font:700 clamp(18px,2.4vw,23px)/1.4 var(--rx-head); color:#fff; }
+/* the film hero: one of EFF's own clips behind a deep purple wash */
+.cp-film { position:relative; overflow:hidden; padding:72px 0 56px; }
+.cp-bg { position:absolute; inset:0; }
+.cp-bg video { width:100%; height:100%; object-fit:cover; opacity:.45; }
+.cp-film::after { content:""; position:absolute; inset:0; background:linear-gradient(180deg, rgba(59,13,120,.82), rgba(42,10,85,.92)); }
+.cp-over { position:relative; z-index:1; }
+/* facts */
+.cp-facts { padding:46px 0; background:#1a0838; color:#fff; }
+.cp-facts h2 { margin:0 0 22px; font:800 clamp(28px,4.4vw,46px)/1.08 var(--rx-head); letter-spacing:-.025em; color:#fff; max-width:860px; }
+.cp-facts h2 em { font-style:normal; color:#ffd35a; }
+.cp-factgrid { display:grid; grid-template-columns:repeat(auto-fit, minmax(220px,1fr)); gap:14px; }
+.cp-fact { margin:0; padding:22px; border-radius:22px; background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.14); display:grid; gap:8px; align-content:start; }
+.cp-fact b { font:800 clamp(34px,4.6vw,50px)/1 var(--rx-head); color:#ffd35a; letter-spacing:-.02em; }
+.cp-fact p { margin:0; font-size:17px; line-height:1.45; color:#efe4ff; }
+.cp-fact figcaption { font-size:12.5px; line-height:1.4; }
+.cp-fact figcaption a { color:#cdb4f5 !important; }
+.cp-factline { margin:24px 0 0; max-width:780px; font-size:20px; line-height:1.5; color:#efe4ff; }
+.cp-factline b { color:#fff; }
+/* gallery */
+.cp-gallery { display:grid; grid-template-columns:repeat(4, 1fr); grid-auto-rows:210px; gap:12px; }
+.cp-gallery > * { width:100%; height:100%; object-fit:cover; border-radius:20px; background:#2a0b55; box-shadow:0 18px 40px -26px rgba(42,10,85,.7); }
+.cp-gallery > :nth-child(1) { grid-row:span 2; }
+.cp-gallery > :nth-child(2) { grid-column:span 2; }
+.cp-gallery > :nth-child(3) { grid-row:span 2; }
+.cp-gallery > :nth-child(4) { grid-column:span 2; }
+.cp-gallery > :nth-child(5) { grid-column:span 2; }
+.cp-gallery > :nth-child(6) { grid-column:span 2; }
+@media (max-width:760px) {
+  .cp-gallery { grid-template-columns:1fr 1fr; grid-auto-rows:160px; }
+  .cp-gallery > :nth-child(n) { grid-column:auto; grid-row:auto; }
+  .cp-gallery > :nth-child(1), .cp-gallery > :nth-child(3) { grid-row:span 2; }
+  .cp-gallery > :nth-child(2), .cp-gallery > :nth-child(4) { grid-column:span 2; }
+}
+.cp-card.you { background:var(--pl); border-color:transparent; }
