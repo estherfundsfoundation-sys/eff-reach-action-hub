@@ -1,5 +1,6 @@
 "use client";
 
+import { RealStrip } from "../RealReach";
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { SiteFoot, SiteTop } from "../myreach/ui";
@@ -100,6 +101,7 @@ export default function Freebies({ data }: { data: Data | null }) {
           </div>
           {got.length ? <p className="fb-tally">🎉 You&rsquo;ve claimed <b>{got.length}</b> freebie{got.length === 1 ? "" : "s"}. Keep going.</p> : null}
         </div></section>
+        <RealStrip photo="p7" video="v2" />
 
         {ff ? (
           <section className="sc-wrap fb-ff" aria-label="Free Friday">

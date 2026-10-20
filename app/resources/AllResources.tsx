@@ -1,5 +1,6 @@
 "use client";
 
+import { RealStrip } from "../RealReach";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { CATEGORIES } from "../content/resources";
@@ -32,6 +33,7 @@ export default function AllResources() {
           </nav>
         </div>
       </section>
+      <RealStrip photo="p5" video="v4" />
       <div className="sc-wrap sc-section">
         {!shown.length ? <div className="sc-empty"><h2>Nothing by that name.</h2><p>Try another word, or <Link href="/get-help">tell Get Help what&rsquo;s going on</Link>.</p></div> : null}
         {shown.map((c) => (

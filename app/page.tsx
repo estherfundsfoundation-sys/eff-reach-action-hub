@@ -1,3 +1,4 @@
+import { RealReachHome } from "./RealReach";
 import Link from "next/link";
 import ReachOpening from "./ReachOpening";
 import { ReachBox, ReachLetters, ReachStill, ReachStory, ReachWalkers } from "./ReachFilm";
@@ -26,6 +27,7 @@ export default function Home() {
         </div>
       </section>
       <ReachLetters />
+      <RealReachHome />
 
       <section id="doors" className="rh-doors">
         <div className="sc-wrap">

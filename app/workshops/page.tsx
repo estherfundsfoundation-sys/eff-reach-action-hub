@@ -1,3 +1,4 @@
+import { RealStrip } from "../RealReach";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { SiteFoot, SiteTop } from "../myreach/ui";
@@ -69,6 +70,7 @@ export default function Workshops() {
           <JoinCode base={`${MYEFF}/w`} />
         </div>
       </header>
+      <RealStrip photo="p5" video="v3" />
 
       <section className="wk-how">
         <div className="sc-wrap">

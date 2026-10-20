@@ -1,3 +1,4 @@
+import { RealStrip } from "../RealReach";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { rpc, dueLabel, urgent, LEVELS, type Search, type Stats, type Card } from "./lib";
@@ -63,6 +64,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<Par
           </div>
         </div>
       </section>
+      <RealStrip photo="p6" video="v3" />
 
       <div className="sc-wrap sc-section">
         <div className="sc-doors">
