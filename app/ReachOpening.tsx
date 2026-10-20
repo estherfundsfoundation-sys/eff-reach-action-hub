@@ -65,9 +65,10 @@ export default function ReachOpening() {
       // 2. the letters: fly in from far away, one after another, and lock
       letters.current.forEach((n, i) => {
         if (!n) return;
-        const a = 0.56 + i * 0.035, t = ease(seg(p, a, a + 0.12));
-        const push = seg(p, 0.86, 1);
-        n.style.transform = `translate3d(0, ${(1 - t) * (i % 2 ? -40 : 40)}vh, ${(1 - t) * -2600 + push * 260}px) rotateX(${(1 - t) * (i % 2 ? 70 : -70)}deg) rotateY(${(1 - t) * (i - 2) * 40}deg)`;
+        // Letters rise into place in order, after "Before you drop out," has gone. They stay upright and in
+        // line the whole way (Shayna, 20 Oct 2026: the tumbling letters looked messy when you scroll).
+        const a = 0.62 + i * 0.04, t = ease(seg(p, a, a + 0.1));
+        n.style.transform = `translate3d(0, ${(1 - t) * 14}vh, ${(1 - t) * -500}px)`;
         n.style.opacity = t.toFixed(3);
       });
     };
