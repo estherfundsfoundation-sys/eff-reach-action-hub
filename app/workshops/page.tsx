@@ -32,6 +32,7 @@ const SHELVES = [
     ["FAFSA & Financial Aid Night", "Aid made plain, then a 12-minute FAFSA Sprint in the room."],
     ["Finals Survival", "Sleep, study that sticks, and a plan for the hardest week."],
     ["Scholarship Essay Lab", "Seven quiet minutes to write your first paragraph, then read it aloud."],
+    ["Apply With Me Night", "Build your scholarship application together on REACH, then a Submit Sprint: everyone applies before they leave."],
     ["Resume & LinkedIn Glow-Up", "A resume that gets read and a profile that gets found."],
     ["Money 101", "Refund checks, a weekly number, scam radar, and credit."],
     ["Grad School & Transfer Roadmap", "Where you're going next and how to get there."],

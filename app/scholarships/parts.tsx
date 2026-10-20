@@ -10,6 +10,7 @@ import { SiteTop } from "../myreach/ui";
 export const SCH_TABS = [
   { href: "/scholarships", label: "All scholarships" },
   { href: "/scholarships/match", label: "Match me" },
+  { href: "/apply-with-me", label: "Apply With Me" },
   { href: "/scholarships/saved", label: "Saved" },
   { href: "/scholarships/recipients", label: "Past recipients" },
   { href: "/scholarships/toolkits", label: "Toolkits" },
