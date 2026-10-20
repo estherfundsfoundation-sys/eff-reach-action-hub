@@ -5,7 +5,7 @@
 
 .em-hero { position:relative; padding:36px 0 8px; overflow:hidden; }
 .em-hero .sc-wrap { position:relative; }
-.em-hero h1, .em-plan-head h1 { margin:10px 0 10px; font:900 clamp(40px,8.5vw,88px)/.95 "Georama","Archivo","Arial Black",sans-serif; letter-spacing:-.035em; color:var(--p); }
+.em-hero h1, .em-plan-head h1 { margin:10px 0 10px; font:900 clamp(40px,8.5vw,88px)/.95 var(--rx-head); letter-spacing:-.035em; color:var(--p); }
 .em-hero h1 em, .em-plan-head h1 em { font-style:normal; background:linear-gradient(transparent 62%, var(--y) 62%); padding:0 .06em; }
 @media (prefers-color-scheme: dark) { .em-hero h1 em, .em-plan-head h1 em { background:linear-gradient(transparent 62%, rgba(255,211,90,.35) 62%); } }
 .em-hero p, .em-plan-head p { margin:0; max-width:620px; font-size:18px; line-height:1.5; color:var(--i2); }
@@ -27,14 +27,14 @@
 .em-stage { padding-bottom:40px; scroll-margin-top:80px; }
 .em-q { max-width:760px; margin:18px 0 0; padding:24px 20px; border-radius:28px; background:var(--s); border:1px solid var(--b); box-shadow:0 20px 50px rgba(66,18,127,.08); animation:em-in .45s cubic-bezier(.2,.8,.2,1) both; }
 @keyframes em-in { from { opacity:0; transform:translateY(16px) scale(.985); } to { opacity:1; transform:none; } }
-.em-q h2 { margin:0 0 6px; font:800 clamp(26px,5vw,38px)/1.1 "Georama","Archivo",sans-serif; color:var(--i); letter-spacing:-.01em; }
+.em-q h2 { margin:0 0 6px; font:800 clamp(26px,5vw,38px)/1.1 var(--rx-head); color:var(--i); letter-spacing:-.01em; }
 .em-sub { color:var(--i2); font-size:16px; line-height:1.5; margin:0 0 14px; }
 
 .em-big { display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:12px; margin-top:14px; }
 .em-big.three { grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); }
 .em-choice { display:flex; flex-direction:column; gap:4px; align-items:flex-start; text-align:left; min-height:96px; padding:18px; border-radius:20px; border:2px solid var(--b); background:var(--s); color:var(--i); font-family:inherit; cursor:pointer; transition:transform .15s, border-color .15s, background .15s; }
 .em-choice:hover { transform:translateY(-2px); border-color:var(--pv); }
-.em-choice b { font:800 20px/1.2 "Georama","Archivo",sans-serif; }
+.em-choice b { font:800 20px/1.2 var(--rx-head); }
 .em-choice span { font-size:15px; color:var(--i2); }
 .em-choice.on { border-color:var(--p); background:var(--pl); }
 .em-choice.danger { border-color:#c2263f; background:#fff1f3; }
@@ -61,7 +61,7 @@
 .em-crisis { border-color:#c2263f; }
 .em-lines { display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:10px; margin:14px 0; }
 .em-line { display:flex; flex-direction:column; gap:2px; padding:16px; border-radius:18px; background:var(--pl); text-decoration:none; color:var(--i) !important; min-height:72px; }
-.em-line b { font:900 22px/1.1 "Georama","Archivo",sans-serif; color:var(--p); }
+.em-line b { font:900 22px/1.1 var(--rx-head); color:var(--p); }
 .em-line span { font-size:14px; color:var(--i2); }
 .em-line.red { background:#a3122c; }
 .em-line.red b, .em-line.red span { color:#fff; }
@@ -82,11 +82,11 @@
 
 .em-step { position:relative; display:grid; grid-template-columns:56px 1fr; gap:14px; padding:24px 0; border-top:1px solid var(--b); animation:em-in .5s both; }
 .em-step:nth-of-type(2) { animation-delay:.08s; } .em-step:nth-of-type(3) { animation-delay:.16s; } .em-step:nth-of-type(4) { animation-delay:.24s; }
-.em-num { width:52px; height:52px; border-radius:50%; display:grid; place-items:center; background:var(--p); color:#fff; font:900 24px/1 "Georama","Archivo",sans-serif; box-shadow:0 0 0 6px var(--pl); }
+.em-num { width:52px; height:52px; border-radius:50%; display:grid; place-items:center; background:var(--p); color:#fff; font:900 24px/1 var(--rx-head); box-shadow:0 0 0 6px var(--pl); }
 .em-num::before { counter-increment:em-step; content:counter(em-step); }
 @media (prefers-color-scheme: dark) { .em-num { color:#1b1227; } }
 .em-body { min-width:0; }
-.em-body h3 { margin:6px 0 6px; font:800 clamp(22px,4vw,30px)/1.15 "Georama","Archivo",sans-serif; color:var(--i); }
+.em-body h3 { margin:6px 0 6px; font:800 clamp(22px,4vw,30px)/1.15 var(--rx-head); color:var(--i); }
 @media (max-width:560px) { .em-step { grid-template-columns:1fr; gap:6px; } .em-num { width:42px; height:42px; font-size:20px; } }
 
 .em-script { padding:16px 18px; border-radius:20px; background:var(--pl); margin-bottom:14px; }
@@ -95,7 +95,7 @@
 
 .em-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(260px, 1fr)); gap:12px; margin-bottom:12px; }
 .em-card { display:flex; flex-direction:column; gap:6px; padding:16px; border-radius:20px; background:var(--s); border:1px solid var(--b); min-width:0; }
-.em-card h4 { margin:0; font:800 18px/1.25 "Georama","Archivo",sans-serif; color:var(--i); }
+.em-card h4 { margin:0; font:800 18px/1.25 var(--rx-head); color:var(--i); }
 .em-card p { margin:0; font-size:15px; line-height:1.5; color:var(--i); overflow-wrap:anywhere; }
 .em-card.hot { border:2px solid var(--p); }
 .em-card.web { border-style:dashed; border-color:var(--pv); }
@@ -111,13 +111,13 @@
 .em-acts { display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin-top:auto; padding-top:8px; }
 .em-sms { font-weight:700; font-size:14px; color:var(--i); }
 .em-need { margin-bottom:8px; }
-.em-needh { margin:12px 0 8px; font:800 17px/1.2 "Georama","Archivo",sans-serif; color:var(--pv); }
+.em-needh { margin:12px 0 8px; font:800 17px/1.2 var(--rx-head); color:var(--pv); }
 .em-searching { display:flex; align-items:center; gap:10px; color:var(--i2); font-size:15px; }
 .em-spin { width:18px; height:18px; border-radius:50%; border:3px solid var(--b); border-top-color:var(--c); animation:em-rot 1s linear infinite; }
 @keyframes em-rot { to { transform:rotate(360deg); } }
 
 .em-ended, .em-scam { margin:18px 0; padding:18px; border-radius:20px; border:1px solid var(--b); background:var(--s); }
-.em-ended h3, .em-scam h3 { margin:0 0 6px; font:800 20px/1.2 "Georama","Archivo",sans-serif; }
+.em-ended h3, .em-scam h3 { margin:0 0 6px; font:800 20px/1.2 var(--rx-head); }
 .em-ended ul { margin:0; padding-left:18px; } .em-ended li { margin:4px 0; font-size:15px; }
 .em-scam { border:2px solid var(--c); } .em-scam p { margin:0; font-size:15px; line-height:1.55; }
 .em-foot { font-size:13px; color:var(--i2); margin:10px 0 0; }

@@ -8,7 +8,7 @@
 @keyframes tr-sweep { from { transform:rotate(16deg); } to { transform:rotate(-16deg); } }
 .tr-copy { position:relative; z-index:2; padding-bottom:48px; text-align:center; }
 .tr-kick { display:inline-block; font-weight:800; font-size:13px; letter-spacing:.2em; text-transform:uppercase; color:#ffd35a; }
-.tr-h { margin:14px auto 16px; font:900 clamp(52px,10vw,132px)/.88 "Georama","Archivo","Arial Black",sans-serif; letter-spacing:-.045em; max-width:10em; color:#fff; }
+.tr-h { margin:14px auto 16px; font:900 clamp(52px,10vw,132px)/.88 var(--rx-head); letter-spacing:-.045em; max-width:10em; color:#fff; }
 .tr-h em { font-style:normal; color:#ffd35a; }
 .tr-year { display:block; font-size:.5em; letter-spacing:.06em; color:transparent; -webkit-text-stroke:2px #fff; margin-top:.12em; }
 .tr-sub { max-width:640px; margin:0 auto 24px; font-size:clamp(18px,2.3vw,22px); line-height:1.5; color:#e9def9; }

@@ -1,11 +1,11 @@
 /* REACH Freebies (/freebies), inside .sc (scholarships.css). */
-.fb h2 { font:900 clamp(28px,5vw,44px)/1 "Georama","Archivo","Arial Black",sans-serif; letter-spacing:-.02em; color:var(--p); margin:0 0 8px; }
+.fb h2 { font:900 clamp(28px,5vw,44px)/1 var(--rx-head); letter-spacing:-.02em; color:var(--p); margin:0 0 8px; }
 .fb-sub { color:var(--i2); font-size:16px; margin:0 0 14px; }
 .fb-tally { position:relative; margin-top:16px; font-size:17px; color:var(--i); }
 
 .fb-ff { margin:6px auto 36px; }
 .fb-ff-label { display:flex; align-items:baseline; gap:10px; flex-wrap:wrap; margin-bottom:10px; }
-.fb-ff-label span { font:900 22px/1 "Georama","Archivo",sans-serif; color:var(--c); letter-spacing:.02em; }
+.fb-ff-label span { font:900 22px/1 var(--rx-head); color:var(--c); letter-spacing:.02em; }
 .fb-ff-label small { color:var(--i2); font-size:14px; }
 
 .fb-card { position:relative; display:flex; flex-direction:column; gap:6px; padding:18px; border-radius:22px; background:var(--s); border:1px solid var(--b); transition:transform .15s, border-color .15s, box-shadow .15s; }
@@ -13,7 +13,7 @@
 .fb-card.got { border-color:var(--g); }
 .fb-card.big { padding:26px; border:2px solid var(--c); background:linear-gradient(135deg, var(--s), var(--pl)); }
 .fb-card.big h3 { font-size:clamp(24px,4vw,34px); }
-.fb-card h3 { margin:0; font:800 20px/1.2 "Georama","Archivo",sans-serif; color:var(--i); }
+.fb-card h3 { margin:0; font:800 20px/1.2 var(--rx-head); color:var(--i); }
 .fb-brand { margin:0; font-weight:800; font-size:13px; letter-spacing:.12em; text-transform:uppercase; color:var(--pv); }
 .fb-what { margin:0; font-size:15px; line-height:1.5; color:var(--i); }
 .fb-how, .fb-needs { margin:0; font-size:14px; line-height:1.45; color:var(--i2); }
@@ -44,7 +44,7 @@
 
 .fb-more { display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:12px; margin-bottom:24px; }
 .fb-door { display:flex; flex-direction:column; gap:6px; align-items:flex-start; padding:18px; border-radius:20px; background:var(--s); border:1px solid var(--b); }
-.fb-door b { font:800 18px/1.2 "Georama","Archivo",sans-serif; color:var(--p); }
+.fb-door b { font:800 18px/1.2 var(--rx-head); color:var(--p); }
 .fb-door span { color:var(--i2); font-size:14px; margin-bottom:6px; }
 .fb-note { font-size:13px; line-height:1.5; color:var(--i2); margin-bottom:28px; }
 
