@@ -209,3 +209,4 @@
 .sp-what-letters span { font-weight:800; color:#ffd35a; }
 .sp-hero > .cp-over { width:100%; min-width:0; box-sizing:border-box; }
 .sp-hero .cp-kick { overflow-wrap:anywhere; }
+.sp-what-box { margin-top:10px !important; padding-top:8px; border-top:1px solid rgba(255,211,90,.25); }

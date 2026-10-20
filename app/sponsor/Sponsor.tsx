@@ -102,6 +102,7 @@ export default function Sponsor() {
           <div className="sp-what">
             <p><b>What is REACH?</b> REACH is Esther Funds Foundation&rsquo;s response to student retention around the globe.</p>
             <p className="sp-what-letters"><span>R</span>each out · <span>E</span>ngage your community · <span>A</span>ccess resources · <span>C</span>are for your mental health · <span>H</span>old on</p>
+            <p className="sp-what-box"><b>What is a REACH Box?</b> The most elite, helpful care package a college student can receive: food, hygiene and school supplies, packed by EFF and put in the hands of students who asked for help.</p>
           </div>
           <h1>Put your name on the moment a student <em>almost walked away.</em></h1>
           <p className="cp-lede">Students rarely leave college all at once. It&rsquo;s a bill, a hold, an empty fridge, a hard week. REACH is where they turn first. <b>Your logo on the box they open. Your name on the screen when they learn. We do all the work.</b></p>
@@ -180,7 +181,7 @@ export default function Sponsor() {
                   <div className="sp-face sp-top"><span className="sp-bx-t">REACH</span><span className="sp-bx-tt">Esther Funds Foundation</span></div>
                 </div>
               </div>
-              <figcaption><b>On the REACH Box.</b> Your logo on the front and side of every box a student opens, with your product inside if you like.</figcaption>
+              <figcaption><b>On the REACH Box.</b> The most elite care package a college student can receive, with your logo on the front and side and your product inside if you like.</figcaption>
             </figure>
 
             <figure className="sp-mock" data-rv>
