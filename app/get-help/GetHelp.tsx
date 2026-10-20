@@ -1,6 +1,5 @@
 "use client";
 
-import { RealStrip } from "../RealReach";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { SiteTop } from "../myreach/ui";
 import { byKey, fullHref, type ReachResource } from "./resources";
@@ -112,7 +111,6 @@ export default function GetHelp() {
         <h1>What&rsquo;s going on?</h1>
         <p>Pick what&rsquo;s closest. We&rsquo;ll show you who can help, near you first, in plain words. Nothing you pick is saved.</p>
       </header>
-      <RealStrip photo="p6" video="v1" line="You are not the only one going through it." />
 
       <section className="gh-needs" aria-label="What do you need help with?">
         <button className={`gh-need gh-need-crisis${crisis ? " on" : ""}`} aria-pressed={crisis} onClick={() => { setCrisis(true); setNeed(null); setFound(null); }}>I&rsquo;m not okay right now</button>
