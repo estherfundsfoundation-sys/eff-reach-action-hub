@@ -20,7 +20,7 @@ export const FOR_YOU = [
   { h: "Recognized on REACH and EFF", p: "Named on this page and on Esther Funds Foundation's website and social media, with your permission." },
   { h: "Your team on the ground", p: "Employee volunteers at a tour stop, packing care packages, or leading a workshop on what your people know best: money, careers, wellness." },
   { h: "Impact you can report", p: "Totals after every sponsorship: workshops held, students reached, items given, campuses visited. Never a student's name or data." },
-  { h: "A real 501(c)(3) partner", p: "Esther Funds Foundation is a 501(c)(3) nonprofit, EIN 93-4917509. Gifts are tax-deductible as the law allows, and you get a written acknowledgment for every one." },
+  { h: "A real 501(c)(3) partner", p: "Esther Funds Foundation is an IRS-verified 501(c)(3) public charity, EIN 93-4917509. Gifts are tax-deductible as the law allows, and you get a written acknowledgment for every one." },
   { h: "A cause students feel", p: "First-generation, low-income and minority college students, many at HBCUs and in the South, the ones closest to not finishing." },
 ];
 

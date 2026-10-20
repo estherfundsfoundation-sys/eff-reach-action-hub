@@ -21,6 +21,8 @@ type Sch = { current?: number };
 type Chapter = { school_name: string | null; chapter_name: string; state: string | null };
 const IG = ["DZnxaMJJNlE", "DesNpGvINUE", "Dek6k_2Rc_Q", "DeDK3FOR2z9"];
 const ROMAN = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"];
+// The IRS Tax Exempt Organization Search, so a donor can check the EIN for themselves.
+const IRS_SEARCH = "https://apps.irs.gov/app/eos/";
 const n = (x?: number) => (typeof x === "number" ? x.toLocaleString("en-US") : "");
 
 export default function Sponsor() {
@@ -104,6 +106,18 @@ export default function Sponsor() {
             {site?.chapters ? <div><b>{n(site.chapters)}</b><span>campus chapters in {n(site.states)} states</span></div> : null}
             <div><b>$0</b><span>for a student to use any of it</span></div>
           </div>
+        </div>
+      </section>
+
+
+      <section className="sp-trust" aria-label="Tax-exempt status">
+        <div className="sc-wrap sp-trust-in">
+          <div className="sp-seal" aria-hidden="true"><span>501</span><small>(c)(3)</small></div>
+          <div className="sp-trust-txt">
+            <b>IRS-verified 501(c)(3) public charity</b>
+            <span>Esther Funds Foundation · Federal Tax ID (EIN) <strong>93-4917509</strong> · Gifts are tax-deductible as the law allows, with a written acknowledgment for every one.</span>
+          </div>
+          <a className="sp-verify" href={IRS_SEARCH} target="_blank" rel="noreferrer">Verify us on IRS.gov →</a>
         </div>
       </section>
 
@@ -348,7 +362,7 @@ export default function Sponsor() {
             <label className="cp-check"><input type="checkbox" checked={agree} onChange={(e) => setAgree(e.target.checked)} required />Esther Funds Foundation may contact me about this sponsorship.</label>
             {err ? <p className="aw-err" role="alert">{err}</p> : null}
             <div className="sc-acts"><button className="sc-btn coral" disabled={busy}>{busy ? "Sending…" : "Send my note"}</button></div>
-            <p className="sc-small">You&rsquo;ll send your logo files after we talk. A 501(c)(3) nonprofit, EIN 93-4917509. Sponsorship benefits are set by written agreement and follow nonprofit rules.</p>
+            <p className="sc-small">You&rsquo;ll send your logo files after we talk. Esther Funds Foundation is an IRS-verified 501(c)(3) public charity, EIN 93-4917509 (<a href={IRS_SEARCH} target="_blank" rel="noreferrer">verify on IRS.gov</a>). Sponsorship benefits are set by written agreement and follow nonprofit rules.</p>
           </form>
         )}
       </section>
