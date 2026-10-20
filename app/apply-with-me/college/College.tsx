@@ -5,7 +5,6 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { call, readPass, startCode, writePass, SignedOut, type Pass } from "../../myreach/pass";
 import { SiteTop, SiteFoot } from "../../myreach/ui";
 import { SignIn } from "../../account/SignIn";
-import { RealStrip } from "../../RealReach";
 import { fit, words, wordLimitIn } from "../essays";
 import {
   ACTIVITY_TYPES, CHECKS, DEADLINES, DECISIONS, GRADES, HONOR_LEVELS, LIMITS, PLATFORMS, PROMPTS, PS_LIMIT, PS_MIN, PS_QS, WHY_QS,
@@ -160,7 +159,6 @@ function Landing() {
           <div className="sc-acts"><a className="sc-btn coral" href="#start">Start my college application</a><Link className="sc-btn ghost" href="/apply-with-me">Scholarships instead</Link></div>
         </div>
       </section>
-      <RealStrip photo="p5" video="v1" line="Every future fulfilled. Yours too." />
       <section className="sc-wrap aw-how">
         {[
           ["1", "Your profile, once", "High school, GPA, classes, up to 10 activities and 5 honors, written to the Common App's exact character limits."],

@@ -1,6 +1,5 @@
 "use client";
 
-import { RealStrip } from "../RealReach";
 import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { call, readPass, startCode, writePass, SignedOut, type Pass } from "../myreach/pass";
@@ -153,7 +152,6 @@ function Landing() {
           <p className="aw-lede" style={{ marginTop: 18 }}>In high school? <Link href="/apply-with-me/college"><b>Let us apply for college with you →</b></Link></p>
         </div>
       </section>
-      <RealStrip photo="p7" video="v4" />
       <section className="sc-wrap aw-how">
         {[
           ["1", "Build your profile once", "School, activities, service, work, goals and recommenders. About 20 minutes, saved for good."],
