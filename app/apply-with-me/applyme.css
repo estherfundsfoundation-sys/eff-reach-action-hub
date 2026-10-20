@@ -154,3 +154,15 @@
   .aw-hero::before, .aw-hero h1, .aw-lede, .aw-hero .sc-acts { animation:none; }
   .aw-bar span { transition:none; }
 }
+
+/* Apply With Me · College */
+.awc-prompts { display:grid; gap:8px; margin:12px 0 6px; }
+.awc-prompt { display:flex; gap:12px; align-items:flex-start; text-align:left; padding:14px 16px; border-radius:16px; border:2px solid var(--b); background:var(--s); color:var(--i); font:500 16px/1.45 inherit; font-family:inherit; cursor:pointer; }
+.awc-prompt b { flex:0 0 30px; height:30px; display:grid; place-items:center; border-radius:50%; background:var(--pl); color:var(--p); font-size:14px; }
+.awc-prompt.on { border-color:var(--p); background:var(--pl); }
+.awc-prompt.on b { background:var(--p); color:#fff; }
+.awc-pre { white-space:pre-wrap; }
+.awc-why { margin:10px 0; padding:12px 14px; border-radius:16px; background:var(--pl); }
+.awc-fafsa a { font-weight:800; }
+.aw-files em { font-style:normal; }
+.aw-switch { display:flex; flex-wrap:wrap; gap:8px; margin:6px 0 14px; }

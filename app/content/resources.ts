@@ -33,6 +33,7 @@ export const CATEGORIES: Category[] = [
       { title: "REACH Scholarships", text: "Thousands of open scholarships, checked every morning. Search by level, deadline and state.", href: "/scholarships", tag: "EFF" },
       { title: "REACH Freebies", text: "Free money you're owed, free software, free trials and student prices, checked by EFF. A new Free Friday every week.", href: "/freebies", tag: "EFF" },
       { title: "Apply With Me", text: "EFF builds your scholarship application with you: your profile and essays once, every answer ready to paste, reminders before each deadline. You make it yours and click submit.", href: "/apply-with-me", tag: "EFF" },
+      { title: "Apply With Me · College", text: "For high school students: EFF builds your college applications with you. Activities, personal statement, college list, supplements and emails to your counselor, ready to paste. You click submit.", href: "/apply-with-me/college", tag: "EFF" },
       { title: "Match me in 2 minutes", text: "Answer a few questions and see the open scholarships that fit you, with the reasons why.", href: "/scholarships/match", tag: "Tool" },
       { title: "Apply to EFF", text: "Esther Funds Foundation's own scholarships and funding, in one account.", href: "/apply", tag: "EFF" },
       { title: "The Scholarship Walk", text: "167 hand-picked scholarships in the order they close. Save a list and add deadlines to your calendar.", href: "/scholarshipwalk", tag: "EFF" },

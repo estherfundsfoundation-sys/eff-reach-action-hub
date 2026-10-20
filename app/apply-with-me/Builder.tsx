@@ -23,6 +23,8 @@ type App = {
   essay_id: string | null; essay_body: string | null; why_line: string | null; notes: string | null; award_cents: number | null; applied_at: string | null;
 };
 type Me = { email: string; account: Record<string, unknown>; profile: Profile; essays: Essay[]; apps: App[] };
+/* College applications (apply-with-me/college) share the table; this builder shows scholarships only. */
+const onlySch = <T extends Me>(m: T): T => ({ ...m, apps: (m.apps || []).filter((a) => (a as App & { kind?: string }).kind !== "college") });
 type View = "start" | "profile" | "essays" | "matches" | "kit" | "tracker";
 
 const STEPS: Array<{ v: View; n: string; label: string }> = [
@@ -52,7 +54,7 @@ export default function Builder() {
 
   const load = useCallback(async (p: Pass | null) => {
     if (!p) { setMe(null); return; }
-    try { setMe(await call<Me>("eff_raw_me", { p_token: p.token })); }
+    try { setMe(onlySch(await call<Me>("eff_raw_me", { p_token: p.token }))); }
     catch (e) { if (e instanceof SignedOut) setPass(null); else setErr(e instanceof Error ? e.message : "REACH didn't load."); }
   }, []);
 
@@ -69,7 +71,7 @@ export default function Builder() {
   const run = useCallback(async <T,>(fn: string, body: Record<string, unknown>): Promise<T | null> => {
     if (!pass) return null;
     setErr("");
-    try { const r = await call<T & Me>(fn, { p_token: pass.token, ...body }); if (r && (r as Me).apps) setMe(r); return r; }
+    try { const r = await call<T & Me>(fn, { p_token: pass.token, ...body }); if (r && (r as Me).apps) setMe(onlySch(r as Me)); return r; }
     catch (e) { if (!(e instanceof SignedOut)) setErr(e instanceof Error ? e.message : "That didn't save."); return null; }
   }, [pass]);
 
@@ -130,7 +132,7 @@ export default function Builder() {
           : view === "kit" ? <KitView key={kitId || "none"} me={me} run={run} id={kitId} pick={(id) => go("kit", id)} back={() => go("matches")} tracker={() => go("tracker")} />
           : <TrackerView me={me} run={run} openKit={(id) => go("kit", id)} find={() => go("matches")} />}
         <p className="sc-small aw-out">
-          Signed in as {pass.email}. Your answers save to your REACH account. <button type="button" className="aw-link" onClick={() => { call("eff_reach_sign_out", { p_token: pass.token }).catch(() => {}); writePass(null); setPass(null); setMe(null); }}>Sign out</button>
+          Applying to college? <Link href="/apply-with-me/college">Apply With Me · College</Link> uses the same account. Signed in as {pass.email}. Your answers save to your REACH account. <button type="button" className="aw-link" onClick={() => { call("eff_reach_sign_out", { p_token: pass.token }).catch(() => {}); writePass(null); setPass(null); setMe(null); }}>Sign out</button>
         </p>
       </div>
       <SiteFoot />
@@ -148,6 +150,7 @@ function Landing() {
           <h1>You don&rsquo;t have to apply <em>alone.</em></h1>
           <p className="aw-lede">EFF builds your scholarship application with you. You tell us your story once. We turn it into answers and essays for every scholarship. <b>You make it yours and click submit.</b></p>
           <div className="sc-acts"><a className="sc-btn coral" href="#start">Start my application</a><Link className="sc-btn ghost" href="/scholarships">Browse scholarships</Link></div>
+          <p className="aw-lede" style={{ marginTop: 18 }}>In high school? <Link href="/apply-with-me/college"><b>Let us apply for college with you →</b></Link></p>
         </div>
       </section>
       <RealStrip photo="p7" video="v4" />
