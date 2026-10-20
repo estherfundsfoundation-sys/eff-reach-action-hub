@@ -142,6 +142,38 @@ export default function Sponsor() {
         </div>
       </section>
 
+      <section className="sp-news" aria-labelledby="sp-nw">
+        <div className="sc-wrap sp-nw-in">
+          <div className="sp-nw-copy">
+            <span className="sp-eyebrow">As seen in the news</span>
+            <h2 id="sp-nw">Hear it from the news.</h2>
+            <p className="sp-st-sub">REACH made the news. Watch the story of the EFF Campus REACH Project, the boxes and the students behind them, then imagine your brand in the next one.</p>
+            <a className="sp-ig-btn" href="https://www.instagram.com/reel/DZvmqsbJd6m/" target="_blank" rel="noreferrer"><span aria-hidden="true">▶</span> Watch on Instagram</a>
+            <small className="sp-nw-src">A post shared by EFF Campus Reach Project (@effcampusreachbox)</small>
+          </div>
+          <div className="sp-nw-tv">
+            <span className="sp-nw-live" aria-hidden="true">● ON AIR</span>
+            <iframe src="https://www.instagram.com/reel/DZvmqsbJd6m/embed" title="REACH in the news" loading="lazy" allowFullScreen />
+          </div>
+        </div>
+      </section>
+
+      <section className="sp-tourband" aria-labelledby="sp-tb">
+        <div className="sc-wrap sp-tb-in">
+          <div className="sp-nw-tv sp-tb-tv">
+            <span className="sp-nw-live sp-tb-tag" aria-hidden="true">REACH on Tour</span>
+            <iframe src="https://www.instagram.com/p/DerrEFPiY5y/embed" title="REACH on Tour" loading="lazy" allowFullScreen />
+          </div>
+          <div className="sp-nw-copy">
+            <span className="sp-eyebrow">REACH on Tour</span>
+            <h2 id="sp-tb">Join us on tour around the world. <em>Join the movement.</em></h2>
+            <p className="sp-st-sub">REACH goes campus to campus with workshops, REACH Boxes and real conversations. Ride with us and get your brand in front of thousands of students, in person.</p>
+            <a className="sc-btn coral sp-tb-btn" href="#talk" onClick={() => setTier("tour")}>Get in front of thousands →</a>
+            <small className="sp-nw-src">A post shared by EFF Campus Reach Project (@effcampusreachbox)</small>
+          </div>
+        </div>
+      </section>
+
       <section className="sp-social" aria-labelledby="sp-so">
         <div className="sc-wrap sp-so-in">
           <div>
