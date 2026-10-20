@@ -22,6 +22,8 @@ type Chapter = { school_name: string | null; chapter_name: string; state: string
 const IG = ["DZnxaMJJNlE", "DesNpGvINUE", "Dek6k_2Rc_Q", "DeDK3FOR2z9"];
 const ROMAN = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"];
 // The IRS Tax Exempt Organization Search, so a donor can check the EIN for themselves.
+// Shayna, 20 Oct 2026: 56,000+ followers, videos with millions of views.
+const IG_URL = "https://www.instagram.com/Estherfundsfoundation";
 const IRS_SEARCH = "https://apps.irs.gov/app/eos/";
 const n = (x?: number) => (typeof x === "number" ? x.toLocaleString("en-US") : "");
 
@@ -131,6 +133,25 @@ export default function Sponsor() {
                 <b><Count to={x.n} />{x.s}</b><span>{x.t}</span><i>See the post →</i>
               </a>
             ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="sp-social" aria-labelledby="sp-so">
+        <div className="sc-wrap sp-so-in">
+          <div>
+            <span className="sp-eyebrow">Our audience is your audience</span>
+            <h2 id="sp-so">Join forces. <em>Get your brand in front of the students who matter.</em></h2>
+            <p className="sp-st-sub">EFF speaks straight to minority, first-generation and low-income college students, many at HBCUs and across the South. Partner with us and we connect your brand with them, on their phones and on their campuses.</p>
+            <div className="sp-so-stats">
+              <div><b><Count to={56000} />+</b><span>followers on Instagram</span></div>
+              <div><b>Millions</b><span>of views on our videos</span></div>
+            </div>
+            <a className="sp-ig-btn" href={IG_URL} target="_blank" rel="noreferrer"><span aria-hidden="true">◎</span> Follow @estherfundsfoundation</a>
+          </div>
+          <div className="sp-so-phone" aria-hidden="true">
+            <Clip c={CLIPS.v1} label="" />
+            <span className="sp-so-tag">@estherfundsfoundation</span>
           </div>
         </div>
       </section>
