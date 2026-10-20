@@ -99,6 +99,10 @@ export default function Sponsor() {
         <div className="cp-bg" aria-hidden="true"><Clip c={CLIPS.v4} label="" /></div>
         <div className="sc-wrap cp-over">
           <span className="cp-kick">Sponsor REACH · Esther Funds Foundation</span>
+          <div className="sp-what">
+            <p><b>What is REACH?</b> REACH is Esther Funds Foundation&rsquo;s response to student retention around the globe.</p>
+            <p className="sp-what-letters"><span>R</span>each out · <span>E</span>ngage your community · <span>A</span>ccess resources · <span>C</span>are for your mental health · <span>H</span>old on</p>
+          </div>
           <h1>Put your name on the moment a student <em>almost walked away.</em></h1>
           <p className="cp-lede">Students rarely leave college all at once. It&rsquo;s a bill, a hold, an empty fridge, a hard week. REACH is where they turn first. <b>Your logo on the box they open. Your name on the screen when they learn. We do all the work.</b></p>
           <div className="sc-acts"><a className="sc-btn coral" href="#studio">See your brand on REACH</a><a className="sc-btn ghost" href="#tiers">See the tiers</a></div>
