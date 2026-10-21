@@ -21,7 +21,7 @@ export default function Home() {
 
       <section id="what" className="rh-what">
         <div className="sc-wrap">
-          <p className="rh-kick">How we fight back</p>
+          <p className="rh-kick">How we rebuild it</p>
           <h2>Five letters for the moment you want to quit.</h2>
           <p>REACH is Esther Funds Foundation&rsquo;s student support. When school gets expensive, heavy or lonely, it puts help, money and people within reach, before a hard semester becomes the last one.</p>
         </div>
