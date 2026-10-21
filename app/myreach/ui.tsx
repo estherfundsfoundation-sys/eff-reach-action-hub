@@ -66,6 +66,7 @@ export function SiteFoot() {
     <footer className="sc-foot">
       <div className="sc-wrap">
         <p><b>REACH</b> is Esther Funds Foundation&rsquo;s student support: Reach out, Engage your community, Access resources, Care for your mental health, Hold on. Before you drop out, REACH.</p>
+        <p><b>No more student dropouts.</b> REACH is part of Esther Funds Foundation, the world’s first faith-based student retention movement.</p>
         <p>In immediate danger, call 911. In crisis, call or text <a href="tel:988">988</a>.</p>
         <p><Link href="/emergency">Emergency plan</Link> · <Link href="/">REACH home</Link> · <Link href="/get-help">Get Help</Link> · <Link href="/scholarships">Scholarships</Link> · <Link href="/freebies">Freebies</Link> · <Link href="/apply">Apply to EFF</Link> · <Link href="/workshops">Workshops</Link> · <Link href="/account">My REACH</Link> · <Link href="/campus">For colleges</Link> · <Link href="/sponsor">Sponsor REACH</Link> · <a href="https://www.estherfundsfoundation.org">Esther Funds Foundation</a></p>
       </div>

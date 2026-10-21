@@ -21,7 +21,7 @@ export default function Home() {
 
       <section id="what" className="rh-what">
         <div className="sc-wrap">
-          <p className="rh-kick">What REACH is</p>
+          <p className="rh-kick">How we fight back</p>
           <h2>Five letters for the moment you want to quit.</h2>
           <p>REACH is Esther Funds Foundation&rsquo;s student support. When school gets expensive, heavy or lonely, it puts help, money and people within reach, before a hard semester becomes the last one.</p>
         </div>
@@ -61,7 +61,7 @@ export default function Home() {
         <div className="sc-wrap rh-lead-in">
           <div className="rh-lead-art" aria-hidden="true"><span>R</span><span>E</span><span>A</span><span>C</span><span>H</span></div>
           <div>
-            <p className="rh-kick">Student leaders in action</p>
+            <p className="rh-kick">Join the fight</p>
             <h2>Be the reason someone stays.</h2>
             <p>REACH Ambassadors bring care, resources and connection to campus. Host a REACH workshop, lead a drive, or give to a student&rsquo;s next step.</p>
             <div className="sc-acts">

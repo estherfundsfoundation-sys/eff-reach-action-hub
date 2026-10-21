@@ -107,8 +107,8 @@ export default function ReachOpening() {
         </div>
 
         <div className="ro-end">
-          <p className="ro-by">by Esther Funds Foundation</p>
-          <p className="ro-line">Help, money and people for college students, in one place. Free. Always.</p>
+          <p className="ro-by">by Esther Funds Foundation · the world’s first faith-based student retention movement</p>
+          <p className="ro-line">The system is failing minority students. REACH is how we fight back: help, money and people, in one place. Free. Always.</p>
           <div className="ro-acts">
             <Link className="ro-btn hot" href="/get-help">I need help right now</Link>
             <Link className="ro-btn" href="/scholarships">Find money for school</Link>
