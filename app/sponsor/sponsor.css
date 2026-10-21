@@ -237,3 +237,11 @@
 @media (max-width:820px) { .sp-tb-in { grid-template-columns:1fr; } .sp-tb-in .sp-nw-copy { order:-1; } .sp-tb-tv { transform:none; } }
 @media (prefers-reduced-motion:reduce) { .sp-tb-tv { transform:none; } }
 .sp-news .sp-st-sub { color:#3a2f52; }
+
+/* The movement trailer behind the hero (app/YouTubeBg.tsx): invisible until it plays,
+   scaled past its edges so YouTube's title bar and logo are cut off, never clickable. */
+.ytbg { position:absolute; inset:0; overflow:hidden; pointer-events:none; opacity:0; transition:opacity 1.4s ease; container-type:size; }
+.ytbg.on { opacity:1; }
+.ytbg iframe { position:absolute; left:50%; top:50%; border:0; pointer-events:none;
+  width:calc(max(100cqw, 100cqh * 9 / 16) * 1.2); height:calc(max(100cqw, 100cqh * 9 / 16) * 1.2 * 16 / 9);
+  translate:-50% -50%; }

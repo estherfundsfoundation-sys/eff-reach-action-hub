@@ -5,6 +5,10 @@ import { useEffect, useRef, useState } from "react";
 import { rpc, SUPABASE, KEY } from "../scholarships/lib";
 import { SiteTop, SiteFoot } from "../myreach/ui";
 import { PHOTOS, CLIPS } from "../RealReach";
+import { YouTubeBg } from "../YouTubeBg";
+
+/* The movement trailer, Shayna's YouTube Short of 21 Oct 2026, behind the hero with no YouTube showing. */
+const HERO_YOUTUBE = "v0ftrliR2LY";
 import { FUND, FOR_YOU, PROMISES, PATHWAYS, ORG_TYPES, CONTRIBUTIONS, FACTS, IMPACT, WE_DO, TIERS, INKIND } from "./content";
 
 /* Sponsor REACH (20 Oct 2026, Shayna: "a page just for sponsors … instead of a PDF or a PowerPoint … the videos,
@@ -96,7 +100,7 @@ export default function Sponsor() {
       <SiteTop />
 
       <section className="cp-hero cp-film sp-hero">
-        <div className="cp-bg" aria-hidden="true"><Clip c={CLIPS.v4} label="" /></div>
+        <div className="cp-bg" aria-hidden="true"><Clip c={CLIPS.v4} label="" /><YouTubeBg id={HERO_YOUTUBE} /></div>
         <div className="sc-wrap cp-over">
           <span className="cp-kick">Sponsor REACH · Esther Funds Foundation</span>
           <div className="sp-what">
