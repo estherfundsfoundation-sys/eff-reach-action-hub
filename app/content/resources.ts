@@ -23,6 +23,7 @@ export const CATEGORIES: Category[] = [
   {
     key: "pay", title: "Pay for school", line: "Scholarships checked every morning, EFF's own awards, and aid made plain.", hue: "#ffd35a", glyph: "$",
     items: [
+      { title: "EFF Pell Grant Protector", text: "New for 2026–27: state, college and private aid that reaches your cost of attendance ends your Pell Grant. Check yours, and any new scholarship offer, before you say yes.", href: "https://my.estherfundsfoundation.org/kit/pell", tag: "EFF" },
       { title: "Loan Navigator", text: "What changed for student and parent loans from July 1, 2026, plus a Parent PLUS gap calculator.", href: "https://my.estherfundsfoundation.org/kit/loans", tag: "Tool" },
       { title: "Free Tax Money", text: "The American Opportunity Tax Credit and EITC, which one to look into, and where to file for free.", href: "https://my.estherfundsfoundation.org/kit/taxes", tag: "Tool" },
       { title: "Foster Youth & Independent Students", text: "Independent status, Chafee education vouchers and dependency overrides when you don't have a parent's help.", href: "https://my.estherfundsfoundation.org/kit/foster", tag: "Tool" },
@@ -37,7 +38,6 @@ export const CATEGORIES: Category[] = [
       { title: "Award Letter & Balance Decoder", text: "Upload an aid letter, add your bill, wages, work hours, savings, and support, then see what is still uncovered.", href: "/tools/award", tag: "Tool" },
       { title: "Financial Aid Offer Decoder", text: "Separate gift aid, debt, work-study, bill gap, and the full cost of attendance.", href: "/tools/aid", tag: "Tool" },
       { title: "Financial Aid Counter-Offer Engine", text: "Compare competing offers, check a federal net-price benchmark, and draft a respectful institutional-aid reconsideration request.", href: "/tools/counteroffer", tag: "Tool" },
-      { title: "Pell Protector", text: "Check whether other grants could push your Pell Grant away, before you accept them.", href: "https://my.estherfundsfoundation.org/kit/pell", tag: "Tool" },
       { title: "Scholarship Essay Builder", text: "Answer five quick prompts and instantly get a scholarship-ready STORY outline.", href: "/tools/essay", tag: "Tool" },
       { title: "Scholarship Action Center", text: "Turn one deadline and its requirements into a complete application checklist.", href: "/tools/scholarship", tag: "Tool" },
       { title: "Official EFF Recommendation Letter", text: "Submit truthful facts and save a personalized Esther Funds Foundation letter.", href: "/tools/recommendation", tag: "EFF" },

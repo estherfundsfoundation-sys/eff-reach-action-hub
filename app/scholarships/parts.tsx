@@ -13,6 +13,7 @@ export const SCH_TABS = [
   { href: "/scholarships/saved", label: "Saved" },
   { href: "/scholarships/recipients", label: "Past recipients" },
   { href: "/scholarships/toolkits", label: "Toolkits" },
+  { href: "https://my.estherfundsfoundation.org/kit/pell", label: "Protect my Pell" },
 ];
 
 export function Top({ on }: { on: string }) {

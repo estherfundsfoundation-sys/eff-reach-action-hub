@@ -65,6 +65,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<Par
 
       <div className="sc-wrap sc-section">
         <div className="sc-doors">
+          <a className="sc-door" href="https://my.estherfundsfoundation.org/kit/pell"><b>Protect your Pell</b><span>New for 2026–27: too much scholarship money can cost you your Pell Grant. Check before you say yes.</span></a>
           <Link className="sc-door" href="/scholarships?deadline=soon"><b>Closing soon</b><span>{stats ? `${stats.closing_soon.toLocaleString()} close in the next 30 days.` : "Due in the next 30 days."}</span></Link>
           <Link className="sc-door" href="/scholarships?deadline=rolling"><b>Apply anytime</b><span>Rolling deadlines: no clock ticking.</span></Link>
           <Link className="sc-door" href="/scholarships/eff"><b>EFF&rsquo;s own</b><span>The scholarships Esther Funds Foundation gives.</span></Link>
