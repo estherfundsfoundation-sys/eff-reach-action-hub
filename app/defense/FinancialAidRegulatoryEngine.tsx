@@ -31,7 +31,7 @@ const VERIFIED_AUTHORITY_DATABASE: Record<AidScenario, AuthorityRecord> = {
   },
   plus_denial: {
     statute: "34 CFR § 685.203(c) and applicable Direct Loan limits",
-    officialSummary: "A dependent undergraduate whose parent cannot obtain a PLUS Loan may be eligible for higher Direct Unsubsidized Loan limits. The school determines actual eligibility and amount.",
+    officialSummary: "A dependent undergraduate whose parent cannot obtain a PLUS Loan may be eligible for higher Direct Unsubsidized Loan limits. The school determines actual eligibility and amount. For Parent PLUS loans first made on or after July 1, 2026, federal law also caps Parent PLUS at $20,000 a year and $65,000 in total per dependent student, so a family can reach the cap without being denied; ask the financial aid office what options remain.",
     primaryActionUrl: "https://studentaid.gov/plus-app/parent/landing",
     actionLabel: "StudentAid.gov Parent PLUS application and status",
     escalationUrl: "https://studentaid.gov/feedback-ombudsman",
