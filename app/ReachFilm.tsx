@@ -173,7 +173,7 @@ export function ReachStory() {
       <p className="rf-src">As EFF posted on 15 June 2026. <a href="https://www.instagram.com/p/DZll1FiCQ-t/">See the post ↗</a></p>
       <ol className="rf-time">{TIMELINE.map(([d, t, x, code]) => <TimeItem key={t} d={d} t={t} x={x} code={code} />)}</ol>
       <div className="rf-story-go">
-        <Link className="bridge-button" href="/ambassadors">Meet the ambassadors</Link>
+        <Link className="bridge-button" href="https://represent.estherfundsfoundation.org">Meet the ambassadors</Link>
         <a className="bridge-button ghost" href="https://www.instagram.com/effcampusreachbox/">Follow @effcampusreachbox ↗</a>
       </div>
     </section>

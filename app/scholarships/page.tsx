@@ -58,6 +58,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<Par
           <p>Real scholarships from the people who give them, updated every day. Search, get matched in two minutes, save your list and put the deadlines in your calendar. Free, always. Never pay to apply.</p>
           <div className="sc-acts">
             <Link className="sc-btn coral" href="/scholarships/match">Match me in 2 minutes</Link>
+            <Link className="sc-btn" href="/apply-with-me">Apply With Me</Link>
             <a className="sc-btn ghost" href="#search">Search everything</a>
           </div>
         </div>

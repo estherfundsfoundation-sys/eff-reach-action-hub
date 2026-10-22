@@ -37,7 +37,9 @@ function relevantQuestionTerms(question = "") {
   return [...new Set(words(question).filter((word) => word.length > 3 && !STOP_WORDS.has(word)))];
 }
 
-export function calculateAnswerScore({ transcript = "", question = {}, profession = {} }) {
+export function calculateAnswerScore({ transcript = "", question = {}, profession = {}, options = {} }) {
+  // options.maxWords tightens the length target (rapid-fire answers aim for about a minute).
+  const maxWords = Number(options.maxWords) > 60 ? Number(options.maxWords) : 260;
   const t = clean(transcript);
   const tokenList = words(t);
   if (!t) return emptyScore();
@@ -67,7 +69,7 @@ export function calculateAnswerScore({ transcript = "", question = {}, professio
   const professional = clamp(1 - weakCount * 0.16 - profanityCount * 0.5 - (wordCount < 20 ? 0.25 : 0));
   const alignment = clamp(career.count / 4 + (career.count >= 2 ? 0.18 : 0));
   const fillerRate = fillerCount / Math.max(wordCount, 1);
-  const tooLongPenalty = wordCount > 260 ? Math.min(0.55, (wordCount - 260) / 180) : 0;
+  const tooLongPenalty = wordCount > maxWords ? Math.min(0.55, (wordCount - maxWords) / 180) : 0;
   const tooShortPenalty = wordCount < 35 ? (35 - wordCount) / 70 : 0;
   const delivery = clamp(1 - fillerRate * 15 - tooLongPenalty - tooShortPenalty);
 
@@ -75,7 +77,7 @@ export function calculateAnswerScore({ transcript = "", question = {}, professio
   const categoryScores = Object.fromEntries(Object.entries(SCORING_CONFIG.weights).map(([key, weight]) => [key, Math.round(ratios[key] * weight)]));
   const score = Object.values(categoryScores).reduce((sum, value) => sum + value, 0);
 
-  const analysis = { wordCount, fillerCount, weakCount, actionCount, resultCount, numberCount, profanityCount, star, career, questionMatches, questionTerms };
+  const analysis = { maxWords, wordCount, fillerCount, weakCount, actionCount, resultCount, numberCount, profanityCount, star, career, questionMatches, questionTerms };
   return { score, label: masteryLabel(score), categoryScores, analysis, feedback: generateFeedback({ score, ratios, analysis, question, profession }) };
 }
 
@@ -106,7 +108,7 @@ export function generateFeedback({ score, ratios, analysis, question, profession
 
   if (ratios.relevance < 0.58) improvements.push("Answer the exact question in your first sentence, then support it with one example.");
   if (analysis.wordCount < 35) improvements.push("Your answer is too brief to show your thinking. Add the context, your action, and what happened next.");
-  if (analysis.wordCount > 260) improvements.push("Tighten the answer. Keep one example and remove details that do not change the outcome.");
+  if (analysis.wordCount > (analysis.maxWords || 260)) improvements.push("Tighten the answer. Keep one example and remove details that do not change the outcome.");
   if (analysis.weakCount) improvements.push(`You used uncertain language ${analysis.weakCount} time${analysis.weakCount === 1 ? "" : "s"}. Replace it with a direct, truthful statement.`);
   if (analysis.fillerCount) improvements.push(`The transcript detected ${analysis.fillerCount} filler phrase${analysis.fillerCount === 1 ? "" : "s"}. Pause briefly instead of filling the silence.`);
   if (analysis.profanityCount) improvements.push("Replace informal or profane language with workplace-appropriate wording.");
@@ -127,7 +129,7 @@ export function generateFeedback({ score, ratios, analysis, question, profession
   if (!analysis.resultCount && !analysis.numberCount) nextGoal = "End your next attempt with a specific result or measurable outcome.";
   else if (question.star && analysis.star.count < 4) nextGoal = "Complete all four parts of the story: context, responsibility, action, and result.";
   else if (analysis.fillerCount) nextGoal = "Retry with deliberate pauses and fewer filler phrases.";
-  else if (score >= 95) nextGoal = "Question mastered. Keep the same clarity while sounding natural—not memorized.";
+  else if (score >= 95) nextGoal = "Question mastered. Keep the same clarity while sounding natural, not memorized.";
 
   return { strengths: dedupedStrengths, improvements: dedupedImprovements, nextGoal };
 }
@@ -143,6 +145,30 @@ export function compareAttempts(previous, current) {
   if (!improvements.length && change > 0) improvements.push("Your overall rubric performance became more complete and focused.");
   if (!improvements.length) improvements.push("Use the coaching goal below to create a stronger next attempt.");
   return { change, improvements };
+}
+
+// Elevator pitch: simple, transparent checks for a 30-second introduction.
+// About 70 to 90 words fits 30 seconds at a natural speaking pace.
+export function scorePitch(text = "", seconds = 0) {
+  const t = clean(text);
+  const wordCount = words(t).length;
+  const fillerCount = phraseCount(t, FILLERS);
+  const hasName = /\b(my name is|i'm|i am)\b/.test(t);
+  const hasAsk = /\b(looking for|hoping to|i'd love|i would love|interested in|seeking|i want to|my goal is|open to|would welcome|i'm searching|i am searching|apply|connect with|learn more about)\b/.test(t);
+  const hasStrength = /\b(good at|great at|strength|skilled|known for|excel|i'm strong|i am strong|best at|passionate about|specialize)\b/.test(t);
+  const hasEvidence = /\b(for example|for instance|when i|last (year|semester|summer)|i led|i created|i organized|i built|i started|i helped|i managed|i designed|i raised|i tutored|i coordinated|as a result)\b/.test(t) || /\b\d+(?:\.\d+)?%?\b/.test(t);
+  const lengthOk = wordCount >= 65 && wordCount <= 95;
+  const timeOk = !seconds || (seconds >= 22 && seconds <= 38);
+  const checks = [
+    { key: "length", ok: lengthOk, good: `${wordCount} words fits about 30 seconds.`, fix: wordCount < 65 ? `${wordCount} words is a little short. Aim for 70 to 90 so they get a full picture.` : `${wordCount} words is a lot for 30 seconds. Trim to 70 to 90 by cutting the least important detail.` },
+    { key: "name", ok: hasName, good: "You introduced yourself by name.", fix: "Open with your name so they can remember you, then what you study or do." },
+    { key: "strength", ok: hasStrength && hasEvidence, good: "You named a strength and backed it with a real example.", fix: hasStrength ? "You named a strength. Add one quick example or number that proves it." : "Name one thing you are great at and give one quick example that proves it." },
+    { key: "ask", ok: hasAsk, good: "You ended with a clear ask.", fix: "End with a clear ask: the internship, role, advice, or connection you are looking for." },
+    { key: "filler", ok: fillerCount === 0, good: "No tracked filler words. Nice and clean.", fix: `The transcript caught ${fillerCount} filler word${fillerCount === 1 ? "" : "s"}. A short pause sounds more confident than "um."` },
+  ];
+  if (seconds) checks.push({ key: "time", ok: timeOk, good: `You finished in ${seconds} seconds.`, fix: seconds < 22 ? `You finished in ${seconds} seconds. Slow down a little and let each part land.` : `You took ${seconds} seconds. Practice until it fits in about 30.` });
+  const passed = checks.filter((item) => item.ok).length;
+  return { wordCount, fillerCount, seconds, checks, passed, total: checks.length };
 }
 
 export { detectSTARComponents, detectCareerKeywords };

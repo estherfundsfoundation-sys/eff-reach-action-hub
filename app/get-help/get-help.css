@@ -1,7 +1,7 @@
 /* REACH Get Help. Everything scoped to .gh so the rest of the Action Hub is untouched.
    Friendly, big tap targets, readable on a cheap phone, light and dark. */
 .gh { --ghp:#42127f; --ghv:#6d3a87; --ghl:#efe7fb; --ghs:#fff; --ghi:#1b1227; --ghi2:#5d5470; --ghb:#e3d8f4; --ghc:#ff6f61; --ghy:#ffd35a;
-  min-height:100vh; background:#faf7ff; color:var(--ghi); font-family:"Poppins","Avenir Next","Segoe UI",system-ui,sans-serif; padding:0 16px 48px; overflow-x:clip; }
+  min-height:100vh; background:#faf7ff; color:var(--ghi); font-family:var(--rx-body),sans-serif; padding:0 16px 48px; overflow-x:clip; }
 @media (prefers-color-scheme: dark) {
   .gh { --ghp:#cdb4f5; --ghv:#b793e8; --ghl:#2a1a40; --ghs:#1c1229; --ghi:#f4eefc; --ghi2:#c3b6d8; --ghb:#3b2a57; background:#120a1d; }
 }
@@ -11,7 +11,7 @@
 .gh-crisis a { color:#ffd35a; }
 .gh-hero { max-width:860px; margin:0 auto; padding:34px 0 18px; }
 .gh-back { display:inline-block; font-weight:800; letter-spacing:.14em; font-size:13px; text-decoration:none; margin-bottom:14px; }
-.gh-hero h1 { margin:0 0 10px; font:800 clamp(40px,9vw,76px)/1 "Georama","Archivo","Arial Black",sans-serif; letter-spacing:-.03em; color:var(--ghp); }
+.gh-hero h1 { margin:0 0 10px; font:800 clamp(40px,9vw,76px)/1 var(--rx-head); letter-spacing:-.03em; color:var(--ghp); }
 .gh-hero p { margin:0; font-size:18px; line-height:1.5; color:var(--ghi2); max-width:620px; }
 .gh-needs { max-width:860px; margin:10px auto 18px; display:grid; grid-template-columns:repeat(auto-fill,minmax(min(100%,240px),1fr)); gap:10px; }
 .gh-need { min-height:64px; text-align:left; padding:14px 16px; border-radius:18px; border:2px solid var(--ghb); background:var(--ghs); color:var(--ghi); font:600 16px/1.3 inherit; font-family:inherit; cursor:pointer; transition:transform .15s, border-color .15s; }
@@ -21,7 +21,7 @@
 .gh-need-crisis { border-color:#f3b4ad; }
 .gh-need-crisis.on { background:#b3123a; border-color:#b3123a; color:#fff; }
 .gh-card { max-width:860px; margin:0 auto 16px; background:var(--ghs); border:1px solid var(--ghb); border-radius:22px; padding:20px 18px; box-sizing:border-box; }
-.gh-card h2, .gh-h2 { margin:0 0 8px; font:800 24px/1.2 "Georama","Archivo","Arial Black",sans-serif; color:var(--ghp); }
+.gh-card h2, .gh-h2 { margin:0 0 8px; font:800 24px/1.2 var(--rx-head); color:var(--ghp); }
 .gh-h2 { max-width:860px; margin:26px auto 10px; }
 .gh-card p { margin:0 0 10px; line-height:1.55; }
 .gh-now { border-color:#f3b4ad; }

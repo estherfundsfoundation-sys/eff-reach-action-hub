@@ -37,7 +37,7 @@
 .ro-lit .ro-first { opacity:clamp(0, calc((.055 - var(--p)) * 30), 1); }
 .ro-second { font-size:clamp(26px,5vw,58px); color:#ffd35a; opacity:clamp(0, min(calc((var(--p) - .035) * 30), calc((.11 - var(--p)) * 30)), 1); }
 .ro-before { font-size:clamp(44px,10vw,132px); color:#fff; letter-spacing:-.04em;
-  opacity:clamp(0, min(calc((var(--p) - .47) * 18), calc((.64 - var(--p)) * 14)), 1);
+  opacity:clamp(0, min(calc((var(--p) - .47) * 18), calc((.6 - var(--p)) * 16)), 1);
   transform:translate(-50%,-50%) translateY(calc(var(--p) * -12vh)) scale(calc(.9 + var(--p) * .2)); text-shadow:0 0 60px rgba(183,153,227,.5); }
 
 /* the weights */

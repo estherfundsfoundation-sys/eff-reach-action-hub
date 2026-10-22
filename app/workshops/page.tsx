@@ -29,6 +29,24 @@ const SHELVES = [
     ["For Such a Time as This", "Esther's story and our founder's, your why written down, and a plan for the hard days."],
     ["Lead Where You Stand", "Lead yourself, serve the EFF way, lead people, and pitch a project."],
     ["Finish Strong", "Your degree audit, registering right, the midterm check, finals, and applying to graduate."],
+    ["FAFSA & Financial Aid Night", "Aid made plain, then a 12-minute FAFSA Sprint in the room."],
+    ["Finals Survival", "Sleep, study that sticks, and a plan for the hardest week."],
+    ["Scholarship Essay Lab", "Seven quiet minutes to write your first paragraph, then read it aloud."],
+    ["Apply With Me Night", "Build your scholarship application together on REACH, then a Submit Sprint: everyone applies before they leave."],
+    ["Resume & LinkedIn Glow-Up", "A resume that gets read and a profile that gets found."],
+    ["Money 101", "Refund checks, a weekly number, scam radar, and credit."],
+    ["Grad School & Transfer Roadmap", "Where you're going next and how to get there."],
+    ["You Belong Here", "The doubt every new student feels, named, and where to find your people."],
+    ["Grow Your Mind", "Why struggle is part of learning, and what to do when it's hard."],
+    ["Beat the Sophomore Slump", "Why second years stall, and how to keep going."],
+    ["Healthy Love", "What healthy looks like, the warning signs, and how to help a friend."],
+    ["Sleep, Stress & Your Grades", "Rest, stress and the habits that hold up your semester."],
+    ["First-Gen Family Night", "College made plain for the families of first-generation students."],
+  ] },
+  { title: "Game Nights", line: "Fun, loud and useful. The whole room plays on their phones.", items: [
+    ["The Semester", "Live one student's semester together and make every choice as a room."],
+    ["Financial Aid Escape Room", "Solve the aid puzzles before the clock runs out."],
+    ["REACH Feud", "Survey says: the college edition, every answer sourced."],
   ] },
   { title: "Meetings", line: "For chapters and campuses getting started.", items: [
     ["EFF Informational Meeting", "Who EFF is, the story so far, where you fit, and joining in the room."],
@@ -87,7 +105,7 @@ export default function Workshops() {
             <p>Chapter officers, Campus Ambassadors and National host from MyEFF: pick a workshop, add your facilitators, your logo and a partner, and your flyers and caption are made for you.</p>
             <div className="sc-acts">
               <a className="sc-btn coral" href={`${MYEFF}/workshop`}>Host in MyEFF</a>
-              <Link className="sc-btn ghost" href="/workshop-request">Ask EFF to bring one</Link>
+              <Link className="sc-btn ghost" href="/workshop-request">Request a REACH on Tour stop</Link>
             </div>
           </div>
           <ol className="rh-steps" aria-label="Who can host">

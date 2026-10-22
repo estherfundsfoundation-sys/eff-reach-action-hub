@@ -11,7 +11,7 @@ export default function InterviewCoachPage() {
       <iframe
         src="/eff-interview-coach-app/index.html"
         title="EFF Interview Coach"
-        allow="microphone"
+        allow="microphone; camera"
       />
       <noscript>
         <p>

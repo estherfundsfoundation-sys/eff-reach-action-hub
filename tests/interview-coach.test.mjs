@@ -1,11 +1,11 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
-import { CAREER_CATEGORIES, CAREER_DATA, FEATURED_PROFESSIONS, buildInterviewQuestions } from "../public/eff-interview-coach/career-data.js";
-import { calculateAnswerScore, compareAttempts } from "../public/eff-interview-coach/scoring-engine.js";
+import { CAREER_CATEGORIES, CAREER_DATA, FEATURED_PROFESSIONS, buildInterviewQuestions } from "../public/eff-interview-coach-app/career-data.js";
+import { calculateAnswerScore, compareAttempts } from "../public/eff-interview-coach-app/scoring-engine.js";
 
 test("Interview Coach ships the complete requested career catalog", () => {
-  assert.equal(CAREER_CATEGORIES.length, 12);
+  assert.equal(CAREER_CATEGORIES.length, 14);
   assert.ok(Object.keys(CAREER_DATA).length >= 40);
   for (const profession of FEATURED_PROFESSIONS) {
     assert.ok(CAREER_DATA[profession].questions.length >= 15, `${profession} needs at least 15 questions`);
@@ -41,7 +41,7 @@ test("rule-based scoring rewards specific action, outcomes, and role alignment",
 });
 
 test("static interview surface includes privacy, fallback, mastery, and report controls", async () => {
-  const html = await readFile(new URL("../public/eff-interview-coach/index.html", import.meta.url), "utf8");
+  const html = await readFile(new URL("../public/eff-interview-coach-app/index.html", import.meta.url), "utf8");
   assert.match(html, /Your recordings stay in your browser session/);
   assert.match(html, /Continue without camera/);
   assert.match(html, /Try this question again/);
