@@ -108,7 +108,7 @@ export default function ReachOpening() {
 
         <div className="ro-end">
           <p className="ro-by">by Esther Funds Foundation · the world’s first faith-based college dropout prevention movement</p>
-          <p className="ro-line">The system wasn’t built for us. REACH is how we rebuild it: help, money and people, in one place. Free. Always.</p>
+          <p className="ro-line">Called to tear down every wall to higher education. REACH is how: help, money and people, in one place. Free. Always.</p>
           <div className="ro-acts">
             <Link className="ro-btn hot" href="/get-help">I need help right now</Link>
             <Link className="ro-btn" href="/scholarships">Find money for school</Link>
