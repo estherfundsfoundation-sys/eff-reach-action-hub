@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { call, readPass, writePass, startCode, SignedOut, STATUS_WORDS, type Me, type Program } from "../myreach/pass";
+import { call, readPass, writePass, startCode, decideBy, SignedOut, STATUS_WORDS, type Me, type Program } from "../myreach/pass";
 import { SiteTop, SiteFoot } from "../myreach/ui";
 import { SignIn } from "./SignIn";
 
@@ -88,6 +88,9 @@ export default function Account() {
                       {a.more_info ? <p className="sc-note" style={{ margin: 0 }}><b>EFF asked:</b> {a.more_info}</p> : null}
                       {a.decision_note ? <p className="sc-note" style={{ margin: 0 }}>{a.decision_note}</p> : null}
                       {a.status === "awarded" && a.award_amount ? <div className="sc-amt">${Number(a.award_amount).toLocaleString()}</div> : null}
+                      {["submitted", "reviewing"].includes(a.status) && decideBy(a.due_by) ? <p className="sc-small" style={{ margin: 0, fontWeight: 700, color: "var(--p)" }}>{decideBy(a.due_by)}</p> : null}
+                      {a.payments?.map((x, i) => <p key={i} className="sc-small" style={{ margin: 0 }}>EFF paid <b>${Number(x.amount).toLocaleString(undefined, { maximumFractionDigits: 2 })}</b> to {x.to}</p>)}
+                      {a.checkins?.filter((c) => c.code).map((c) => <Link key={c.day} className="sc-btn sm" style={{ position: "relative", zIndex: 2, alignSelf: "flex-start" }} href={`/checkin/${c.code}`}>Answer your {c.day}-day check-in</Link>)}
                       {["draft", "more_info"].includes(a.status) ? <Link className="sc-btn sm" style={{ position: "relative", zIndex: 2, alignSelf: "flex-start" }} href={`/apply/${a.program}`}>{a.status === "draft" ? "Finish it" : "Add what's needed"}</Link> : null}
                     </article>
                   );

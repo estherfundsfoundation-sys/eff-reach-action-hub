@@ -49,18 +49,20 @@ export async function upload(token: string, application: string, key: string, fi
   return call<App>("eff_reach_doc_attach", { p_token: token, p_id: application, p_key: key, p_path: d.path, p_name: file.name });
 }
 
-export type Question = { key: string; label: string; kind: string; required?: boolean; options?: string[]; help?: string; max?: number };
+export type Question = { key: string; label: string; kind: string; required?: boolean; options?: string[]; help?: string; max?: number; must?: string; must_note?: string };
 export type DocReq = { key: string; label: string; required?: boolean; help?: string };
 export type Program = {
   key: string; name: string; kind: string; summary: string; amount: string | null; who: string | null; audience: string;
   open: boolean; status: string; cycle: string | null; opens_at: string | null; closes_at: string | null; rolling: boolean;
   description?: string; questions?: Question[]; documents?: DocReq[];
+  turnaround_hours?: number | null; max_award?: number | null; rubric?: Array<{ label: string; max: number; guide?: string }>; fund_left?: boolean | null;
 };
 export type App = {
   id: string; number: string; program: string; cycle: string; status: string; answers: Record<string, unknown>;
   documents: Array<{ key: string; name: string; size: number; at: string }>; submitted_at: string | null; decided_at: string | null;
   decision_note: string | null; more_info: string | null; award_amount: number | null; updated_at: string;
   events: Array<{ at: string; kind: string; actor: string }>; program_name?: string; program_kind?: string; program_open?: boolean; closes_at?: string | null;
+  due_by?: string | null; payments?: Array<{ to: string; kind: string; amount: number; on: string }>; checkins?: Array<{ day: number; due_on: string; code: string | null; answered: boolean }>;
 };
 export type Me = {
   email: string; is_member: boolean; applications: App[];
@@ -76,3 +78,14 @@ export const STATUS_WORDS: Record<string, { label: string; tone: string; line: s
   not_selected: { label: "Not selected", tone: "", line: "Not this time. Keep going: thousands of other scholarships are open." },
   withdrawn: { label: "Withdrawn", tone: "", line: "You withdrew this application." },
 };
+
+/* the promised decision time, in the student's words */
+export function decideBy(due: string | null | undefined): string | null {
+  if (!due) return null;
+  const t = new Date(due);
+  const left = t.getTime() - Date.now();
+  const at = t.toLocaleString("en-US", { weekday: "long", hour: "numeric", minute: "2-digit", timeZone: "America/New_York" });
+  if (left <= 0) return `EFF promised a decision by ${at} ET. It's taking longer than we said, and we're sorry. It's still being worked on.`;
+  const h = Math.floor(left / 3600000), m = Math.round((left % 3600000) / 60000);
+  return `EFF decides by ${at} ET (${h ? `${h}h ` : ""}${m}m from now).`;
+}
