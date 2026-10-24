@@ -120,7 +120,7 @@ export default function Apply({ programKey }: { programKey: string }) {
           {prog.audience === "members" ? <p className="sc-note">For EFF members. Sign in with the email you joined EFF with.</p> : null}
           {prog.kind === "emergency" ? (
             <div className="ap-promise">
-              {prog.turnaround_hours ? <div><b>{prog.turnaround_hours} hours</b><span>to a decision</span></div> : null}
+              {prog.turnaround_hours ? <div><b>{prog.turnaround_hours} hours</b><span>to a decision (weekdays)</span></div> : null}
               {prog.max_award ? <div><b>Up to ${Number(prog.max_award).toLocaleString()}</b><span>per student</span></div> : null}
               <div><b>Paid to the bill</b><span>so you don&rsquo;t front it</span></div>
               <div><b>Not a loan</b><span>you never pay it back</span></div>
@@ -130,7 +130,7 @@ export default function Apply({ programKey }: { programKey: string }) {
             <ol className="ap-steps">
               <li><b>Tell us what happened</b><span>In your own words. A few sentences is enough.</span></li>
               <li><b>Upload proof</b><span>The bill, estimate or notice, and proof you&rsquo;re enrolled. A phone photo is fine.</span></li>
-              <li><b>EFF decides{prog.turnaround_hours ? ` within ${prog.turnaround_hours} hours` : ""}</b><span>A real person at EFF National reads every request.</span></li>
+              <li><b>EFF decides{prog.turnaround_hours ? ` within ${prog.turnaround_hours} weekday hours` : ""}</b><span>A real person at EFF reads every request. The clock pauses on Saturday and Sunday.</span></li>
               <li><b>We pay it</b><span>Straight to your landlord, the shop, the utility or your school when we can.</span></li>
             </ol>
           ) : null}
