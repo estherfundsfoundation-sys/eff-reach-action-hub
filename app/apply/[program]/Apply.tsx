@@ -2,13 +2,17 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { call, readPass, startCode, upload, SignedOut, STATUS_WORDS, type App, type Me, type Program, type Question } from "../../myreach/pass";
+import { call, readPass, startCode, upload, decideBy, SignedOut, STATUS_WORDS, type App, type Me, type Program, type Question } from "../../myreach/pass";
+import "./apply.css";
 import { SiteTop, SiteFoot } from "../../myreach/ui";
 import { SignIn } from "../../account/SignIn";
 
 /* One EFF program: what it is, then the application. Drafts save as you go
    (eff_reach_application_save); documents upload straight to the private bucket;
-   Send checks every required answer and file (eff_reach_application_submit). */
+   Send checks every required answer and file (eff_reach_application_submit).
+   A question with "must" is an eligibility question: the wrong answer says so at once, in the program's own words.
+   Programs with a clock (the EFF Emergency Grant: 24 hours) show the promised decision time; awards show what
+   EFF paid and to whom, and the check-ins EFF sends after. */
 export default function Apply({ programKey }: { programKey: string }) {
   const [prog, setProg] = useState<Program | null | undefined>(undefined);
   const [me, setMe] = useState<Me | null>(null);
@@ -91,7 +95,7 @@ export default function Apply({ programKey }: { programKey: string }) {
         const arr = Array.isArray(v) ? (v as string[]) : [];
         return <div className="sc-pills">{(q.options || []).map((o) => <button type="button" key={o} disabled={dis} className={`sc-pill${arr.includes(o) ? " on" : ""}`} aria-pressed={arr.includes(o)} onClick={() => change(q.key, arr.includes(o) ? arr.filter((x) => x !== o) : [...arr, o])}>{o}</button>)}</div>;
       }
-      case "number": return <input inputMode="decimal" value={String(v ?? "")} disabled={dis} onChange={(e) => change(q.key, e.target.value)} />;
+      case "number": return q.key === "amount" ? <span className="ap-money"><b>$</b><input inputMode="decimal" placeholder="0" value={String(v ?? "")} disabled={dis} onChange={(e) => change(q.key, e.target.value.replace(/[^0-9.,]/g, ""))} /></span> : <input inputMode="decimal" value={String(v ?? "")} disabled={dis} onChange={(e) => change(q.key, e.target.value)} />;
       case "date": return <input type="date" value={String(v ?? "")} disabled={dis} onChange={(e) => change(q.key, e.target.value)} />;
       default: return <input value={String(v ?? "")} maxLength={q.max || 300} disabled={dis} onChange={(e) => change(q.key, e.target.value)} />;
     }
@@ -100,7 +104,8 @@ export default function Apply({ programKey }: { programKey: string }) {
   if (prog === undefined) return <main className="sc"><SiteTop on="/apply" /><p className="sc-wrap sc-small" style={{ padding: 40 }}>Loading…</p></main>;
   if (!prog) return <main className="sc"><SiteTop on="/apply" /><div className="sc-wrap sc-section"><div className="sc-empty" style={{ marginTop: 30 }}><h2>That program isn&rsquo;t here.</h2><p><Link href="/apply">See what EFF has open</Link>.</p></div></div><SiteFoot /></main>;
 
-  const w = app ? STATUS_WORDS[app.status] : null;
+  const w0 = app ? STATUS_WORDS[app.status] : null;
+  const w = w0 && prog.kind === "emergency" && app?.status === "awarded" ? { ...w0, label: "Approved", line: "EFF approved your request. You'll get an email the moment it's paid." } : w0;
   return (
     <main className="sc">
       <SiteTop on="/apply" />
@@ -113,14 +118,42 @@ export default function Apply({ programKey }: { programKey: string }) {
           <p style={{ fontSize: 18, lineHeight: 1.55 }}>{prog.summary}</p>
           {prog.who ? <p className="sc-chip" style={{ display: "inline-block" }}>{prog.who}</p> : null}
           {prog.audience === "members" ? <p className="sc-note">For EFF members. Sign in with the email you joined EFF with.</p> : null}
+          {prog.kind === "emergency" ? (
+            <div className="ap-promise">
+              {prog.turnaround_hours ? <div><b>{prog.turnaround_hours} hours</b><span>to a decision (weekdays)</span></div> : null}
+              {prog.max_award ? <div><b>Up to ${Number(prog.max_award).toLocaleString()}</b><span>per student</span></div> : null}
+              <div><b>Paid to the bill</b><span>so you don&rsquo;t front it</span></div>
+              <div><b>Not a loan</b><span>you never pay it back</span></div>
+            </div>
+          ) : null}
+          {prog.kind === "emergency" ? (
+            <ol className="ap-steps">
+              <li><b>Tell us what happened</b><span>In your own words. A few sentences is enough.</span></li>
+              <li><b>Upload proof</b><span>The bill, estimate or notice, and proof you&rsquo;re enrolled. A phone photo is fine.</span></li>
+              <li><b>EFF decides{prog.turnaround_hours ? ` within ${prog.turnaround_hours} weekday hours` : ""}</b><span>A real person at EFF reads every request. The clock pauses on Saturday and Sunday.</span></li>
+              <li><b>We pay it</b><span>Straight to your landlord, the shop, the utility or your school when we can.</span></li>
+            </ol>
+          ) : null}
           {prog.description ? prog.description.split(/\n\s*\n/).map((para, i) => <p key={i} style={{ lineHeight: 1.6 }}>{para}</p>) : null}
+          {prog.rubric && prog.rubric.length ? (
+            <section className="ap-rubric">
+              <h2>How applications are scored</h2>
+              <p className="sc-small" style={{ marginTop: 0 }}>Every application is read by EFF National and scored on the same lines, out of {prog.rubric.reduce((t, r) => t + Number(r.max || 0), 0)} points.</p>
+              <ul>{prog.rubric.map((r) => <li key={r.label}><b>{r.label}</b> <span>{r.max} points</span>{r.guide ? <em>{r.guide}</em> : null}</li>)}</ul>
+            </section>
+          ) : null}
+          {prog.kind === "emergency" && !/988/.test(prog.description || "") ? <p className="sc-small ap-safety">In danger, or thinking about hurting yourself? Call or text <a href="tel:988">988</a>, or call <a href="tel:911">911</a>. You don&rsquo;t have to wait for us.</p> : null}
 
           {app && w ? (
             <section className="sc-box" style={{ borderColor: app.status === "awarded" ? "#1f8a5b" : undefined }}>
               <h2>{w.label} · {app.number}</h2>
               <p style={{ margin: 0 }}>{w.line}</p>
+              {["submitted", "reviewing"].includes(app.status) && decideBy(app.due_by) ? <p className="ap-clock">{decideBy(app.due_by)}</p> : null}
               {app.more_info ? <p className="sc-note"><b>EFF asked:</b> {app.more_info}</p> : null}
               {app.decision_note ? <p className="sc-note">{app.decision_note}</p> : null}
+              {app.status === "awarded" && app.award_amount ? <p style={{ margin: "8px 0 0" }}><b>${Number(app.award_amount).toLocaleString()}</b> approved.</p> : null}
+              {app.payments && app.payments.length ? <ul className="ap-paid">{app.payments.map((x, i) => <li key={i}>EFF paid <b>${Number(x.amount).toLocaleString(undefined, { maximumFractionDigits: 2 })}</b> to {x.to} on {new Date(x.on + "T12:00:00").toLocaleDateString("en-US", { month: "long", day: "numeric" })}</li>)}</ul> : null}
+              {app.checkins?.filter((c) => c.code).map((c) => <p key={c.day} style={{ margin: "10px 0 0" }}><Link className="sc-btn sm" href={`/checkin/${c.code}`}>Answer your {c.day}-day check-in</Link></p>)}
             </section>
           ) : null}
 
@@ -138,6 +171,7 @@ export default function Apply({ programKey }: { programKey: string }) {
                     {q.help ? <span className="sc-small" style={{ fontWeight: 400 }}>{q.help}</span> : null}
                     {field(q)}
                   </label>
+                  {q.must && answers[q.key] && String(answers[q.key]) !== q.must ? <p className="ap-must" role="alert">{q.must_note || "This program isn't open to you based on this answer."}</p> : null}
                   {q.kind === "long" && q.max ? <p className="sc-small" style={{ margin: "4px 0 0", textAlign: "right" }}>{String(answers[q.key] ?? "").length} / {q.max}</p> : null}
                 </section>
               ))}
