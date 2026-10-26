@@ -14,7 +14,7 @@ export const CATEGORIES: Category[] = [
       { title: "Benefits Check", text: "SNAP, health coverage, Lifeline and more you may qualify for as a student.", href: "https://my.estherfundsfoundation.org/kit/benefits", tag: "Tool" },
       { title: "Get Connected", text: "Low-cost internet and a laptop now that the ACP has ended.", href: "https://my.estherfundsfoundation.org/kit/connected", tag: "Tool" },
       { title: "Is This a Scam?", text: "Check a scholarship, job or check before you answer.", href: "https://my.estherfundsfoundation.org/kit/scam", tag: "Tool" },
-      { title: "HOLD UP: know what you owe", text: "Paste your student account and get your real number before a registration hold: what you owe now, aid on the way, your real gap and a plan. Nothing leaves your phone.", href: "/holdup", tag: "Tool" },
+      { title: "HOLD UP: know what you owe", text: "Paste your student account and get your real number before a registration hold: what you owe now, aid on the way, your real gap, your school's payment and drop dates, and a plan. Nothing leaves your phone unless you choose to share.", href: "/holdup", tag: "Tool" },
       { title: "REACH Emergency: make a plan", text: "Five private questions, then a step-by-step plan: your campus emergency fund, help near you and what's open right now.", href: "/emergency", tag: "Now" },
       { title: "Get Help near you", text: "Say what's going on in your own words and get local help, nearest first, plus exactly what to say when you call.", href: "/get-help", tag: "Now" },
       { title: "988 Suicide & Crisis Lifeline", text: "Call, text, or chat 988 for immediate mental-health crisis support.", href: "https://988lifeline.org/", tag: "Official" },

@@ -110,3 +110,24 @@
   .hu-num.big { background:#fff; color:#000; border:2px solid #000; }
   .hu-num.big span, .hu-num.big b, .hu-num.big small { color:#000 !important; }
 }
+
+/* School pieces: Purge Clock and the opt-in fee ledger */
+.hu-school { margin:18px 0 6px; position:relative; }
+.hu-school .hu-in { flex:1; min-width:0; }
+.hu-pick { list-style:none; margin:6px 0 0; padding:0; border:1px solid #e3d8f5; border-radius:12px; background:#fff; overflow:hidden; }
+.hu-pick button { width:100%; text-align:left; padding:11px 14px; border:0; background:none; font:inherit; cursor:pointer; }
+.hu-pick button:hover, .hu-pick button:focus-visible { background:#f4eefc; }
+.hu-pick span { color:#6f6885; font-size:.9em; }
+.hu-chip small { opacity:.7; margin-left:4px; }
+.hu-dl ul { list-style:none; margin:10px 0; padding:0; display:grid; gap:8px; }
+.hu-dl li { display:flex; gap:10px; align-items:flex-start; justify-content:space-between; flex-wrap:wrap; padding:12px 14px; border-radius:12px; background:#f7f3fd; border:1px solid #e3d8f5; }
+.hu-dl li.hot { background:#fff1ee; border-color:#f3c2b8; }
+.hu-dl li div { display:grid; gap:2px; min-width:0; flex:1 1 220px; }
+.hu-dl li span { font-weight:600; }
+.hu-dl li small { color:#6f6885; }
+.hu-dl li a { font-size:.9em; }
+.hu-dl .sc-btn.ghost.on { background:#42127f; color:#fff !important; }
+.hu-share { margin-top:18px; }
+.hu-tick { display:flex; gap:10px; align-items:flex-start; margin:12px 0; cursor:pointer; }
+.hu-tick input { margin-top:3px; width:18px; height:18px; flex:none; }
+@media print { .hu-share, .hu-pick { display:none; } }
