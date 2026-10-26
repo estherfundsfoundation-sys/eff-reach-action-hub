@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { SiteFoot, SiteTop } from "../myreach/ui";
+import { SchoolDeadlines, SchoolFees, SchoolPick, ShareFees, useCampus, DEADLINE_LABEL, type Deadline, type School } from "./School";
 import { KIND_LABEL, OFTEN_MISSING, parseBill, totals, usd, type Kind, type Line } from "./parse";
 
 /* HOLD UP (reach.estherfundsfoundation.org/holdup), 26 Oct 2026, Shayna: know your real number
@@ -11,7 +12,7 @@ import { KIND_LABEL, OFTEN_MISSING, parseBill, totals, usd, type Kind, type Line
    and a plan in order. Kept on this phone only (localStorage "reach-holdup", with Erase). */
 
 type Ans = { changed?: boolean; plus?: boolean };
-type Saved = { lines: Line[]; shown: number | null; due: string; ans: Ans; step: Step };
+type Saved = { lines: Line[]; shown: number | null; due: string; ans: Ans; step: Step; school?: School | null };
 type Step = "open" | "paste" | "check" | "result";
 const KEY = "reach-holdup";
 const KINDS: Kind[] = ["charge", "aid", "coming", "payment", "offer", "skip"];
@@ -54,6 +55,23 @@ function ics(due: string, gap: number) {
   ].join("\r\n");
   const url = URL.createObjectURL(new Blob([body], { type: "text/calendar" }));
   const a = document.createElement("a"); a.href = url; a.download = "hold-up-deadline.ics"; a.click();
+  setTimeout(() => URL.revokeObjectURL(url), 2000);
+}
+
+function icsAll(school: string, list: Deadline[]) {
+  const stamp = new Date().toISOString().replace(/[-:]/g, "").replace(/\.\d+/, "");
+  const ev = list.map((x, i) => [
+    "BEGIN:VEVENT", `UID:holdup-${x.kind}-${x.date}-${i}-${Math.random().toString(36).slice(2)}@reach.estherfundsfoundation.org`,
+    `DTSTAMP:${stamp}`, `DTSTART;VALUE=DATE:${x.date.replace(/-/g, "")}`,
+    `SUMMARY:${school}: ${DEADLINE_LABEL[x.kind] || x.kind} (${x.term})`,
+    `DESCRIPTION:Confirm on your school's page: ${x.source_url}`,
+    "BEGIN:VALARM", "ACTION:DISPLAY", "DESCRIPTION:HOLD UP: a school deadline is coming", "TRIGGER:-P7D", "END:VALARM",
+    "BEGIN:VALARM", "ACTION:DISPLAY", "DESCRIPTION:HOLD UP: a school deadline is in 2 days", "TRIGGER:-P2D", "END:VALARM",
+    "END:VEVENT",
+  ].join("\r\n"));
+  const body = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//REACH//HOLD UP//EN", ...ev, "END:VCALENDAR"].join("\r\n");
+  const url = URL.createObjectURL(new Blob([body], { type: "text/calendar" }));
+  const a = document.createElement("a"); a.href = url; a.download = "school-deadlines.ics"; a.click();
   setTimeout(() => URL.revokeObjectURL(url), 2000);
 }
 
@@ -124,13 +142,15 @@ export default function HoldUp() {
   const [ans, setAns] = useState<Ans>({});
   const [ready, setReady] = useState(false);
   const [note, setNote] = useState("");
+  const [school, setSchool] = useState<School | null>(null);
+  const [campus, setCampus] = useCampus(school);
   const next = useRef(1);
   const top = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const s = load();
     if (s && s.lines?.length) {
-      setLines(s.lines); setShown(s.shown ?? null); setDue(s.due || ""); setAns(s.ans || {}); setStep(s.step === "open" ? "check" : s.step);
+      setLines(s.lines); setShown(s.shown ?? null); setDue(s.due || ""); setAns(s.ans || {}); setSchool(s.school || null); setStep(s.step === "open" ? "check" : s.step);
       next.current = Math.max(0, ...s.lines.map((l) => l.id)) + 1;
     }
     setReady(true);
@@ -139,9 +159,9 @@ export default function HoldUp() {
     if (!ready) return;
     try {
       if (!lines.length) localStorage.removeItem(KEY);
-      else localStorage.setItem(KEY, JSON.stringify({ lines, shown, due, ans, step } satisfies Saved));
+      else localStorage.setItem(KEY, JSON.stringify({ lines, shown, due, ans, step, school } satisfies Saved));
     } catch { /* fine */ }
-  }, [lines, shown, due, ans, step, ready]);
+  }, [lines, shown, due, ans, step, school, ready]);
 
   const go = (s: Step) => { setStep(s); requestAnimationFrame(() => top.current?.scrollIntoView({ behavior: "smooth", block: "start" })); };
   const t = useMemo(() => totals(lines), [lines]);
@@ -155,14 +175,14 @@ export default function HoldUp() {
     next.current += p.lines.length;
     setLines(p.lines); setShown(p.shownBalance); setNote(""); go("check");
   }
-  const add = (label = "", kind: Kind = "charge") => {
+  const add = (label = "", kind: Kind = "charge", amount = 0) => {
     const id = next.current++;
-    setLines((ls) => [...ls, { id, label, amount: 0, kind }]);
+    setLines((ls) => [...ls, { id, label, amount, kind }]);
   };
   const edit = (id: number, patch: Partial<Line>) => setLines((ls) => ls.map((l) => (l.id === id ? { ...l, ...patch, guessed: false } : l)));
   const drop = (id: number) => setLines((ls) => ls.filter((l) => l.id !== id));
   function erase() {
-    setLines([]); setShown(null); setDue(""); setAns({}); setText(""); setStep("open");
+    setLines([]); setShown(null); setDue(""); setAns({}); setText(""); setSchool(null); setStep("open");
     try { localStorage.removeItem(KEY); } catch { /* fine */ }
   }
 
@@ -182,7 +202,7 @@ export default function HoldUp() {
                 <button type="button" className="hu-cta" onClick={() => go("paste")}>Check my number</button>
               </div>
             ) : null}
-            <p className="hu-promise">Free. No sign-in. Nothing you paste leaves your phone.</p>
+            <p className="hu-promise">Free. No sign-in. Nothing you paste leaves your phone unless you choose to share.</p>
           </div>
         </section>
 
@@ -248,6 +268,9 @@ export default function HoldUp() {
               <button type="button" className="sc-btn ghost sm" onClick={() => add()}>+ Add a line</button>
               <button type="button" className="sc-btn ghost sm" onClick={() => add("Loan offered (not accepted)", "offer")}>+ A loan I haven&rsquo;t accepted</button>
             </div>
+
+            <SchoolPick school={school} onPick={setSchool} />
+            <SchoolFees info={campus} has={missingAdded} add={(label, amount) => add(label, "charge", amount)} />
 
             <div className="hu-miss">
               <h3>Often not on the bill yet</h3>
@@ -319,6 +342,7 @@ export default function HoldUp() {
               </div>
               <div className="hu-q">
                 <p>When is your payment due, or the day unpaid students get dropped? <small>(It&rsquo;s on your school&rsquo;s academic calendar or bursar page.)</small></p>
+                {school ? <SchoolDeadlines info={campus} due={due} setDue={setDue} onAll={(list) => icsAll(campus?.school || school.name, list)} /> : <SchoolPick school={school} onPick={setSchool} />}
                 <div className="hu-due">
                   <input type="date" className="hu-in" aria-label="Payment deadline" value={due} onChange={(e) => setDue(e.target.value)} />
                   {left !== null ? (
@@ -349,12 +373,15 @@ export default function HoldUp() {
               </div>
             ) : null}
 
+            <ShareFees school={school} lines={lines.filter((l) => l.kind === "charge")}
+              onShared={(fees) => setCampus((c) => (c ? { ...c, fees } : c))} />
+
             <div className="sc-acts hu-end">
               <button type="button" className="sc-btn ghost" onClick={() => go("check")}>Edit my lines</button>
               <button type="button" className="sc-btn ghost" onClick={() => window.print()}>Print my plan</button>
               <button type="button" className="hu-link" onClick={erase}>Erase everything</button>
             </div>
-            <p className="hu-fine">HOLD UP is an estimate from what you entered. Your school&rsquo;s student account is the official number. Saved only on this phone until you erase it.</p>
+            <p className="hu-fine">HOLD UP is an estimate from what you entered. Your school&rsquo;s student account is the official number. Saved only on this phone until you erase it, unless you choose to share your school&rsquo;s fee lines.</p>
           </section>
         ) : null}
       </main>
