@@ -6,7 +6,10 @@
    One intake for every way someone asks EFF to come. It replaces the old Jotform (262293112402041).
    Sends to MyEFF's anon eff_reach_tour_request (honeypot `website`, an adult must send it); the requester and
    nationals@ are emailed, the Executive Director is notified. National answers in National → Programs → REACH.
-   No price is published here on purpose: prices are set by National and sent as a quote after a call. */
+   No price is published here on purpose: prices are set by National and sent as a quote after a call.
+   27 Oct 2026 (Shayna: "some low cost things for reach workshops are printing at your local school and for chapters
+   hosting it themselves make sure the workshop request for funding reflects this"; "workshops support from nationals
+   was up to $100 for pizza"): chapters and ambassadors hosting a REACH Workshop themselves see HOSTING below. */
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { call, MYEFF } from "../myreach/pass";
@@ -18,11 +21,19 @@ const KINDS: Array<{ key: Kind; title: string; line: string; paid?: boolean }> =
   { key: "school_visit", title: "My K–12 school", line: "Elementary, middle or high school. Assemblies, classrooms, family nights.", paid: true },
   { key: "college_visit", title: "My college or university", line: "An office, department, program or student organization.", paid: true },
   { key: "community", title: "Church or community group", line: "Youth groups, churches, nonprofits, libraries, community centers." },
-  { key: "chapter_partner", title: "Partner with an EFF chapter", line: "Bring REACH on Tour to a campus with an EFF chapter, or work alongside one." },
+  { key: "chapter_partner", title: "My EFF chapter is hosting, or partnering", line: "Your chapter is hosting a REACH Workshop, or you want to bring REACH to a campus with an EFF chapter." },
   { key: "affiliate", title: "Become a community affiliate", line: "Your organization joins REACH's network of help for students." },
-  { key: "ambassador_event", title: "I'm a Campus Ambassador", line: "Plan your REACH event and ask for support, like food for the room." },
+  { key: "ambassador_event", title: "I'm a Campus Ambassador", line: "Plan your REACH event and ask for food support for the room (up to $100)." },
   { key: "sponsor", title: "Sponsor a tour stop", line: "Help bring REACH to students who couldn't host it on their own." },
   { key: "other", title: "Something else", line: "Tell us what you have in mind." },
+];
+
+const HOSTING = [
+  "Print handouts and flyers at your school (the library, your student union or your department often print for free or for pennies).",
+  "Book a free room on campus through student activities or your residence hall.",
+  "Partner with RAs, Residence Life, TRIO or student affairs. They often bring snacks, space and students.",
+  "Use EFF's ready-made workshop on the big screen. Students join on their phones, so there's nothing to buy or print for the games.",
+  "Ask campus offices (financial aid, counseling, the career center) for free handouts and a speaker.",
 ];
 
 const AUDIENCE = [["elementary", "Elementary"], ["middle", "Middle school"], ["high", "High school"], ["college", "College students"], ["families", "Families"], ["educators", "Teachers & staff"], ["community", "Community"], ["faith", "Church / youth group"]] as const;
@@ -134,6 +145,14 @@ export default function TourRequest() {
                   </div>
                 ) : null}
 
+                {kind === "chapter_partner" || kind === "ambassador_event" ? (
+                  <div className="tr-note">
+                    <b>Hosting a REACH Workshop yourselves?</b> EFF National can help with food only: <b>up to $100, for pizza</b>. That&rsquo;s all National can cover, and it isn&rsquo;t promised; ask early. We strongly encourage fundraising for anything else. Ways to keep it low-cost:
+                    <ul className="tr-tips">{HOSTING.map((t) => <li key={t}>{t}</li>)}</ul>
+                    In &ldquo;Tell us more&rdquo;, give your date, where, how many students, and how much food support you&rsquo;re asking for (up to $100).
+                  </div>
+                ) : null}
+
                 <h3>{kind === "ambassador_event" ? "Your campus" : kind === "sponsor" ? "You or your organization" : "Your school or organization"}</h3>
                 <div className="tr-row">
                   <label className="sc-field grow"><span>Name</span><input required maxLength={160} value={f.org_name} onChange={set("org_name")} placeholder={kind === "school_visit" ? "Washington High School" : kind === "college_visit" ? "Office of Student Success, Albany State University" : ""} /></label>
@@ -187,7 +206,7 @@ export default function TourRequest() {
                 ) : null}
 
                 <h3>Tell us more</h3>
-                <label className="sc-field"><span>{kind === "affiliate" ? "What does your organization do for students, and how would you like to work with REACH?" : kind === "chapter_partner" ? "Which chapter or campus, and what would you like to do together?" : kind === "ambassador_event" ? "Your event: the date, where, what you're planning and the support you need" : "What do your students need, and what would make this a win?"}</span>
+                <label className="sc-field"><span>{kind === "affiliate" ? "What does your organization do for students, and how would you like to work with REACH?" : kind === "chapter_partner" ? "Which chapter or campus, what you're planning (date, where, how many students), and any food support you need (up to $100)" : kind === "ambassador_event" ? "Your event: the date, where, how many students, what you're planning, and the food support you need (up to $100)" : "What do your students need, and what would make this a win?"}</span>
                   <textarea required minLength={20} maxLength={3000} rows={5} value={f.details} onChange={set("details")} />
                 </label>
                 <label className="sc-field tr-one"><span>How did you hear about REACH? (optional)</span><input maxLength={80} value={f.heard_from} onChange={set("heard_from")} /></label>
