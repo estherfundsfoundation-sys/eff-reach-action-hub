@@ -29,9 +29,9 @@ const journeys: Record<string, Journey> = {
     eyebrow:"REACH YOUR CAMPUS", title:"Turn one caring idea into campus action.", intro:"Host practical retention programming: scholarship search parties, financial-aid workshops, resource drives, care events, and peer support.", heading:"Your campus action plan", description:"The original workshop sequence, presentation resources, and ambassador pathway in one place.",
     sections:[
       {title:"Pick your workshop",text:"Choose one problem students already talk about.",bullets:["Scholarship Search Party","Financial Aid 101 and appeal preparation","Basic-needs resource map","REACH peer-support and dropout-prevention conversation"],links:[{label:"REACH Workshop I",href:"https://drive.google.com/file/d/1d5SA4e7koSU-ONuviFrA6Fl1LEXknXix/view",alt:true},{label:"REACH Workshop II",href:"https://drive.google.com/file/d/1vP8Nv256d9FRCVsiH3GyKygHbP8rfS6t/view"}]},
-      {title:"Plan and fund it",text:"Make the event accessible, useful, and easy to attend.",bullets:["Reserve a room and coordinate with student affairs or financial aid","Request food, printing, promotion, and small-event funding early","Build a focused 45–60 minute agenda"],links:[{label:"Request pizza + workshop support",href:"/workshop-request",alt:true},{label:"Campus event materials",href:"https://www.canva.com/design/DAHL1vZJQFY/EwLN-e-IT8q2vbgvTij9bg/view"}]},
+      {title:"Plan and fund it",text:"Make the event accessible, useful, and easy to attend.",bullets:["Reserve a room and coordinate with student affairs or financial aid","Request food, printing, promotion, and small-event funding early","Build a focused 45–60 minute agenda"],links:[{label:"Request workshop support",href:"/workshop-request",alt:true},{label:"Campus event materials",href:"https://www.canva.com/design/DAHL1vZJQFY/EwLN-e-IT8q2vbgvTij9bg/view"}]},
       {title:"Present and follow up",text:"Give students an action—not only information.",bullets:["Include time to complete one real next step","Share verified links and EFF toolkits","Collect attendance and anonymous feedback, never sensitive financial data"],links:[{label:"EFF toolkits",href:"/scholarships/toolkits",alt:true}]},
-      {title:"Become an ambassador",text:"Keep resource awareness active throughout the year.",bullets:["Share support resources and scholarship opportunities","Create student-centered content and events","Develop leadership, advocacy, and professional skills"],links:[{label:"Apply to REACH",href:"https://portal.estherfundsfoundation.org/reach/apply",alt:true},{label:"Ambassador training",href:"https://portal.estherfundsfoundation.org/reach/ambassador/training"}]},
+      {title:"Become an ambassador",text:"Keep resource awareness active throughout the year.",bullets:["Share support resources and scholarship opportunities","Create student-centered content and events","Develop leadership, advocacy, and professional skills"],links:[{label:"Become a Campus Ambassador",href:"https://represent.estherfundsfoundation.org/ambassador",alt:true},{label:"Ambassador Academy",href:"https://represent.estherfundsfoundation.org/ambassador"}]},
     ]
   },
   "reach-your-community": {
@@ -46,10 +46,10 @@ const journeys: Record<string, Journey> = {
   "reach-beyond-campus": {
     eyebrow:"REACH BEYOND CAMPUS", title:"Build support that lasts beyond one event.", intro:"Grow the movement through chapters, ambassadors, donors, institutions, and long-term partners.", heading:"Choose your leadership lane", description:"The original chapter, ambassador, and mission-funding opportunities organized clearly.",
     sections:[
-      {title:"Start an EFF chapter",text:"Create a campus extension of EFF's dropout-prevention mission.",bullets:["Peer-led support and resource awareness","Retention-focused events and service","Leadership development and campus partnerships"],links:[{label:"Chapter opportunities",href:"https://linktr.ee/estherfundsfoundation",alt:true}]},
-      {title:"Become an ambassador",text:"Represent the mission on campus and online.",bullets:["Share resources and campaigns","Connect students to credible support","Build advocacy and professional experience"],links:[{label:"Apply to REACH",href:"https://portal.estherfundsfoundation.org/reach/apply",alt:true},{label:"Meet the ambassadors",href:"https://represent.estherfundsfoundation.org"}]},
+      {title:"Start an EFF chapter",text:"Create a campus extension of EFF's dropout-prevention mission.",bullets:["Peer-led support and resource awareness","Retention-focused events and service","Leadership development and campus partnerships"],links:[{label:"Start an EFF chapter",href:"https://my.estherfundsfoundation.org/chapters/apply",alt:true},{label:"Find a chapter",href:"https://my.estherfundsfoundation.org/chapters"}]},
+      {title:"Become an ambassador",text:"Represent the mission on campus and online.",bullets:["Share resources and campaigns","Connect students to credible support","Build advocacy and professional experience"],links:[{label:"Become a Campus Ambassador",href:"https://represent.estherfundsfoundation.org/ambassador",alt:true},{label:"Meet the ambassadors",href:"https://represent.estherfundsfoundation.org"}]},
       {title:"Fuel the mission",text:"Help EFF provide tools, emergency support, scholarships, and care.",bullets:["One-time and recurring gifts","Campaign and event sponsorship","In-kind products, services, and career opportunities"],links:[{label:"Donate to EFF",href:"https://givebutter.com/estherfundsfoundation",alt:true}]},
-      {title:"Connect an institution",text:"Invite a college, employer, church, or organization into the movement.",bullets:["Campus resource collaborations","Research and student-success partnerships","Career access, mentors, speakers, and volunteers"],links:[{label:"Become a partner",href:"https://portal.estherfundsfoundation.org/partners/join",alt:true}]},
+      {title:"Connect an institution",text:"Invite a college, employer, church, or organization into the movement.",bullets:["Campus resource collaborations","Research and student-success partnerships","Career access, mentors, speakers, and volunteers"],links:[{label:"Become a partner",href:"https://partner.estherfundsfoundation.org",alt:true}]},
     ]
   },
   "reach-k-12": {
@@ -65,12 +65,20 @@ const journeys: Record<string, Journey> = {
     eyebrow:"REACH FOR PROFESSIONALS", title:"Your experience can become a student's lifeline.", intro:"Mentor, partner, sponsor, hire, teach, or return to EFF as an alumni leader.", heading:"Put your expertise to work", description:"Professionals can contribute more than donations. Choose a practical role.",
     sections:[
       {title:"Mentor a student",text:"Offer perspective, encouragement, and career navigation.",bullets:["Career and major exploration","Resume, interview, and professional communication support","First-generation and transition-to-college guidance"],links:[{label:"Contact EFF",href:"mailto:info@estherfundsfoundation.org",alt:true}]},
-      {title:"Open a career door",text:"Create access students may not find in their networks.",bullets:["Internships, job shadowing, and apprenticeships","Speakers, mock interviews, and workplace visits","Technology and certification support"],links:[{label:"Partner with EFF",href:"https://portal.estherfundsfoundation.org/partners/join",alt:true}]},
+      {title:"Open a career door",text:"Create access students may not find in their networks.",bullets:["Internships, job shadowing, and apprenticeships","Speakers, mock interviews, and workplace visits","Technology and certification support"],links:[{label:"Partner with EFF",href:"https://partner.estherfundsfoundation.org",alt:true}]},
       {title:"Sponsor student success",text:"Direct support toward retention barriers.",bullets:["Scholarships and emergency assistance","REACH Boxes and resource events","Transportation, books, childcare, and technology"],links:[{label:"Donate to EFF",href:"https://givebutter.com/estherfundsfoundation",alt:true}]},
       {title:"Former member? Return and lead",text:"Bring your lived experience back to the next generation.",bullets:["Serve as a mentor or speaker","Support chapters and national programming","Build institutional and corporate relationships"],links:[{label:"Explore EFF membership",href:"https://app.joinit.com/o/esther-funds-foundation/jRuTrBy6Sk4ntaYaa",alt:true}]},
     ]
   }
 };
+
+export async function generateMetadata({params}:{params:Promise<{journey:string}>}) {
+  const {journey} = await params;
+  const j = journeys[journey];
+  if (!j) return {};
+  const name = j.eyebrow.charAt(0) + j.eyebrow.slice(1).toLowerCase().replace(/reach/g, "REACH").replace(/k–12/i, "K–12");
+  return { title: `${name} · EFF REACH`, description: j.intro, openGraph: { title: `${name} · EFF REACH`, description: j.intro } };
+}
 
 export default async function JourneyPage({params}:{params:Promise<{journey:string}>}) {
   const {journey:slug}=await params; const journey=journeys[slug]; if(!journey)notFound();
