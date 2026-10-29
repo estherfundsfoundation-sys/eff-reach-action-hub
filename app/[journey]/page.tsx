@@ -76,7 +76,7 @@ export async function generateMetadata({params}:{params:Promise<{journey:string}
   const {journey} = await params;
   const j = journeys[journey];
   if (!j) return {};
-  const name = j.eyebrow.charAt(0) + j.eyebrow.slice(1).toLowerCase().replace(/reach/g, "REACH").replace(/k–12/i, "K–12");
+  const name = j.eyebrow.toLowerCase().replace(/^reach/, "REACH").replace(/k–12/, "K–12");
   return { title: `${name} · EFF REACH`, description: j.intro, openGraph: { title: `${name} · EFF REACH`, description: j.intro } };
 }
 
