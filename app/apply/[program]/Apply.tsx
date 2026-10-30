@@ -22,16 +22,34 @@ export default function Apply({ programKey }: { programKey: string }) {
   const [state, setState] = useState<"idle" | "saving" | "saved" | "sending">("idle");
   const [err, setErr] = useState("");
   const [upBusy, setUpBusy] = useState("");
+  // A private invitation (?invite=CODE): EFF opens a closed program for one student. Kept for this tab only.
+  const [invite, setInvite] = useState<"none" | "ok" | "mine" | "bad">("none");
+  const [inviteErr, setInviteErr] = useState("");
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   async function load() {
     const p = await call<Program | null>("eff_reach_program", { p_key: programKey }).catch(() => null);
     setProg(p);
+    const KEY = `reach-invite:${programKey}`;
+    let code = "";
+    try {
+      const q = new URLSearchParams(window.location.search).get("invite");
+      if (q) sessionStorage.setItem(KEY, q.trim().toUpperCase());
+      code = sessionStorage.getItem(KEY) || "";
+    } catch { /* storage blocked */ }
+    if (code) {
+      const peek = await call<{ valid: boolean; program?: string }>("eff_reach_invite_peek", { p_code: code }).catch(() => null);
+      setInvite(peek?.valid && peek.program === programKey ? "ok" : "bad");
+    }
     const pass = readPass();
     if (!pass) { setSignedIn(false); return; }
     try {
       const m = await call<Me>("eff_reach_me", { p_token: pass.token });
       setMe(m); setSignedIn(true);
+      if (code) {
+        try { await call("eff_reach_invite_claim", { p_token: pass.token, p_code: code }); setInvite("mine"); }
+        catch (e) { setInvite("bad"); setInviteErr(e instanceof Error ? e.message : "This invitation can't be used."); }
+      }
       const mine = m.applications.find((a) => a.program === programKey && (a.cycle || "") === (p?.cycle || ""));
       if (mine) { setApp(mine); setAnswers(mine.answers || {}); }
     } catch (e) { if (e instanceof SignedOut) setSignedIn(false); }
@@ -104,6 +122,7 @@ export default function Apply({ programKey }: { programKey: string }) {
   if (prog === undefined) return <main className="sc"><SiteTop on="/apply" /><p className="sc-wrap sc-small" style={{ padding: 40 }}>Loading…</p></main>;
   if (!prog) return <main className="sc"><SiteTop on="/apply" /><div className="sc-wrap sc-section"><div className="sc-empty" style={{ marginTop: 30 }}><h2>That program isn&rsquo;t here.</h2><p><Link href="/apply">See what EFF has open</Link>.</p></div></div><SiteFoot /></main>;
 
+  const open = prog.open || invite === "mine";
   const w0 = app ? STATUS_WORDS[app.status] : null;
   const w = w0 && prog.kind === "emergency" && app?.status === "awarded" ? { ...w0, label: "Approved", line: "EFF approved your request. You'll get an email the moment it's paid." } : w0;
   return (
@@ -112,7 +131,7 @@ export default function Apply({ programKey }: { programKey: string }) {
       <div className="sc-wrap">
         <article className="sc-detail">
           <Link className="sc-back" href="/apply">← Apply to EFF</Link>
-          <div><span className={`sc-due${prog.open ? " hot" : ""}`}>{prog.open ? (prog.rolling ? "Open: apply anytime" : prog.closes_at ? `Closes ${new Date(prog.closes_at).toLocaleString("en-US", { month: "long", day: "numeric", hour: "numeric", minute: "2-digit", timeZone: "America/New_York" })} ET` : "Open") : "Closed for now"}</span></div>
+          <div><span className={`sc-due${open ? " hot" : ""}`}>{invite === "mine" || (invite === "ok" && !prog.open) ? "Private invitation: just for you" : prog.open ? (prog.rolling ? "Open: apply anytime" : prog.closes_at ? `Closes ${new Date(prog.closes_at).toLocaleString("en-US", { month: "long", day: "numeric", hour: "numeric", minute: "2-digit", timeZone: "America/New_York" })} ET` : "Open") : "Closed for now"}</span></div>
           <h1>{prog.name}</h1>
           {prog.amount ? <div className="sc-bigamt">{prog.amount}</div> : null}
           <p style={{ fontSize: 18, lineHeight: 1.55 }}>{prog.summary}</p>
@@ -157,11 +176,13 @@ export default function Apply({ programKey }: { programKey: string }) {
             </section>
           ) : null}
 
-          {!prog.open && !app ? (
+          {invite === "ok" && !prog.open && signedIn === false ? <p className="sc-note">EFF opened this application just for you. Sign in (or make your free account) with your email to start. Your answers save as you type.</p> : null}
+          {invite === "bad" && !prog.open && !app ? <p className="sc-note" style={{ color: "#b3123a", fontWeight: 600 }}>{inviteErr || "This invitation link has expired or isn't valid. Ask EFF for a new one."}</p> : null}
+          {!open && !app && !(invite === "ok" && signedIn === false) ? (
             <div className="sc-empty"><p>Applications aren&rsquo;t open right now. {signedIn ? "It will show on My REACH the day it opens." : "Make your free account so you're ready the day it opens."}</p>{!signedIn ? <Link className="sc-btn" href="/account">Make my account</Link> : null}</div>
           ) : signedIn === false ? (
             <SignIn onIn={load} startCode={startCode} title={<>Sign in to <em>apply.</em></>} />
-          ) : signedIn && (prog.open || app) ? (
+          ) : signedIn && (open || app) ? (
             <form onSubmit={(e) => { e.preventDefault(); send(); }}>
               {!me?.profile.first_name ? <p className="sc-note">Add your name on <Link href="/account">My REACH</Link> so EFF knows who you are.</p> : null}
               {(prog.questions || []).map((q) => (
