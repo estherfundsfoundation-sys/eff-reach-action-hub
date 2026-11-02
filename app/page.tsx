@@ -5,6 +5,8 @@ import { ReachBox, ReachLetters, ReachStill, ReachStory, ReachWalkers } from "./
 import { CATEGORIES } from "./content/resources";
 import { SiteTop, SiteFoot } from "./myreach/ui";
 import Doors from "./Doors";
+import WhoDoors from "./WhoDoors";
+import "./start/start.css";
 import "./scholarships/scholarships.css";
 import "./reach-home.css";
 
@@ -18,6 +20,7 @@ export default function Home() {
     <main className="sc rh">
       <ReachOpening />
       <SiteTop />
+      <WhoDoors />
 
       <section id="what" className="rh-what">
         <div className="sc-wrap">
