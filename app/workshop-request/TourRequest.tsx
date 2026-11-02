@@ -9,7 +9,10 @@
    No price is published here on purpose: prices are set by National and sent as a quote after a call.
    27 Oct 2026 (Shayna: "some low cost things for reach workshops are printing at your local school and for chapters
    hosting it themselves make sure the workshop request for funding reflects this"; "workshops support from nationals
-   was up to $100 for pizza"): chapters and ambassadors hosting a REACH Workshop themselves see HOSTING below. */
+   was up to $100 for pizza"): chapters and ambassadors hosting a REACH Workshop themselves see HOSTING below.
+   2 Nov 2026, Shayna: "the only thing eff can afford is admin and eff financial assistance and scholarship ... close reach
+   funded workshops for chapters and ambassadors until further notice ... we will still plan to travel for the reach workshops".
+   National funds no chapter or ambassador workshop for now (no food support); REACH on Tour visits continue. */
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { call, MYEFF } from "../myreach/pass";
@@ -23,7 +26,7 @@ const KINDS: Array<{ key: Kind; title: string; line: string; paid?: boolean }> =
   { key: "community", title: "Church or community group", line: "Youth groups, churches, nonprofits, libraries, community centers." },
   { key: "chapter_partner", title: "My EFF chapter is hosting, or partnering", line: "Your chapter is hosting a REACH Workshop, or you want to bring REACH to a campus with an EFF chapter." },
   { key: "affiliate", title: "Become a community affiliate", line: "Your organization joins REACH's network of help for students." },
-  { key: "ambassador_event", title: "I'm a Campus Ambassador", line: "Plan your REACH event and ask for food support for the room (up to $100)." },
+  { key: "ambassador_event", title: "I'm a Campus Ambassador", line: "Plan your REACH event and tell National about it." },
   { key: "sponsor", title: "Sponsor a tour stop", line: "Help bring REACH to students who couldn't host it on their own." },
   { key: "other", title: "Something else", line: "Tell us what you have in mind." },
 ];
@@ -147,9 +150,9 @@ export default function TourRequest() {
 
                 {kind === "chapter_partner" || kind === "ambassador_event" ? (
                   <div className="tr-note">
-                    <b>Hosting a REACH Workshop yourselves?</b> EFF National can help with food only: <b>up to $100, for pizza</b>. That&rsquo;s all National can cover, and it isn&rsquo;t promised; ask early. We strongly encourage fundraising for anything else. Ways to keep it low-cost:
+                    <b>Hosting a REACH Workshop yourselves?</b> Right now EFF National isn&rsquo;t able to fund chapter or ambassador workshops, including food, until further notice. EFF&rsquo;s money is going to scholarships and emergency help for students. You can still host, and it can cost nothing. Ways to keep it free or low-cost:
                     <ul className="tr-tips">{HOSTING.map((t) => <li key={t}>{t}</li>)}</ul>
-                    In &ldquo;Tell us more&rdquo;, give your date, where, how many students, and how much food support you&rsquo;re asking for (up to $100).
+                    In &ldquo;Tell us more&rdquo;, give your date, where and how many students, so National can cheer you on and share it.
                   </div>
                 ) : null}
 
@@ -206,7 +209,7 @@ export default function TourRequest() {
                 ) : null}
 
                 <h3>Tell us more</h3>
-                <label className="sc-field"><span>{kind === "affiliate" ? "What does your organization do for students, and how would you like to work with REACH?" : kind === "chapter_partner" ? "Which chapter or campus, what you're planning (date, where, how many students), and any food support you need (up to $100)" : kind === "ambassador_event" ? "Your event: the date, where, how many students, what you're planning, and the food support you need (up to $100)" : "What do your students need, and what would make this a win?"}</span>
+                <label className="sc-field"><span>{kind === "affiliate" ? "What does your organization do for students, and how would you like to work with REACH?" : kind === "chapter_partner" ? "Which chapter or campus, and what you're planning (date, where, how many students)" : kind === "ambassador_event" ? "Your event: the date, where, how many students, and what you're planning" : "What do your students need, and what would make this a win?"}</span>
                   <textarea required minLength={20} maxLength={3000} rows={5} value={f.details} onChange={set("details")} />
                 </label>
                 <label className="sc-field tr-one"><span>How did you hear about REACH? (optional)</span><input maxLength={80} value={f.heard_from} onChange={set("heard_from")} /></label>
