@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { SiteFoot, SiteTop } from "../../myreach/ui";
 import { rpc } from "../../scholarships/lib";
+import Dossier, { type DossierData } from "./Dossier";
 import { EFF_ROUTES, fmtDate, host, type College, type Item } from "../data";
 
 const TYPES: Array<[string, string]> = [
@@ -100,7 +101,7 @@ function Report({ c, item, close }: { c: College; item: Item | null; close: () =
   );
 }
 
-export default function CollegeView({ c }: { c: College }) {
+export default function CollegeView({ c, dossier }: { c: College; dossier?: DossierData | null }) {
   const [report, setReport] = useState<{ item: Item | null } | null>(null);
   const has = c.groups.length > 0;
   return (
@@ -111,7 +112,7 @@ export default function CollegeView({ c }: { c: College }) {
           <Link href="/my-college" className="cr-back">← Another college</Link>
           <span className="sc-kick"><span className="dot" />{[c.city, c.state].filter(Boolean).join(", ")}{c.hbcu ? " · HBCU" : ""}{c.tribal ? " · Tribal college" : ""}</span>
           <h1 className="cr-h1">{c.name}</h1>
-          <p>{has ? "Help at your college that EFF has checked, starting with emergency money. Every listing shows where it came from." : "EFF hasn't confirmed this college's help yet. Here's where to start today, and what EFF has for you right now."}</p>
+          <p>{dossier ? "EFF read this college for you: the fastest moves when money runs out, then eleven sections of real paths, each with the college's own page." : has ? "Help at your college that EFF has checked, starting with emergency money. Every listing shows where it came from." : "EFF hasn't confirmed this college's help yet. Here's where to start today, and what EFF has for you right now."}</p>
           {!c.active ? <p className="cr-warn">IPEDS lists this college as no longer open. If you were a student here, financial aid can still help with your records.</p> : null}
         </div></section>
 
@@ -122,6 +123,8 @@ export default function CollegeView({ c }: { c: College }) {
             {c.chapter ? <a className="sc-door" href={`https://my.estherfundsfoundation.org/chapters/${c.chapter.slug}`}><b>{c.chapter.name}</b><span>EFF has a chapter here. Students who can walk this with you.</span></a> : null}
           </div>
 
+          {dossier ? <Dossier d={dossier} name={c.name} /> : null}
+          {dossier && c.groups.length ? <h2 className="cr-more">More EFF found on the college&rsquo;s site</h2> : null}
           {c.groups.map((g) => (
             <section key={g.type} className="cr-group">
               <h2>{g.label}</h2>

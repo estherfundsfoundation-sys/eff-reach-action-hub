@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import CollegeView from "./CollegeView";
 import { rpc } from "../../scholarships/lib";
 import type { College } from "../data";
+import type { DossierData } from "./Dossier";
 import "../../scholarships/scholarships.css";
 import "../college.css";
 
@@ -27,5 +28,6 @@ export async function generateMetadata({ params }: { params: Promise<{ unitid: s
 export default async function Page({ params }: { params: Promise<{ unitid: string }> }) {
   const c = await load((await params).unitid);
   if (!c) notFound();
-  return <CollegeView c={c} />;
+  const dossier = await rpc<DossierData | null>("eff_campus_dossier_public", { p_unitid: c.unitid }, 600).catch(() => null);
+  return <CollegeView c={c} dossier={dossier} />;
 }
