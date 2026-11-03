@@ -56,7 +56,7 @@ export default function Finder({ coverage }: { coverage: Coverage | null }) {
                     <Link href={`/my-college/${h.unitid}`} className="cr-hit">
                       <b>{h.name}</b>
                       <span>{[h.city, h.state].filter(Boolean).join(", ")}{h.level ? ` · ${h.level}` : ""}{h.hbcu ? " · HBCU" : ""}{h.tribal ? " · Tribal college" : ""}{!h.active ? " · no longer open" : ""}</span>
-                      {h.verified > 0 ? <em>{h.verified} confirmed by EFF</em> : null}
+                      {h.verified > 0 ? <em>{h.verified} listed</em> : null}
                     </Link>
                   </li>
                 ))}
@@ -67,7 +67,7 @@ export default function Finder({ coverage }: { coverage: Coverage | null }) {
           <div className="cr-honest">
             <h2>How we know</h2>
             <p>Every college in the U.S. Department of Education&rsquo;s list is here ({(coverage?.colleges ?? 6072).toLocaleString()}), with its own website and financial aid office. EFF reads each college&rsquo;s public pages to find its help, and a person checks every listing before you see it as confirmed. Each one shows where it came from and when it was last checked.</p>
-            <p className="cr-count"><b>{(coverage?.verified_colleges ?? 0).toLocaleString()}</b> colleges have help confirmed by EFF so far. We&rsquo;re adding more every week, starting with the campuses where EFF has chapters, then HBCUs.</p>
+            <p className="cr-count"><b>{(coverage?.verified_colleges ?? 0).toLocaleString()}</b> colleges have campus help listed so far. EFF adds more every night, starting with the campuses where EFF has chapters, then HBCUs. See something wrong? Tell us and EFF fixes it.</p>
             <p className="cr-note">See something wrong or missing at your college? Every college page has a &ldquo;Tell us&rdquo; button.</p>
           </div>
         </section>

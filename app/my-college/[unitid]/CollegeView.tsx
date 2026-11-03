@@ -64,7 +64,7 @@ function Report({ c, item, close }: { c: College; item: Item | null; close: () =
         {done ? (
           <>
             <h2>Thank you.</h2>
-            <p>It goes to the people who check {c.name}&rsquo;s listings: EFF&rsquo;s chapter or Campus Ambassadors there, or EFF National. We fix it after we&rsquo;ve looked at the college&rsquo;s own page.</p>
+            <p>It goes to EFF National, who looks at {c.name}&rsquo;s own page and fixes or removes the listing.</p>
             <button type="button" className="sc-btn" onClick={close}>Done</button>
           </>
         ) : (
