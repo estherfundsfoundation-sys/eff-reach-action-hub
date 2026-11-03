@@ -67,7 +67,7 @@ export default function Finder({ coverage }: { coverage: Coverage | null }) {
           <div className="cr-honest">
             <h2>How we know</h2>
             <p>Every college in the U.S. Department of Education&rsquo;s list is here ({(coverage?.colleges ?? 6072).toLocaleString()}), with its own website and financial aid office. EFF reads each college&rsquo;s public pages to find its help, and a person checks every listing before you see it as confirmed. Each one shows where it came from and when it was last checked.</p>
-            <p className="cr-count"><b>{(coverage?.verified_colleges ?? 0).toLocaleString()}</b> colleges have campus help listed so far. EFF adds more every night, starting with the campuses where EFF has chapters, then HBCUs. See something wrong? Tell us and EFF fixes it.</p>
+            <p className="cr-count"><b>{(coverage?.deep_colleges ?? 0).toLocaleString()} of {(coverage?.colleges ?? 6072).toLocaleString()}</b> colleges have a full EFF guide so far: EFF read the college&rsquo;s own pages and wrote the paths for twelve kinds of help, starting with what to do if you&rsquo;re broke on a Friday night. EFF adds colleges every week, chapter campuses first, then HBCUs. Every other college shows what EFF has found on its site so far. See something wrong? Tell us and EFF fixes it.</p>
             <p className="cr-note">See something wrong or missing at your college? Every college page has a &ldquo;Tell us&rdquo; button.</p>
           </div>
         </section>

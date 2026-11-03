@@ -17,7 +17,7 @@ export type College = {
   chapter: { name: string; slug: string; status: string } | null; crawled_at: string | null;
   groups: Group[]; pages: Array<{ type: string; label: string; url: string; checked_at: string | null }>;
 };
-export type Coverage = { colleges: number; verified_colleges: number; verified_resources: number; deep_colleges: number; crawled_colleges: number; pages_watched: number };
+export type Coverage = { colleges: number; verified_colleges: number; verified_resources: number; deep_colleges: number; dossier_sections?: number; college_scholarships?: number; crawled_colleges: number; pages_watched: number };
 
 export const fmtDate = (s: string | null) => (s ? new Date(s).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric", timeZone: "America/New_York" }) : null);
 export const host = (u: string) => { try { return new URL(u).hostname.replace(/^www\./, ""); } catch { return u; } };
