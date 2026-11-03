@@ -167,3 +167,30 @@
 .sc-sub a.on { color:var(--p) !important; box-shadow:inset 0 -2px 0 var(--p); border-radius:0; }
 /* the site bar on pages that are not inside .sc */
 .sc.sc-bar { min-height:0; background:none; position:sticky; top:0; z-index:30; }
+
+/* Deep scholarships (3 Nov 2026): the "checked by EFF" badge, the facts table, why-matched lines, extra filters. */
+.sc-checked { display:inline-flex; align-items:center; gap:6px; align-self:flex-start; padding:4px 10px; border-radius:999px; background:#e6f5ee; color:#14653f; font-weight:800; font-size:12px; letter-spacing:.02em; }
+.sc-checked.wait { background:#fff4d6; color:#7a5300; }
+@media (prefers-color-scheme: dark) { .sc-checked { background:#123827; color:#8fe0b8; } .sc-checked.wait { background:#3a2e10; color:#ffd98a; } }
+.sc-last { font-size:12px !important; opacity:.85; }
+.sc-deep-top { display:flex; flex-wrap:wrap; gap:10px; align-items:center; justify-content:space-between; margin-bottom:10px; }
+.sc-facts { display:grid; gap:0; margin:0 0 12px; }
+.sc-facts > div { display:grid; grid-template-columns:minmax(120px,190px) 1fr; gap:12px; padding:10px 0; border-top:1px solid var(--b); }
+.sc-facts dt { font-weight:700; color:var(--i2); font-size:14px; }
+.sc-facts dd { margin:0; font-size:16px; line-height:1.45; }
+@media (max-width:560px) { .sc-facts > div { grid-template-columns:1fr; gap:2px; } }
+.sc-whyline { margin:4px 0 0; font-size:14px; line-height:1.4; color:#14653f; }
+.sc-whyline.warn { color:#9a3412; }
+.sc-whyline.soft { color:var(--i2); }
+@media (prefers-color-scheme: dark) { .sc-whyline { color:#8fe0b8; } .sc-whyline.warn { color:#ffb38a; } }
+.sc-more { flex:1 1 100%; }
+.sc-more summary { cursor:pointer; font-weight:700; color:var(--p); min-height:44px; display:flex; align-items:center; }
+.sc-more-in { display:flex; flex-wrap:wrap; gap:10px; align-items:flex-end; padding-top:6px; }
+.sc-check { display:flex; gap:8px; align-items:center; font-weight:600; font-size:14px; min-height:48px; color:var(--i); flex:1 1 260px; }
+.sc-check input { width:20px; height:20px; accent-color:var(--p); }
+.sc-trust ul { margin:0 0 8px; padding-left:18px; line-height:1.55; }
+.sc-fafsa { padding:18px; border-radius:22px; background:var(--pl); border:1px solid var(--b); margin-top:18px; }
+.sc-fafsa p { margin:6px 0; font-size:17px; line-height:1.5; }
+.sc-fafsa h3 { margin:16px 0 8px; font:800 20px/1.2 var(--rx-head); color:var(--p); }
+.sc-nofit { padding:18px; border-radius:22px; background:#fff7ed; border:1px solid #fed7aa; }
+@media (prefers-color-scheme: dark) { .sc-nofit { background:#2b1a0d; border-color:#5a3412; } }

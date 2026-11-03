@@ -21,15 +21,27 @@ export async function rpc<T>(fn: string, body: Record<string, unknown> = {}, rev
   return d as T;
 }
 
+/* A deep record: the structured, checked layer (MyEFF eff_sch_deep, seeded 3 Nov 2026 from providers' own sites).
+   Where one exists its facts win; the listing keeps everything else. A field is null when the official page
+   doesn't state it, and the page shows an honest blank. */
+export type Deep = {
+  id: number; status: "verified" | "needs_review" | "unverified"; verified: boolean; open: boolean; rollover: boolean;
+  provider: string | null; provider_type: string | null; amount_text: string | null; amount_min: number | null; amount_max: number | null; renewable: boolean | null;
+  deadline_text: string | null; deadline_date: string | null; deadline_type: "fixed" | "rolling" | "varies_by_school" | null;
+  eligibility_text: string | null; gpa_min: number | null; level: string | null; enrollment: string | null; citizenship: string | null;
+  state_residency: string | null; states: string[]; major_field: string | null; demographic_focus: string | null; need_based: boolean;
+  essay_required: boolean | null; num_awards: number | null; application_url: string | null; source_url: string | null; last_verified_at: string | null;
+};
 export type Card = {
   slug: string; title: string; sponsor: string | null; amount: string | null; amount_numeric: number | null;
-  deadline_kind: "date" | "rolling" | "varies"; deadline: string | null; levels: string[]; featured?: boolean; current?: boolean;
+  deadline_kind: "date" | "rolling" | "varies"; deadline: string | null; levels: string[]; featured?: boolean; current?: boolean; deep?: Deep;
 };
+export const checkedOn = (s: string | null | undefined) => (s ? new Date(s).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric", timeZone: "America/New_York" }) : null);
 export type Detail = Card & {
   summary: string | null; url: string; eligibility: Record<string, unknown>; current: boolean; checked: string | null; seen: string | null;
   source: { name: string; url: string; permission: string; note: string | null };
 };
-export type Search = { total: number; page: number; pages: number; items: Card[] };
+export type Search = { total: number; page: number; pages: number; items: Card[]; verified_open?: number };
 export type Stats = { current: number; closing_soon: number; sources: number; updated: string | null };
 
 export const LEVELS = [
