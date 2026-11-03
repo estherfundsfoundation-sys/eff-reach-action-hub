@@ -33,7 +33,7 @@ export default function AllResources() {
         <div className="sc-wrap">
           <span className="sc-kick"><span className="dot" aria-hidden="true" />{items.length} tools, guides and lifelines, checked every morning</span>
           <h1>Everything, <em>organized.</em></h1>
-          <p>For students from 9th grade to after graduation, and for everyone in their corner. Or <Link href="/start">answer three questions and get your own plan</Link>.</p>
+          <p>For students from 9th grade to after graduation, and for everyone in their corner. Or <Link href="/start">answer three questions and get your own plan</Link>, or see <Link href="/organizations">46 organizations across the country doing this work</Link>.</p>
           <div className="sc-filters" style={{ marginTop: 18 }}>
             <label className="sc-field grow"><span>Search everything</span><input value={q} onChange={(e) => setQ(e.target.value)} placeholder="rent, FAFSA, DACA, GI Bill, résumé, 988…" /></label>
             <label className="sc-field"><span>I&rsquo;m</span><select value={who} onChange={(e) => setWho(e.target.value)}><option value="">Anyone</option>{WHO.map((w) => <option key={w.key} value={w.key}>{short[w.key]}</option>)}</select></label>
