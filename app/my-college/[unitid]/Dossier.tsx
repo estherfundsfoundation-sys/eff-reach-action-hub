@@ -63,6 +63,7 @@ export default function Dossier({ d, name }: { d: DossierData; name: string }) {
       {rest.map((s, i) => (
         <section key={s.key} id={s.key} className="dz-sec">
           <h3 className="dz-h"><span>{NUM[i]}</span>{s.label}</h3>
+          {s.key === "financial_aid" ? <p className="dz-aid">Every college answers to the same federal rules. <a href="/aid-moves">The aid moves nobody tells you →</a></p> : null}
           {s.items.length ? s.items.map((it) => <Path key={it.id} it={it} />) : (
             <div className="dz-gap"><b>Not published — here&rsquo;s the move:</b> {s.move}</div>
           )}

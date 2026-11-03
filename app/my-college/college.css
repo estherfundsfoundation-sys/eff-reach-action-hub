@@ -64,3 +64,4 @@
 .dz-gap, .dz-move { padding:14px 16px; border-radius:18px; border:1px dashed var(--b); background:var(--s); line-height:1.5; color:var(--i); }
 .dz-fri .dz-move { background:#fff; }
 .cr-more { margin:10px 0 14px; font:900 clamp(22px,3.6vw,30px)/1.1 var(--rx-head); color:var(--p); }
+.dz-aid { margin:0 0 10px; padding:10px 14px; border-radius:14px; background:var(--pl); font-weight:700; }

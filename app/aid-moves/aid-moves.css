@@ -1,0 +1,21 @@
+.am-h1 { position:relative; margin:6px 0 12px; font:900 clamp(38px,7vw,78px)/.96 var(--rx-head); letter-spacing:-.03em; color:#fff; }
+.am-state { margin:6px 0 26px; padding:22px 20px; border-radius:24px; background:var(--pl); }
+.am-state h2, .am-college h2 { margin:0 0 8px; font:900 clamp(24px,4vw,32px)/1.05 var(--rx-head); color:var(--p); }
+.am-state p { margin:0 0 10px; line-height:1.5; }
+.am-st { padding:12px 14px; border-radius:16px; background:var(--s); }
+.am-st.hot { border:2px solid var(--c); }
+.am-toc { display:flex; flex-wrap:wrap; gap:6px; margin:0 0 26px; }
+.am-toc a { display:inline-flex; gap:6px; padding:8px 12px; border-radius:999px; border:1px solid var(--b); background:var(--s); font-size:14px; font-weight:700; text-decoration:none; color:var(--p) !important; }
+.am-toc span { color:var(--g); font-family:var(--rx-head); }
+.am-card { position:relative; padding:22px 20px; border-radius:24px; background:var(--s); border:1px solid var(--b); margin-bottom:16px; scroll-margin-top:90px; overflow:hidden; }
+.am-n { position:absolute; right:14px; top:4px; font:900 64px/1 var(--rx-head); color:var(--pl); }
+.am-hook { position:relative; margin:0 0 4px; font-size:13px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:var(--g); }
+.am-card h2 { position:relative; margin:0 0 12px; font:900 clamp(22px,3.6vw,30px)/1.1 var(--rx-head); color:var(--p); max-width:22ch; }
+.am-card h3 { margin:14px 0 6px; font:800 16px/1.2 var(--rx-head); color:var(--i); }
+.am-truth, .am-bring { margin:0; padding-left:20px; display:grid; gap:6px; line-height:1.5; }
+.am-script { margin:0 0 10px; padding:14px 16px; border-radius:16px; background:var(--pl); border-left:4px solid var(--p); line-height:1.5; font-style:normal; }
+.am-when p { margin:12px 0 0; line-height:1.5; }
+.am-src { margin:12px 0 0; font-size:13px; color:var(--i2); }
+.am-college { margin:26px 0 16px; padding:22px 20px; border-radius:24px; border:2px solid var(--c); }
+.am-college p { margin:0 0 12px; line-height:1.5; }
+.am-foot { margin:0 0 50px; font-size:13px; }
