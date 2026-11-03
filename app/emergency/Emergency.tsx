@@ -1,5 +1,6 @@
 "use client";
 
+import { CollegeMoves, EmailPlan, type Dossier } from "./CollegeMoves";
 import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { SiteFoot, SiteTop } from "../myreach/ui";
@@ -50,7 +51,7 @@ type Plan = {
   grant: { open: boolean; key: string; closes_at: string | null } | null;
   state: string | null; campus: { institution?: { id: string; name: string; city: string | null; state: string | null }; chapter?: { name: string; slug: string } | null; links?: Array<{ kind: string; label: string; url: string }> } | null;
   nearby: Local[]; fema: Array<{ number: number; title: string; type: string; declared: string; areas: string[]; url: string }>;
-  web: Web[] | null; web_available: boolean; error?: string;
+  web: Web[] | null; web_available: boolean; error?: string; dossier?: Dossier | null;
 };
 type School = { id: string; name: string; city: string; state: string; is_hbcu: boolean; has_chapter: boolean };
 
@@ -298,6 +299,7 @@ export default function Emergency() {
                       <button type="button" className="sc-btn sm" onClick={() => window.print()}>Save or print</button>{" "}
                       <button type="button" className="sc-btn sm ghost" onClick={restart}>Start over</button>
                     </div>
+                    <EmailPlan needs={needs} institution={school?.id || null} state={school ? school.state : state || null} />
                   </header>
 
                   {plan.fema.length ? (
@@ -314,7 +316,13 @@ export default function Emergency() {
                     </Step>
                   ) : null}
 
-                  <Step title={`Go to ${campusName || "your campus"} first`} sub="Your college is the main place emergency money comes from: usually a one-time grant, often a few hundred dollars up to about $1,000, sometimes decided in days.">
+                  {plan.dossier ? (
+                    <Step title={`Your moves at ${plan.dossier.name}`} sub="EFF read your college's own pages for this, fastest help first. Tick each one off as you go.">
+                      <CollegeMoves d={plan.dossier} />
+                    </Step>
+                  ) : null}
+
+                  <Step title={plan.dossier ? "If you still need more, ask in person" : `Go to ${campusName || "your campus"} first`} sub="Your college is the main place emergency money comes from: usually a one-time grant, often a few hundred dollars up to about $1,000, sometimes decided in days.">
                     <div className="em-script">
                       <p><b>Ask the Dean of Students, financial aid or the basic needs office. Say:</b></p>
                       <blockquote>&ldquo;{script}&rdquo;</blockquote>

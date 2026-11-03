@@ -194,3 +194,19 @@
 .em-line svg { grid-row:span 2; color:var(--p); }
 .em-line.red svg { color:#fff; }
 .em-fema p a, .em-sub a { white-space:nowrap; } .em-fema p a svg, .em-sub a svg { vertical-align:-2px; }
+/* Her college's own moves (3 Nov 2026) */
+.em-col { display:grid; gap:14px; }
+.em-col-kick { margin:0; font-size:13px; font-weight:800; letter-spacing:.06em; text-transform:uppercase; color:var(--g); }
+.em-col-h { margin:4px 0 8px; font:900 20px/1.15 var(--rx-head); color:var(--p); }
+.em-col-sec { display:grid; gap:10px; }
+.em-col-card.done { opacity:.6; }
+.em-col-card.closed { border-style:dashed; }
+.em-col-steps { margin:6px 0 10px; padding-left:20px; display:grid; gap:4px; line-height:1.45; }
+.em-col-q { margin:0 0 10px; padding:8px 12px; border-left:4px solid var(--pv); font-style:italic; }
+.em-col-src { margin:8px 0 0; font-size:13px; color:var(--i2); }
+.em-col-move { margin:0; padding:12px 14px; border-radius:14px; border:1px dashed var(--b); line-height:1.5; }
+.em-mail { display:grid; gap:8px; margin-top:16px; padding:14px 16px; border-radius:18px; background:var(--s); border:1px solid var(--b); max-width:560px; color:var(--i); }
+.em-mail-row { display:flex; gap:8px; flex-wrap:wrap; }
+.em-mail-row input { flex:1 1 220px; min-height:42px; padding:8px 12px; border-radius:12px; border:1px solid var(--b); font:inherit; }
+.em-mail-chk { display:flex; gap:8px; align-items:center; font-size:15px; }
+.em-trap { position:absolute; left:-9999px; width:1px; height:1px; opacity:0; }
