@@ -6,6 +6,7 @@ import { call, readPass, startCode, upload, decideBy, SignedOut, STATUS_WORDS, t
 import "./apply.css";
 import { SiteTop, SiteFoot } from "../../myreach/ui";
 import { SignIn } from "../../account/SignIn";
+import Wizard, { PreCheck, Tracker, WhileYouWait } from "./Wizard";
 
 /* One EFF program: what it is, then the application. Drafts save as you go
    (eff_reach_application_save); documents upload straight to the private bucket;
@@ -26,6 +27,10 @@ export default function Apply({ programKey }: { programKey: string }) {
   const [invite, setInvite] = useState<"none" | "ok" | "mine" | "bad">("none");
   const [inviteErr, setInviteErr] = useState("");
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  // Emergency programs: the 30-second eligibility check before sign-in, kept for this tab.
+  const PRE = `reach-pre:${programKey}`;
+  const [pre, setPre] = useState<Record<string, string> | null>(null);
+  useEffect(() => { try { const v = sessionStorage.getItem(PRE); if (v) setPre(JSON.parse(v)); } catch { /* blocked */ } }, [PRE]);
 
   async function load() {
     const p = await call<Program | null>("eff_reach_program", { p_key: programKey }).catch(() => null);
@@ -51,7 +56,16 @@ export default function Apply({ programKey }: { programKey: string }) {
         catch (e) { setInvite("bad"); setInviteErr(e instanceof Error ? e.message : "This invitation can't be used."); }
       }
       const mine = m.applications.find((a) => a.program === programKey && (a.cycle || "") === (p?.cycle || ""));
-      if (mine) { setApp(mine); setAnswers(mine.answers || {}); }
+      let base: Record<string, unknown> = mine?.answers || {};
+      if (mine) { setApp(mine); }
+      try {
+        const p0 = JSON.parse(sessionStorage.getItem(`reach-pre:${programKey}`) || "null") as Record<string, string> | null;
+        if (p0 && (!mine || ["draft", "more_info"].includes(mine.status)) && Object.keys(p0).some((k) => base[k] == null || base[k] === "")) {
+          base = { ...p0, ...Object.fromEntries(Object.entries(base).filter(([, v]) => v != null && v !== "")) };
+          if (p?.open || code) call<App>("eff_reach_application_save", { p_token: pass.token, p_program: programKey, p_answers: base }).then((a) => setApp((cur) => ({ ...(cur || {}), ...a }))).catch(() => {});
+        }
+      } catch { /* storage blocked */ }
+      setAnswers(base);
     } catch (e) { if (e instanceof SignedOut) setSignedIn(false); }
   }
   useEffect(() => { load(); }, [programKey]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -122,6 +136,28 @@ export default function Apply({ programKey }: { programKey: string }) {
   if (prog === undefined) return <main className="sc"><SiteTop on="/apply" /><p className="sc-wrap sc-small" style={{ padding: 40 }}>Loading…</p></main>;
   if (!prog) return <main className="sc"><SiteTop on="/apply" /><div className="sc-wrap sc-section"><div className="sc-empty" style={{ marginTop: 30 }}><h2>That program isn&rsquo;t here.</h2><p><Link href="/apply">See what EFF has open</Link>.</p></div></div><SiteFoot /></main>;
 
+  const docsBox = (
+    <section className="sc-step">
+                  <h2>Documents</h2>
+                  <p className="sc-small" style={{ marginTop: 0 }}>PDF, photo or Word, up to 10 MB each. Private: only EFF National can open them. Never upload your Social Security card or bank details.</p>
+                  {(prog.documents || []).map((d) => {
+                    const have = app?.documents?.find((x) => x.key === d.key);
+                    return (
+                      <div key={d.key} style={{ padding: "12px 0", borderTop: "1px solid var(--b)" }}>
+                        <b>{d.label}{d.required ? " *" : ""}</b>{d.help ? <div className="sc-small">{d.help}</div> : null}
+                        {have ? <p style={{ margin: "6px 0" }}>✓ {have.name}{editable ? <> · <button type="button" className="sc-link" style={{ background: "none", border: 0, color: "var(--p)", textDecoration: "underline", cursor: "pointer", minHeight: 44 }} onClick={() => removeDoc(d.key)}>Remove</button></> : null}</p> : null}
+                        {editable ? (
+                          <label className="sc-btn ghost sm" style={{ marginTop: 6 }}>
+                            {upBusy === d.key ? "Uploading…" : have ? "Replace file" : "Choose file"}
+                            <input type="file" accept=".pdf,.jpg,.jpeg,.png,.heic,.heif,.webp,.doc,.docx,application/pdf,image/*" style={{ display: "none" }} disabled={Boolean(upBusy)} onChange={(e) => { const f = e.target.files?.[0]; if (f) attach(d.key, f); e.target.value = ""; }} />
+                          </label>
+                        ) : null}
+                      </div>
+                    );
+                  })}
+                </section>
+  );
+  const emergency = prog.kind === "emergency";
   const open = prog.open || invite === "mine";
   const w0 = app ? STATUS_WORDS[app.status] : null;
   const w = w0 && prog.kind === "emergency" && app?.status === "awarded" ? { ...w0, label: "Approved", line: "EFF approved your request. You'll get an email the moment it's paid." } : w0;
@@ -139,10 +175,10 @@ export default function Apply({ programKey }: { programKey: string }) {
           {prog.audience === "members" ? <p className="sc-note">For EFF members. Sign in with the email you joined EFF with.</p> : null}
           {prog.kind === "emergency" ? (
             <div className="ap-promise">
-              {prog.turnaround_hours ? <div><b>{prog.turnaround_hours} hours</b><span>to a decision (weekdays)</span></div> : null}
+              {prog.turnaround_hours ? <div><b>{prog.turnaround_hours} hours</b><span>to a decision (weekdays). Never a loan.</span></div> : null}
               {prog.max_award ? <div><b>Up to ${Number(prog.max_award).toLocaleString()}</b><span>per student</span></div> : null}
+              <div><b>About 10 minutes</b><span>on your phone, one step at a time</span></div>
               <div><b>Paid to the bill</b><span>so you don&rsquo;t front it</span></div>
-              <div><b>Not a loan</b><span>you never pay it back</span></div>
             </div>
           ) : null}
           {prog.kind === "emergency" ? (
@@ -167,7 +203,7 @@ export default function Apply({ programKey }: { programKey: string }) {
             <section className="sc-box" style={{ borderColor: app.status === "awarded" ? "#1f8a5b" : undefined }}>
               <h2>{w.label} · {app.number}</h2>
               <p style={{ margin: 0 }}>{w.line}</p>
-              {["submitted", "reviewing"].includes(app.status) && decideBy(app.due_by) ? <p className="ap-clock">{decideBy(app.due_by)}</p> : null}
+              {emergency ? <Tracker app={app} prog={prog} clock={["submitted", "reviewing"].includes(app.status) ? decideBy(app.due_by) : null} /> : ["submitted", "reviewing"].includes(app.status) && decideBy(app.due_by) ? <p className="ap-clock">{decideBy(app.due_by)}</p> : null}
               {app.more_info ? <p className="sc-note"><b>EFF asked:</b> {app.more_info}</p> : null}
               {app.decision_note ? <p className="sc-note">{app.decision_note}</p> : null}
               {app.status === "awarded" && app.award_amount ? <p style={{ margin: "8px 0 0" }}><b>${Number(app.award_amount).toLocaleString()}</b> approved.</p> : null}
@@ -180,8 +216,12 @@ export default function Apply({ programKey }: { programKey: string }) {
           {invite === "bad" && !prog.open && !app ? <p className="sc-note" style={{ color: "#b3123a", fontWeight: 600 }}>{inviteErr || "This invitation link has expired or isn't valid. Ask EFF for a new one."}</p> : null}
           {!open && !app && !(invite === "ok" && signedIn === false) ? (
             <div className="sc-empty"><p>Applications aren&rsquo;t open right now. {signedIn ? "It will show on My REACH the day it opens." : "Make your free account so you're ready the day it opens."}</p>{!signedIn ? <Link className="sc-btn" href="/account">Make my account</Link> : null}</div>
+          ) : signedIn === false && emergency && !pre ? (
+            <PreCheck prog={prog} onPass={(a) => { try { sessionStorage.setItem(PRE, JSON.stringify(a)); } catch { /* blocked */ } setPre(a); }} />
           ) : signedIn === false ? (
             <SignIn onIn={load} startCode={startCode} title={<>Sign in to <em>apply.</em></>} />
+          ) : signedIn && (open || app) && emergency && editable ? (
+            <Wizard prog={prog} app={app} answers={answers} field={field} docs={docsBox} send={send} sending={state === "sending"} saveState={state} err={err} />
           ) : signedIn && (open || app) ? (
             <form onSubmit={(e) => { e.preventDefault(); send(); }}>
               {!me?.profile.first_name ? <p className="sc-note">Add your name on <Link href="/account">My REACH</Link> so EFF knows who you are.</p> : null}
@@ -196,27 +236,7 @@ export default function Apply({ programKey }: { programKey: string }) {
                   {q.kind === "long" && q.max ? <p className="sc-small" style={{ margin: "4px 0 0", textAlign: "right" }}>{String(answers[q.key] ?? "").length} / {q.max}</p> : null}
                 </section>
               ))}
-              {(prog.documents || []).length ? (
-                <section className="sc-step">
-                  <h2>Documents</h2>
-                  <p className="sc-small" style={{ marginTop: 0 }}>PDF, photo or Word, up to 10 MB each. Private: only EFF National can open them. Never upload your Social Security card or bank details.</p>
-                  {(prog.documents || []).map((d) => {
-                    const have = app?.documents?.find((x) => x.key === d.key);
-                    return (
-                      <div key={d.key} style={{ padding: "12px 0", borderTop: "1px solid var(--b)" }}>
-                        <b>{d.label}{d.required ? " *" : ""}</b>{d.help ? <div className="sc-small">{d.help}</div> : null}
-                        {have ? <p style={{ margin: "6px 0" }}>✓ {have.name}{editable ? <> · <button type="button" className="sc-link" style={{ background: "none", border: 0, color: "var(--p)", textDecoration: "underline", cursor: "pointer", minHeight: 44 }} onClick={() => removeDoc(d.key)}>Remove</button></> : null}</p> : null}
-                        {editable ? (
-                          <label className="sc-btn ghost sm" style={{ marginTop: 6 }}>
-                            {upBusy === d.key ? "Uploading…" : have ? "Replace file" : "Choose file"}
-                            <input type="file" accept=".pdf,.jpg,.jpeg,.png,.heic,.heif,.webp,.doc,.docx,application/pdf,image/*" style={{ display: "none" }} disabled={Boolean(upBusy)} onChange={(e) => { const f = e.target.files?.[0]; if (f) attach(d.key, f); e.target.value = ""; }} />
-                          </label>
-                        ) : null}
-                      </div>
-                    );
-                  })}
-                </section>
-              ) : null}
+              {(prog.documents || []).length ? docsBox : null}
               {err ? <p className="sc-note" style={{ color: "#b3123a", fontWeight: 600 }}>{err}</p> : null}
               {editable ? (
                 <div className="sc-acts" style={{ margin: "18px 0 40px" }}>
@@ -226,6 +246,7 @@ export default function Apply({ programKey }: { programKey: string }) {
               ) : <p className="sc-note">Sent. You can follow it on <Link href="/account">My REACH</Link>.</p>}
             </form>
           ) : null}
+          {emergency && app && ["submitted", "reviewing", "more_info"].includes(app.status) ? <WhileYouWait /> : null}
         </article>
       </div>
       <SiteFoot />

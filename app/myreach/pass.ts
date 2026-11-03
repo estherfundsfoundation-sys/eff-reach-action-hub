@@ -86,6 +86,6 @@ export function decideBy(due: string | null | undefined): string | null {
   const left = t.getTime() - Date.now();
   const at = t.toLocaleString("en-US", { weekday: "long", hour: "numeric", minute: "2-digit", timeZone: "America/New_York" });
   if (left <= 0) return `EFF promised a decision by ${at} ET. It's taking longer than we said, and we're sorry. It's still being worked on.`;
-  const h = Math.floor(left / 3600000), m = Math.round((left % 3600000) / 60000);
+  const h = Math.floor(left / 3600000), m = Math.floor((left % 3600000) / 60000);
   return `EFF decides by ${at} ET (${h ? `${h}h ` : ""}${m}m from now).`;
 }

@@ -21,3 +21,50 @@
 .sc .ap-money { display: flex; align-items: center; gap: 6px; }
 .sc .ap-money b { font-size: 20px; color: #42127F; }
 .sc .ap-money input { flex: 1; }
+
+/* The Emergency Grant, one step at a time (Wizard.tsx) */
+.sc .em-wiz, .sc .em-pre, .sc .em-wait { margin: 20px 0 36px; }
+.sc .em-top { display: flex; justify-content: space-between; align-items: baseline; }
+.sc .em-count { font-size: 13px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: var(--p); }
+.sc .em-save { font-size: 13px; color: var(--i2); }
+.sc .em-bar { height: 8px; border-radius: 99px; background: var(--pl); margin: 8px 0 10px; overflow: hidden; }
+.sc .em-bar i { display: block; height: 100%; border-radius: 99px; background: linear-gradient(90deg, var(--p), var(--c)); transition: width .4s ease; }
+.sc .em-dots { list-style: none; display: flex; gap: 6px; padding: 0; margin: 0 0 14px; overflow-x: auto; scrollbar-width: none; }
+.sc .em-dots li { flex: none; font-size: 12.5px; padding: 5px 10px; border-radius: 99px; background: var(--pl); color: var(--i2); white-space: nowrap; }
+.sc .em-dots li.on { background: var(--p); color: #fff; font-weight: 700; }
+.sc .em-dots li.done { color: var(--p); font-weight: 600; }
+.sc .em-dots li.done::before { content: "✓ "; }
+.sc .em-card, .sc .em-pre { padding: 22px 20px; border-radius: 24px; background: var(--s); border: 1px solid var(--b); box-shadow: 0 18px 40px -28px rgba(66,18,127,.5); animation: em-in .35s ease both; }
+.sc .em-card h2, .sc .em-pre h2, .sc .em-wait h2 { margin: 2px 0 4px; font: 800 26px/1.15 var(--rx-head); color: var(--p); letter-spacing: -.01em; }
+.sc .em-line { margin: 0 0 14px; color: var(--i2); font-size: 16px; }
+.sc .em-q { padding: 12px 0; border-top: 1px solid var(--b); }
+.sc .em-q:first-of-type { border-top: 0; }
+.sc .em-q input, .sc .em-q select, .sc .em-q textarea { font-size: 17px; min-height: 52px; }
+.sc .em-opt { font-style: normal; font-weight: 400; color: var(--i2); font-size: 14px; }
+.sc .em-nav { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-top: 18px; }
+.sc .em-go { min-height: 56px; font-size: 18px; padding: 0 28px; flex: 1; max-width: 320px; margin-left: auto; }
+.sc .em-foot { text-align: center; }
+.sc .em-review { margin: 6px 0 0; display: grid; gap: 10px; }
+.sc .em-review > div { padding: 12px 14px; border-radius: 14px; background: var(--pl); }
+.sc .em-review dt { font-weight: 800; display: flex; justify-content: space-between; align-items: center; }
+.sc .em-review dd { margin: 4px 0 0; display: grid; gap: 2px; font-size: 14.5px; color: var(--i); overflow-wrap: anywhere; }
+.sc .em-edit { background: none; border: 0; color: var(--p); text-decoration: underline; font: inherit; font-weight: 600; cursor: pointer; min-height: 40px; }
+.sc .em-track ol { list-style: none; padding: 0; margin: 14px 0 4px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; position: relative; }
+.sc .em-track li { display: grid; justify-items: center; text-align: center; gap: 4px; position: relative; }
+.sc .em-track li::after { content: ""; position: absolute; top: 17px; left: calc(50% + 20px); right: calc(-50% + 20px); height: 3px; border-radius: 3px; background: var(--b); }
+.sc .em-track li:last-child::after { display: none; }
+.sc .em-track li.done::after { background: var(--p); }
+.sc .em-track i { width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; font-style: normal; font-weight: 800; background: var(--pl); color: var(--i2); }
+.sc .em-track li.done i { background: var(--p); color: #fff; }
+.sc .em-track li.on i { background: var(--c); color: #fff; box-shadow: 0 0 0 6px rgba(255,111,97,.2); animation: em-pulse 1.8s ease-in-out infinite; }
+.sc .em-track li.warn i { background: var(--y); color: #1b1227; }
+.sc .em-track b { font-size: 13.5px; }
+.sc .em-track span { font-size: 12px; color: var(--i2); line-height: 1.3; }
+.sc .em-wait-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 10px; }
+.sc .em-wait-grid a { display: grid; gap: 4px; padding: 14px 16px; border-radius: 16px; border: 1px solid var(--b); background: var(--s); color: var(--i); text-decoration: none; }
+.sc .em-wait-grid a b { color: var(--p); }
+.sc .em-wait-grid a span { font-size: 14px; color: var(--i2); }
+@keyframes em-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+@keyframes em-pulse { 50% { box-shadow: 0 0 0 10px rgba(255,111,97,.08); } }
+@media (prefers-reduced-motion: reduce) { .sc .em-card, .sc .em-pre, .sc .em-track li.on i { animation: none; } .sc .em-bar i { transition: none; } }
+@media (prefers-color-scheme: dark) { .sc .em-dots li.on, .sc .em-track li.done i { color: #1b1227; } }
