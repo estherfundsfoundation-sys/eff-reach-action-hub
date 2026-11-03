@@ -1,0 +1,41 @@
+/* Your College's Resources (/my-college), inside .sc (scholarships.css). */
+.cr .cr-h1 { font-size:clamp(34px,7vw,72px); }
+.cr-back { position:relative; display:inline-block; margin-bottom:10px; font-weight:700; text-decoration:none; }
+.cr-search { margin-top:4px; }
+.cr-hits { list-style:none; margin:0 0 30px; padding:0; display:grid; gap:8px; }
+.cr-hit { display:grid; gap:2px; padding:14px 16px; border-radius:18px; background:var(--s); border:1px solid var(--b); text-decoration:none; color:var(--i) !important; }
+.cr-hit:hover { border-color:var(--pv); }
+.cr-hit b { font:800 18px/1.25 var(--rx-head); color:var(--p); }
+.cr-hit span { font-size:14px; color:var(--i2); }
+.cr-hit em { font-style:normal; font-size:13px; font-weight:800; color:var(--g); }
+.cr-note { color:var(--i2); font-size:15px; line-height:1.5; }
+.cr-err { color:#b3261e; font-weight:700; }
+.cr-warn { position:relative; margin-top:12px !important; padding:10px 14px; border-radius:14px; background:var(--pl); color:var(--i) !important; font-size:16px !important; }
+.cr-honest { margin:30px 0 50px; padding:22px; border-radius:24px; background:var(--pl); }
+.cr-honest h2, .cr-group h2 { margin:0 0 10px; font:900 clamp(24px,4vw,34px)/1.05 var(--rx-head); color:var(--p); letter-spacing:-.02em; }
+.cr-honest p { margin:0 0 10px; line-height:1.55; }
+.cr-count b { font-size:22px; color:var(--p); }
+.cr-start { display:grid; grid-template-columns:repeat(auto-fill,minmax(min(100%,260px),1fr)); gap:10px; margin:6px 0 30px; }
+.cr-group { margin:0 0 34px; }
+.cr-item { padding:18px; border-radius:22px; background:var(--s); border:1px solid var(--b); margin-bottom:12px; }
+.cr-item h3 { margin:0 0 6px; font:800 21px/1.2 var(--rx-head); color:var(--i); }
+.cr-item p { margin:0 0 8px; line-height:1.5; }
+.cr-amt { font-weight:800; color:var(--g); }
+.cr-next { padding:10px 12px; border-radius:14px; background:var(--pl); }
+.cr-quote { margin:0 0 10px; padding:10px 14px; border-left:4px solid var(--pv); color:var(--i); font-style:italic; }
+.cr-quote span { display:block; font-style:normal; font-size:12px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:var(--i2); margin-bottom:4px; }
+.cr-contact { list-style:none; margin:0 0 10px; padding:0; display:flex; flex-wrap:wrap; gap:6px 16px; font-size:15px; color:var(--i2); }
+.cr-src { margin:10px 0 0 !important; font-size:13px; color:var(--i2); }
+.cr-pages { list-style:none; margin:0; padding:0; display:grid; gap:8px; }
+.cr-pages a { display:grid; gap:2px; padding:12px 14px; border-radius:16px; border:1px dashed var(--b); text-decoration:none; color:var(--i) !important; overflow-wrap:anywhere; }
+.cr-pages b { color:var(--p); }
+.cr-pages span { font-size:13px; color:var(--i2); }
+.cr-tell { display:flex; flex-wrap:wrap; gap:14px; align-items:center; justify-content:space-between; padding:18px 20px; border-radius:22px; border:2px solid var(--c); margin-bottom:16px; }
+.cr-tell p { margin:0; flex:1 1 280px; line-height:1.5; }
+.cr-foot { margin:0 0 50px; font-size:13px; }
+.cr-sheet { position:fixed; inset:0; z-index:60; display:grid; place-items:center; padding:16px; background:rgba(20,7,32,.55); }
+.cr-sheet-in { position:relative; width:min(560px,100%); max-height:calc(100vh - 32px); overflow:auto; display:grid; gap:12px; padding:24px 20px; border-radius:24px; background:var(--s); color:var(--i); }
+.cr-sheet-in h2 { margin:0 30px 0 0; font:900 26px/1.1 var(--rx-head); color:var(--p); }
+.cr-sheet-in p { margin:0; line-height:1.5; }
+.cr-x { position:absolute; top:10px; right:12px; width:40px; height:40px; border:0; border-radius:50%; background:var(--pl); color:var(--p); font-size:24px; cursor:pointer; }
+.cr-trap { position:absolute; left:-9999px; width:1px; height:1px; opacity:0; }
