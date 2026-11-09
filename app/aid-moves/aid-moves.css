@@ -19,3 +19,20 @@
 .am-college { margin:26px 0 16px; padding:22px 20px; border-radius:24px; border:2px solid var(--c); }
 .am-college p { margin:0 0 12px; line-height:1.5; }
 .am-foot { margin:0 0 50px; font-size:13px; }
+
+.am-intro { position:relative; margin:0 0 14px; font-size:18px; line-height:1.5; font-weight:600; color:var(--i); max-width:62ch; }
+.am-amts { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:10px; margin:0 0 14px; }
+.am-amt { padding:14px 16px; border-radius:18px; background:var(--p); color:#fff; display:grid; gap:4px; }
+.am-amt b { font:900 22px/1.1 var(--rx-head); }
+.am-amt span { font-size:14px; opacity:.9; }
+.am-steps { margin:0; padding-left:22px; display:grid; gap:8px; line-height:1.5; }
+.am-paths { margin:16px 0 4px; padding:16px; border-radius:18px; border:2px dashed var(--b); }
+.am-paths h3 { margin-top:0; }
+.am-pp { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:10px; }
+.am-pp > div { padding:12px 14px; border-radius:14px; background:var(--pl); }
+.am-pp p { margin:6px 0 0; line-height:1.45; }
+.am-pnote { margin:10px 0 0; font-size:14px; color:var(--i2); }
+.am-honest { margin:14px 0 4px; padding:14px 16px; border-radius:16px; border-left:4px solid var(--c); background:var(--s); }
+.am-honest h3 { margin-top:0; }
+.am-honest ul { margin:0; padding-left:20px; display:grid; gap:6px; line-height:1.5; }
+.am-checked { margin:12px 0 0; font-size:13px; font-weight:700; color:var(--p); }

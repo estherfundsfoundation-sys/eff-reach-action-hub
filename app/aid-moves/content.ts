@@ -6,6 +6,11 @@
 export type Move = {
   key: string; title: string; hook: string; truth: string[]; script: string; bring?: string[];
   when: string[]; sources: Array<[string, string]>;
+  /* Optional pieces for the longer guides: an opening line, who and how much, ordered steps, a both-paths box
+     (show both, push neither), honesty lines, and the date the rule was last checked. */
+  intro?: string; amounts?: Array<[string, string]>; steps?: string[];
+  paths?: { title: string; a: [string, string]; b: [string, string]; note?: string };
+  honest?: string[]; checked?: string;
 };
 
 export const MOVES: Move[] = [
@@ -22,6 +27,50 @@ export const MOVES: Move[] = [
     bring: ["A layoff letter or unemployment statements", "A death certificate", "Medical bills", "A divorce or separation document", "Recent pay stubs showing the lower income", "A short letter in your own words"],
     when: ["Ask as soon as the change happens. Don't wait for your award letter."],
     sources: [["FSA Handbook, Special Cases (2026–27)", "https://fsapartners.ed.gov/knowledge-center/fsa-handbook/2026-2027/application-and-verification-guide/ch5-special-cases"]],
+  },
+  {
+    key: "plus-denied", title: "Parent PLUS Denied? The Student Can Unlock $4,000–$5,000 More",
+    hook: "Additional unsubsidized loan after a Parent PLUS denial",
+    intro: "A Parent PLUS denial feels like a dead end. It's a door. If your parent is turned down for adverse credit, you can borrow more in your own name, enough to cover a balance of up to $4,000 to $5,000 and stay enrolled.",
+    amounts: [
+      ["Up to $4,000 more a year", "Freshmen and sophomores (under 60 credit hours)"],
+      ["Up to $5,000 more a year", "Juniors and seniors (60 credit hours or more)"],
+    ],
+    truth: [
+      "This is for dependent undergraduates. When a parent is denied a Direct Parent PLUS Loan because of adverse credit history, the student becomes eligible for extra Direct Unsubsidized Loan money at the independent-student level.",
+      "The denial has to be for credit. A parent who simply doesn't want to borrow does not open this door.",
+      "If two parents apply and one is approved, the extra amount isn't available.",
+      "Parent PLUS limits changed on July 1, 2026: a parent can now borrow up to $20,000 a year and $65,000 in total for each student. The extra unsubsidized amount after a denial still exists after July 1, 2026.",
+    ],
+    steps: [
+      "Your parent applies for a Parent PLUS Loan at studentaid.gov.",
+      "If it's denied, your parent picks the option for you to receive the additional unsubsidized loan during that same process. Or you take the denial to your financial aid office and ask them to adjust your award.",
+      "Your school raises your unsubsidized loan eligibility, and you accept it like any other Direct Loan.",
+    ],
+    paths: {
+      title: "The honest tradeoff: two paths, both real",
+      a: ["Your parent appeals or gets an endorser", "If PLUS is then approved, the loan is in your parent's name, and your extra eligibility goes away."],
+      b: ["Your parent doesn't appeal", "The extra $4,000 or $5,000 is a loan in your name."],
+      note: "Neither is the \"right\" one. Talk it through as a family before you choose.",
+    },
+    honest: [
+      "This is a loan, not a grant. You pay it back.",
+      "It's unsubsidized: interest starts adding up while you're still in school.",
+      "It is not automatic. You or your parent has to trigger it. Nobody will do it for you.",
+      "Borrow only what you need to stay enrolled.",
+    ],
+    script: "Hi, my name is ___, student ID ___. My parent applied for a Parent PLUS Loan and was denied for adverse credit. I'd like my award adjusted to add the additional Direct Unsubsidized Loan I'm now eligible for. Do you need a copy of the denial, and when will it show on my award?",
+    bring: ["The PLUS denial notice from studentaid.gov (a screenshot or the email)", "Your student ID", "Your bill or balance, so they can see what you need"],
+    when: ["As soon as the denial comes, and before your payment or purge deadline.", "Every year the parent is denied again: the extra amount is year by year."],
+    checked: "Source: Federal Student Aid (studentaid.gov), last checked 2026-11-09",
+    sources: [
+      ["StudentAid.gov: PLUS loan denied for adverse credit", "https://studentaid.gov/articles/plus-loans-denied-adverse-credit/"],
+      ["FSA Handbook Vol. 8, Ch. 4: annual and aggregate loan limits", "https://fsapartners.ed.gov/sites/default/files/2025-2026/2025-2026_Federal_Student_Aid_Handbook/_knowledge-center_fsa-handbook_2025-2026_vol8_ch4-annual-and-aggregate-loan-limits.pdf"],
+      ["FSA Handbook 2026–27, Vol. 3, Ch. 3: packaging aid", "https://fsapartners.ed.gov/knowledge-center/fsa-handbook/2026-2027/vol3/ch3-packaging-aid"],
+      ["34 CFR 685.203", "https://www.ecfr.gov/current/title-34/subtitle-B/chapter-VI/part-685/subpart-B/section-685.203"],
+      ["FSA: OBBBA NSLDS eligibility updates (Apr 24, 2026, updated May 7, 2026)", "https://fsapartners.ed.gov/knowledge-center/library/electronic-announcements/2026-04-24/one-big-beautiful-bill-act-nslds-eligibility-processing-updates"],
+      ["FSA: loan limits FAQ (July 2026)", "https://fsapartners.ed.gov/sites/default/files/2026-05/FrequentlyAskedQuestionsLoanLimits.pdf"],
+    ],
   },
   {
     key: "independent", title: "Can't get your parents' information? You may not need it.",

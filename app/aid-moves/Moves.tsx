@@ -4,6 +4,8 @@ import { useState } from "react";
 import { SiteFoot, SiteTop } from "../myreach/ui";
 import { MOVES, STATES, type Move } from "./content";
 
+const WORDS: Record<number, string> = { 14: "fourteen", 15: "fifteen", 16: "sixteen", 17: "seventeen", 18: "eighteen" };
+
 function Card({ m, i }: { m: Move; i: number }) {
   const [copied, setCopied] = useState(false);
   const copy = async () => {
@@ -14,12 +16,20 @@ function Card({ m, i }: { m: Move; i: number }) {
       <span className="am-n">{String(i + 1).padStart(2, "0")}</span>
       <p className="am-hook">{m.hook}</p>
       <h2>{m.title}</h2>
+      {m.intro ? <p className="am-intro">{m.intro}</p> : null}
+      {m.amounts ? <div className="am-amts">{m.amounts.map(([a, w]) => <div key={a} className="am-amt"><b>{a}</b><span>{w}</span></div>)}</div> : null}
       <ul className="am-truth">{m.truth.map((t, k) => <li key={k}>{t}</li>)}</ul>
+      {m.steps ? <><h3>The steps, in order</h3><ol className="am-steps">{m.steps.map((t) => <li key={t}>{t}</li>)}</ol></> : null}
+      {m.paths ? <div className="am-paths"><h3>{m.paths.title}</h3><div className="am-pp">
+        {[m.paths.a, m.paths.b].map(([h, t]) => <div key={h}><b>{h}</b><p>{t}</p></div>)}
+      </div>{m.paths.note ? <p className="am-pnote">{m.paths.note}</p> : null}</div> : null}
+      {m.honest ? <div className="am-honest"><h3>Be honest with yourself</h3><ul>{m.honest.map((t) => <li key={t}>{t}</li>)}</ul></div> : null}
       {m.bring ? <><h3>What to bring</h3><ul className="am-bring">{m.bring.map((b) => <li key={b}>{b}</li>)}</ul></> : null}
       <h3>What to say</h3>
       <blockquote className="am-script">{m.script}</blockquote>
       <button type="button" className="sc-btn sm" onClick={copy}>{copied ? "Copied" : "Copy the words"}</button>
       <div className="am-when">{m.when.map((w) => <p key={w}><b>When:</b> {w}</p>)}</div>
+      {m.checked ? <p className="am-checked">{m.checked}</p> : null}
       <p className="am-src">Source: {m.sources.map(([l, u], k) => <span key={u}>{k ? " · " : ""}<a href={u} target="_blank" rel="noopener noreferrer">{l}</a></span>)}</p>
     </article>
   );
@@ -35,7 +45,7 @@ export default function Moves() {
         <section className="sc-hero"><div className="sc-wrap">
           <span className="sc-kick"><span className="dot" />Financial aid, the deep layer</span>
           <h1 className="cr-h1">The aid moves nobody tells you.</h1>
-          <p>Financial aid has more doors than the FAFSA. These are fourteen of them, from the official rules, in plain words, with what to say. You don&rsquo;t need permission to ask.</p>
+          <p>Financial aid has more doors than the FAFSA. These are {WORDS[MOVES.length] || MOVES.length} of them, from the official rules, in plain words, with what to say. You don&rsquo;t need permission to ask.</p>
         </div></section>
         <section className="sc-wrap">
           <div className="am-state">

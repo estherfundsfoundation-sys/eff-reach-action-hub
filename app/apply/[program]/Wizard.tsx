@@ -16,7 +16,8 @@ const GROUPS: Array<{ key: string; title: string; line: string; keys: string[] }
   { key: "what", title: "What happened", line: "In your own words. A few sentences is enough.", keys: ["category", "what_happened", "school_impact"] },
   { key: "bill", title: "The bill", line: "EFF pays the bill itself, never cash to you, so you don't have to front it.", keys: ["amount", "due_date", "pay_to", "vendor_name", "vendor_contact", "account_ref"] },
   { key: "proof", title: "Proof", line: "A phone photo or a screenshot is fine.", keys: [] },
-  { key: "more", title: "Anything else", line: "Optional, but it helps us help you.", keys: ["tried", "anything_else"] },
+  { key: "aid", title: "Money you've already tried", line: "So we know what's left. A parent's PLUS denial can open more federal loan money in your name: reach.estherfundsfoundation.org/aid-moves#plus-denied", keys: ["parent_plus", "plus_unsub", "tried"] },
+  { key: "more", title: "Anything else", line: "Optional, but it helps us help you.", keys: ["anything_else"] },
   { key: "send", title: "Check it and send", line: "Read it over once. Then it's on its way to a real person at EFF.", keys: ["truth"] },
 ];
 
