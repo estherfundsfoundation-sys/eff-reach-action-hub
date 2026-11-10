@@ -7,7 +7,7 @@ const NEEDS = [
   { href: "/emergency", glyph: "🚨", t: "I have an emergency", s: "Rent, a bill, a hold, a car. Get a step-by-step plan in 2 minutes." },
   { href: "/holdup", glyph: "🔓", t: "A hold is blocking my classes", s: "Find what you really owe and how to get it lifted." },
   { href: "/get-help", glyph: "🍎", t: "I need food or a place to stay", s: "Help near your campus and near you." },
-  { href: "/my-college", glyph: "🏫", t: "What does my college offer?", s: "Emergency funds, pantries and help at your school." },
+  { href: "/emergency-aid", glyph: "🏫", t: "Does my college have emergency money?", s: "Find your college's emergency fund and the words to ask." },
   { href: "/scholarships", glyph: "🎓", t: "I need money for school", s: "Scholarships EFF checked. Match me in a minute." },
   { href: "https://my.estherfundsfoundation.org/lighthouse", glyph: "💬", t: "I need someone to talk to", s: "Ask EFF privately. A real person answers." },
 ];
