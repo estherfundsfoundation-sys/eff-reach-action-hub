@@ -15,7 +15,7 @@ export type DossierData = { researched_at: string | null; sections: DSection[] }
 
 const NUM = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII"];
 
-function Path({ it, n }: { it: DItem; n?: number }) {
+export function Path({ it, n }: { it: DItem; n?: number }) {
   const c = it.contact || {};
   const steps = Array.isArray(it.steps) ? it.steps.filter(Boolean) : [];
   return (

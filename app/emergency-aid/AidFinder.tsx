@@ -9,6 +9,7 @@ import Link from "next/link";
 import { SiteFoot, SiteTop } from "../myreach/ui";
 import { rpc } from "../scholarships/lib";
 import { fmtDate, host, type College, type Hit, type Item } from "../my-college/data";
+import { Path, type DItem, type DossierData } from "../my-college/[unitid]/Dossier";
 import type { AidStats } from "./page";
 
 type Need = { key: string; label: string; glyph: string; types: string[]; ask: string };
@@ -44,6 +45,7 @@ export default function AidFinder({ stats }: { stats: AidStats | null }) {
   const [q, setQ] = useState("");
   const [hits, setHits] = useState<Hit[] | null>(null);
   const [c, setC] = useState<College | null>(null);
+  const [deep, setDeep] = useState<DossierData | null>(null);
   const [busy, setBusy] = useState(false);
   const [name, setName] = useState("");
   const [copied, setCopied] = useState("");
@@ -61,7 +63,14 @@ export default function AidFinder({ stats }: { stats: AidStats | null }) {
 
   async function pick(h: Hit) {
     setBusy(true); setHits(null); setQ(h.name);
-    try { setC(await rpc<College | null>("eff_campus_public", { p_unitid: h.unitid })); } catch { setC(null); }
+    setDeep(null);
+    try {
+      const [col, dos] = await Promise.all([
+        rpc<College | null>("eff_campus_public", { p_unitid: h.unitid }),
+        rpc<DossierData | null>("eff_campus_dossier_public", { p_unitid: h.unitid }).catch(() => null),
+      ]);
+      setC(col); setDeep(dos);
+    } catch { setC(null); }
     setBusy(false);
     setTimeout(() => out.current?.scrollIntoView({ behavior: "smooth", block: "start" }), 50);
   }
@@ -74,6 +83,16 @@ export default function AidFinder({ stats }: { stats: AidStats | null }) {
       .flatMap((g) => g.items.map((it) => ({ type: g.type, label: g.label, it })));
   }, [c, need]);
   const fund = items.find((x) => x.type === "emergency_grant") || null;
+  /* EFF's own full guide (the dossier), where one exists: its emergency-money paths come first, with real steps. */
+  const SEC: Record<string, string> = { hold: "holds_balances", food: "food", housing: "housing_emergencies" };
+  const paths: DItem[] = useMemo(() => {
+    if (!deep) return [];
+    const get = (k: string) => deep.sections.find((x) => x.key === k)?.items || [];
+    const extra = need && SEC[need.key] ? get(SEC[need.key]) : [];
+    const seen = new Set<string>();
+    return [...get("emergency_money"), ...extra].filter((x) => (seen.has(x.id) ? false : (seen.add(x.id), true)));
+  }, [deep, need]);
+  const found = Boolean(fund) || paths.length > 0;
   const site = c?.website_url ? host(c.website_url) : null;
 
   async function copy(text: string, key: string) {
@@ -119,11 +138,17 @@ export default function AidFinder({ stats }: { stats: AidStats | null }) {
           {c ? (
             <div ref={out} className="ea-out">
               <h2 className="ea-h2"><span>3</span> What {c.name} has for you</h2>
-              {fund ? (
-                <p className="ea-yes">✅ EFF found an emergency fund at {c.name}. Start there.</p>
+              {found ? (
+                <p className="ea-yes">✅ EFF found emergency help at {c.name}. Start there.</p>
               ) : (
                 <p className="ea-no">EFF hasn&rsquo;t confirmed an emergency fund at {c.name} yet. That doesn&rsquo;t mean there isn&rsquo;t one: most colleges have something. Ask financial aid with the words below.</p>
               )}
+
+              {paths.length ? (
+                <div className="dz ea-paths">
+                  {paths.map((it, i) => <Path key={it.id} it={it} n={i + 1} />)}
+                </div>
+              ) : null}
 
               {items.map(({ type, label, it }) => (
                 <article key={it.id} className={`cr-item ea-item ${type === "emergency_grant" ? "fund" : ""}`}>
@@ -156,7 +181,7 @@ export default function AidFinder({ stats }: { stats: AidStats | null }) {
                 <button type="button" className="sc-btn" onClick={() => copy(email(c, fund?.it ?? null, need, name), "main")}>{copied === "main" ? "Copied ✓" : "Copy it"}</button>
               </section>
 
-              {!fund && site ? (
+              {!found && site ? (
                 <p className="cr-note">Search the college&rsquo;s own site: <a href={`https://www.google.com/search?q=${encodeURIComponent(`site:${site} emergency fund OR emergency grant students`)}`} target="_blank" rel="noopener noreferrer">emergency fund at {site} ↗</a></p>
               ) : null}
 
