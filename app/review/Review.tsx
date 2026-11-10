@@ -186,7 +186,7 @@ function BoardView({ board, pick, back }: { board: Board; pick: (a: App) => void
   const [sort, setSort] = useState("auto");
   const words = q.trim().toLowerCase().split(/\s+/).filter(Boolean);
   const hay = (a: App) => [fullName(a), a.number, a.school, a.state, ...Object.values(a.answers || {}).map((v) => (Array.isArray(v) ? v.join(" ") : String(v ?? "")))].join(" ").toLowerCase();
-  const key = (a: App) => sort === "flags" ? (a.auto_flags?.length ? 0 : 1) * 1000 - (a.auto_score ?? 0) : sort === "oldest" ? Date.parse(a.submitted_at || "2999") : -(a.auto_score ?? -1);
+  const key = (a: App) => sort === "unscored" ? (a.score_count ? 1 : 0) * 1000 - (a.auto_score ?? 0) : sort === "flags" ? (a.auto_flags?.length ? 0 : 1) * 1000 - (a.auto_score ?? 0) : sort === "oldest" ? Date.parse(a.submitted_at || "2999") : -(a.auto_score ?? -1);
   const list = board.applications.filter((a) => words.every((w) => hay(a).includes(w))).sort((x, y) => key(x) - key(y));
   const waiting = list.filter((a) => ["submitted", "reviewing"].includes(a.status));
   const rest = list.filter((a) => !["submitted", "reviewing"].includes(a.status));
@@ -202,7 +202,7 @@ function BoardView({ board, pick, back }: { board: Board; pick: (a: App) => void
           {a.auto_score != null ? <span className="rv-pill ok">score {a.auto_score}</span> : null}
           {a.auto_flags?.length ? <span className="rv-pill late">⚑ {a.auto_flags.length}</span> : null}
           {a.requested_cents ? <span className="rv-pill">asks {money(a.requested_cents)}</span> : null}
-          {a.mine ? <span className="rv-pill ok">you: {a.mine.total}</span> : null}
+          {a.mine ? <span className="rv-pill ok">you scored {a.mine.total}</span> : a.score_count ? <span className="rv-pill ok">scored{a.others?.[0]?.name ? ` by ${a.others[0].name.split(" ")[0]}` : ""}</span> : p.rubric.length ? <span className="rv-pill soon">needs a score</span> : null}
           {ck ? <span className={`rv-pill ${ck.cls}`}>{ck.text}</span> : <span className="rv-pill">{STATUS[a.status] || a.status}</span>}
         </span>
       </button>
@@ -217,7 +217,7 @@ function BoardView({ board, pick, back }: { board: Board; pick: (a: App) => void
       <div style={{ display: "flex", gap: 8, flexWrap: "wrap", margin: "10px 0" }}>
         <input className="ffield" style={{ flex: 3, minWidth: 220 }} type="search" placeholder="Search name, school, or anything they wrote" value={q} onChange={(e) => setQ(e.target.value)} />
         <select className="ffield" style={{ flex: 1, minWidth: 160 }} value={sort} onChange={(e) => setSort(e.target.value)} aria-label="Sort">
-          <option value="auto">Highest score first</option><option value="flags">Flagged first</option><option value="oldest">First sent first</option>
+          <option value="auto">Highest score first</option><option value="unscored">Needs a score first</option><option value="flags">Flagged first</option><option value="oldest">First sent first</option>
         </select>
       </div>
       <h2>Waiting ({waiting.length})</h2>
@@ -306,7 +306,8 @@ function AppView({ pass, board, a, say, busy, setBusy, back, reload }: { pass: s
               <p>Committee average: <b>{a.score_avg ?? "–"}</b> / {max} from {a.score_count} reviewer{a.score_count === 1 ? "" : "s"}.</p>
               {a.others.map((o, i) => <p key={i}>{o.name}: {o.total}{o.note ? ` · ${o.note}` : ""}</p>)}
             </div>
-          ) : <p className="tiny">You&rsquo;ll see the other reviewers&rsquo; scores after you save yours.</p>}
+          ) : null}
+          {a.score_count > 0 && !a.mine ? <p className="tiny">Already scored by the committee. You don&rsquo;t have to score it too; add yours only if you want to.</p> : null}
         </section>
       ) : null}
       {board.role === "decider" && open ? (
