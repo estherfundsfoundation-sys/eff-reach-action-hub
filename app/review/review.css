@@ -1,0 +1,55 @@
+/* reach.estherfundsfoundation.org/review: the EFF review committee on REACH. Everything scoped to .rvp. */
+.rvp { min-height: 100vh; background: #F6F2FB; color: #1A1226; font-family: var(--rx-body, "Plus Jakarta Sans", system-ui, sans-serif); }
+.rvp .top { background: linear-gradient(135deg, #5A16A8, #2A0650); color: #fff; padding: 14px 20px; }
+.rvp .logo { font-weight: 800; font-size: 22px; letter-spacing: .01em; }
+.rvp .logo small { font-weight: 600; font-size: 13px; opacity: .85; margin-left: 6px; text-transform: uppercase; letter-spacing: .08em; }
+.rvp .card { background: #fff; border: 1px solid #E6DDF3; border-radius: 16px; padding: 16px 18px; }
+.rvp .tiny { font-size: 13px; }
+.rvp .btn { font: inherit; font-weight: 700; border-radius: 999px; padding: 10px 18px; cursor: pointer; border: 2px solid #5B1FB0; }
+.rvp .btn.sm { padding: 6px 14px; font-size: 14px; }
+.rvp .btn.p { background: #5B1FB0; color: #fff; }
+.rvp .btn.o { background: #fff; color: #42127F; }
+.rvp .top .btn.o { background: transparent; color: #fff; border-color: rgba(255,255,255,.7); }
+.rvp .btn:disabled { opacity: .5; cursor: default; }
+.rvp .toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%); background: #2A0650; color: #fff; padding: 12px 18px; border-radius: 12px; z-index: 50; max-width: calc(100% - 32px); }
+.rvp .toast.bad { background: #A1122F; }
+/* /review: the review committee. Scoped to .rvp (with eff-console for buttons and fields). */
+.rvp { background: #F6F2FB; }
+.rvp .rv-top { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
+.rvp .rv-who { font-size: 14px; display: inline-flex; align-items: center; gap: 8px; }
+.rvp .rvw { max-width: 860px; margin: 0 auto; padding: 20px 16px 80px; display: grid; gap: 14px; }
+.rvp .rvw h1 { margin: 6px 0 0; color: #2A0A55; }
+.rvp .rvw h2 { margin: 6px 0 8px; color: #42127F; font-size: 19px; }
+.rvp .rvw .sub { margin: 0; color: #4B4458; }
+.rvp .rv-sign { display: grid; gap: 12px; max-width: 520px; }
+.rvp .rv-sign form { display: grid; gap: 10px; }
+.rvp .rv-pledge { margin: 0; padding-left: 20px; display: grid; gap: 8px; line-height: 1.5; }
+.rvp .rv-check { display: flex; gap: 8px; align-items: center; font-weight: 600; }
+.rvp .rv-progs { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 10px; }
+.rvp .rv-prog { text-align: left; display: grid; gap: 4px; cursor: pointer; border: 1px solid #E6DDF3; font: inherit; }
+.rvp .rv-prog:hover { border-color: #5B1FB0; }
+.rvp .rv-prog b { font-size: 18px; color: #2A0A55; }
+.rvp .rv-list { display: grid; gap: 6px; }
+.rvp .rv-row { display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; align-items: center; text-align: left; background: #fff; border: 1px solid #E6DDF3; border-radius: 12px; padding: 12px 14px; font: inherit; cursor: pointer; }
+.rvp .rv-row:hover { border-color: #5B1FB0; }
+.rvp .rv-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+.rvp .rv-pill { display: inline-block; padding: 3px 10px; border-radius: 999px; background: #EFE7FA; color: #42127F; font-size: 12.5px; font-weight: 700; white-space: nowrap; }
+.rvp .rv-pill.ok { background: #E3F4EA; color: #1C6B3F; }
+.rvp .rv-pill.soon { background: #FBF1DC; color: #8A5A00; }
+.rvp .rv-pill.late { background: #FBE3E6; color: #A1122F; }
+.rvp .rv-banner { border-radius: 14px; padding: 12px 16px; background: #42127F; color: #fff; display: flex; gap: 6px 16px; flex-wrap: wrap; align-items: baseline; }
+.rvp .rv-banner.soon { background: #8A5A00; }
+.rvp .rv-banner.late { background: #A1122F; }
+.rvp .rv-ans { margin-bottom: 12px; }
+.rvp .rv-ans > div:last-child { white-space: pre-wrap; overflow-wrap: anywhere; }
+.rvp .rv-score, .rvp .rv-dec { display: grid; gap: 10px; }
+.rvp .rv-total { font-size: 28px; font-weight: 800; color: #42127F; margin-left: 8px; }
+.rvp .rv-srow { display: grid; grid-template-columns: minmax(0, 1fr) 100px; gap: 10px; align-items: center; }
+.rvp .rv-srow input[type=range] { width: 100%; }
+.rvp .rv-btns { display: flex; gap: 8px; flex-wrap: wrap; }
+@media (max-width: 560px) { .rvp .rv-srow { grid-template-columns: minmax(0, 1fr); } }
+.rvp .rvw > .btn { justify-self: start; }
+.rvp .rvw .ffield { width: 100%; box-sizing: border-box; padding: 10px 12px; border: 1px solid #D9CCEE; border-radius: 10px; font: inherit; font-size: 15px; background: #fff; color: #1A1226; }
+.rvp .rvw textarea.ffield { resize: vertical; }
+.rvp .rvw .ffield:focus { outline: 2px solid #5B1FB0; outline-offset: 1px; }
+.rvp .rv-srow input[type=range] { accent-color: #5B1FB0; }
