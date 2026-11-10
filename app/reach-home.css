@@ -54,3 +54,24 @@
   .rh-door, .rh-lead-art span { animation:none; }
   .rh-door { transform:none; }
 }
+
+/* "What do you need right now?" (NeedNow.tsx): the first screen. A task, not a moment: plain and fast. */
+.rh-need { padding:clamp(28px,6vh,56px) 0 clamp(36px,7vh,64px); background:linear-gradient(180deg,#f3ecff,#faf7ff); }
+@media (prefers-color-scheme: dark) { .rh-need { background:linear-gradient(180deg,#1d0f30,#120a1d); } }
+.rh-need-brand { margin:0 0 18px; font:900 20px/1 var(--rx-head); letter-spacing:.04em; color:var(--p); }
+.rh-need-brand span { font:700 11px/1 var(--rx-body); letter-spacing:.2em; text-transform:uppercase; color:var(--pv); margin-left:8px; }
+.rh-need h1 { margin:0 0 10px; font:900 clamp(34px,7vw,64px)/1 var(--rx-head); letter-spacing:-.035em; color:var(--p); }
+.rh-need-lede { margin:0 0 22px; font-size:18px; line-height:1.5; color:var(--i2); }
+.rh-need-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr)); gap:12px; }
+.rh-need-card { display:grid; grid-template-columns:52px 1fr; grid-template-rows:auto auto; column-gap:14px; row-gap:4px; align-items:center; padding:18px; border-radius:22px;
+  background:var(--s); border:2px solid var(--b); text-decoration:none; color:var(--i) !important; transition:border-color .2s, transform .2s, box-shadow .2s; }
+.rh-need-card:hover, .rh-need-card:focus-visible { border-color:var(--p); transform:translateY(-2px); box-shadow:0 18px 36px -24px rgba(66,18,127,.6); }
+.rh-need-card:focus-visible { outline:3px solid var(--p); outline-offset:2px; }
+.rh-need-card span { grid-row:1 / span 2; width:52px; height:52px; border-radius:16px; display:grid; place-items:center; font-size:26px; background:var(--pl, #ece2ff); }
+.rh-need-card b { font:900 20px/1.15 var(--rx-head); color:var(--p); letter-spacing:-.01em; }
+.rh-need-card small { font-size:15px; line-height:1.4; color:var(--i2); }
+.rh-need-more { margin:20px 0 0; font-size:16px; color:var(--i2); }
+.rh-need-more a, .rh-need-crisis a { font-weight:800; color:var(--p) !important; }
+.rh-need-crisis { margin:10px 0 0; font-size:15px; color:var(--i2); }
+.rh-need-film { display:inline-block; margin-top:18px; font-weight:700; font-size:15px; color:var(--pv) !important; }
+@media (prefers-reduced-motion: reduce) { .rh-need-card { transition:none; } }

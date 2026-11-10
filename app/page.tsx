@@ -6,6 +6,7 @@ import { CATEGORIES } from "./content/resources";
 import { SiteTop, SiteFoot } from "./myreach/ui";
 import Doors from "./Doors";
 import WhoDoors from "./WhoDoors";
+import NeedNow from "./NeedNow";
 import "./start/start.css";
 import "./scholarships/scholarships.css";
 import "./reach-home.css";
@@ -18,6 +19,8 @@ export default function Home() {
   const total = CATEGORIES.reduce((n, c) => n + c.items.length, 0);
   return (
     <main className="sc rh">
+      <NeedNow />
+      <div id="reach-film" />
       <ReachOpening />
       <SiteTop />
       <WhoDoors />
