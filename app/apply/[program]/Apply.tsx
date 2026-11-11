@@ -212,10 +212,15 @@ export default function Apply({ programKey }: { programKey: string }) {
             </section>
           ) : null}
 
+          {!open && app?.status === "draft" && prog.key === "reach-grocery-fund" ? <p className="sc-note">The REACH Grocery Fund reached its limit before this application was sent, so it can&rsquo;t be sent now. <Link href="/notify">Join the waiting list</Link> and we&rsquo;ll email you the day the EFF Emergency Grant opens in January.</p> : null}
           {invite === "ok" && !prog.open && signedIn === false ? <p className="sc-note">EFF opened this application just for you. Sign in (or make your free account) with your email to start. Your answers save as you type.</p> : null}
           {invite === "bad" && !prog.open && !app ? <p className="sc-note" style={{ color: "#b3123a", fontWeight: 600 }}>{inviteErr || "This invitation link has expired or isn't valid. Ask EFF for a new one."}</p> : null}
           {!open && !app && !(invite === "ok" && signedIn === false) ? (
+            prog.key === "reach-grocery-fund" ? (
+              <div className="sc-empty"><p><b>The REACH Grocery Fund has reached its limit for this round,</b> so we aren&rsquo;t taking new applications. Join the waiting list and we&rsquo;ll email you the day the EFF Emergency Grant opens in January.</p><p style={{ display: "flex", gap: 10, flexWrap: "wrap", justifyContent: "center" }}><Link className="sc-btn coral" href="/notify">Join the waiting list</Link><a className="sc-btn ghost" href="https://my.estherfundsfoundation.org/kit/food">Find food help near me</a></p></div>
+            ) : (
             <div className="sc-empty"><p>Applications aren&rsquo;t open right now. {signedIn ? "It will show on My REACH the day it opens." : "Make your free account so you're ready the day it opens."}</p>{!signedIn ? <Link className="sc-btn" href="/account">Make my account</Link> : null}</div>
+            )
           ) : signedIn === false && emergency && !pre ? (
             <PreCheck prog={prog} onPass={(a) => { try { sessionStorage.setItem(PRE, JSON.stringify(a)); } catch { /* blocked */ } setPre(a); }} />
           ) : signedIn === false ? (
