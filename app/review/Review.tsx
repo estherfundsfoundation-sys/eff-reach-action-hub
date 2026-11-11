@@ -95,7 +95,7 @@ export default function Review() {
         {!pass ? <SignIn onPass={(t) => { try { localStorage.setItem(KEY, t); } catch { /* ignore */ } setPass(t); }} say={say} />
           : !me ? <p className="tiny">Loading…</p>
           : !me.pledged ? <Pledge pass={pass} me={me} say={say} done={loadMe} />
-          : open && board ? <AppView pass={pass} board={board} a={open} say={say} busy={busy} setBusy={setBusy} back={() => { setOpen(null); loadBoard(board.program.key); loadMe(); }} reload={(gone) => gone ? (setOpen(null), loadBoard(board.program.key), loadMe()) : loadBoard(board.program.key, open.id)} />
+          : open && board ? <AppView key={open.id} next={(id) => id ? loadBoard(board.program.key, id) : (setOpen(null), loadBoard(board.program.key), loadMe())} pass={pass} board={board} a={open} say={say} busy={busy} setBusy={setBusy} back={() => { setOpen(null); loadBoard(board.program.key); loadMe(); }} reload={(gone) => gone ? (setOpen(null), loadBoard(board.program.key), loadMe()) : loadBoard(board.program.key, open.id)} />
           : board ? <BoardView board={board} pick={setOpen} back={() => { setBoard(null); loadMe(); }} />
           : (
             <>
@@ -227,7 +227,13 @@ function BoardView({ board, pick, back }: { board: Board; pick: (a: App) => void
   );
 }
 
-function AppView({ pass, board, a, say, busy, setBusy, back, reload }: { pass: string; board: Board; a: App; say: (m: string, bad?: boolean) => void; busy: boolean; setBusy: (b: boolean) => void; back: () => void; reload: (gone?: boolean) => void }) {
+/* The saved "not this time" message, kept in this browser per program. Grocery Fund starts with the wording Shayna was shown on 11 Nov 2026. */
+const QUICK_START: Record<string, string> = {
+  "reach-grocery-fund": "Thank you for applying to the REACH Grocery Fund. We received far more requests than we had cards to give, and we weren't able to select your application this time. The EFF Emergency Grant opens in January. Join the waiting list at reach.estherfundsfoundation.org/notify and we'll email you the day it opens. For food help near your campus right now, visit reach.estherfundsfoundation.org.",
+};
+const quickKey = (k: string) => `reach-review-quick:${k}`;
+
+function AppView({ pass, board, a, say, busy, setBusy, back, reload, next }: { next: (id: string | null) => void; pass: string; board: Board; a: App; say: (m: string, bad?: boolean) => void; busy: boolean; setBusy: (b: boolean) => void; back: () => void; reload: (gone?: boolean) => void }) {
   const p = board.program;
   const [sc, setSc] = useState<Record<string, number>>(a.mine?.scores || {});
   const [note, setNote] = useState(a.mine?.note || "");
@@ -236,6 +242,23 @@ function AppView({ pass, board, a, say, busy, setBusy, back, reload }: { pass: s
   const max = p.rubric.reduce((t, r) => t + r.max, 0);
   const ck = ["submitted", "reviewing"].includes(a.status) ? clock(a.due_by) : null;
   const open = !["awarded", "not_selected"].includes(a.status);
+  const [quick, setQuick] = useState(QUICK_START[p.key] || "");
+  const [editQuick, setEditQuick] = useState(false);
+  useEffect(() => { try { const v = localStorage.getItem(quickKey(p.key)); if (v != null) setQuick(v); } catch { /* private window */ } }, [p.key]);
+  const saveQuick = (v: string) => { setQuick(v); try { localStorage.setItem(quickKey(p.key), v); } catch { /* private window */ } };
+  const nextId = board.applications.filter((x) => x.id !== a.id && ["submitted", "reviewing"].includes(x.status)).sort((x, y) => (y.auto_score ?? -1) - (x.auto_score ?? -1))[0]?.id || null;
+  async function quickNo() {
+    if (quick.trim().length < 10) { say("Write your message first (10+ characters).", true); setEditQuick(true); return; }
+    setBusy(true);
+    try {
+      const r = await fetch(`${MYEFF}/api/review`, { method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ pass, action: "decide", id: a.id, status: "not_selected", note: quick.trim(), amount: null }) });
+      const d = await r.json(); if (!r.ok) throw new Error(d.error);
+      say(d.emailed ? `${fullName(a)} was emailed and is off your list.` : "Saved, but the email didn't send. EFF National will follow up.", !d.emailed);
+      next(nextId);
+    } catch (e) { say(e instanceof Error ? e.message : "That didn't save.", true); }
+    setBusy(false);
+  }
 
   async function file(key: string) {
     try {
@@ -308,6 +331,18 @@ function AppView({ pass, board, a, say, busy, setBusy, back, reload }: { pass: s
             </div>
           ) : null}
           {a.score_count > 0 && !a.mine ? <p className="tiny">Already scored by the committee. You don&rsquo;t have to score it too; add yours only if you want to.</p> : null}
+        </section>
+      ) : null}
+      {board.role === "decider" && open ? (
+        <section className="card rv-dec">
+          <h2>Not this time, in one tap</h2>
+          {editQuick ? <textarea className="ffield" rows={5} value={quick} onChange={(e) => saveQuick(e.target.value)} aria-label="Your saved message" />
+            : <p className="tiny" style={{ whiteSpace: "pre-wrap" }}>{quick ? <>&ldquo;{quick}&rdquo;</> : "No saved message yet."}</p>}
+          <div className="rv-btns">
+            <button className="btn p sm" disabled={busy} onClick={quickNo}>Send this &amp; go to the next one →</button>
+            <button className="btn o sm" onClick={() => setEditQuick(!editQuick)}>{editQuick ? "Done" : "Change the message"}</button>
+          </div>
+          <p className="tiny" style={{ opacity: 0.8 }}>The student is emailed this message, and the application leaves your waiting list.{p.key === "reach-grocery-fund" ? " Their answers and files are wiped automatically 3 days later." : ""}</p>
         </section>
       ) : null}
       {board.role === "decider" && open ? (
