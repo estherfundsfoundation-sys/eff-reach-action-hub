@@ -35,6 +35,8 @@ export default function Mass({ pass, board, quickStart, back, say }: { pass: str
   const [moreNote, setMoreNote] = useState("");
   const [run, setRun] = useState<{ done: number; total: number; failed: string[] } | null>(null);
   const [topN, setTopN] = useState("");
+  /* Emergency programs are first complete, first funded (Shayna, 11 Nov 2026), so they open oldest first. */
+  const [sort, setSort] = useState<"high" | "low" | "old">(board.program.kind === "emergency" ? "old" : "high");
   const [paid, setPaid] = useState(0);
 
   useEffect(() => { try { const v = localStorage.getItem(quickKey(p.key)); if (v != null) setNoNote(v); } catch { /* private window */ } }, [p.key]);
@@ -46,7 +48,10 @@ export default function Mass({ pass, board, quickStart, back, say }: { pass: str
   const counts = useMemo(() => ({ all: waiting.length, strong: waiting.filter((a) => kind(a) === "strong").length, check: waiting.filter((a) => kind(a) === "check").length, missing: waiting.filter((a) => kind(a) === "missing").length }), [waiting]);
   const words = q.trim().toLowerCase().split(/\s+/).filter(Boolean);
   const hay = (a: App) => [fullName(a), a.number, a.school, ...Object.values(a.answers || {}).map((v) => (Array.isArray(v) ? v.join(" ") : String(v ?? "")))].join(" ").toLowerCase();
-  const list = waiting.filter((a) => (pile === "all" || (pile === "ticked" ? tick[a.id] : kind(a) === pile)) && words.every((w) => hay(a).includes(w)));
+  const order = (x: App, y: App) => sort === "low" ? (x.auto_score ?? -1) - (y.auto_score ?? -1) : sort === "old" ? (x.submitted_at || "").localeCompare(y.submitted_at || "") : 0;
+  const list = waiting.filter((a) => (pile === "all" || (pile === "ticked" ? tick[a.id] : kind(a) === pile)) && words.every((w) => hay(a).includes(w))).sort(order);
+  /* One press for a whole pile: tick everyone showing and open the decision. Nothing is sent until the confirm in the dock. */
+  const whole = (m: "award" | "no" | "more") => { setTick(Object.fromEntries(list.map((a) => [a.id, true]))); setMode(m); };
   const ticked = waiting.filter((a) => tick[a.id]);
   const cents = Math.round((Number(amount.replace(/[^0-9.]/g, "")) || 0) * 100);
   const fundLeft = p.fund_left_cents != null ? p.fund_left_cents - paid : null;
@@ -58,7 +63,14 @@ export default function Mass({ pass, board, quickStart, back, say }: { pass: str
     if (!n) return;
     setTick(Object.fromEntries(waiting.filter((a) => kind(a) === "strong").slice(0, n).map((a) => [a.id, true])));
     setPile("ticked");
+  }  /* Lowest automatic scores first, flagged ones included: the pile to look at for "not this time". */
+  function pickLow() {
+    const n = Math.max(0, Math.min(200, Number(topN) || 0));
+    if (!n) return;
+    setTick(Object.fromEntries([...waiting].sort((a, b) => (a.auto_score ?? -1) - (b.auto_score ?? -1)).slice(0, n).map((a) => [a.id, true])));
+    setPile("ticked");
   }
+
 
   async function go() {
     const status = mode === "award" ? "awarded" : mode === "no" ? "not_selected" : "more_info";
@@ -95,21 +107,34 @@ export default function Mass({ pass, board, quickStart, back, say }: { pass: str
     <div className="rv-mass">
       <button className="btn o sm" onClick={() => back(changed)}>← {p.name}</button>
       <h1>Review many at once</h1>
-      <p className="sub">{waiting.length} waiting, strongest automatic score first. Tick students, then decide for all of them with one press. Each one still gets their own email.
+      <p className="sub">{waiting.length} waiting, sorted into piles by the automatic check. Decide a whole pile with one press, or tick students yourself. Each one still gets their own email.
         {p.max_award_cents != null ? ` Most per student: ${money(p.max_award_cents)}.` : ""}{fundLeft != null ? ` Left in the fund: ${money(fundLeft)}.` : ""}</p>
       {run ? <div className={`rv-banner ${run.failed.length ? "late" : ""}`}><b>{busy ? `Working: ${run.done} of ${run.total}…` : `Finished ${run.total}.`}</b>{run.failed.length ? <span>{run.failed.join(" · ")}</span> : <span>{busy ? "Keep this page open." : "Everyone was emailed."}</span>}</div> : null}
 
       <div className="rv-mbar">
         {(["all", "strong", "check", "missing"] as Pile[]).map((k) => (
           <button key={k} className={`rv-chip${pile === k ? " on" : ""}`} onClick={() => { setPile(k); setShown(40); }}>
-            {k === "all" ? "Everyone" : k === "strong" ? "No flags" : k === "check" ? "Check first" : "Missing or not eligible"} <b>{counts[k as "all"]}</b>
+            {k === "all" ? "Everyone" : k === "strong" ? "Ready" : k === "check" ? "Needs a person" : "Not eligible or incomplete"} <b>{counts[k as "all"]}</b>
           </button>
         ))}
         <button className={`rv-chip${pile === "ticked" ? " on" : ""}`} onClick={() => setPile("ticked")}>Ticked <b>{ticked.length}</b></button>
       </div>
+      {pile !== "all" && pile !== "ticked" && list.length > 0 && !busy ? (
+        <div className="rv-banner">
+          <b>{pile === "strong" ? `${list.length} ready: nothing missing and no flags.` : pile === "missing" ? `${list.length} not eligible or incomplete.` : `${list.length} need a person to look.`}</b>
+          <span style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+            {pile === "strong" ? <button className="btn p sm" onClick={() => whole("award")}>Approve all {list.length}…</button> : null}
+            {pile === "missing" ? <button className="btn p sm" onClick={() => whole("more")}>Ask all {list.length} for what&rsquo;s missing…</button> : null}
+            <button className="btn o sm" onClick={() => whole("no")}>Not this time for all {list.length}…</button>
+          </span>
+        </div>
+      ) : null}
       <div className="rv-mbar">
         <input className="ffield" style={{ flex: 2, minWidth: 180 }} type="search" placeholder="Search name, school, or anything they wrote" value={q} onChange={(e) => { setQ(e.target.value); setShown(40); }} />
-        <span className="rv-top-n"><input className="ffield" inputMode="numeric" placeholder="7" value={topN} onChange={(e) => setTopN(e.target.value.replace(/\D/g, "").slice(0, 3))} aria-label="How many" /><button className="btn o sm" onClick={pickTop} disabled={!topN}>Tick the strongest</button></span>
+        <span className="rv-top-n"><input className="ffield" inputMode="numeric" placeholder="7" value={topN} onChange={(e) => setTopN(e.target.value.replace(/\D/g, "").slice(0, 3))} aria-label="How many" /><button className="btn o sm" onClick={pickTop} disabled={!topN}>Tick the strongest</button><button className="btn o sm" onClick={pickLow} disabled={!topN}>Tick the lowest</button></span>
+        <select className="ffield" style={{ width: "auto" }} value={sort} onChange={(e) => setSort(e.target.value as "high" | "low" | "old")} aria-label="Order">
+          <option value="high">Highest score first</option><option value="low">Lowest score first</option><option value="old">Applied first</option>
+        </select>
         <button className="btn o sm" onClick={() => setMany(list.map((a) => a.id), true)} disabled={!list.length}>Tick all {list.length} here</button>
         <button className="btn o sm" onClick={() => setTick({})} disabled={!ticked.length}>Clear</button>
       </div>
