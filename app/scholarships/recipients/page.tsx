@@ -47,7 +47,7 @@ export default async function Page() {
             ))}
           </div>
         ) : <div className="sc-empty"><p>The recipient list didn&rsquo;t load. Try again in a minute.</p></div>}
-        <div className="sc-note" style={{ marginTop: 24 }}>Want to be next? <Link href="/scholarships/eff">See EFF&rsquo;s own scholarships</Link> and <Link href="/scholarships/match">get matched to thousands more</Link>.</div>
+        <div className="sc-note" style={{ marginTop: 24 }}>Need help now? <Link href="/apply">See the EFF Emergency Grant</Link> and <Link href="/scholarships/match">get matched to thousands more</Link>.</div>
       </div>
       <Foot />
     </main>

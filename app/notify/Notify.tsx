@@ -21,7 +21,7 @@ export default function Notify() {
   const q = useSearchParams();
   const stop = q.get("stop");
   const [emergency, setEmergency] = useState(true);
-  const [scholarships, setScholarships] = useState(true);
+  const [scholarships, setScholarships] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [hp, setHp] = useState("");
@@ -81,7 +81,6 @@ export default function Notify() {
   }
 
   const signedIn = Boolean(me);
-  const both = emergency && scholarships;
 
   return (
     <div className="sc nt">
@@ -103,13 +102,13 @@ export default function Notify() {
             <>
               <h1 id="nt-title" className="nt-h">You&rsquo;re on <em>the list.</em></h1>
               <p className="nt-sub">
-                We&rsquo;ll email <b>{me?.email || email}</b> the day {both ? "the EFF Emergency Grant opens, and the day each of EFF’s 2027 scholarships opens" : emergency ? "the EFF Emergency Grant opens" : "each of EFF’s 2027 scholarships opens"}. One email, with the link to apply. Nothing else.
+                We&rsquo;ll email <b>{me?.email || email}</b> the day the EFF Emergency Grant opens. One email, with the link to apply. Nothing else.
               </p>
             </>
           ) : (
             <>
               <h1 id="nt-title" className="nt-h">Be first <em>to know.</em></h1>
-              <p className="nt-sub">The <b>EFF Emergency Grant</b> and EFF&rsquo;s <b>2027 scholarships</b> are coming. Make a free REACH account and we&rsquo;ll email you the day they open.</p>
+              <p className="nt-sub">The <b>EFF Emergency Grant</b> is coming. Make a free REACH account and we&rsquo;ll email you the day it opens.</p>
               <a className="sc-btn coral nt-jump" href="#nt-form">Notify me</a>
             </>
           )}
@@ -129,14 +128,6 @@ export default function Notify() {
                 <svg viewBox="0 0 48 48"><path d="M24 41s-15-8.6-15-20a8.5 8.5 0 0 1 15-5.5A8.5 8.5 0 0 1 39 21c0 11.4-15 20-15 20Z" fill="none" stroke="currentColor" strokeWidth="3" strokeLinejoin="round" /><path d="M14 24h6l2.5-5 4 10 2.5-5h5" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" /></svg>
               </span>
               <span><b>The EFF Emergency Grant</b><small>Help when a sudden cost could stop your education.</small></span>
-              <span className="nt-tick" aria-hidden="true" />
-            </label>
-            <label className={`nt-pick${scholarships ? " on" : ""}`}>
-              <input type="checkbox" checked={scholarships} onChange={(e) => setScholarships(e.target.checked)} />
-              <span className="nt-ico" aria-hidden="true">
-                <svg viewBox="0 0 48 48"><path d="M4 18 24 9l20 9-20 9Z" fill="none" stroke="currentColor" strokeWidth="3" strokeLinejoin="round" /><path d="M12 22v9c0 3 5.4 6 12 6s12-3 12-6v-9M44 18v11" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" /></svg>
-              </span>
-              <span><b>EFF&rsquo;s 2027 scholarships</b><small>Every EFF scholarship, the day each one opens.</small></span>
               <span className="nt-tick" aria-hidden="true" />
             </label>
           </div>

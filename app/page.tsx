@@ -49,7 +49,7 @@ export default function Home() {
           <div>
             <p className="rh-kick">My REACH</p>
             <h2>One account. Every application.</h2>
-            <p>Apply for EFF&rsquo;s own scholarships and emergency funding, upload what&rsquo;s asked, and watch your application move, all in one place. No password: just your email and a code.</p>
+            <p>Apply for the EFF Emergency Grant and EFF support, upload what&rsquo;s asked, and watch your application move, all in one place. No password: just your email and a code.</p>
             <div className="sc-acts"><Link className="sc-btn coral" href="/account">Make my free account</Link><Link className="sc-btn ghost" href="/apply">See what&rsquo;s open</Link></div>
           </div>
           <ol className="rh-steps" aria-label="How it works">

@@ -6,11 +6,11 @@ import "./notify.css";
 
 export const metadata: Metadata = {
   title: "Be first to know | REACH by Esther Funds Foundation",
-  description: "Make a free REACH account and get one email the day the EFF Emergency Grant and EFF's 2027 scholarships open.",
+  description: "Make a free REACH account and get one email the day the EFF Emergency Grant opens.",
   alternates: { canonical: "/notify" },
   openGraph: {
     title: "Be first to know.",
-    description: "One email the day the EFF Emergency Grant and EFF's 2027 scholarships open. Free. No password.",
+    description: "One email the day the EFF Emergency Grant opens. Free. No password.",
     url: "https://reach.estherfundsfoundation.org/notify",
     images: ["/og.png"],
   },

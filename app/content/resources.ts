@@ -37,7 +37,7 @@ export const CATEGORIES: Category[] = [
       { title: "Apply With Me", text: "EFF builds your scholarship application with you: your profile and essays once, every answer ready to paste, reminders before each deadline. You make it yours and click submit.", href: "/apply-with-me", tag: "EFF" },
       { title: "Apply With Me · College", text: "For high school students: EFF builds your college applications with you. Activities, personal statement, college list, supplements and emails to your counselor, ready to paste. You click submit.", href: "/apply-with-me/college", tag: "EFF" },
       { title: "Match me in 2 minutes", text: "Answer a few questions and see the open scholarships that fit you, with the reasons why.", href: "/scholarships/match", tag: "Tool" },
-      { title: "Apply to EFF", text: "Esther Funds Foundation's own scholarships and funding, in one account.", href: "/apply", tag: "EFF" },
+      { title: "Apply to EFF", text: "The EFF Emergency Grant and EFF support, in one account.", href: "/apply", tag: "EFF" },
       { title: "The Scholarship Walk", text: "167 hand-picked scholarships in the order they close. Save a list and add deadlines to your calendar.", href: "/scholarshipwalk", tag: "EFF" },
       { title: "FAFSA Decoder", text: "Decode your FAFSA status, SAI, verification request, or changed financial circumstances.", href: "/tools/fafsa", tag: "Tool" },
       { title: "Award Letter & Balance Decoder", text: "Upload an aid letter, add your bill, wages, work hours, savings, and support, then see what is still uncovered.", href: "/tools/award", tag: "Tool" },

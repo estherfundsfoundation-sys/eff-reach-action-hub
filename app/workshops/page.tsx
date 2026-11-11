@@ -24,7 +24,7 @@ const SHELVES = [
     ["Career Launch", "A resume that speaks, STAR interviews, your network, and your pitch."],
   ] },
   { title: "EFF Signature Workshops", line: "Built on EFF's mission, made for chapters to host with their own logo and partners.", items: [
-    ["Everything Within Reach", "EFF's own scholarships and emergency help, thousands more checked every morning, and every EFF tool."],
+    ["Everything Within Reach", "The EFF Emergency Grant, thousands of scholarships checked every morning, and every EFF tool."],
     ["First in the Family", "The rulebook nobody hands first-generation students."],
     ["For Such a Time as This", "Esther's story and our founder's, your why written down, and a plan for the hard days."],
     ["Lead Where You Stand", "Lead yourself, serve the EFF way, lead people, and pitch a project."],

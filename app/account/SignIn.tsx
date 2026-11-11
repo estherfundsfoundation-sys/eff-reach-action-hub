@@ -31,7 +31,7 @@ export function SignIn({ onIn, startCode, title }: { onIn: () => void; startCode
     <section className="sc-hero" style={{ maxWidth: 640 }}>
       <span className="sc-kick"><span className="dot" aria-hidden="true" />My REACH · no password needed</span>
       <h1>{title || <>Your seat is <em>saved.</em></>}</h1>
-      <p>Sign in with your email to apply for EFF scholarships and funding and follow every application. New here? The same two steps make your account.</p>
+      <p>Sign in with your email to apply for the EFF Emergency Grant and EFF support and follow every application. New here? The same two steps make your account.</p>
       {!session ? (
         <form onSubmit={send} className="sc-box" style={{ position: "relative" }}>
           <label className="sc-field"><span>Your email</span><input type="email" autoComplete="email" required value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@school.edu" /></label>
