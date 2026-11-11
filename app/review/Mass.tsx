@@ -35,8 +35,8 @@ export default function Mass({ pass, board, quickStart, back, say }: { pass: str
   const [moreNote, setMoreNote] = useState("");
   const [run, setRun] = useState<{ done: number; total: number; failed: string[] } | null>(null);
   const [topN, setTopN] = useState("");
-  /* Emergency programs are first complete, first funded (Shayna, 11 Nov 2026), so they open oldest first. */
-  const [sort, setSort] = useState<"high" | "low" | "old">(board.program.kind === "emergency" ? "old" : "high");
+  /* Scores decide, for every program (Shayna, 11 Nov 2026: "its not about first complete either we need to go by scores"). */
+  const [sort, setSort] = useState<"high" | "low" | "old">("high");
   const [paid, setPaid] = useState(0);
 
   useEffect(() => { try { const v = localStorage.getItem(quickKey(p.key)); if (v != null) setNoNote(v); } catch { /* private window */ } }, [p.key]);
