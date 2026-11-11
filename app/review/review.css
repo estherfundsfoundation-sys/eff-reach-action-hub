@@ -61,3 +61,28 @@
 .rvp .rv-payhead { display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; align-items: center; }
 .rvp .rv-payform { display: grid; gap: 8px; margin-top: 10px; padding-top: 10px; border-top: 1px solid #EFE7FA; }
 .rvp .rv-link { background: none; border: 0; padding: 0; font: inherit; color: #5B1FB0; text-decoration: underline; cursor: pointer; }
+.rvp .rv-mass { display: grid; gap: 12px; }
+.rvp .rv-mbar { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.rvp .rv-chip { font: inherit; font-size: 14px; font-weight: 600; padding: 6px 12px; border-radius: 999px; border: 1px solid #D9CCEE; background: #fff; color: #42127F; cursor: pointer; }
+.rvp .rv-chip.on { background: #42127F; color: #fff; border-color: #42127F; }
+.rvp .rv-chip b { margin-left: 4px; }
+.rvp .rv-top-n { display: inline-flex; gap: 6px; align-items: center; }
+.rvp .rv-top-n .ffield { width: 64px; }
+.rvp .rv-mrow { display: grid; grid-template-columns: 44px minmax(0, 1fr); background: #fff; border: 1px solid #E6DDF3; border-radius: 12px; }
+.rvp .rv-mrow.on { border-color: #5B1FB0; background: #FAF6FF; box-shadow: inset 4px 0 0 #5B1FB0; }
+.rvp .rv-mtick { display: flex; justify-content: center; padding-top: 14px; cursor: pointer; }
+.rvp .rv-mtick input { width: 22px; height: 22px; accent-color: #5B1FB0; }
+.rvp .rv-mbody { padding: 12px 14px 12px 0; display: grid; gap: 6px; min-width: 0; }
+.rvp .rv-flag { margin: 0; color: #9a3412; }
+.rvp .rv-facts { display: flex; flex-wrap: wrap; gap: 5px; }
+.rvp .rv-facts span { font-size: 12.5px; background: #F3EEFA; border-radius: 8px; padding: 3px 8px; overflow-wrap: anywhere; }
+.rvp .rv-facts i { font-style: normal; color: #6F6885; }
+.rvp .rv-story { margin: 0; font-size: 14.5px; line-height: 1.5; color: #2b2438; overflow-wrap: anywhere; }
+.rvp .rv-story.open { white-space: pre-wrap; }
+.rvp .rv-mbody .rv-link { justify-self: start; font-size: 13px; }
+.rvp .rv-dock { position: sticky; bottom: 0; z-index: 20; margin: 0 -16px -80px; padding: 10px 16px calc(10px + env(safe-area-inset-bottom)); background: #2A0650; color: #fff; box-shadow: 0 -6px 24px rgba(20, 7, 32, .25); }
+.rvp .rv-dock-in { max-width: 860px; margin: 0 auto; display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+.rvp .rv-dock-form { display: grid; gap: 8px; flex: 1 1 320px; }
+.rvp .rv-dock .tiny { margin: 0; color: #E9DDFB; }
+.rvp .rv-dock .btn.o { background: transparent; color: #fff; border-color: rgba(255,255,255,.7); }
+.rvp .rv-dock .btn.p { background: #fff; color: #2A0650; border-color: #fff; }

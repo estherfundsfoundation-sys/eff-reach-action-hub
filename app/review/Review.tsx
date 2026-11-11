@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { rpc } from "../scholarships/lib";
 import Payouts from "./Payouts";
+import Mass from "./Mass";
 import "./review.css";
 
 /* reach.estherfundsfoundation.org/review (Shayna, 10 Nov 2026: "i want reach.estherfundsfoundation.org to have its own sign in to review").
@@ -24,7 +25,7 @@ type Me = { email: string; name: string | null; pledged: boolean; programs: Prog
 type R = { key: string; label: string; max: number; guide?: string };
 type Q = { key: string; label: string; kind: string };
 type Doc = { key: string; label: string };
-type App = {
+export type App = {
   id: string; number: string; status: string; submitted_at: string | null; due_by: string | null; answers: Record<string, unknown>;
   requested_cents: number | null; award_amount: number | null; more_info: string | null; decision_note: string | null; decided_at: string | null;
   documents: { key: string; name: string }[]; name: string | null; school: string | null; level: string | null; state: string | null;
@@ -34,7 +35,7 @@ type App = {
   auto_detail?: { lines?: Array<{ label: string; got: number; max: number }>; student?: { school?: string | null; domain?: string | null; edu?: boolean } } | null;
 };
 const fullName = (a: App) => [a.answers?.first_name, a.answers?.last_name].filter(Boolean).join(" ") || a.name || a.number;
-type Board = { role: "scorer" | "decider"; program: { key: string; name: string; kind: string; rubric: R[]; questions: Q[]; documents: Doc[]; turnaround_hours: number | null; max_award_cents: number | null; fund_left_cents: number | null }; applications: App[] };
+export type Board = { role: "scorer" | "decider"; program: { key: string; name: string; kind: string; rubric: R[]; questions: Q[]; documents: Doc[]; turnaround_hours: number | null; max_award_cents: number | null; fund_left_cents: number | null }; applications: App[] };
 
 const STATUS: Record<string, string> = { submitted: "New", reviewing: "Reviewing", more_info: "Waiting on student", awarded: "Awarded", not_selected: "Not selected" };
 const when = (s: string | null) => (s ? new Date(s).toLocaleString("en-US", { timeZone: "America/New_York", weekday: "short", month: "short", day: "numeric", hour: "numeric", minute: "2-digit" }) : "");
@@ -63,6 +64,7 @@ export default function Review() {
   const [toast, setToast] = useState<{ m: string; bad?: boolean } | null>(null);
   const [busy, setBusy] = useState(false);
   const [pay, setPay] = useState(false);
+  const [mass, setMass] = useState(false);
 
   useEffect(() => {
     try { setPass(localStorage.getItem(KEY) || ""); } catch { /* private window */ }
@@ -98,8 +100,9 @@ export default function Review() {
           : !me ? <p className="tiny">Loading…</p>
           : !me.pledged ? <Pledge pass={pass} me={me} say={say} done={loadMe} />
           : open && board ? <AppView key={open.id} next={(id) => id ? loadBoard(board.program.key, id) : (setOpen(null), loadBoard(board.program.key), loadMe())} pass={pass} board={board} a={open} say={say} busy={busy} setBusy={setBusy} back={() => { setOpen(null); loadBoard(board.program.key); loadMe(); }} reload={(gone) => gone ? (setOpen(null), loadBoard(board.program.key), loadMe()) : loadBoard(board.program.key, open.id)} />
+          : board && mass ? <Mass pass={pass} board={board} quickStart={QUICK_START[board.program.key] || ""} say={say} back={() => { setMass(false); loadBoard(board.program.key); loadMe(); }} />
           : board && pay ? <Payouts pass={pass} program={board.program.key} say={say} back={() => { setPay(false); loadBoard(board.program.key); }} />
-          : board ? <BoardView board={board} pick={setOpen} money={() => setPay(true)} back={() => { setBoard(null); loadMe(); }} />
+          : board ? <BoardView board={board} pick={setOpen} money={() => setPay(true)} many={() => setMass(true)} back={() => { setBoard(null); loadMe(); }} />
           : (
             <>
               <h1>Welcome{me.name ? `, ${me.name.split(" ")[0]}` : ""}.</h1>
@@ -183,7 +186,7 @@ function Pledge({ pass, me, say, done }: { pass: string; me: Me; say: (m: string
   );
 }
 
-function BoardView({ board, pick, back, money: openMoney }: { board: Board; pick: (a: App) => void; back: () => void; money: () => void }) {
+function BoardView({ board, pick, back, money: openMoney, many }: { board: Board; pick: (a: App) => void; back: () => void; money: () => void; many: () => void }) {
   const p = board.program;
   const [q, setQ] = useState("");
   const [sort, setSort] = useState("auto");
@@ -217,7 +220,10 @@ function BoardView({ board, pick, back, money: openMoney }: { board: Board; pick
       <h1>{p.name}</h1>
       <p className="sub">{board.role === "decider" ? "You score and decide." : "You score. A committee member who decides, or EFF National, makes the decision."}
         {p.max_award_cents != null ? ` Most per student: ${money(p.max_award_cents)}.` : ""}{p.fund_left_cents != null ? ` Left in the fund: ${money(p.fund_left_cents)}.` : ""}</p>
-      <p><button className="btn p sm" onClick={openMoney}>Awards &amp; payouts →</button> <span className="tiny">Who we awarded, how much, and what has been paid.</span></p>
+      <div className="rv-btns">
+        {board.role === "decider" ? <button className="btn p" onClick={many}>Review many at once →</button> : null}
+        <button className="btn o" onClick={openMoney}>Awards &amp; payouts →</button>
+      </div>
       <div style={{ display: "flex", gap: 8, flexWrap: "wrap", margin: "10px 0" }}>
         <input className="ffield" style={{ flex: 3, minWidth: 220 }} type="search" placeholder="Search name, school, or anything they wrote" value={q} onChange={(e) => setQ(e.target.value)} />
         <select className="ffield" style={{ flex: 1, minWidth: 160 }} value={sort} onChange={(e) => setSort(e.target.value)} aria-label="Sort">
