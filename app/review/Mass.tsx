@@ -39,7 +39,7 @@ export default function Mass({ pass, board, quickStart, back, say }: { pass: str
   const [run, setRun] = useState<{ done: number; total: number; failed: string[] } | null>(null);
   const [topN, setTopN] = useState("");
   /* Scores decide, for every program (Shayna, 11 Nov 2026: "its not about first complete either we need to go by scores"). */
-  const [sort, setSort] = useState<"high" | "low" | "old">("high");
+  const [sort, setSort] = useState<"high" | "low" | "old" | "cmte">("high");
   const [paid, setPaid] = useState(0);
 
   useEffect(() => { try { const v = localStorage.getItem(quickKey(p.key)); if (v != null) setNoNote(v); } catch { /* private window */ } }, [p.key]);
@@ -51,7 +51,7 @@ export default function Mass({ pass, board, quickStart, back, say }: { pass: str
   const counts = useMemo(() => ({ all: waiting.length, strong: waiting.filter((a) => kind(a) === "strong").length, check: waiting.filter((a) => kind(a) === "check").length, missing: waiting.filter((a) => kind(a) === "missing").length }), [waiting]);
   const words = q.trim().toLowerCase().split(/\s+/).filter(Boolean);
   const hay = (a: App) => [fullName(a), a.number, a.school, ...Object.values(a.answers || {}).map((v) => (Array.isArray(v) ? v.join(" ") : String(v ?? "")))].join(" ").toLowerCase();
-  const order = (x: App, y: App) => sort === "low" ? (x.auto_score ?? -1) - (y.auto_score ?? -1) : sort === "old" ? (x.submitted_at || "").localeCompare(y.submitted_at || "") : 0;
+  const order = (x: App, y: App) => sort === "low" ? (x.auto_score ?? -1) - (y.auto_score ?? -1) : sort === "old" ? (x.submitted_at || "").localeCompare(y.submitted_at || "") : sort === "cmte" ? (y.score_avg ?? -1) - (x.score_avg ?? -1) : 0;
   const list = waiting.filter((a) => (pile === "all" || (pile === "ticked" ? tick[a.id] : pile === "cyes" || pile === "cno" ? lean(a) === pile : kind(a) === pile)) && words.every((w) => hay(a).includes(w))).sort(order);
   /* One press for a whole pile: tick everyone showing and open the decision. Nothing is sent until the confirm in the dock. */
   const whole = (m: "award" | "no" | "more") => { setTick(Object.fromEntries(list.map((a) => [a.id, true]))); setMode(m); };
@@ -155,8 +155,8 @@ export default function Mass({ pass, board, quickStart, back, say }: { pass: str
       <div className="rv-mbar">
         <input className="ffield" style={{ flex: 2, minWidth: 180 }} type="search" placeholder="Search name, school, or anything they wrote" value={q} onChange={(e) => { setQ(e.target.value); setShown(40); }} />
         <span className="rv-top-n"><input className="ffield" inputMode="numeric" placeholder="7" value={topN} onChange={(e) => setTopN(e.target.value.replace(/\D/g, "").slice(0, 3))} aria-label="How many" /><button className="btn o sm" onClick={pickTop} disabled={!topN}>Tick the strongest</button><button className="btn o sm" onClick={pickLow} disabled={!topN}>Tick the lowest</button></span>
-        <select className="ffield" style={{ width: "auto" }} value={sort} onChange={(e) => setSort(e.target.value as "high" | "low" | "old")} aria-label="Order">
-          <option value="high">Highest score first</option><option value="low">Lowest score first</option><option value="old">Applied first</option>
+        <select className="ffield" style={{ width: "auto" }} value={sort} onChange={(e) => setSort(e.target.value as "high" | "low" | "old" | "cmte")} aria-label="Order">
+          <option value="high">Highest score first</option><option value="low">Lowest score first</option><option value="old">Applied first</option><option value="cmte">Committee score first</option>
         </select>
         <button className="btn o sm" onClick={() => setMany(list.map((a) => a.id), true)} disabled={!list.length}>Tick all {list.length} here</button>
         <button className="btn o sm" onClick={() => setTick({})} disabled={!ticked.length}>Clear</button>
@@ -175,6 +175,7 @@ export default function Mass({ pass, board, quickStart, back, say }: { pass: str
                     <span><b>{fullName(a)}</b> <span className="tiny">{a.number}{a.school ? ` · ${a.school}` : ""}</span></span>
                     <span className="rv-tags">
                       {a.auto_score != null ? <span className="rv-pill ok">score {a.auto_score}</span> : null}
+                      {a.score_count ? <span className="rv-pill ok" style={{ background: "#42127F", color: "#fff" }}>committee {a.score_avg}</span> : null}
                       {k !== "strong" ? <span className={`rv-pill ${k === "missing" ? "late" : "soon"}`}>⚑ {a.auto_flags?.length}</span> : null}
                       {a.requested_cents ? <span className="rv-pill">asks {money(a.requested_cents)}</span> : null}
                     </span>

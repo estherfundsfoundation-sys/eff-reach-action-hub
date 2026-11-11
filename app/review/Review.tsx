@@ -247,6 +247,10 @@ function BoardView({ board, pick, back, money: openMoney, many, quick }: { board
 }
 
 /* The saved "not this time" message, kept in this browser per program. Grocery Fund starts with the wording Shayna was shown on 11 Nov 2026. */
+/* A rubric line whose key starts with t_ is a tick box worth its full points (Shayna, 11 Nov 2026: "a rubric on the side
+   something we can tick ... a quick score that comes out with overall points"). */
+export const isTick = (r: { key: string }) => r.key.startsWith("t_");
+
 const QUICK_START: Record<string, string> = {
   "reach-grocery-fund": "Thank you for applying to the REACH Grocery Fund. We received far more requests than we had cards to give, and we weren't able to select your application this time. The EFF Emergency Grant opens in January. Join the waiting list at reach.estherfundsfoundation.org/notify and we'll email you the day it opens. For food help near your campus right now, visit reach.estherfundsfoundation.org.",
 };
@@ -286,9 +290,10 @@ function AppView({ pass, board, a, say, busy, setBusy, back, reload, next }: { n
       window.open(d.url, "_blank", "noopener");
     } catch (e) { say(e instanceof Error ? e.message : "That file couldn't open.", true); }
   }
-  async function score() {
+  async function score(go: boolean) {
     setBusy(true);
-    try { await effRpc("eff_review_score", "", { p_token: pass, p_id: a.id, p_scores: sc, p_note: note || null }); say("Your score is saved."); reload(); }
+    const full = Object.fromEntries(p.rubric.map((r) => [r.key, Number(sc[r.key]) || 0]));
+    try { await effRpc("eff_review_score", "", { p_token: pass, p_id: a.id, p_scores: full, p_note: note || null }); say(`Saved: ${total} / ${max}.`); if (go) next(nextId); else reload(); }
     catch (e) { say(e instanceof Error ? e.message : "That didn't save.", true); }
     setBusy(false);
   }
@@ -326,6 +331,7 @@ function AppView({ pass, board, a, say, busy, setBusy, back, reload, next }: { n
           <p className="tiny" style={{ opacity: 0.8 }}>The score ranks applications from their answers. You still decide.</p>
         </section>
       ) : null}
+      <div className={p.rubric.length ? "rv-two" : undefined}>
       <section className="card">
         <h2>Their answers</h2>
         {p.questions.map((q) => { const v = a.answers[q.key]; return <div key={q.key} className="rv-ans"><div className="tiny"><b>{q.label}</b></div><div>{Array.isArray(v) ? v.join(", ") : v ? String(v) : <span className="tiny">No answer</span>}</div></div>; })}
@@ -334,7 +340,14 @@ function AppView({ pass, board, a, say, busy, setBusy, back, reload, next }: { n
       {p.rubric.length ? (
         <section className="card rv-score">
           <h2>Your score <span className="rv-total">{total}</span><span className="tiny"> / {max}</span></h2>
-          {p.rubric.map((r) => (
+          {p.rubric.some(isTick) ? <p className="tiny" style={{ margin: 0 }}>Tick what is true for this student. Each tick adds its points. Go by the facts and the proof, not by how the story is written.</p> : null}
+          {p.rubric.map((r) => isTick(r) ? (
+            <label key={r.key} className={`rv-tick${Number(sc[r.key]) > 0 ? " on" : ""}`}>
+              <input type="checkbox" checked={Number(sc[r.key]) > 0} onChange={(e) => setSc({ ...sc, [r.key]: e.target.checked ? r.max : 0 })} />
+              <span><b>{r.label}</b>{r.guide ? <span className="tiny"> {r.guide}</span> : null}</span>
+              <em>+{r.max}</em>
+            </label>
+          ) : (
             <div key={r.key} className="rv-srow">
               <div><b>{r.label}</b> <span className="tiny">out of {r.max}</span>{r.guide ? <div className="tiny">{r.guide}</div> : null}
                 <input type="range" min={0} max={r.max} value={Number(sc[r.key] ?? 0)} onChange={(e) => setSc({ ...sc, [r.key]: Number(e.target.value) })} aria-label={r.label} /></div>
@@ -342,7 +355,8 @@ function AppView({ pass, board, a, say, busy, setBusy, back, reload, next }: { n
             </div>
           ))}
           <input className="ffield" placeholder="A note for the committee (optional, the student never sees it)" value={note} onChange={(e) => setNote(e.target.value)} />
-          <div><button className="btn p sm" disabled={busy} onClick={score}>{a.mine ? "Update my score" : "Save my score"}</button></div>
+          <div className="rv-btns"><button className="btn p sm" disabled={busy} onClick={() => score(false)}>{a.mine ? "Update my score" : "Save my score"}</button>
+            {nextId ? <button className="btn o sm" disabled={busy} onClick={() => score(true)}>Save &amp; open the next one →</button> : null}</div>
           {a.others ? (
             <div className="tiny">
               <p>Committee average: <b>{a.score_avg ?? "–"}</b> / {max} from {a.score_count} reviewer{a.score_count === 1 ? "" : "s"}.</p>
@@ -352,6 +366,7 @@ function AppView({ pass, board, a, say, busy, setBusy, back, reload, next }: { n
           {a.score_count > 0 && !a.mine ? <p className="tiny">Already scored by the committee. You don&rsquo;t have to score it too; add yours only if you want to.</p> : null}
         </section>
       ) : null}
+      </div>
       {board.role === "decider" && open ? (
         <section className="card rv-dec">
           <h2>Not this time, in one tap</h2>

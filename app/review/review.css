@@ -98,3 +98,13 @@
 .rvp .rv-qticks input { width: 20px; height: 20px; }
 .rvp .rv-qgo { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin: 14px 0 6px; }
 .rvp .rv-qgo .btn { min-height: 48px; padding: 0 20px; }
+
+/* tick rubric on the side of an application */
+.rvp .rvw:has(.rv-two) { max-width: 1180px; }
+.rvp .rv-two { display: grid; gap: 14px; grid-template-columns: minmax(0, 1fr); align-items: start; }
+@media (min-width: 1000px) { .rvp .rv-two { grid-template-columns: minmax(0, 1fr) 380px; } .rvp .rv-two > .rv-score { position: sticky; top: 12px; max-height: calc(100vh - 24px); overflow: auto; } }
+.rvp .rv-tick { display: grid; grid-template-columns: 22px minmax(0, 1fr) auto; gap: 10px; align-items: start; padding: 10px 12px; border: 1px solid #D9CCEE; border-radius: 12px; background: #fff; cursor: pointer; }
+.rvp .rv-tick.on { background: #F1E9FB; border-color: #5B1FB0; }
+.rvp .rv-tick input { width: 20px; height: 20px; margin: 1px 0 0; }
+.rvp .rv-tick em { font-style: normal; font-weight: 800; color: #42127F; }
+.rvp .rv-qticks .rv-check { display: flex; gap: 8px; align-items: center; }

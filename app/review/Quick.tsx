@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { rpc } from "../scholarships/lib";
-import type { App, Board } from "./Review";
+import { isTick, type App, type Board } from "./Review";
 
 /* Quick check (Shayna, 11 Nov 2026: "build so i can get this done"). The committee's fast lane: one application on the
    screen, a few boxes to tick, then Yes / Not sure / No, and the next one opens by itself. A check is advice, not a
@@ -19,7 +19,9 @@ const TICKS: Record<string, [string, string][]> = {
 
 export default function Quick({ pass, board, back, say }: { pass: string; board: Board; back: () => void; say: (m: string, bad?: boolean) => void }) {
   const p = board.program;
-  const ticks = TICKS[p.kind === "emergency" ? "emergency" : "other"];
+  const scored = p.rubric.length > 0 && p.rubric.every(isTick);
+  const ticks: [string, string, number][] = scored ? p.rubric.map((r) => [r.key, r.label, r.max]) : TICKS[p.kind === "emergency" ? "emergency" : "other"].map(([k, l]) => [k, l, 0]);
+  const max = p.rubric.reduce((t, r) => t + r.max, 0);
   const queue = useMemo(() => {
     const open = board.applications.filter((a) => ["submitted", "reviewing"].includes(a.status) && !a.my_check);
     const mine = open.filter((a) => a.assigned_me);
@@ -46,6 +48,7 @@ export default function Quick({ pass, board, back, say }: { pass: string; board:
     if (verdict !== "yes" && note.trim().length < 5) { say("Add a few words on why, so the person deciding knows.", true); return; }
     setBusy(true);
     try {
+      if (scored) await rpc("eff_review_score", { p_token: pass, p_id: a.id, p_scores: Object.fromEntries(ticks.map(([k, , m]) => [k, on[k] ? m : 0])), p_note: note || null }, 0);
       await rpc("eff_review_check", { p_token: pass, p_id: a.id, p_verdict: verdict, p_checks: on, p_note: note }, 0);
       setDone(done + 1); setOn({}); setNote(""); setI(i + 1); window.scrollTo({ top: 0 });
     } catch (e) { say(e instanceof Error ? e.message : "That didn't save.", true); }
@@ -72,7 +75,8 @@ export default function Quick({ pass, board, back, say }: { pass: string; board:
       {story.length ? <p className="rv-story open">{story.join("\n\n")}</p> : null}
       {a.documents.length ? <p>{a.documents.map((f) => <button key={f.key} className="btn o sm" style={{ marginRight: 6 }} onClick={() => file(f.key)}>Open {p.documents.find((x) => x.key === f.key)?.label || f.name}</button>)}</p> : null}
       <div className="rv-qticks">
-        {ticks.map(([k, l]) => <label key={k} className="rv-check"><input type="checkbox" checked={!!on[k]} onChange={(e) => setOn({ ...on, [k]: e.target.checked })} /> {l}</label>)}
+        {scored ? <p style={{ margin: 0 }}><b>Score: <span className="rv-total" style={{ margin: 0 }}>{ticks.reduce((t, [k, , m]) => t + (on[k] ? m : 0), 0)}</span> / {max}</b> <span className="tiny">Tick what is true. Go by the facts and the proof, not by how the story is written.</span></p> : null}
+        {ticks.map(([k, l, m]) => <label key={k} className="rv-check"><input type="checkbox" checked={!!on[k]} onChange={(e) => setOn({ ...on, [k]: e.target.checked })} /> {l}{m ? <b style={{ marginLeft: "auto", color: "#42127F" }}>+{m}</b> : null}</label>)}
       </div>
       <input className="ffield" placeholder="A few words for the person deciding (needed for Not sure and No)" value={note} onChange={(e) => setNote(e.target.value)} />
       <div className="rv-qgo">
