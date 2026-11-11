@@ -7,7 +7,7 @@ import "./aid.css";
 
 export const revalidate = 600;
 export const metadata: Metadata = {
-  title: "Emergency Aid Finder | REACH by Esther Funds Foundation",
+  title: "EFF Emergency Campus Aid Lookup | REACH by Esther Funds Foundation",
   description: "Your college might have emergency money for you right now. Find it, and get the exact words to ask for it.",
   alternates: { canonical: "/emergency-aid" },
 };

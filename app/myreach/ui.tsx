@@ -12,7 +12,7 @@ export const NAV = [
   { href: "/start", label: "Start here" },
   { href: "/get-help", label: "Get Help" },
   { href: "/scholarships", label: "Scholarships" },
-  { href: "/emergency-aid", label: "Emergency aid finder" },
+  { href: "/emergency-aid", label: "Campus aid lookup" },
   { href: "/my-college", label: "My college" },
   { href: "/freebies", label: "Freebies" },
   { href: "/apply", label: "Apply to EFF" },

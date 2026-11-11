@@ -104,7 +104,7 @@ export default function AidFinder({ stats }: { stats: AidStats | null }) {
       <SiteTop />
       <main>
         <section className="sc-hero ea-hero"><div className="sc-wrap">
-          <span className="sc-kick"><span className="dot" />Emergency Aid Finder</span>
+          <span className="sc-kick"><span className="dot" />EFF Emergency Campus Aid Lookup</span>
           <h1>Your college might have money for you <em>right now.</em></h1>
           <p>Most colleges keep emergency money, food and housing help for students in a crisis. Most students never hear about it. Find yours, and we&rsquo;ll give you the exact words to ask.</p>
           {stats ? <p className="ea-stat"><b>{stats.funds.toLocaleString()}</b> emergency funds and <b>{stats.listings.toLocaleString()}</b> kinds of emergency help confirmed at <b>{stats.colleges.toLocaleString()}</b> colleges, and growing every week.</p> : null}
