@@ -46,13 +46,13 @@ export default function Mass({ pass, board, quickStart, back, say }: { pass: str
 
   const facts = useMemo(() => p.questions.filter((x) => x.kind !== "long" && x.kind !== "text" && !SKIP.test(x.key)), [p.questions]);
   const longs = useMemo(() => p.questions.filter((x) => x.kind === "long"), [p.questions]);
-  const waiting = useMemo(() => board.applications.filter((a) => ["submitted", "reviewing"].includes(a.status) && !gone[a.id]).sort((x, y) => (y.auto_score ?? -1) - (x.auto_score ?? -1)), [board.applications, gone]);
+  const waiting = useMemo(() => board.applications.filter((a) => ["submitted", "reviewing"].includes(a.status) && !gone[a.id]).sort((x, y) => (y.shortlist ? 1 : 0) - (x.shortlist ? 1 : 0) || (y.auto_score ?? -1) - (x.auto_score ?? -1)), [board.applications, gone]);
   const kind = (a: App): Pile => (a.auto_flags?.some((f) => HARD.test(f)) ? "missing" : a.auto_flags?.length ? "check" : "strong");
   const counts = useMemo(() => ({ all: waiting.length, strong: waiting.filter((a) => kind(a) === "strong").length, check: waiting.filter((a) => kind(a) === "check").length, missing: waiting.filter((a) => kind(a) === "missing").length }), [waiting]);
   const words = q.trim().toLowerCase().split(/\s+/).filter(Boolean);
   const hay = (a: App) => [fullName(a), a.number, a.school, ...Object.values(a.answers || {}).map((v) => (Array.isArray(v) ? v.join(" ") : String(v ?? "")))].join(" ").toLowerCase();
   const order = (x: App, y: App) => sort === "low" ? (x.auto_score ?? -1) - (y.auto_score ?? -1) : sort === "old" ? (x.submitted_at || "").localeCompare(y.submitted_at || "") : sort === "cmte" ? (y.score_avg ?? -1) - (x.score_avg ?? -1) : 0;
-  const list = waiting.filter((a) => (pile === "all" || (pile === "ticked" ? tick[a.id] : pile === "cyes" || pile === "cno" ? lean(a) === pile : kind(a) === pile)) && words.every((w) => hay(a).includes(w))).sort(order);
+  const list = waiting.filter((a) => (pile === "all" || (pile === "ticked" ? tick[a.id] : pile === "cyes" || pile === "cno" ? lean(a) === pile : kind(a) === pile)) && words.every((w) => hay(a).includes(w))).sort((x, y) => (y.shortlist ? 1 : 0) - (x.shortlist ? 1 : 0) || order(x, y));
   /* One press for a whole pile: tick everyone showing and open the decision. Nothing is sent until the confirm in the dock. */
   const whole = (m: "award" | "no" | "more") => { setTick(Object.fromEntries(list.map((a) => [a.id, true]))); setMode(m); };
   const ticked = waiting.filter((a) => tick[a.id]);
@@ -174,6 +174,7 @@ export default function Mass({ pass, board, quickStart, back, say }: { pass: str
                   <div className="rv-payhead">
                     <span><b>{fullName(a)}</b> <span className="tiny">{a.number}{a.school ? ` · ${a.school}` : ""}</span></span>
                     <span className="rv-tags">
+                      {a.shortlist ? <span className="rv-pill" style={{ background: "#C9A227", color: "#1A1226" }}>★ Your pick</span> : null}
                       {a.auto_score != null ? <span className="rv-pill ok">score {a.auto_score}</span> : null}
                       {a.score_count ? <span className="rv-pill ok" style={{ background: "#42127F", color: "#fff" }}>committee {a.score_avg}</span> : null}
                       {k !== "strong" ? <span className={`rv-pill ${k === "missing" ? "late" : "soon"}`}>⚑ {a.auto_flags?.length}</span> : null}

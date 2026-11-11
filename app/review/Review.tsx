@@ -32,7 +32,7 @@ export type App = {
   documents: { key: string; name: string }[]; name: string | null; school: string | null; level: string | null; state: string | null;
   mine: { scores: Record<string, number>; total: number; note: string | null } | null; score_avg: number | null; score_count: number;
   others: { name: string; total: number; note: string | null }[] | null;
-  auto_score?: number | null; auto_flags?: string[] | null;
+  auto_score?: number | null; auto_flags?: string[] | null; shortlist?: boolean;
   assigned_me?: boolean; assigned_to?: string | null; my_check?: { verdict: string; note: string | null } | null;
   checks?: { name: string; verdict: "yes" | "unsure" | "no"; note: string | null }[];
   auto_detail?: { lines?: Array<{ label: string; got: number; max: number }>; student?: { school?: string | null; domain?: string | null; edu?: boolean } } | null;
@@ -201,7 +201,7 @@ function BoardView({ board, pick, back, money: openMoney, many, quick }: { board
   const words = q.trim().toLowerCase().split(/\s+/).filter(Boolean);
   const hay = (a: App) => [fullName(a), a.number, a.school, a.state, ...Object.values(a.answers || {}).map((v) => (Array.isArray(v) ? v.join(" ") : String(v ?? "")))].join(" ").toLowerCase();
   const key = (a: App) => sort === "unscored" ? (a.score_count ? 1 : 0) * 1000 - (a.auto_score ?? 0) : sort === "flags" ? (a.auto_flags?.length ? 0 : 1) * 1000 - (a.auto_score ?? 0) : sort === "oldest" ? Date.parse(a.submitted_at || "2999") : -(a.auto_score ?? -1);
-  const list = board.applications.filter((a) => words.every((w) => hay(a).includes(w))).sort((x, y) => key(x) - key(y));
+  const list = board.applications.filter((a) => words.every((w) => hay(a).includes(w))).sort((x, y) => (y.shortlist ? 1 : 0) - (x.shortlist ? 1 : 0) || key(x) - key(y));
   const waiting = list.filter((a) => ["submitted", "reviewing"].includes(a.status));
   const rest = list.filter((a) => !["submitted", "reviewing"].includes(a.status));
   const story = p.questions.find((x) => x.kind === "long");
@@ -213,6 +213,7 @@ function BoardView({ board, pick, back, money: openMoney, many, quick }: { board
         <span><b>{fullName(a)}</b> <span className="tiny">{a.number}{a.school ? ` · ${a.school}` : ""}</span>
           {st ? <span className="tiny" style={{ display: "block", opacity: 0.8, marginTop: 2 }}>&ldquo;{st.slice(0, 140)}{st.length > 140 ? "…" : ""}&rdquo;</span> : null}</span>
         <span className="rv-tags">
+          {a.shortlist ? <span className="rv-pill" style={{ background: "#C9A227", color: "#1A1226" }}>★ Your pick</span> : null}
           {a.auto_score != null ? <span className="rv-pill ok">score {a.auto_score}</span> : null}
           {a.auto_flags?.length ? <span className="rv-pill late">⚑ {a.auto_flags.length}</span> : null}
           {a.requested_cents ? <span className="rv-pill">asks {money(a.requested_cents)}</span> : null}
