@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { rpc } from "../scholarships/lib";
+import Payouts from "./Payouts";
 import "./review.css";
 
 /* reach.estherfundsfoundation.org/review (Shayna, 10 Nov 2026: "i want reach.estherfundsfoundation.org to have its own sign in to review").
@@ -61,6 +62,7 @@ export default function Review() {
   const [open, setOpen] = useState<App | null>(null);
   const [toast, setToast] = useState<{ m: string; bad?: boolean } | null>(null);
   const [busy, setBusy] = useState(false);
+  const [pay, setPay] = useState(false);
 
   useEffect(() => {
     try { setPass(localStorage.getItem(KEY) || ""); } catch { /* private window */ }
@@ -96,7 +98,8 @@ export default function Review() {
           : !me ? <p className="tiny">Loading…</p>
           : !me.pledged ? <Pledge pass={pass} me={me} say={say} done={loadMe} />
           : open && board ? <AppView key={open.id} next={(id) => id ? loadBoard(board.program.key, id) : (setOpen(null), loadBoard(board.program.key), loadMe())} pass={pass} board={board} a={open} say={say} busy={busy} setBusy={setBusy} back={() => { setOpen(null); loadBoard(board.program.key); loadMe(); }} reload={(gone) => gone ? (setOpen(null), loadBoard(board.program.key), loadMe()) : loadBoard(board.program.key, open.id)} />
-          : board ? <BoardView board={board} pick={setOpen} back={() => { setBoard(null); loadMe(); }} />
+          : board && pay ? <Payouts pass={pass} program={board.program.key} say={say} back={() => { setPay(false); loadBoard(board.program.key); }} />
+          : board ? <BoardView board={board} pick={setOpen} money={() => setPay(true)} back={() => { setBoard(null); loadMe(); }} />
           : (
             <>
               <h1>Welcome{me.name ? `, ${me.name.split(" ")[0]}` : ""}.</h1>
@@ -180,7 +183,7 @@ function Pledge({ pass, me, say, done }: { pass: string; me: Me; say: (m: string
   );
 }
 
-function BoardView({ board, pick, back }: { board: Board; pick: (a: App) => void; back: () => void }) {
+function BoardView({ board, pick, back, money: openMoney }: { board: Board; pick: (a: App) => void; back: () => void; money: () => void }) {
   const p = board.program;
   const [q, setQ] = useState("");
   const [sort, setSort] = useState("auto");
@@ -214,6 +217,7 @@ function BoardView({ board, pick, back }: { board: Board; pick: (a: App) => void
       <h1>{p.name}</h1>
       <p className="sub">{board.role === "decider" ? "You score and decide." : "You score. A committee member who decides, or EFF National, makes the decision."}
         {p.max_award_cents != null ? ` Most per student: ${money(p.max_award_cents)}.` : ""}{p.fund_left_cents != null ? ` Left in the fund: ${money(p.fund_left_cents)}.` : ""}</p>
+      <p><button className="btn p sm" onClick={openMoney}>Awards &amp; payouts →</button> <span className="tiny">Who we awarded, how much, and what has been paid.</span></p>
       <div style={{ display: "flex", gap: 8, flexWrap: "wrap", margin: "10px 0" }}>
         <input className="ffield" style={{ flex: 3, minWidth: 220 }} type="search" placeholder="Search name, school, or anything they wrote" value={q} onChange={(e) => setQ(e.target.value)} />
         <select className="ffield" style={{ flex: 1, minWidth: 160 }} value={sort} onChange={(e) => setSort(e.target.value)} aria-label="Sort">
