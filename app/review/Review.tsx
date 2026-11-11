@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { rpc } from "../scholarships/lib";
 import Payouts from "./Payouts";
+import Quick from "./Quick";
 import Mass from "./Mass";
 import "./review.css";
 
@@ -32,6 +33,8 @@ export type App = {
   mine: { scores: Record<string, number>; total: number; note: string | null } | null; score_avg: number | null; score_count: number;
   others: { name: string; total: number; note: string | null }[] | null;
   auto_score?: number | null; auto_flags?: string[] | null;
+  assigned_me?: boolean; assigned_to?: string | null; my_check?: { verdict: string; note: string | null } | null;
+  checks?: { name: string; verdict: "yes" | "unsure" | "no"; note: string | null }[];
   auto_detail?: { lines?: Array<{ label: string; got: number; max: number }>; student?: { school?: string | null; domain?: string | null; edu?: boolean } } | null;
 };
 const fullName = (a: App) => [a.answers?.first_name, a.answers?.last_name].filter(Boolean).join(" ") || a.name || a.number;
@@ -65,6 +68,7 @@ export default function Review() {
   const [busy, setBusy] = useState(false);
   const [pay, setPay] = useState(false);
   const [mass, setMass] = useState(false);
+  const [quick, setQuick] = useState(false);
 
   useEffect(() => {
     try { setPass(localStorage.getItem(KEY) || ""); } catch { /* private window */ }
@@ -101,8 +105,9 @@ export default function Review() {
           : !me.pledged ? <Pledge pass={pass} me={me} say={say} done={loadMe} />
           : open && board ? <AppView key={open.id} next={(id) => id ? loadBoard(board.program.key, id) : (setOpen(null), loadBoard(board.program.key), loadMe())} pass={pass} board={board} a={open} say={say} busy={busy} setBusy={setBusy} back={() => { setOpen(null); loadBoard(board.program.key); loadMe(); }} reload={(gone) => gone ? (setOpen(null), loadBoard(board.program.key), loadMe()) : loadBoard(board.program.key, open.id)} />
           : board && mass ? <Mass pass={pass} board={board} quickStart={QUICK_START[board.program.key] || ""} say={say} back={() => { setMass(false); loadBoard(board.program.key); loadMe(); }} />
+          : board && quick ? <Quick pass={pass} board={board} say={say} back={() => { setQuick(false); loadBoard(board.program.key); loadMe(); }} />
           : board && pay ? <Payouts pass={pass} program={board.program.key} say={say} back={() => { setPay(false); loadBoard(board.program.key); }} />
-          : board ? <BoardView board={board} pick={setOpen} money={() => setPay(true)} many={() => setMass(true)} back={() => { setBoard(null); loadMe(); }} />
+          : board ? <BoardView board={board} pick={setOpen} money={() => setPay(true)} many={() => setMass(true)} quick={() => setQuick(true)} back={() => { setBoard(null); loadMe(); }} />
           : (
             <>
               <h1>Welcome{me.name ? `, ${me.name.split(" ")[0]}` : ""}.</h1>
@@ -186,7 +191,10 @@ function Pledge({ pass, me, say, done }: { pass: string; me: Me; say: (m: string
   );
 }
 
-function BoardView({ board, pick, back, money: openMoney, many }: { board: Board; pick: (a: App) => void; back: () => void; money: () => void; many: () => void }) {
+function BoardView({ board, pick, back, money: openMoney, many, quick }: { board: Board; pick: (a: App) => void; back: () => void; money: () => void; many: () => void; quick: () => void }) {
+  const open = board.applications.filter((a) => ["submitted", "reviewing"].includes(a.status) && !a.my_check);
+  const mineN = open.filter((a) => a.assigned_me).length;
+  const quickN = mineN || open.filter((a) => !a.assigned_to).length;
   const p = board.program;
   const [q, setQ] = useState("");
   const [sort, setSort] = useState("auto");
@@ -222,6 +230,7 @@ function BoardView({ board, pick, back, money: openMoney, many }: { board: Board
         {p.max_award_cents != null ? ` Most per student: ${money(p.max_award_cents)}.` : ""}{p.fund_left_cents != null ? ` Left in the fund: ${money(p.fund_left_cents)}.` : ""}</p>
       <div className="rv-btns">
         {board.role === "decider" ? <button className="btn p" onClick={many}>Review many at once →</button> : null}
+        {quickN ? <button className={board.role === "decider" ? "btn o" : "btn p"} onClick={quick}>Quick check ({quickN}{mineN ? " for you" : ""}) →</button> : null}
         <button className="btn o" onClick={openMoney}>Awards &amp; payouts →</button>
       </div>
       <div style={{ display: "flex", gap: 8, flexWrap: "wrap", margin: "10px 0" }}>

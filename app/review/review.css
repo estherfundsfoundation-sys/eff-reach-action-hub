@@ -86,3 +86,15 @@
 .rvp .rv-dock .tiny { margin: 0; color: #E9DDFB; }
 .rvp .rv-dock .btn.o { background: transparent; color: #fff; border-color: rgba(255,255,255,.7); }
 .rvp .rv-dock .btn.p { background: #fff; color: #2A0650; border-color: #fff; }
+
+/* Quick check, committee verdicts and the share-out (11 Nov 2026) */
+.rvp .rv-share { display: flex; gap: 12px; align-items: center; justify-content: space-between; flex-wrap: wrap; background: #F6F1FC; border: 1px solid #E6DDF3; border-radius: 12px; padding: 10px 14px; margin: 10px 0; font-size: 14px; }
+.rvp .rv-share span { flex: 1; min-width: 240px; }
+.rvp .rv-cmte { color: #42127F; font-weight: 600; margin: 4px 0 0; }
+.rvp .rv-quick { max-width: 760px; }
+.rvp .rv-qbar { height: 6px; background: #E6DDF3; border-radius: 99px; overflow: hidden; margin-bottom: 14px; }
+.rvp .rv-qbar i { display: block; height: 100%; background: #5B1FB0; }
+.rvp .rv-qticks { display: grid; gap: 10px; margin: 16px 0 12px; padding: 14px; background: #F6F1FC; border-radius: 12px; }
+.rvp .rv-qticks input { width: 20px; height: 20px; }
+.rvp .rv-qgo { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin: 14px 0 6px; }
+.rvp .rv-qgo .btn { min-height: 48px; padding: 0 20px; }

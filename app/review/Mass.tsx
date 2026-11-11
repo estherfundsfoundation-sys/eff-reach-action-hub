@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { rpc } from "../scholarships/lib";
 import type { App, Board } from "./Review";
 
 /* Review many at once, for deciders (Shayna, 11 Nov 2026: "i need a way of like a mass review through my review account ...
@@ -18,7 +19,9 @@ const SKIP = /name|email|phone|address|student_id|birth|dob|confirm|agree|consen
 const HARD = /required document|not enrolled|not an undergraduate|duplicate/i;
 const quickKey = (k: string) => `reach-review-quick:${k}`;
 
-type Pile = "all" | "strong" | "check" | "missing" | "ticked";
+type Pile = "all" | "strong" | "check" | "missing" | "cyes" | "cno" | "ticked";
+/* What the committee said in Quick check: more yes than no, or more no than yes. */
+const lean = (a: App) => { const c = a.checks || []; const y = c.filter((x) => x.verdict === "yes").length, n = c.filter((x) => x.verdict === "no").length; return y > n ? "cyes" : n > y ? "cno" : ""; };
 
 export default function Mass({ pass, board, quickStart, back, say }: { pass: string; board: Board; quickStart: string; back: (changed: boolean) => void; say: (m: string, bad?: boolean) => void }) {
   const p = board.program;
@@ -49,7 +52,7 @@ export default function Mass({ pass, board, quickStart, back, say }: { pass: str
   const words = q.trim().toLowerCase().split(/\s+/).filter(Boolean);
   const hay = (a: App) => [fullName(a), a.number, a.school, ...Object.values(a.answers || {}).map((v) => (Array.isArray(v) ? v.join(" ") : String(v ?? "")))].join(" ").toLowerCase();
   const order = (x: App, y: App) => sort === "low" ? (x.auto_score ?? -1) - (y.auto_score ?? -1) : sort === "old" ? (x.submitted_at || "").localeCompare(y.submitted_at || "") : 0;
-  const list = waiting.filter((a) => (pile === "all" || (pile === "ticked" ? tick[a.id] : kind(a) === pile)) && words.every((w) => hay(a).includes(w))).sort(order);
+  const list = waiting.filter((a) => (pile === "all" || (pile === "ticked" ? tick[a.id] : pile === "cyes" || pile === "cno" ? lean(a) === pile : kind(a) === pile)) && words.every((w) => hay(a).includes(w))).sort(order);
   /* One press for a whole pile: tick everyone showing and open the decision. Nothing is sent until the confirm in the dock. */
   const whole = (m: "award" | "no" | "more") => { setTick(Object.fromEntries(list.map((a) => [a.id, true]))); setMode(m); };
   const ticked = waiting.filter((a) => tick[a.id]);
@@ -71,6 +74,18 @@ export default function Mass({ pass, board, quickStart, back, say }: { pass: str
     setPile("ticked");
   }
 
+
+  const [share, setShare] = useState<{ name: string; count: number }[] | null>(null);
+  const [sharing, setSharing] = useState(false);
+  async function split(notify: boolean) {
+    setSharing(true);
+    try {
+      const r = await rpc<{ shares: { name: string; count: number }[] }>("eff_review_split", { p_token: pass, p_program: p.key, p_notify: notify }, 0);
+      setShare(r.shares);
+      if (notify) { fetch(`${MYEFF}/api/email/flush`, { mode: "no-cors" }).catch(() => {}); say("Shared out, and each reviewer was emailed."); }
+    } catch (e) { say(e instanceof Error ? e.message : "That didn't work.", true); }
+    setSharing(false);
+  }
 
   async function go() {
     const status = mode === "award" ? "awarded" : mode === "no" ? "not_selected" : "more_info";
@@ -111,19 +126,27 @@ export default function Mass({ pass, board, quickStart, back, say }: { pass: str
         {p.max_award_cents != null ? ` Most per student: ${money(p.max_award_cents)}.` : ""}{fundLeft != null ? ` Left in the fund: ${money(fundLeft)}.` : ""}</p>
       {run ? <div className={`rv-banner ${run.failed.length ? "late" : ""}`}><b>{busy ? `Working: ${run.done} of ${run.total}…` : `Finished ${run.total}.`}</b>{run.failed.length ? <span>{run.failed.join(" · ")}</span> : <span>{busy ? "Keep this page open." : "Everyone was emailed."}</span>}</div> : null}
 
+      <div className="rv-share">
+        {!share ? <><span><b>Too many to read alone?</b> Share the unchecked ones out evenly across the committee. Each reviewer gets a short Quick check list, and their yes or no shows here.</span>
+          <button className="btn o sm" disabled={sharing} onClick={() => split(false)}>Share out to the committee</button></> : (
+          <><span><b>Shared out:</b> {share.length ? share.map((x) => `${x.name.split(" ")[0]} ${x.count}`).join(" · ") : "nothing left to share"}. Nobody has been told yet. The email says: &ldquo;You have N applications to check for the {p.name}. Each one takes less than a minute: read the short answers, tick what is true, and choose Yes, Not sure or No. You are not making the final decision; your answer helps EFF decide faster. Students are waiting on an answer, so please finish within 24 hours. Thank you for serving.&rdquo;</span>
+          <button className="btn p sm" disabled={sharing || !share.length} onClick={() => split(true)}>Email them now</button></>
+        )}
+      </div>
       <div className="rv-mbar">
         {(["all", "strong", "check", "missing"] as Pile[]).map((k) => (
           <button key={k} className={`rv-chip${pile === k ? " on" : ""}`} onClick={() => { setPile(k); setShown(40); }}>
             {k === "all" ? "Everyone" : k === "strong" ? "Ready" : k === "check" ? "Needs a person" : "Not eligible or incomplete"} <b>{counts[k as "all"]}</b>
           </button>
         ))}
+        {(["cyes", "cno"] as Pile[]).map((k) => { const n = waiting.filter((a) => lean(a) === k).length; return n ? <button key={k} className={`rv-chip${pile === k ? " on" : ""}`} onClick={() => { setPile(k); setShown(40); }}>{k === "cyes" ? "Committee says yes" : "Committee says no"} <b>{n}</b></button> : null; })}
         <button className={`rv-chip${pile === "ticked" ? " on" : ""}`} onClick={() => setPile("ticked")}>Ticked <b>{ticked.length}</b></button>
       </div>
       {pile !== "all" && pile !== "ticked" && list.length > 0 && !busy ? (
         <div className="rv-banner">
-          <b>{pile === "strong" ? `${list.length} ready: nothing missing and no flags.` : pile === "missing" ? `${list.length} not eligible or incomplete.` : `${list.length} need a person to look.`}</b>
+          <b>{pile === "cyes" ? `The committee said yes to ${list.length}.` : pile === "cno" ? `The committee said no to ${list.length}.` : pile === "strong" ? `${list.length} ready: nothing missing and no flags.` : pile === "missing" ? `${list.length} not eligible or incomplete.` : `${list.length} need a person to look.`}</b>
           <span style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-            {pile === "strong" ? <button className="btn p sm" onClick={() => whole("award")}>Approve all {list.length}…</button> : null}
+            {pile === "strong" || pile === "cyes" ? <button className="btn p sm" onClick={() => whole("award")}>Approve all {list.length}…</button> : null}
             {pile === "missing" ? <button className="btn p sm" onClick={() => whole("more")}>Ask all {list.length} for what&rsquo;s missing…</button> : null}
             <button className="btn o sm" onClick={() => whole("no")}>Not this time for all {list.length}…</button>
           </span>
@@ -156,6 +179,7 @@ export default function Mass({ pass, board, quickStart, back, say }: { pass: str
                       {a.requested_cents ? <span className="rv-pill">asks {money(a.requested_cents)}</span> : null}
                     </span>
                   </div>
+                  {a.checks?.length ? <p className="tiny rv-cmte">Committee: {a.checks.map((c) => `${c.name.split(" ")[0]} ${c.verdict === "yes" ? "✓ yes" : c.verdict === "no" ? "✕ no" : "? not sure"}${c.note ? ` (${c.note})` : ""}`).join(" · ")}</p> : a.assigned_to ? <p className="tiny rv-cmte">With {a.assigned_to.split(" ")[0]} to check</p> : null}
                   {a.auto_flags?.length ? a.auto_flags.map((f) => <p key={f} className="tiny rv-flag">⚑ {f}</p>) : null}
                   <div className="rv-facts">{facts.map((x) => { const v = a.answers?.[x.key]; const s = Array.isArray(v) ? v.join(", ") : v == null || v === "" ? "" : String(v); return s ? <span key={x.key} title={x.label}><i>{x.label.length > 34 ? `${x.label.slice(0, 32)}…` : x.label}</i> {s}</span> : null; })}</div>
                   {story.length ? <p className={`rv-story${open ? " open" : ""}`}>{open ? story.join("\n\n") : `${story[0].slice(0, 260)}${story[0].length > 260 || story.length > 1 ? "…" : ""}`}</p> : null}
