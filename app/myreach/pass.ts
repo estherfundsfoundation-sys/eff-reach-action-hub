@@ -49,7 +49,9 @@ export async function upload(token: string, application: string, key: string, fi
   return call<App>("eff_reach_doc_attach", { p_token: token, p_id: application, p_key: key, p_path: d.path, p_name: file.name });
 }
 
-export type Question = { key: string; label: string; kind: string; required?: boolean; options?: string[]; help?: string; max?: number; must?: string; must_note?: string };
+export type Question = { key: string; label: string; kind: string; required?: boolean; options?: string[]; help?: string; max?: number; must?: string; must_note?: string; show_if?: { key: string; in: string[] } }
+/* A question with show_if appears only when another answer is one of the listed values. */
+export const shown = (q: Question, answers: Record<string, unknown>) => !q.show_if || (q.show_if.in || []).includes(String(answers[q.show_if.key] ?? ""));;
 export type DocReq = { key: string; label: string; required?: boolean; help?: string };
 export type Program = {
   key: string; name: string; kind: string; summary: string; amount: string | null; who: string | null; audience: string;

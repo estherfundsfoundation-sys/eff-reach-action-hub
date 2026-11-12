@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState, type ReactNode } from "react";
-import type { App, Program, Question } from "../../myreach/pass";
+import { shown, type App, type Program, type Question } from "../../myreach/pass";
 
 /* The EFF Emergency Grant, one small screen at a time (after Beam's emergency-aid flow:
    bybeam.co). The questions and their keys are the program's own (eff_programs.questions);
@@ -14,7 +14,7 @@ const GROUPS: Array<{ key: string; title: string; line: string; keys: string[] }
   { key: "you", title: "Can you apply?", line: "Two quick questions first.", keys: ["us_enrolled", "undergrad"] },
   { key: "school", title: "Your school", line: "So we know where you are.", keys: ["school", "state", "enrollment"] },
   { key: "what", title: "What happened", line: "In your own words. A few sentences is enough.", keys: ["category", "what_happened", "school_impact"] },
-  { key: "bill", title: "The bill", line: "EFF pays the bill itself, never cash to you, so you don't have to front it.", keys: ["amount", "due_date", "pay_to", "vendor_name", "vendor_contact", "account_ref"] },
+  { key: "bill", title: "The bill", line: "EFF pays the bill itself, never cash to you, so you don't have to front it.", keys: ["amount", "due_date", "pay_to", "vendor_name", "vendor_contact", "account_ref", "acct_name", "pay_how", "pay_link", "mail_to", "pay_other", "lease_unit", "service_zip", "student_id", "store", "giftcard_email"] },
   { key: "proof", title: "Proof", line: "A phone photo or a screenshot is fine.", keys: [] },
   { key: "aid", title: "Money you've already tried", line: "So we know what's left. A parent's PLUS denial can open more federal loan money in your name: reach.estherfundsfoundation.org/aid-moves#plus-denied", keys: ["parent_plus", "plus_unsub", "tried"] },
   { key: "more", title: "Anything else", line: "Optional, but it helps us help you.", keys: ["anything_else"] },
@@ -33,7 +33,7 @@ function filled(q: Question, v: unknown) {
 }
 
 export default function Wizard({ prog, app, answers, field, docs, send, sending, saveState, err }: Props) {
-  const qs = prog.questions || [];
+  const qs = (prog.questions || []).filter((q) => shown(q, answers));
   const known = new Set(GROUPS.flatMap((g) => g.keys));
   const steps = GROUPS.map((g) => ({
     ...g,

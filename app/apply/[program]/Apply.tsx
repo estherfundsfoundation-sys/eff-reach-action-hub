@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { call, readPass, startCode, upload, decideBy, SignedOut, STATUS_WORDS, type App, type Me, type Program, type Question } from "../../myreach/pass";
+import { call, readPass, startCode, upload, decideBy, shown, SignedOut, STATUS_WORDS, type App, type Me, type Program, type Question } from "../../myreach/pass";
 import "./apply.css";
 import { SiteTop, SiteFoot } from "../../myreach/ui";
 import { SignIn } from "../../account/SignIn";
@@ -230,7 +230,7 @@ export default function Apply({ programKey }: { programKey: string }) {
           ) : signedIn && (open || app) ? (
             <form onSubmit={(e) => { e.preventDefault(); send(); }}>
               {!me?.profile.first_name ? <p className="sc-note">Add your name on <Link href="/account">My REACH</Link> so EFF knows who you are.</p> : null}
-              {(prog.questions || []).map((q) => (
+              {(prog.questions || []).filter((q) => shown(q, answers)).map((q) => (
                 <section className="sc-step" key={q.key}>
                   <label className="sc-field" style={{ color: "var(--i)", fontSize: 16 }}>
                     <span style={{ fontWeight: 700 }}>{q.label}{q.required ? " *" : ""}</span>
