@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { rpc, dueLabel, urgent, checkedOn, LEVELS, type Search, type Stats, type Card } from "./lib";
-import { Top, SaveButton, Foot } from "./parts";
+import { rpc, LEVELS, type Search, type Stats } from "./lib";
+import { Top, Foot } from "./parts";
+import { CardView, BrowseBlock } from "./cards";
 import "./scholarships.css";
 
 /* REACH Scholarships: the directory. Server-rendered from MyEFF's eff_scholarships_find (one directory: REACH's
@@ -22,21 +23,6 @@ const FOCUS = [
   ["disability", "Living with a disability"], ["lgbtq", "LGBTQ+"], ["foster", "Foster care"], ["immigrant", "Immigrant / DACA"],
 ];
 const STATES = "AL AK AZ AR CA CO CT DE DC FL GA HI ID IL IN IA KS KY LA ME MD MA MI MN MS MO MT NE NV NH NJ NM NY NC ND OH OK OR PA RI SC SD TN TX UT VT VA WA WV WI WY PR".split(" ");
-
-function CardView({ c }: { c: Card }) {
-  return (
-    <article className="sc-card">
-      {c.featured ? <span className="sc-feat">EFF pick</span> : null}
-      {c.deep?.verified ? <span className="sc-checked" title={`Checked on the provider's own page ${checkedOn(c.deep.last_verified_at) || ""}`}>✓ Checked by EFF</span> : null}
-      <span className={`sc-due${urgent(c) ? " hot" : ""}`}>{urgent(c) ? "⏳ " : ""}{dueLabel(c)}</span>
-      <div className={c.amount && /\d/.test(c.amount) ? "sc-amt" : "sc-amt quiet"}>{c.amount && /\d/.test(c.amount) ? c.amount : c.deep ? "Amount not stated" : "Amount varies"}</div>
-      <h3><Link href={`/scholarships/${c.slug}`}>{c.title}</Link></h3>
-      {c.sponsor ? <p className="sc-by">Offered by {c.sponsor}</p> : null}
-      {c.deep?.last_verified_at ? <p className="sc-by sc-last">Last checked {checkedOn(c.deep.last_verified_at)}</p> : null}
-      <SaveButton slug={c.slug} compact />
-    </article>
-  );
-}
 
 export default async function Page({ searchParams }: { searchParams: Promise<Params> }) {
   const p = await searchParams;
@@ -68,6 +54,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<Par
           <div className="sc-acts">
             <Link className="sc-btn coral" href="/scholarships/match">Match me in 2 minutes</Link>
             <Link className="sc-btn" href="/apply-with-me">Apply With Me</Link>
+            <a className="sc-btn ghost" href="#browse">Browse by list</a>
             <a className="sc-btn ghost" href="#search">Search everything</a>
           </div>
         </div>
@@ -83,6 +70,11 @@ export default async function Page({ searchParams }: { searchParams: Promise<Par
           <Link className="sc-door" href="/scholarships/toolkits"><b>Essay &amp; planner toolkits</b><span>Free downloads to write and track it all.</span></Link>
         </div>
 
+        <h2 className="sc-bh">Browse by list</h2>
+        <p className="sc-small">Pick a door. Every scholarship in the directory is still here; these just sort them for you.</p>
+        <BrowseBlock />
+
+        <h2 className="sc-bh">Or search everything</h2>
         <form id="search" className="sc-filters" action="/scholarships">
           <label className="sc-field grow">Search<input name="q" defaultValue={p.q} placeholder="nursing, HBCU, first-gen, a sponsor…" /></label>
           <label className="sc-field">I&rsquo;m in<select name="level" defaultValue={p.level ?? "all"}><option value="all">Any level</option>{LEVELS.map((l) => <option key={l.v} value={l.v}>{l.label}</option>)}</select></label>
