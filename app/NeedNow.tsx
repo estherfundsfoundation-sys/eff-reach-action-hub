@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { HomeSearch } from "./Front";
 
 /* REACH home, the very first thing on the page (10 Nov 2026, Shayna: a student told her finding REACH's
    help was difficult and she was lost). Before the film, before anything: "What do you need right now?"
@@ -29,6 +30,7 @@ export default function NeedNow() {
             </Link>
           ))}
         </div>
+        <HomeSearch />
         <p className="rh-need-more">
           Not sure? <Link href="/start">Answer 3 questions and we&rsquo;ll show you what fits</Link> · <Link href="/resources">See everything</Link>
         </p>

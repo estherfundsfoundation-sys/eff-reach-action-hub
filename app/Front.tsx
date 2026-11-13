@@ -3,21 +3,9 @@
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { useLibrary } from "./content/useLibrary";
-import { CLIPS, Video } from "./RealReach";
 
-/* REACH's front door (13 Nov 2026, Shayna: "a more luxury look to reach but still the same branding ... a professional
-   look easy to navigate but dont remove the resources ... BEST stuff to the front"). One calm screen: what REACH is,
-   one search box over every resource in the library, the seven things students come for, then the tools students
-   use most. The film moved to /story; nothing was removed. */
-const NEEDS = [
-  { href: "/emergency", t: "I have an emergency", s: "Rent, a bill, a hold, a car. A step-by-step plan in two minutes.", hot: true },
-  { href: "/screening", t: "I owe my school", s: "Free balance screening. A person at EFF reviews your case and writes you a plan." },
-  { href: "/holdup", t: "A hold is blocking my classes", s: "See what you really owe and how to get the hold lifted." },
-  { href: "/get-help", t: "I need food or a place to stay", s: "Help near your campus and near you, tonight." },
-  { href: "/emergency-aid", t: "Does my college have emergency money?", s: "Your college's own fund, and the words to ask for it." },
-  { href: "/scholarships", t: "I need money for school", s: "Scholarships EFF checked. Matched to you in a minute." },
-  { href: "https://my.estherfundsfoundation.org/lighthouse", t: "I need someone to talk to", s: "Ask EFF privately. A real person answers." },
-];
+/* Two additions to the REACH home page (13 Nov 2026), in the look REACH already has (Shayna chose to keep it):
+   HomeSearch, one search box over every resource in the library, and Best, the tools students use most. */
 const BEST = [
   { href: "/screening", k: "New", t: "Balance Screening", s: "Your balance, read like an aid advisor would." },
   { href: "/eff-interview-coach", k: "Career", t: "Mock Interview Coach", s: "56 professions. Practice out loud, get scored, try again." },
@@ -31,7 +19,7 @@ const BEST = [
 ];
 const TRY = ["hold", "FAFSA", "food", "interview", "rent", "appeal", "laptop", "first-gen"];
 
-export default function Front() {
+export function HomeSearch() {
   const { items } = useLibrary();
   const [q, setQ] = useState("");
   const hits = useMemo(() => {
@@ -48,71 +36,38 @@ export default function Front() {
   const ext = (h: string) => /^https?:/.test(h);
 
   return (
-    <div className="lx">
-      <section className="lx-hero" aria-labelledby="lx-h">
-        <div className="sc-wrap lx-hero-in">
-         <div>
-          <p className="lx-eyebrow">Free student support · Esther Funds Foundation</p>
-          <h1 id="lx-h">Before you drop out, <em>REACH.</em></h1>
-          <p className="lx-lede">Money, food, a hold, a hard semester. Whatever is standing between you and your degree, the help is here, it&rsquo;s free, and you don&rsquo;t need an account.</p>
-          <form className="lx-search" role="search" action="/resources" onSubmit={(e) => { if (!q.trim()) e.preventDefault(); }}>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7" /><path d="M20 20l-3.5-3.5" /></svg>
-            <input name="q" value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search everything: a hold, FAFSA, food, an interview…" aria-label={`Search all ${items.length} REACH resources`} autoComplete="off" />
-            <button type="submit">Search</button>
-          </form>
-          {q.trim().length > 1 ? (
-            <div className="lx-hits" aria-live="polite">
-              {hits.length ? hits.map((it) => (
-                <a key={it.key} href={it.href} {...(ext(it.href) ? { target: "_blank", rel: "noopener" } : {})}>
-                  <b>{it.title}</b><span>{it.text}</span>
-                </a>
-              )) : <p>Nothing by that name yet. Try one word, like &ldquo;rent&rdquo; or &ldquo;appeal&rdquo;, or <Link href="/get-help">ask a person</Link>.</p>}
-              {hits.length ? <Link className="lx-all" href={`/resources?q=${encodeURIComponent(q.trim())}`}>See every match →</Link> : null}
-            </div>
-          ) : (
-            <p className="lx-try">Try{" "}{TRY.map((w) => <button key={w} type="button" onClick={() => setQ(w)}>{w}</button>)}</p>
-          )}
-          <p className="lx-crisis">In crisis? Call or text <a href="tel:988">988</a>, any time. In danger, call <a href="tel:911">911</a>.</p>
-         </div>
-         <div className="lx-reel" aria-label="REACH in real life">
-           <div className="lx-pan a"><Video c={CLIPS.v1} label="REACH students together" /></div>
-           <div className="lx-pan b"><Video c={CLIPS.v2} label="A moment from REACH" /></div>
-           <div className="lx-pan c"><Video c={CLIPS.v3} label="A REACH event" /></div>
-           <span className="lx-tag">This is REACH</span>
-         </div>
+    <div className="hs">
+      <form className="hs-box" role="search" action="/resources" onSubmit={(e) => { if (!q.trim()) e.preventDefault(); }}>
+        <input name="q" value={q} onChange={(e) => setQ(e.target.value)} placeholder="Or search everything: a hold, FAFSA, food, an interview…" aria-label={`Search all ${items.length} REACH resources`} autoComplete="off" />
+        <button type="submit">Search</button>
+      </form>
+      {q.trim().length > 1 ? (
+        <div className="hs-hits" aria-live="polite">
+          {hits.length ? hits.map((it) => (
+            <a key={it.key} href={it.href} {...(ext(it.href) ? { target: "_blank", rel: "noopener" } : {})}><b>{it.title}</b><span>{it.text}</span></a>
+          )) : <p>Nothing by that name yet. Try one word, like &ldquo;rent&rdquo; or &ldquo;appeal&rdquo;, or <Link href="/get-help">ask a person</Link>.</p>}
+          {hits.length ? <Link className="hs-all" href={`/resources?q=${encodeURIComponent(q.trim())}`}>See every match →</Link> : null}
         </div>
-      </section>
-
-      <section className="lx-need" aria-labelledby="lx-need-h">
-        <div className="sc-wrap">
-          <p className="lx-eyebrow">Start here</p>
-          <h2 id="lx-need-h">What do you need <em>right now?</em></h2>
-          <div className="lx-rows">
-            {NEEDS.map((n, i) => {
-              const inner = (<><i aria-hidden="true">{String(i + 1).padStart(2, "0")}</i><span><b>{n.t}</b><small>{n.s}</small></span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg></>);
-              return ext(n.href) ? <a key={n.href} href={n.href} className="lx-row">{inner}</a> : <Link key={n.href} href={n.href} className={`lx-row${n.hot ? " hot" : ""}`}>{inner}</Link>;
-            })}
-          </div>
-          <p className="lx-more">Not sure where you fit? <Link href="/start">Answer three questions</Link> and REACH shows you what&rsquo;s made for you.</p>
-        </div>
-      </section>
-
-      <section className="lx-best" aria-labelledby="lx-best-h">
-        <div className="sc-wrap">
-          <p className="lx-eyebrow">The best of REACH</p>
-          <h2 id="lx-best-h">What students <em>use most.</em></h2>
-          <div className="lx-grid">
-            {BEST.map((b) => {
-              const inner = (<><small>{b.k}</small><b>{b.t}</b><span>{b.s}</span><em>Open →</em></>);
-              return ext(b.href) ? <a key={b.href} href={b.href} className="lx-card">{inner}</a> : <Link key={b.href} href={b.href} className="lx-card">{inner}</Link>;
-            })}
-          </div>
-          <div className="lx-story">
-            <div><b>New to REACH?</b><span>Watch the two-minute story of why it exists.</span></div>
-            <Link className="sc-btn ghost" href="/story">Watch the REACH story</Link>
-          </div>
-        </div>
-      </section>
+      ) : (
+        <p className="hs-try">Try{" "}{TRY.map((w) => <button key={w} type="button" onClick={() => setQ(w)}>{w}</button>)}</p>
+      )}
     </div>
+  );
+}
+
+export function Best() {
+  const ext = (h: string) => /^https?:/.test(h);
+  return (
+    <section className="rh-best" aria-labelledby="best-h">
+      <div className="sc-wrap">
+        <p className="rh-kick">The best of REACH</p>
+        <h2 id="best-h">What students use most.</h2>
+        <div className="sc-doors">
+          {BEST.map((b) => ext(b.href)
+            ? <a key={b.href} href={b.href} className="sc-door"><b>{b.t}</b><span>{b.s}</span></a>
+            : <Link key={b.href} href={b.href} className="sc-door"><b>{b.t}</b><span>{b.s}</span></Link>)}
+        </div>
+      </div>
+    </section>
   );
 }

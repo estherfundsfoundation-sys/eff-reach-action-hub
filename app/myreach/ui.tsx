@@ -34,7 +34,7 @@ const GROUPS = [
     { href: "/my-college", label: "My college" }, { href: "/apply-with-me/college", label: "Apply to college" }, { href: "https://my.estherfundsfoundation.org/kit", label: "The Survival Kit" } ] },
   { t: "Explore", items: [
     { href: "/start", label: "Start here" }, { href: "/resources", label: "All resources" }, { href: "/workshops", label: "Workshops" }, { href: "/organizations", label: "Organizations" },
-    { href: "/for/families", label: "For families" }, { href: "/for/schools", label: "For schools & colleges" }, { href: "/story", label: "The REACH story" }, { href: "https://represent.estherfundsfoundation.org", label: "Ambassadors" } ] },
+    { href: "/for/families", label: "For families" }, { href: "/for/schools", label: "For schools & colleges" }, { href: "https://represent.estherfundsfoundation.org", label: "Ambassadors" } ] },
 ];
 
 export function SiteTop({ on }: { on?: string }) {
