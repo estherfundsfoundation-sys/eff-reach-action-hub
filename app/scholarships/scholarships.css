@@ -215,27 +215,12 @@
 .sc-hero .sc-h1-sm { font-size:clamp(30px,6vw,56px); line-height:1.02; }
 .sc-kick a { text-decoration:none; }
 
-/* ── The refined shell (13 Nov 2026): same purple and gold, calmer surfaces, thinner lines, a serif for the big words ── */
-.sc { --gold:#a8842a; --ivory:#fbf9f5; }
-@media (prefers-color-scheme: light) { .sc { background:var(--ivory); --b:#e8e1d6; --pl:#f3edfa; --i:#1a1226; --i2:#5a5266; } }
-@media (prefers-color-scheme: dark) { .sc { --gold:#e0c36a; --ivory:#120a1d; } }
-.sc-top { background:color-mix(in srgb, var(--ivory) 88%, transparent); backdrop-filter:saturate(1.4) blur(14px); border-bottom:1px solid var(--b); }
-.sc-top .sc-wrap { min-height:68px; max-width:1180px; }
-.sc-brand { font:600 25px/1 var(--rx-display); letter-spacing:.2em; }
-.sc-brand small { font:600 9px/1.6 var(--rx-body); letter-spacing:.26em; color:var(--gold); margin-top:3px; }
-.sc-menu a { font-weight:500; font-size:15px; border-radius:10px; }
-.sc-menu a.on { background:transparent; color:var(--p) !important; box-shadow:inset 0 -2px 0 var(--gold); border-radius:0; }
-.sc-menu .sc-emerg { border-radius:999px; font-weight:600; }
-.sc-menu .sc-emerg.on { border-radius:999px; box-shadow:none; }
-.sc-morebtn { border-radius:10px; border-color:var(--b); font-weight:500; }
-.sc-menu .sc-acct { font-weight:600; background:var(--p); color:#fff !important; border-radius:999px; padding:10px 18px; }
-.sc-menu .sc-acct:hover { background:var(--pv); }
+/* ── The grouped menu (13 Nov 2026) ── */
+.sc-menu .sc-acct { background:var(--p); color:#fff !important; padding:10px 18px; }
 @media (prefers-color-scheme: dark) { .sc-menu .sc-acct { color:#1b1227 !important; } }
-.sc-btn { font-weight:600; letter-spacing:.01em; box-shadow:0 1px 0 rgba(255,255,255,.18) inset, 0 10px 24px -14px rgba(66,18,127,.7); }
-.sc-btn.ghost { box-shadow:inset 0 0 0 1.5px var(--p); }
 .sc-mega { width:min(880px, calc(100vw - 24px)); grid-template-columns:repeat(4,1fr); gap:6px 18px; padding:22px 22px 14px; border-radius:18px; box-shadow:0 30px 70px -28px rgba(26,18,38,.45); }
 .sc-mgroup { display:grid; gap:1px; align-content:start; }
-.sc-mgroup p { margin:0 0 6px; padding:0 12px 8px; font:600 11px/1 var(--rx-body); letter-spacing:.2em; text-transform:uppercase; color:var(--gold); border-bottom:1px solid var(--b); }
+.sc-mgroup p { margin:0 0 6px; padding:0 12px 8px; font:600 11px/1 var(--rx-body); letter-spacing:.2em; text-transform:uppercase; color:var(--pv); border-bottom:1px solid var(--b); }
 .sc-menu .sc-mega a { padding:9px 12px; min-height:40px; font-size:15px; white-space:normal; line-height:1.25; }
 .sc-mfoot { grid-column:1 / -1; display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; margin-top:10px; padding-top:10px; border-top:1px solid var(--b); font-size:14px; color:var(--i2); }
 .sc-menu .sc-mfoot > a { width:auto; font-weight:700; color:var(--p) !important; }
@@ -243,4 +228,4 @@
 @media (max-width:860px) {
   .sc-mega { position:fixed; left:12px; right:12px; top:72px; width:auto; max-height:calc(100dvh - 90px); overflow:auto; grid-template-columns:1fr 1fr; }
 }
-@media (max-width:520px) { .sc-mega { grid-template-columns:1fr; } .sc-brand { font-size:22px; } }
+@media (max-width:520px) { .sc-mega { grid-template-columns:1fr; } }

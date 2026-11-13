@@ -25,7 +25,7 @@ export const CLIPS: Record<string, Clip> = {
 const POSTS = ["DZnxaMJJNlE", "DesNpGvINUE", "Dek6k_2Rc_Q", "DeDK3FOR2z9"];
 
 /* Muted, looping, only loads and plays while on screen; reduced motion keeps the poster. */
-function Video({ c, label }: { c: Clip; label: string }) {
+export function Video({ c, label }: { c: Clip; label: string }) {
   const ref = useRef<HTMLVideoElement>(null);
   useEffect(() => {
     const v = ref.current;

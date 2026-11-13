@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { useLibrary } from "./content/useLibrary";
+import { CLIPS, Video } from "./RealReach";
 
 /* REACH's front door (13 Nov 2026, Shayna: "a more luxury look to reach but still the same branding ... a professional
    look easy to navigate but dont remove the resources ... BEST stuff to the front"). One calm screen: what REACH is,
@@ -47,10 +48,11 @@ export default function Front() {
   const ext = (h: string) => /^https?:/.test(h);
 
   return (
-    <>
+    <div className="lx">
       <section className="lx-hero" aria-labelledby="lx-h">
-        <div className="sc-wrap">
-          <p className="lx-eyebrow">Esther Funds Foundation · student support</p>
+        <div className="sc-wrap lx-hero-in">
+         <div>
+          <p className="lx-eyebrow">Free student support · Esther Funds Foundation</p>
           <h1 id="lx-h">Before you drop out, <em>REACH.</em></h1>
           <p className="lx-lede">Money, food, a hold, a hard semester. Whatever is standing between you and your degree, the help is here, it&rsquo;s free, and you don&rsquo;t need an account.</p>
           <form className="lx-search" role="search" action="/resources" onSubmit={(e) => { if (!q.trim()) e.preventDefault(); }}>
@@ -71,13 +73,20 @@ export default function Front() {
             <p className="lx-try">Try{" "}{TRY.map((w) => <button key={w} type="button" onClick={() => setQ(w)}>{w}</button>)}</p>
           )}
           <p className="lx-crisis">In crisis? Call or text <a href="tel:988">988</a>, any time. In danger, call <a href="tel:911">911</a>.</p>
+         </div>
+         <div className="lx-reel" aria-label="REACH in real life">
+           <div className="lx-pan a"><Video c={CLIPS.v1} label="REACH students together" /></div>
+           <div className="lx-pan b"><Video c={CLIPS.v2} label="A moment from REACH" /></div>
+           <div className="lx-pan c"><Video c={CLIPS.v3} label="A REACH event" /></div>
+           <span className="lx-tag">This is REACH</span>
+         </div>
         </div>
       </section>
 
       <section className="lx-need" aria-labelledby="lx-need-h">
         <div className="sc-wrap">
-          <p className="lx-eyebrow">Start with what&rsquo;s happening</p>
-          <h2 id="lx-need-h">What do you need right now?</h2>
+          <p className="lx-eyebrow">Start here</p>
+          <h2 id="lx-need-h">What do you need <em>right now?</em></h2>
           <div className="lx-rows">
             {NEEDS.map((n, i) => {
               const inner = (<><i aria-hidden="true">{String(i + 1).padStart(2, "0")}</i><span><b>{n.t}</b><small>{n.s}</small></span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg></>);
@@ -91,7 +100,7 @@ export default function Front() {
       <section className="lx-best" aria-labelledby="lx-best-h">
         <div className="sc-wrap">
           <p className="lx-eyebrow">The best of REACH</p>
-          <h2 id="lx-best-h">What students use most.</h2>
+          <h2 id="lx-best-h">What students <em>use most.</em></h2>
           <div className="lx-grid">
             {BEST.map((b) => {
               const inner = (<><small>{b.k}</small><b>{b.t}</b><span>{b.s}</span><em>Open →</em></>);
@@ -104,6 +113,6 @@ export default function Front() {
           </div>
         </div>
       </section>
-    </>
+    </div>
   );
 }
