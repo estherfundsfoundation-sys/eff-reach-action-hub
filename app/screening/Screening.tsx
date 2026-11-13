@@ -54,7 +54,8 @@ export default function Screening() {
   useEffect(() => { window.scrollTo({ top: 0, behavior: "smooth" }); }, [stage, step]);
 
   const qs = visible(PRE, pre);
-  const set = (k: string, v: unknown) => { const n = { ...pre, [k]: v }; setPre(n); keep(n); };
+  // Functional update: the college picker sets two keys in a row, and a stale copy used to wipe the college name.
+  const set = (k: string, v: unknown) => setPre((x) => { const n = { ...x, [k]: v }; keep(n); return n; });
   const route = routeFor(pre);
 
   return (
@@ -209,7 +210,7 @@ function Full({ pre, me, reload, done, back, setErr }: { pre: A; me: Me | null; 
   const pages = [...FULL.map((s) => s.title), "Your documents", "Send it"];
   const save = useCallback(async (submit = false) => {
     if (!p) return null;
-    const out = await call<Case>("eff_bal_save", { p_token: p.token, p: { id: c?.id || null, pre: { ...pre, route: routeFor(pre) }, full: { ...a, school: a.school || pre.school, institution_id: pre.institution_id }, submit } });
+    const out = await call<Case>("eff_bal_save", { p_token: p.token, p: { id: c?.id || null, pre: { ...pre, route: routeFor(pre) }, full: { ...a, school: a.school || pre.school, institution_id: a.institution_id || pre.institution_id }, submit } });
     setC(out); return out;
   }, [p, c?.id, pre, a]);
   const first = useRef(true);
@@ -233,6 +234,9 @@ function Full({ pre, me, reload, done, back, setErr }: { pre: A; me: Me | null; 
       ) : (
         <>
           <h2>Before you send</h2>
+          {!String(a.school || pre.school || "").trim() || a._school_here ? (
+            <div className="bs-q"><label className="bs-label" htmlFor="q-school">Your college</label><SchoolPick a={a} set={(k, v) => { set(k, v); set("_school_here", true); }} /></div>
+          ) : null}
           <label className="bs-tick"><input type="checkbox" checked={!!a.ok_not_aid} onChange={(e) => set("ok_not_aid", e.target.checked)} /> I understand EFF is not my school&rsquo;s financial aid office. EFF can&rsquo;t change my aid or promise money. EFF reviews my case and helps me find options.</label>
           <label className="bs-tick"><input type="checkbox" checked={!!a.ok_no_secrets} onChange={(e) => set("ok_no_secrets", e.target.checked)} /> I didn&rsquo;t share my Social Security number, FSA ID or any password, and I covered them on my screenshots.</label>
           <label className="bs-tick"><input type="checkbox" checked={!!a.ok_true} onChange={(e) => set("ok_true", e.target.checked)} /> What I shared is true to the best of my knowledge, and EFF may contact me about it.</label>
