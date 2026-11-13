@@ -1,5 +1,5 @@
 /* REACH Balance Screening (/screening), scoped .bs inside .sc */
-.bs-wrap { padding:28px 0 60px; max-width:820px; }
+.bs-wrap { padding:28px 16px 60px; max-width:820px; }
 .bs-intro h1 { font:900 clamp(36px,7vw,72px)/1 var(--rx-head); letter-spacing:-.03em; color:var(--p); margin:10px 0 14px; }
 .bs-intro h1 em { font-style:normal; display:block; color:var(--i); }
 .bs-intro > p { font-size:19px; line-height:1.55; color:var(--i2); max-width:680px; }
@@ -57,3 +57,16 @@
 .bs-write { margin-top:16px; display:grid; gap:8px; }
 .bs-cases h1 { font:900 clamp(32px,6vw,56px)/1 var(--rx-head); color:var(--p); }
 @media (prefers-reduced-motion: reduce) { .bs-bar i { transition:none; } }
+
+/* refined look + the script and college help (13 Nov 2026) */
+.bs-intro h1 { font:500 clamp(40px,7.4vw,84px)/1 var(--rx-display); letter-spacing:-.025em; color:var(--i); }
+.bs-intro h1 em { font-style:italic; color:var(--p); }
+.bs-card { border-radius:8px; box-shadow:0 40px 80px -60px rgba(66,18,127,.55); }
+.bs-card h2, .bs-q.big .bs-label { font-family:var(--rx-display); font-weight:500; letter-spacing:-.015em; }
+.bs-promise div { border-radius:6px; border-top:2px solid var(--gold); }
+.bs-bar { height:3px; } .bs-bar i { background:var(--gold); }
+.bs-script, .bs-college { margin-top:22px; padding:20px; border:1px solid var(--b); border-radius:6px; background:color-mix(in srgb, var(--pl) 45%, transparent); }
+.bs-script h3, .bs-college h3 { margin-top:0; }
+.bs-script p { font:400 17px/1.65 var(--rx-display); color:var(--i); margin:0 0 14px; }
+.bs-college > p { color:var(--i2); line-height:1.55; margin:0 0 12px; }
+.sc.bs h1, .sc.bs .bs-card h2 { font-family:var(--rx-display) !important; font-weight:500 !important; }

@@ -21,6 +21,21 @@ export const NAV = [
   { href: "https://represent.estherfundsfoundation.org", label: "Ambassadors" },
 ];
 const MAIN = NAV.slice(1, 4);
+/* The menu, grouped by what a student is trying to do (13 Nov 2026). Every page is here; nothing was taken out. */
+const GROUPS = [
+  { t: "Help right now", items: [
+    { href: "/emergency", label: "Emergency plan" }, { href: "/screening", label: "Balance Screening" }, { href: "/holdup", label: "HOLD UP: clear a hold" },
+    { href: "/get-help", label: "Food, housing & help near me" }, { href: "/emergency-aid", label: "Campus emergency aid lookup" }, { href: "https://my.estherfundsfoundation.org/lighthouse", label: "Talk to a person" } ] },
+  { t: "Money for school", items: [
+    { href: "/scholarships", label: "Scholarships" }, { href: "/scholarships/match", label: "Match me" }, { href: "/apply-with-me", label: "Apply With Me" },
+    { href: "/aid-moves", label: "Financial aid moves" }, { href: "/freebies", label: "Freebies" }, { href: "/apply", label: "Apply to EFF" } ] },
+  { t: "Get ready", items: [
+    { href: "/eff-interview-coach", label: "Mock Interview Coach" }, { href: "/practice", label: "Practice the Conversation" }, { href: "/resume", label: "Résumé Builder" },
+    { href: "/my-college", label: "My college" }, { href: "/apply-with-me/college", label: "Apply to college" }, { href: "https://my.estherfundsfoundation.org/kit", label: "The Survival Kit" } ] },
+  { t: "Explore", items: [
+    { href: "/start", label: "Start here" }, { href: "/resources", label: "All resources" }, { href: "/workshops", label: "Workshops" }, { href: "/organizations", label: "Organizations" },
+    { href: "/for/families", label: "For families" }, { href: "/for/schools", label: "For schools & colleges" }, { href: "/story", label: "The REACH story" }, { href: "https://represent.estherfundsfoundation.org", label: "Ambassadors" } ] },
+];
 
 export function SiteTop({ on }: { on?: string }) {
   const [signed, setSigned] = useState(false);
@@ -51,9 +66,17 @@ export function SiteTop({ on }: { on?: string }) {
               Menu<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6" /></svg>
             </button>
             {open ? (
-              <div className="sc-drop" role="menu">
-                {NAV.slice(1).map((n, i) => <Link key={n.href} role="menuitem" href={n.href} className={`${i < MAIN.length ? "sc-dmain " : ""}${cur(n.href)}`} onClick={() => setOpen(false)}>{n.label}</Link>)}
-                <Link role="menuitem" href="/account" className={`sc-dmain ${cur("/account")}`} onClick={() => setOpen(false)}>{signed ? "My REACH" : "Sign in"}</Link>
+              <div className="sc-drop sc-mega" role="menu">
+                {GROUPS.map((g) => (
+                  <div key={g.t} className="sc-mgroup">
+                    <p>{g.t}</p>
+                    {g.items.map((n) => <Link key={n.href} role="menuitem" href={n.href} className={cur(n.href)} onClick={() => setOpen(false)}>{n.label}</Link>)}
+                  </div>
+                ))}
+                <div className="sc-mfoot">
+                  <Link role="menuitem" href="/account" onClick={() => setOpen(false)}>{signed ? "My REACH" : "Sign in"}</Link>
+                  <span>In crisis? Call or text <a href="tel:988">988</a></span>
+                </div>
               </div>
             ) : null}
           </div>

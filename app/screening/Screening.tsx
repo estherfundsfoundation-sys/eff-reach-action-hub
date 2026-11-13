@@ -6,6 +6,8 @@ import { call, readPass, startCode, MYEFF, SignedOut } from "../myreach/pass";
 import { rpc } from "../scholarships/lib";
 import { SiteTop, SiteFoot } from "../myreach/ui";
 import { SignIn } from "../account/SignIn";
+import { CollegeMoves, type Dossier } from "../emergency/CollegeMoves";
+import "../emergency/emergency.css";
 import { PRE, FULL, DOCS, ROUTE_LABEL, routeFor, movesFor, type Q, type Route } from "./questions";
 
 /* REACH Balance Screening (13 Nov 2026, Shayna). Step 1, the pre-screening: about fifteen questions, no documents,
@@ -102,6 +104,8 @@ export default function Screening() {
               <div className="bs-alert soft">For housing, food or a shutoff today, open <Link href="/emergency">REACH Emergency</Link> or call <a href="tel:211">211</a> while we work on the balance.</div>) : null}
             <h3>Your moves, in order</h3>
             <ol className="bs-moves">{movesFor(pre).map((m) => <li key={m}>{m}</li>)}</ol>
+            <Script a={pre} />
+            <CollegeHelp a={pre} />
             <div className="bs-next">
               <h3>Want EFF to review your whole case?</h3>
               <p>Open your full screening. You&rsquo;ll tell us more and add screenshots of your balance, your aid and your hold. A person at EFF reads everything and writes you a plan. It takes about 10 minutes.</p>
@@ -138,6 +142,42 @@ function Field({ q, a, set, big }: { q: Q; a: A; set: (k: string, v: unknown) =>
       : q.kind === "long" ? <textarea id={`q-${q.key}`} rows={4} value={String(v ?? "")} onChange={(e) => set(q.key, e.target.value)} maxLength={4000} />
       : <input id={`q-${q.key}`} type={q.kind === "date" ? "date" : q.kind === "number" || q.kind === "money" ? "number" : "text"} inputMode={q.kind === "money" || q.kind === "number" ? "decimal" : undefined}
           min={q.kind === "money" || q.kind === "number" ? 0 : undefined} value={String(v ?? "")} onChange={(e) => set(q.key, e.target.value)} maxLength={200} />}
+    </div>
+  );
+}
+
+/* The words to say at the financial aid or student accounts window, built from her answers. Copy and go. */
+function Script({ a }: { a: A }) {
+  const [ok, setOk] = useState(false);
+  const school = String(a.school || "").trim();
+  const text = `Hi, my name is ____ and my student ID is ____. I have a balance${school ? ` at ${school}` : ""} that is keeping me from registering, and I want to stay enrolled. Can you tell me: (1) exactly what I owe today and what each charge is for, (2) whether any of my aid is still pending or missing a document, (3) whether I can get a payment plan or a short hold extension so I can register while I pay, and (4) whether the school has an emergency or completion grant I can apply for? If my family's income changed, I'd also like to ask for a professional judgment review. Who is the right person for that, and can I have their name and email?`;
+  return (
+    <div className="bs-script">
+      <h3>What to say when you call or walk in</h3>
+      <p>{text}</p>
+      <button type="button" className="sc-btn ghost sm" onClick={() => { navigator.clipboard?.writeText(text).then(() => { setOk(true); setTimeout(() => setOk(false), 2000); }).catch(() => {}); }}>{ok ? "Copied" : "Copy these words"}</button>
+    </div>
+  );
+}
+
+/* Her own college's help, from EFF's college guide when we have read that campus; otherwise the two places to look. */
+function CollegeHelp({ a }: { a: A }) {
+  const id = typeof a.institution_id === "string" ? a.institution_id : "";
+  const [d, setD] = useState<Dossier | null>(null);
+  const [done, setDone] = useState(false);
+  useEffect(() => {
+    setD(null); setDone(false);
+    if (!id) { setDone(true); return; }
+    rpc<Dossier | null>("eff_campus_dossier_for_institution", { p_institution: id, p_needs: ["school", "money"] })
+      .then((x) => setD(x && x.sections?.length ? x : null)).catch(() => setD(null)).finally(() => setDone(true));
+  }, [id]);
+  if (!done) return null;
+  if (d) return (<div className="bs-college em"><h3>What {d.name} offers, in order</h3><CollegeMoves d={d} /></div>);
+  return (
+    <div className="bs-college">
+      <h3>Check what your own college offers</h3>
+      <p>Most colleges have emergency money, payment plans or a completion grant that never gets advertised. Look yours up, with the words to ask for it.</p>
+      <div className="sc-acts"><Link className="sc-btn ghost sm" href="/emergency-aid">Campus emergency aid lookup</Link><Link className="sc-btn ghost sm" href="/my-college">My college&rsquo;s resources</Link></div>
     </div>
   );
 }

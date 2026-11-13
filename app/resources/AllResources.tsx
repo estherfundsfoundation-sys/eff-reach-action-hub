@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { SiteTop, SiteFoot } from "../myreach/ui";
 import LibCard from "../content/LibCard";
 import { CATS, GROUPS, ORDER, STAGES, WHO } from "../content/library";
@@ -15,6 +15,7 @@ const short: Record<string, string> = { student: "A student", family: "Parent or
 export default function AllResources() {
   const { items } = useLibrary();
   const [q, setQ] = useState("");
+  useEffect(() => { const v = new URLSearchParams(window.location.search).get("q"); if (v) setQ(v); }, []);
   const [who, setWho] = useState("");
   const [stage, setStage] = useState("");
   const [group, setGroup] = useState("");

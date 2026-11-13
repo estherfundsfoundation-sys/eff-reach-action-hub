@@ -1,6 +1,6 @@
-@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,700&family=Archivo:wdth,wght@100,500;100,800;125,900&family=Georama:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,700&family=Manrope:wght@500;700;800&family=Poppins:wght@400;500;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,700&family=Archivo:wdth,wght@100,500;100,800;125,900&family=Georama:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,700&family=Manrope:wght@500;700;800&family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..600&family=Poppins:wght@400;500;600;700;800&display=swap");
 /* REACH type (20 Oct 2026, Shayna: "a nice more professional font but still keep the reach theme"): one family, Plus Jakarta Sans, everywhere but the home film. */
-:root{--rx-head:"Plus Jakarta Sans","Segoe UI",system-ui,sans-serif;--rx-body:"Plus Jakarta Sans","Segoe UI",system-ui,sans-serif}
+:root{--rx-display:"Fraunces","Iowan Old Style",Georgia,serif;--rx-head:"Plus Jakarta Sans","Segoe UI",system-ui,sans-serif;--rx-body:"Plus Jakarta Sans","Segoe UI",system-ui,sans-serif}
 h1,h2,h3{letter-spacing:-.025em}
 @import "tailwindcss";
 
