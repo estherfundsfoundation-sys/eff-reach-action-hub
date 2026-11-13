@@ -5,6 +5,7 @@ import Link from "next/link";
    Six plain doors to the right tool, 988 always, and the film below for anyone who wants it. */
 const NEEDS = [
   { href: "/emergency", glyph: "🚨", t: "I have an emergency", s: "Rent, a bill, a hold, a car. Get a step-by-step plan in 2 minutes." },
+  { href: "/screening", glyph: "📋", t: "I owe my school and need help clearing it", s: "Free balance screening. EFF reviews your case and sends you a plan." },
   { href: "/holdup", glyph: "🔓", t: "A hold is blocking my classes", s: "Find what you really owe and how to get it lifted." },
   { href: "/get-help", glyph: "🍎", t: "I need food or a place to stay", s: "Help near your campus and near you." },
   { href: "/emergency-aid", glyph: "🏫", t: "Does my college have emergency money?", s: "Find your college's emergency fund and the words to ask." },
