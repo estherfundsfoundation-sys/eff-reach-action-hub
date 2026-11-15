@@ -18,7 +18,9 @@ import { PRE, FULL, DOCS, ROUTE_LABEL, routeFor, movesFor, type Q, type Route } 
 
 type A = Record<string, unknown>;
 type Doc = { id: string; kind: string; name: string; size: number; at: string };
-type Case = { id: string; case_no: string; status: string; urgent: boolean; route: string | null; pre: A; full: A; docs: Doc[]; reply_note: string | null; plan_steps: string[]; submitted_at: string | null; replied_at: string | null };
+type Case = { id: string; case_no: string; status: string; urgent: boolean; route: string | null; pre: A; full: A; docs: Doc[]; reply_note: string | null; plan_steps: string[]; submitted_at: string | null; replied_at: string | null;
+  consent: { name: string; signed_at: string; revoked_at: string | null; version: string } | null; consent_active: boolean; school_release: "on_file" | "will" | "cant" | null };
+type Terms = { version: string; records: string[]; purpose: string; recipients: string; expires: string };
 type Me = { email: string; account: { first_name: string | null; last_name: string | null; phone: string | null; school: string | null; institution_id: string | null }; cases: Case[] };
 type School = { id: string; name: string; city: string; state: string };
 
@@ -302,6 +304,7 @@ function Cases({ me, reload, startNew, addMore }: { me: Me | null; reload: () =>
           <p>{STATUS[c.status]?.line}</p>
           {c.reply_note ? <div className="bs-plan"><h3>From EFF</h3><p>{c.reply_note}</p>{c.plan_steps?.length ? <ol>{c.plan_steps.map((s, i) => <li key={i}>{s}</li>)}</ol> : null}</div> : null}
           {c.status === "need_info" ? <button className="sc-btn coral" onClick={addMore}>Add what EFF asked for</button> : null}
+          {c.status !== "closed" && p ? <Consent c={c} token={p.token} reload={reload} /> : null}
           {c.status !== "closed" && p ? (
             <div className="bs-write">
               <label className="sc-field"><span>Write to EFF about this case</span><textarea rows={3} value={note} onChange={(e) => setNote(e.target.value)} placeholder="An update, a question, what your school said…" /></label>
@@ -312,5 +315,61 @@ function Cases({ me, reload, startNew, addMore }: { me: Me | null; reload: () =>
       ))}
       <div className="sc-acts"><button className="sc-btn ghost" onClick={startNew}>Start a new screening</button></div>
     </section>
+  );
+}
+
+/* FERPA consent (15 Nov 2026). Under FERPA (34 CFR 99.30) a college can tell EFF about her records only with her
+   signed, dated consent naming the records, the purpose and who receives them. She signs here, signed in with her
+   My REACH code (eff_bal_consent_sign), can withdraw it anytime (eff_bal_consent_revoke), and tells us whether she
+   filed her own school's FERPA release naming Esther Funds Foundation (eff_bal_school_release). */
+function Consent({ c, token, reload }: { c: Case; token: string; reload: () => Promise<Me | null> }) {
+  const [terms, setTerms] = useState<Terms | null>(null);
+  const [open, setOpen] = useState(false);
+  const [name, setName] = useState("");
+  const [agree, setAgree] = useState(false);
+  const [busy, setBusy] = useState(false);
+  const [msg, setMsg] = useState("");
+  useEffect(() => { if (open && !terms) rpc<Terms>("eff_bal_consent_terms", {}).then(setTerms).catch(() => {}); }, [open, terms]);
+  const act = async (fn: string, args: Record<string, unknown>, done: string) => {
+    setBusy(true); setMsg("");
+    try { await call(fn, { p_token: token, p_case: c.id, ...args }); setMsg(done); setOpen(false); await reload(); }
+    catch (e) { setMsg(e instanceof Error ? e.message : "That didn't save."); }
+    setBusy(false);
+  };
+  const signed = c.consent_active && c.consent;
+  return (
+    <div className="bs-consent">
+      <h3>Can EFF talk to your school about this?</h3>
+      <p>Federal privacy law (FERPA) means your school can't share anything about your account with EFF unless you say so in writing. Without it, we can still coach you and write your emails with you.</p>
+      {signed ? (
+        <p className="bs-ok">✓ You gave EFF permission on {new Date(c.consent!.signed_at).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}, signed as {c.consent!.name}. <button className="bs-link" disabled={busy} onClick={() => act("eff_bal_consent_revoke", {}, "Withdrawn. EFF won't ask your school about your records.")}>Withdraw it</button></p>
+      ) : !open ? (
+        <button className="sc-btn ghost" onClick={() => setOpen(true)}>Read and sign the permission</button>
+      ) : (
+        <div className="bs-consent-form">
+          {terms ? (
+            <>
+              <p><b>I allow my school, {String(c.full?.school || c.pre?.school || "my college")}, to share these records with Esther Funds Foundation:</b></p>
+              <ul>{terms.records.map((r) => <li key={r}>{r}</li>)}</ul>
+              <p><b>Why:</b> {terms.purpose}</p>
+              <p><b>Who sees them:</b> {terms.recipients}</p>
+              <p><b>How long:</b> {terms.expires}</p>
+              <label className="bs-sign"><span>Type your full name to sign</span><input value={name} onChange={(e) => setName(e.target.value)} autoComplete="name" /></label>
+              <label className="bs-check"><input type="checkbox" checked={agree} onChange={(e) => setAgree(e.target.checked)} /> <span>I agree. Signing here, with today&apos;s date, counts as my written consent.</span></label>
+              <button className="sc-btn" disabled={busy || !agree || name.trim().length < 4} onClick={() => act("eff_bal_consent_sign", { p_name: name, p_agree: agree }, "Signed. Thank you.")}>Sign</button>
+            </>
+          ) : <p className="sc-small">Loading…</p>}
+        </div>
+      )}
+      <div className="bs-release">
+        <p><b>Most schools also need their own form.</b> Look in your student portal for &ldquo;FERPA release&rdquo;, &ldquo;proxy access&rdquo; or &ldquo;authorized user&rdquo;, and add <b>Esther Funds Foundation</b> (nationals@estherfundsinc.org). Did you?</p>
+        <div className="bs-pills">
+          {([["on_file", "Yes, it's on file"], ["will", "I'll do it"], ["cant", "I can't find it"]] as const).map(([k, l]) => (
+            <button key={k} className={`bs-pill${c.school_release === k ? " on" : ""}`} disabled={busy} onClick={() => act("eff_bal_school_release", { p_status: k }, "Saved.")}>{l}</button>
+          ))}
+        </div>
+      </div>
+      {msg ? <p className="sc-small">{msg}</p> : null}
+    </div>
   );
 }

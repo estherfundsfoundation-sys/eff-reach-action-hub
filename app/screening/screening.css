@@ -63,3 +63,19 @@
 .bs-script h3, .bs-college h3 { margin-top:0; }
 .bs-script p { font-size:17px; line-height:1.65; color:var(--i); margin:0 0 14px; }
 .bs-college > p { color:var(--i2); line-height:1.55; margin:0 0 12px; }
+
+/* FERPA consent card (15 Nov 2026) */
+.sc .bs-consent { margin-top: 18px; padding: 16px 18px; border-radius: 14px; border: 1px solid rgba(66,18,127,.18); background: rgba(183,153,227,.10); }
+.sc .bs-consent h3 { margin: 0 0 6px; font-size: 17px; }
+.sc .bs-consent p { margin: 6px 0; line-height: 1.5; }
+.sc .bs-consent ul { margin: 6px 0 10px; padding-left: 20px; }
+.sc .bs-consent-form { margin-top: 10px; }
+.sc .bs-check { display: flex; gap: 10px; align-items: flex-start; margin: 10px 0; font-size: 15px; }
+.sc .bs-ok { color: #1f6b3a; font-weight: 600; }
+.sc .bs-link { background: none; border: 0; padding: 0; color: inherit; text-decoration: underline; cursor: pointer; font: inherit; font-weight: 400; }
+.sc .bs-release { margin-top: 14px; padding-top: 12px; border-top: 1px dashed rgba(66,18,127,.2); }
+.sc .bs-pills { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+.sc .bs-sign { display: grid; gap: 6px; margin: 12px 0 4px; font-weight: 600; }
+.sc .bs-sign input { font: inherit; font-weight: 400; padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(66,18,127,.3); background: #fff; }
+.sc .bs-pill { font: 600 14px var(--rx-body, inherit); padding: 8px 14px; border-radius: 999px; border: 1px solid rgba(66,18,127,.3); background: #fff; color: #42127F; cursor: pointer; }
+.sc .bs-pill.on { background: #42127F; color: #fff; border-color: #42127F; }
