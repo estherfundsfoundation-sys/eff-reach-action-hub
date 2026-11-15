@@ -51,13 +51,23 @@ function clock(due: string | null) {
   return ms < 0 ? { cls: "late", text: `${t} past the promise` } : { cls: ms < 6 * 3600000 ? "soon" : "", text: `${t} left` };
 }
 
+/* The EFF Reviewer Agreement, version 2026-11 (15 Nov 2026, Shayna: reviewers "will need to sign an eff agreement").
+   The same lines are AGREEMENT in MyEFF scripts/promo/student-aid-privacy-guide.mjs (the PDF); keep them equal.
+   A new version here needs eff_review_pledge_version() changed too, so everyone signs again. */
 const PLEDGE = [
-  "Everything a student shares stays with the committee. I won't copy, screenshot, forward or talk about any application outside EFF's review.",
+  "Everything a student shares with EFF stays inside EFF's review. I won't copy, screenshot, download to my own device, forward or talk about any application or case outside it.",
   "I'll step aside from any student I know personally, using “I know this student.”",
-  "I'll score fairly with the rubric. A student's GPA, background or story never counts against them.",
-  "I won't contact any applicant. EFF National speaks to students for the committee.",
-  "I'll sign out when I use a shared or public device.",
+  "I'll score fairly with the rubric. A student's GPA, school, background or how well they write never counts against them.",
+  "I won't contact any applicant, her school, her family or anyone else about her. EFF National speaks for the committee.",
+  "A student's school records are hers (FERPA). I never ask a college about a student. Only EFF National does, and only when she has signed EFF's consent and her school's own release naming EFF is on file.",
+  "No parent, partner or friend gets anything about a student's case without her written okay. If a student may be in danger, I tell EFF National right away, and 988 or 911 come first.",
+  "I read the aid before recommending EFF money: cost of attendance, verification, SAP, and what's already pending. I never advise a student to hide EFF help from her aid office.",
+  "EFF help is paid to the school, landlord or company, never as cash to a student, and I never handle money for EFF.",
+  "I never ask a student for her Social Security number, FSA ID or any password.",
+  "I sign out on shared devices, and I tell EFF National the same day if anything is shared by mistake.",
+  "I serve as a volunteer. Breaking this agreement ends my place on the review committee.",
 ];
+const GUIDE = "https://my.estherfundsfoundation.org/team-guides/student-aid-privacy-reviewer-agreement.pdf";
 
 export default function Review() {
   const [pass, setPass] = useState("");
@@ -181,10 +191,10 @@ function Pledge({ pass, me, say, done }: { pass: string; me: Me; say: (m: string
   }
   return (
     <section className="card rv-sign">
-      <h1>Before you read anything</h1>
-      <p className="sub">These are real students, many in the hardest week of their year. What they share with EFF is shared in trust.</p>
+      <h1>The EFF Reviewer Agreement</h1>
+      <p className="sub">These are real students, many in the hardest week of their year. What they share with EFF is shared in trust. Read the <a href={GUIDE} target="_blank" rel="noreferrer">Student Aid &amp; Privacy guide</a> (5 pages), then sign below.</p>
       <ol className="rv-pledge">{PLEDGE.map((l) => <li key={l}>{l}</li>)}</ol>
-      <label className="rv-check"><input type="checkbox" checked={ok} onChange={(e) => setOk(e.target.checked)} /> I promise to keep these.</label>
+      <label className="rv-check"><input type="checkbox" checked={ok} onChange={(e) => setOk(e.target.checked)} /> I agree to the EFF Reviewer Agreement.</label>
       <input className="ffield" placeholder="Type your full name to sign" value={name} onChange={(e) => setName(e.target.value)} />
       <button className="btn p" disabled={!ok || name.trim().length < 3} onClick={sign}>Sign and continue</button>
     </section>
