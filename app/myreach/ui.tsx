@@ -28,7 +28,7 @@ const GROUPS = [
     { href: "/get-help", label: "Food, housing & help near me" }, { href: "/emergency-aid", label: "Campus emergency aid lookup" }, { href: "https://my.estherfundsfoundation.org/lighthouse", label: "Talk to a person" } ] },
   { t: "Money for school", items: [
     { href: "/scholarships", label: "Scholarships" }, { href: "/scholarships/match", label: "Match me" }, { href: "/apply-with-me", label: "Apply With Me" },
-    { href: "/aid-moves", label: "Financial aid moves" }, { href: "/freebies", label: "Freebies" }, { href: "/apply", label: "Apply to EFF" } ] },
+    { href: "/aid-explained", label: "Financial aid, explained" }, { href: "/aid-moves", label: "Financial aid moves" }, { href: "/freebies", label: "Freebies" }, { href: "/apply", label: "Apply to EFF" } ] },
   { t: "Get ready", items: [
     { href: "/eff-interview-coach", label: "Mock Interview Coach" }, { href: "/practice", label: "Practice the Conversation" }, { href: "/resume", label: "Résumé Builder" },
     { href: "/my-college", label: "My college" }, { href: "/apply-with-me/college", label: "Apply to college" }, { href: "https://my.estherfundsfoundation.org/kit", label: "The Survival Kit" } ] },
