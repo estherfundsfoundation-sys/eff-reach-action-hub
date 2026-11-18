@@ -40,6 +40,7 @@
   .sc-menu .sc-main, .sc-menu .sc-acct { display:none; }
   .sc-drop .sc-dmain { display:inline-flex !important; }
 }
+@media (max-width:1280px) and (min-width:901px) { .sc-menu a.sc-main:nth-of-type(n+5) { display:none; } }
 @media (max-width:760px) { .sc-top .sc-wrap { gap:8px; } .sc-brand small { display:none; } .sc-menu { margin-left:auto; } }
 @media (max-width:380px) { .sc-brand { font-size:18px; } .sc-menu a, .sc-morebtn { padding:10px 11px; } }
 

@@ -9,18 +9,13 @@ import { readPass } from "./pass";
    Emergency, Sign in and Menu show; the menu then lists every tab. */
 export const NAV = [
   { href: "/emergency", label: "Emergency" },
-  { href: "/start", label: "Start here" },
-  { href: "/get-help", label: "Get Help" },
-  { href: "/scholarships", label: "Scholarships" },
-  { href: "/emergency-aid", label: "Campus aid lookup" },
-  { href: "/my-college", label: "My college" },
-  { href: "/freebies", label: "Freebies" },
+  { href: "/#help", label: "Get help" },
+  { href: "/#workshops", label: "Workshops" },
+  { href: "/scholarships", label: "Pay for school" },
+  { href: "/#schools", label: "For schools & partners" },
   { href: "/apply", label: "Apply to EFF" },
-  { href: "/workshops", label: "Workshops" },
-  { href: "/resources", label: "All resources" },
-  { href: "https://represent.estherfundsfoundation.org", label: "Ambassadors" },
 ];
-const MAIN = NAV.slice(1, 4);
+const MAIN = NAV.slice(1);
 /* The menu, grouped by what a student is trying to do (13 Nov 2026). Every page is here; nothing was taken out. */
 const GROUPS = [
   { t: "Help right now", items: [
@@ -32,6 +27,9 @@ const GROUPS = [
   { t: "Get ready", items: [
     { href: "/eff-interview-coach", label: "Mock Interview Coach" }, { href: "/practice", label: "Practice the Conversation" }, { href: "/resume", label: "Résumé Builder" },
     { href: "/my-college", label: "My college" }, { href: "/apply-with-me/college", label: "Apply to college" }, { href: "https://my.estherfundsfoundation.org/kit", label: "The Survival Kit" } ] },
+  { t: "REACH programs", items: [
+    { href: "/workshops", label: "REACH Workshops" }, { href: "/workshop-request", label: "Book REACH on Tour" }, { href: "/campus", label: "REACH for Campuses" },
+    { href: "/sponsor", label: "Sponsor REACH" }, { href: "https://represent.estherfundsfoundation.org", label: "Campus Ambassadors" }, { href: "https://my.estherfundsfoundation.org/tiktok", label: "TikTok team" } ] },
   { t: "Explore", items: [
     { href: "/start", label: "Start here" }, { href: "/resources", label: "All resources" }, { href: "/workshops", label: "Workshops" }, { href: "/organizations", label: "Organizations" },
     { href: "/for/families", label: "For families" }, { href: "/for/schools", label: "For schools & colleges" }, { href: "https://represent.estherfundsfoundation.org", label: "Ambassadors" } ] },
