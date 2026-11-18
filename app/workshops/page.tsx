@@ -2,119 +2,118 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { SiteFoot, SiteTop } from "../myreach/ui";
 import JoinCode from "./JoinCode";
+import Catalog from "./Catalog";
+import { SHELVES } from "./shelves";
 import "../scholarships/scholarships.css";
 import "../reach-home.css";
+import "../reach-face.css";
 import "./workshops.css";
 
 export const metadata: Metadata = {
   title: "REACH Workshops · Esther Funds Foundation",
-  description: "Live workshops that get a room on its feet. Students join on their phones; chapters and Campus Ambassadors host.",
+  description: "Live, interactive workshops that keep students in college. Book REACH on Tour for your school or church, host one in MyEFF, or join with a code.",
 };
 
-/* The workshops live in MyEFF (my.estherfundsfoundation.org/workshop to host,
-   /w to join). This page is REACH's door to them. Names and lines are copied
-   from MyEFF's app/workshop/tracks.ts; keep them in step. */
+/* REACH Workshops, rebuilt with the new REACH home (18 Nov 2026, Shayna: "now revamp the workshop pages too").
+   The workshops themselves run in MyEFF (/workshop to host, /w to join); this page explains them and opens the
+   three doors: book REACH on Tour, host one, join with a code. The catalog is shelves.ts. */
 const MYEFF = "https://my.estherfundsfoundation.org";
-const SHELVES = [
-  { title: "REACH Workshops", line: "Before you drop out, REACH. Hosted by Campus Ambassadors, chapters and National.", items: [
-    ["Before you drop out, REACH.", "Money, food, mental health, and keeping a friend in school."],
-    ["Get Paid to Learn", "Free money first, the scholarship hunt, scam radar, and borrowing like it's your future."],
-    ["Mind Matters", "You're not alone, the basics that hold you, tools for a loud mind, and how to be the one who asks."],
-    ["Stay Enrolled", "Holds and bills, keeping your aid, what withdrawing really costs, and food and rent."],
-    ["Career Launch", "A resume that speaks, STAR interviews, your network, and your pitch."],
-  ] },
-  { title: "EFF Signature Workshops", line: "Built on EFF's mission, made for chapters to host with their own logo and partners.", items: [
-    ["Everything Within Reach", "The EFF Emergency Grant, thousands of scholarships checked every morning, and every EFF tool."],
-    ["First in the Family", "The rulebook nobody hands first-generation students."],
-    ["For Such a Time as This", "Esther's story and our founder's, your why written down, and a plan for the hard days."],
-    ["Lead Where You Stand", "Lead yourself, serve the EFF way, lead people, and pitch a project."],
-    ["Finish Strong", "Your degree audit, registering right, the midterm check, finals, and applying to graduate."],
-    ["FAFSA & Financial Aid Night", "Aid made plain, then a 12-minute FAFSA Sprint in the room."],
-    ["Finals Survival", "Sleep, study that sticks, and a plan for the hardest week."],
-    ["Scholarship Essay Lab", "Seven quiet minutes to write your first paragraph, then read it aloud."],
-    ["Apply With Me Night", "Build your scholarship application together on REACH, then a Submit Sprint: everyone applies before they leave."],
-    ["Resume & LinkedIn Glow-Up", "A resume that gets read and a profile that gets found."],
-    ["Money 101", "Refund checks, a weekly number, scam radar, and credit."],
-    ["Grad School & Transfer Roadmap", "Where you're going next and how to get there."],
-    ["You Belong Here", "The doubt every new student feels, named, and where to find your people."],
-    ["Grow Your Mind", "Why struggle is part of learning, and what to do when it's hard."],
-    ["Beat the Sophomore Slump", "Why second years stall, and how to keep going."],
-    ["Healthy Love", "What healthy looks like, the warning signs, and how to help a friend."],
-    ["Sleep, Stress & Your Grades", "Rest, stress and the habits that hold up your semester."],
-    ["First-Gen Family Night", "College made plain for the families of first-generation students."],
-  ] },
-  { title: "Game Nights", line: "Fun, loud and useful. The whole room plays on their phones.", items: [
-    ["The Semester", "Live one student's semester together and make every choice as a room."],
-    ["Financial Aid Escape Room", "Solve the aid puzzles before the clock runs out."],
-    ["REACH Feud", "Survey says: the college edition, every answer sourced."],
-  ] },
-  { title: "Meetings", line: "For chapters and campuses getting started.", items: [
-    ["EFF Informational Meeting", "Who EFF is, the story so far, where you fit, and joining in the room."],
-    ["Chapter Interest Meeting", "A chapter's logo, board and own slides, with everyone joining on their phones."],
-  ] },
-] as const;
+const MEDIA = "https://voljlrqyruluuqrfqwww.supabase.co/storage/v1/object/public/eff-media/2026/";
+const PHOTO = MEDIA + "d3c2fde7-f7e5-4704-b735-94505eeec9d4.jpg";
+const total = SHELVES.reduce((n, s) => n + s.items.length, 0);
+
+const FOR = [
+  { t: "High schools", s: "Juniors and seniors get ready for college money, applying and the first semester." },
+  { t: "Colleges", s: "Students learn where the help is before a hard week becomes a dropped semester." },
+  { t: "Churches & community", s: "Youth groups and families learn the road to college, and how to stay on it." },
+  { t: "EFF chapters", s: "Chapters host Signature Workshops and meetings with their own logo and partners." },
+];
+
+const FAQ = [
+  { q: "How long is a workshop?", a: "Most run about an hour. EFF can shape a REACH on Tour stop around your schedule." },
+  { q: "What do students need?", a: "A phone. They scan the code, type a first name, and play. No app, no account." },
+  { q: "Is there a cost?", a: "Chapters and Campus Ambassadors host for free from MyEFF. For a REACH on Tour visit to your school or college, EFF sends a quote after a short call." },
+  { q: "Do you come in person?", a: "Yes. REACH on Tour is EFF in the room. You can also host one yourself on any projector or shared screen." },
+];
 
 export default function Workshops() {
   return (
-    <main className="sc rh wk">
+    <main className="sc rh rx wk2">
       <SiteTop on="/workshops" />
-      <header className="wk-hero">
-        <div className="wk-stage" aria-hidden>
-          {["R", "E", "A", "C", "H"].map((l, i) => <span key={l} style={{ ["--i" as string]: i }}>{l}</span>)}
-        </div>
-        <div className="sc-wrap wk-hero-in">
-          <p className="rh-kick">REACH Workshops</p>
-          <h1>Get out of your seat.</h1>
-          <p className="rh-lede">Live workshops on the big screen, with every student playing along on their phone: stand-ups, four corners, timed questions, text-message scenarios, and every resource saved before they leave.</p>
-          <JoinCode base={`${MYEFF}/w`} />
-        </div>
-      </header>
 
-      <section className="wk-how">
+      <section className="rx-hero">
+        <div className="rx-hero-bg" style={{ backgroundImage: `url(${PHOTO})` }} aria-hidden="true" />
+        <div className="sc-wrap rx-hero-in">
+          <p className="rx-kick">REACH Workshops</p>
+          <h1>Get students out of their <span>seats.</span></h1>
+          <p className="rx-lede">Live, game-show style workshops on money, mental health, staying enrolled and what comes next. The whole room plays on their phones, and every student leaves with real resources in their pocket.</p>
+          <div className="rx-paths">
+            <Link href="/workshop-request" className="rx-path alt"><small>Schools, colleges &amp; churches</small><b>Book REACH on Tour</b><i aria-hidden="true">→</i></Link>
+            <a href={`${MYEFF}/workshop`} className="rx-path"><small>Chapters &amp; ambassadors</small><b>Host a workshop</b><i aria-hidden="true">→</i></a>
+          </div>
+          <div className="wk2-join"><JoinCode base={`${MYEFF}/w`} /></div>
+        </div>
+      </section>
+
+      <section className="rx-sec">
         <div className="sc-wrap">
-          <ol className="rh-steps wk-steps">
-            <li><b>1</b><span>A host puts the workshop on a projector. A code and QR appear.</span></li>
-            <li><b>2</b><span>Students scan or type the code. First name only, no account.</span></li>
-            <li><b>3</b><span>Everyone plays along, moves, answers, and leaves with the kit.</span></li>
+          <p className="rh-kick">How it works</p>
+          <h2>A projector, a room, and their phones.</h2>
+          <ol className="wk2-steps">
+            <li><b>1</b><h3>Put it on the big screen</h3><p>The host opens the workshop. A code and QR code appear.</p></li>
+            <li><b>2</b><h3>Students join</h3><p>They scan or type the code on their phones. First name only, no account.</p></li>
+            <li><b>3</b><h3>Everyone plays</h3><p>Stand-ups, four corners, timed questions, real-life text scenarios and a leaderboard.</p></li>
+            <li><b>4</b><h3>They leave with the kit</h3><p>Every resource shown is saved on their phone before they walk out.</p></li>
           </ol>
         </div>
       </section>
 
-      {SHELVES.map((sh, k) => (
-        <section key={sh.title} className="wk-shelf">
-          <div className="sc-wrap">
-            <p className="rh-kick">{sh.title}</p>
-            <h2>{sh.line}</h2>
-            <div className="wk-grid">
-              {sh.items.map(([name, line], i) => (
-                <article key={name} className="wk-card" style={{ ["--d" as string]: `${i * 0.07}s`, ["--hue" as string]: ["#ffd35a", "#c9a0ff", "#ff8f7f"][k] }}>
-                  <h3>{name}</h3>
-                  <p>{line}</p>
-                </article>
-              ))}
-            </div>
-          </div>
-        </section>
-      ))}
-
-      <section className="rh-me wk-host">
-        <div className="sc-wrap rh-me-in">
-          <div>
-            <p className="rh-kick">Host one</p>
-            <h2>Bring it to your campus.</h2>
-            <p>Chapter officers, Campus Ambassadors and National host from MyEFF: pick a workshop, add your facilitators, your logo and a partner, and your flyers and caption are made for you.</p>
-            <div className="sc-acts">
-              <a className="sc-btn coral" href={`${MYEFF}/workshop`}>Host in MyEFF</a>
-              <Link className="sc-btn ghost" href="/workshop-request">Request a REACH on Tour stop</Link>
-            </div>
-          </div>
-          <ol className="rh-steps" aria-label="Who can host">
-            <li><b>✦</b><span>Chapter officers: sign in to MyEFF and open Workshops &amp; meetings.</span></li>
-            <li><b>✦</b><span>Campus Ambassadors: sign in with the email you applied with.</span></li>
-            <li><b>✦</b><span>No chapter yet? Ask EFF, or apply to become an ambassador.</span></li>
-          </ol>
+      <section className="rx-sec rx-eff">
+        <div className="sc-wrap">
+          <p className="rh-kick">The catalog</p>
+          <h2>{total} workshops, ready to run.</h2>
+          <Catalog />
         </div>
       </section>
+
+      <section className="rx-sec">
+        <div className="sc-wrap">
+          <p className="rh-kick">Who it&rsquo;s for</p>
+          <h2>Anywhere students are.</h2>
+          <div className="rx-grid">{FOR.map((f) => <article key={f.t} className="rx-card wk2-card"><b>{f.t}</b><span>{f.s}</span></article>)}</div>
+        </div>
+      </section>
+
+      <section className="rx-sec rx-ws">
+        <div className="sc-wrap">
+          <p className="rh-kick">Bring REACH to your students</p>
+          <h2>Two ways to do it.</h2>
+          <div className="wk2-two">
+            <div className="wk2-way">
+              <em>EFF comes to you</em>
+              <h3>REACH on Tour</h3>
+              <p>EFF brings a live REACH workshop to your high school, college, church or community. Tell us about your students, we set up a call, and you get a quote and a date.</p>
+              <Link className="sc-btn coral" href="/workshop-request">Request a REACH on Tour stop</Link>
+            </div>
+            <div className="wk2-way">
+              <em>You run it</em>
+              <h3>Host a workshop</h3>
+              <p>EFF chapter officers and Campus Ambassadors host for free in MyEFF: pick a workshop, add your facilitators, your logo and a partner, and your flyers and caption are made for you.</p>
+              <a className="sc-btn" href={`${MYEFF}/workshop`}>Host in MyEFF</a>
+              <p className="wk2-small">Not an officer or ambassador yet? <a href="https://represent.estherfundsfoundation.org">Become a Campus Ambassador</a>.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="rx-sec">
+        <div className="sc-wrap">
+          <p className="rh-kick">Questions</p>
+          <h2>Good to know.</h2>
+          <div className="wk2-faq">{FAQ.map((f) => <details key={f.q}><summary>{f.q}</summary><p>{f.a}</p></details>)}</div>
+        </div>
+      </section>
+
       <SiteFoot />
     </main>
   );

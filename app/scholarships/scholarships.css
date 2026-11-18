@@ -15,7 +15,7 @@
 @media (prefers-color-scheme: dark) { .sc-top { background:rgba(18,10,29,.9); } }
 .sc-top .sc-wrap { display:flex; align-items:center; gap:14px; min-height:60px; }
 .sc-brand { font:900 20px/1 var(--rx-head); letter-spacing:.14em; text-decoration:none; color:var(--p) !important; white-space:nowrap; }
-.sc-brand small { display:block; font:700 10px/1.4 inherit; letter-spacing:.2em; color:var(--i2); }
+.sc-brand small { display:block; font:700 10px/1.4 var(--rx-body),sans-serif; letter-spacing:.2em; color:var(--i2); }
 .sc-menu { display:flex; gap:4px; overflow-x:auto; scrollbar-width:none; margin-left:auto; }
 .sc-menu::-webkit-scrollbar { display:none; }
 .sc-menu a { white-space:nowrap; padding:10px 12px; border-radius:999px; font-weight:600; font-size:15px; text-decoration:none; color:var(--i) !important; min-height:44px; display:inline-flex; align-items:center; }
