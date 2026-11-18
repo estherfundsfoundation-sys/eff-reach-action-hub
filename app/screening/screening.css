@@ -76,6 +76,6 @@
 .sc .bs-release { margin-top: 14px; padding-top: 12px; border-top: 1px dashed rgba(66,18,127,.2); }
 .sc .bs-pills { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
 .sc .bs-sign { display: grid; gap: 6px; margin: 12px 0 4px; font-weight: 600; }
-.sc .bs-sign input { font: inherit; font-weight: 400; padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(66,18,127,.3); background: #fff; }
+.sc .bs-sign input, .sc .bs-sign select { font: inherit; font-weight: 400; padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(66,18,127,.3); background: #fff; }
 .sc .bs-pill { font: 600 14px var(--rx-body, inherit); padding: 8px 14px; border-radius: 999px; border: 1px solid rgba(66,18,127,.3); background: #fff; color: #42127F; cursor: pointer; }
 .sc .bs-pill.on { background: #42127F; color: #fff; border-color: #42127F; }

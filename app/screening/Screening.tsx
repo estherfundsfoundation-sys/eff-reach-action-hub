@@ -19,7 +19,7 @@ import { PRE, FULL, DOCS, ROUTE_LABEL, routeFor, movesFor, type Q, type Route } 
 type A = Record<string, unknown>;
 type Doc = { id: string; kind: string; name: string; size: number; at: string };
 type Case = { id: string; case_no: string; status: string; urgent: boolean; route: string | null; pre: A; full: A; docs: Doc[]; reply_note: string | null; plan_steps: string[]; submitted_at: string | null; replied_at: string | null;
-  consent: { name: string; signed_at: string; revoked_at: string | null; version: string } | null; consent_active: boolean; school_release: "on_file" | "will" | "cant" | null };
+  consent: { name: string; signed_at: string; revoked_at: string | null; version: string } | null; consent_active: boolean; school_release: "on_file" | "will" | "cant" | null ; school_contact?: { ok: boolean; office: string | null; name: string | null; email: string | null; at: string } | null};
 type Terms = { version: string; records: string[]; purpose: string; recipients: string; expires: string };
 type Me = { email: string; account: { first_name: string | null; last_name: string | null; phone: string | null; school: string | null; institution_id: string | null }; cases: Case[] };
 type School = { id: string; name: string; city: string; state: string };
@@ -369,6 +369,47 @@ function Consent({ c, token, reload }: { c: Case; token: string; reload: () => P
           ))}
         </div>
       </div>
+      <Contact c={c} token={token} reload={reload} />
+      {msg ? <p className="sc-small">{msg}</p> : null}
+    </div>
+  );
+}
+
+/* May EFF contact your school for you? (18 Nov 2026, Shayna: "ask them if we can contact their school on their behalf
+   and cc them on the email"). Saved through eff_bal_school_contact; National emails the school only after a yes and a
+   signed permission, and she is copied on every email. */
+function Contact({ c, token, reload }: { c: Case; token: string; reload: () => Promise<Me | null> }) {
+  const sc = c.school_contact || null;
+  const [edit, setEdit] = useState(!sc);
+  const [office, setOffice] = useState(sc?.office || "Financial aid");
+  const [name, setName] = useState(sc?.name || "");
+  const [email, setEmail] = useState(sc?.email || "");
+  const [busy, setBusy] = useState(false);
+  const [msg, setMsg] = useState("");
+  const save = async (ok: boolean) => {
+    setBusy(true); setMsg("");
+    try { await call("eff_bal_school_contact", { p_token: token, p_case: c.id, p_ok: ok, p_office: ok ? office : "", p_name: ok ? name : "", p_email: ok ? email : "" }); setEdit(false); setMsg(ok ? "Saved. We'll copy you on every email we send your school." : "Saved. We won't contact your school."); await reload(); }
+    catch (e) { setMsg(e instanceof Error ? e.message : "That didn't save."); }
+    setBusy(false);
+  };
+  return (
+    <div className="bs-release">
+      <p><b>Can EFF contact your school on your behalf?</b> We'd email your school to ask what it takes to clear your balance and register. <b>You'll be copied (cc) on every email</b>, so you see every word we send and every answer.</p>
+      {!edit && sc ? (
+        <p className="bs-ok">{sc.ok ? `✓ Yes${sc.office ? `, ${sc.office}` : ""}${sc.name ? ` (${sc.name})` : ""}${sc.email ? `, ${sc.email}` : ""}.` : "You said no. We won't contact your school."} <button className="bs-link" onClick={() => setEdit(true)}>Change</button></p>
+      ) : (
+        <>
+          <label className="bs-sign"><span>Which office? (if you know)</span>
+            <select value={office} onChange={(e) => setOffice(e.target.value)}>{["Financial aid", "Bursar / student accounts", "Dean of students", "Registrar", "Not sure"].map((o) => <option key={o}>{o}</option>)}</select></label>
+          <label className="bs-sign"><span>Someone you've talked to there (optional)</span><input value={name} onChange={(e) => setName(e.target.value)} placeholder="Ms. Johnson, financial aid counselor" /></label>
+          <label className="bs-sign"><span>Their email (optional, we'll find it if you don't know)</span><input type="email" value={email} onChange={(e) => setEmail(e.target.value)} /></label>
+          <div className="bs-pills">
+            <button className="bs-pill" disabled={busy} onClick={() => save(true)}>Yes, contact my school and cc me</button>
+            <button className="bs-pill" disabled={busy} onClick={() => save(false)}>No, I'll do it myself</button>
+          </div>
+          {c.consent_active ? null : <p className="sc-small">We'll also need your signed permission above before we write to your school about you.</p>}
+        </>
+      )}
       {msg ? <p className="sc-small">{msg}</p> : null}
     </div>
   );
