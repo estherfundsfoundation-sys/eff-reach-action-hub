@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   description: "The EFF Emergency Grant and EFF support. Apply with a free My REACH account and follow your application.",
   alternates: { canonical: "/apply" },
 };
-const KIND: Record<string, string> = { scholarship: "Scholarship", grant: "Grant", emergency: "Emergency funding", award: "Award" };
+const KIND: Record<string, string> = { scholarship: "Scholarship", grant: "Financial assistance", emergency: "Financial assistance · Emergency", award: "Award" };
 
 export default async function Page() {
   let programs: Program[] = [];
@@ -21,7 +21,7 @@ export default async function Page() {
   const closed = programs.filter((p) => !p.open);
   const card = (p: Program) => (
     <article className="sc-card" key={p.key}>
-      <span className={`sc-due${p.open ? " hot" : ""}`}>{p.open ? (p.rolling ? "Open: apply anytime" : p.closes_at ? `Open · closes ${new Date(p.closes_at).toLocaleDateString("en-US", { month: "short", day: "numeric", timeZone: "America/New_York" })}` : "Open") : "Closed for now"}</span>
+      <span className={`sc-due${p.open ? " hot" : ""}`}>{p.open ? (p.rolling ? "Open: apply anytime" : p.closes_at ? `Open · closes ${new Date(p.closes_at).toLocaleDateString("en-US", { month: "short", day: "numeric", timeZone: "America/New_York" })}` : "Open") : p.opens_at && new Date(p.opens_at) > new Date() ? `Opens ${new Date(p.opens_at).toLocaleDateString("en-US", { month: "long", year: "numeric", timeZone: "America/New_York" })}` : "Closed for now"}</span>
       <span className="sc-small" style={{ fontWeight: 800, letterSpacing: ".1em", textTransform: "uppercase", fontSize: 12 }}>{KIND[p.kind] || p.kind}{p.audience === "members" ? " · EFF members" : ""}</span>
       {p.amount ? <div className="sc-amt">{p.amount}</div> : null}
       <h3><Link href={`/apply/${p.key}`}>{p.name}</Link></h3>
